@@ -116,11 +116,11 @@ var SPRITE_ROLE={player:'hero',lumber:'lumberjack',fisher:'fisher',miner:'miner'
 function spritePump(){while(SPRITES.active<2&&SPRITES.queue.length){var name=SPRITES.queue.shift(),m=SPRITES.atlas[name],im=new Image();SPRITES.active++;SPRITES.img[name]=im;im.decoding='async';(function(key,image){var finished=false;function done(ok){if(finished)return;finished=true;SPRITES.state[key]=ok?'ready':'failed';SPRITES.active--;spritePump();}image.onload=function(){done(!!image.naturalWidth);};image.onerror=function(){done(false);};})(name,im);im.src='assets/sprites/'+m.file+'?v='+SPRITE_VERSIONS[name];}}
 function spriteReady(name){if(!SPRITES.atlas[name])return false;if(!SPRITES.state[name]){SPRITES.state[name]='queued';SPRITES.queue.push(name);spritePump();}return SPRITES.state[name]==='ready';}
 function spriteAnim(m,anim){return m.anims[anim]||m.anims.idle||m.anims.static||m.anims[Object.keys(m.anims)[0]];}
-function actorSpriteAnim(a){return a.stab>0||a.aim>.12?'work':a.working?'work':((a.mv||a.moving)?'walk':'idle');}
+function actorSpriteAnim(a){if(a.cheerUntil>(typeof time==='number'?time:0))return 'cheer';return a.stab>0||a.aim>.12?'work':a.working?'work':((a.mv||a.moving)?'walk':'idle');}
 function spriteVisible(x,y,r){if(SPRITE_ART_CAPTURE)return true;if(typeof Z!=='number'||!Z)return true;r=r||80;return x+r>=camX&&x-r<=camX+W/Z&&y+r>=camY&&y-r<=camY+SH/Z;}
 function drawSprite(g,name,anim,t,x,y,ppu,flip,alpha){if(!spriteReady(name))return false;var m=SPRITES.atlas[name],a=spriteAnim(m,anim),f=0;if(a.fps&&!MOTION3D_REDUCED.matches){f=Math.floor(Math.max(0,t)*a.fps);f=a.loop?f%a.frames:Math.min(a.frames-1,f);}var s=(ppu||SPRITE_PPU)/m.ppu;g.save();if(alpha!==undefined)g.globalAlpha*=alpha;g.translate(x,y);if(flip)g.scale(-1,1);g.drawImage(SPRITES.img[name],f*m.frameW,a.row*m.frameH,m.frameW,m.frameH,-m.anchor[0]*s,-m.anchor[1]*s,m.frameW*s,m.frameH*s);g.restore();return true;}
 function drawSpriteLevel(g,x,y,L,cap){if(L<=1)return;g.save();g.translate(x,y);g.fillStyle='#fff7df';g.strokeStyle='#b88b34';g.lineWidth=.6;g.beginPath();g.roundRect(-10,-4,20,8,3);g.fill();g.stroke();g.font='600 5px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#5b441d';g.fillText('Lv'+L,0,0);g.fillStyle=L>=cap?'#f7b72e':'#2aada6';for(var i=0;i<Math.min(8,L);i++)g.fillRect(-10+i*2.5,4,2,1.8);g.restore();}
-function drawFacilitySprite(g,name,x,y,w,h,L,cap,t){var m=SPRITES.atlas[name];if(!m||!spriteReady(name))return false;var ppu=m.ppu*Math.min(w/m.frameW,h/m.frameH)*(.78+.22*Math.min(1,L/(cap||8)));drawSprite(g,name,'idle',t||0,x,y,ppu,false);drawSpriteLevel(g,x,y-h*.66,L,cap||8);return true;}
+function drawFacilitySprite(g,name,x,y,w,h,L,cap,t){var m=SPRITES.atlas[name];if(!m||!spriteReady(name))return false;var ppu=m.ppu*Math.min(w/m.frameW,h/m.frameH)*(.78+.22*Math.min(1,L/(cap||8)));drawSprite(g,name,'idle',typeof time==='number'?time:0,x,y,ppu,false);drawSpriteLevel(g,x,y-h*.66,L,cap||8);return true;}
 /* ---------- species & goods ---------- */
 var TREES=[
   {id:'oak',name:'참나무',tier:0,val:4,shape:'round',c1:'#4c9a5c',c2:'#6cb877',trunk:'#8a6845',log:'#a07a50'},
@@ -224,7 +224,7 @@ var KEY='cozy-village-v6';
 var S={coins:50,axe:0,rod:0,boots:0,cour:0,bag:0,pile:0,p:{axe:0,rod:0,boots:0,cour:0},w:[],auto:false,
   ss:{wood:{},fish:{},iron:{}},piles:{},shop:{wood:1,fish:1},conv:{wood:0,fish:0},cv:{},trunk:0,wh:{},whLv:0,h3:0,lost:0,h1:0,h2:0,sites:null,mill:0,smoke:0,sfx:1,bgm:1,pads:{},tutN:0,fuel:60,st:0};
 /* save format version: bump SAVE_VER whenever a migration below is added; the old save is backed up first */
-var SAVE_VER=11;
+var SAVE_VER=12;
 var FRESH=true;
 try{var raw=localStorage.getItem(KEY);if(raw){FRESH=false;var o=JSON.parse(raw);if((o.ver||0)<SAVE_VER){try{localStorage.setItem(KEY+'-bak-v'+(o.ver||0),raw);}catch(e2){}}for(var k in o)S[k]=o[k];}}catch(e){}
 var LOADV=S.ver||0;
@@ -294,7 +294,7 @@ function updateStage(dt){if(FXA){FXA.t+=dt;if(FXA.t>=1.6)FXA=null;}if(STAGEBAN){
   stageT-=dt;if(stageT>0)return;stageT=.5;if((S.stage||3)<3&&stageReady())expandStage();}
 function siteScore(){var n=0;SITES.forEach(function(st){n+=siteLv(st.id);});return n;}
 /* v75: running totals for today's goals (new save field S.stat - older saves start from zero) */
-function stat(k,n){if(!S.stat)S.stat={};S.stat[k]=(S.stat[k]||0)+(n||0);}
+function stat(k,n){if(typeof actionEvent==='function')actionEvent(k,n||0);if(!S.stat)S.stat={};S.stat[k]=(S.stat[k]||0)+(n||0);}
 var RESETTING=false;
 function save(){if(RESETTING)return;try{saveDefenseState();localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function startOver(){try{localStorage.setItem(KEY+'-bak-reset',JSON.stringify(S));localStorage.removeItem(KEY);}catch(e){}RESETTING=true;location.reload();}
@@ -963,7 +963,7 @@ function palKey(){return whUnlocked()+':'+(S.mill>0)+(S.smoke>0)+(S.smelt>0)+(S.
 var PROC={mill:{line:'wood',goods:['chair','table','sofa'],plot:'sawmill'},smoke:{line:'fish',goods:['can','smoked','gift'],plot:'smokehouse'},smelt:{line:'iron',goods:['ingot','glass','plastic'],plot:'smelter'},elec:{line:'elec',goods:['tv','pc','phone'],plot:'factory'}},procT={mill:0,smoke:0,smelt:0,elec:0},procN={mill:0,smoke:0,smelt:0,elec:0},procBusy={mill:0,smoke:0,smelt:0,elec:0},flushT=0;
 var PROCS=['mill','smoke','smelt','elec'],TPROCS=['mill','smoke','elec'],LINEPROC={wood:'mill',fish:'smoke',iron:'smelt',elec:'elec'};
 /* v63: a full smelter storage is never stuck - the material with the most stock is sold off a few at a time (it no longer waits forever when the factory can't keep up) */
-var smeltSellT=0,SMELTNEED=null;function smeltSell(dt){smeltSellT-=dt;if(smeltSellT>0)return;smeltSellT=.6;var junk=PROC.smelt.goods.filter(function(id){return SMELTNEED&&!SMELTNEED[id]&&whN(id)>0;});var ids=(junk.length?junk:PROC.smelt.goods.filter(function(id){return whN(id)>0;})).sort(function(x,y){return whN(y)-whN(x);});if(!ids.length)return;var id=ids[0],n=Math.min(3,whN(id));addWh(id,-n);var pay=money50(n*ITEMS[id].price*priceMult());S.coins+=pay;var sp0=shedPos('smelt');addFloat(sp0.x,sp0.y-22,'📦 남는 자재 판매 +'+fmt(pay),'#ffe27a',true);}
+var smeltSellT=0,SMELTNEED=null;function smeltSell(dt){smeltSellT-=dt;if(smeltSellT>0)return;smeltSellT=.6;var junk=PROC.smelt.goods.filter(function(id){return SMELTNEED&&!SMELTNEED[id]&&whN(id)>0;});var ids=(junk.length?junk:PROC.smelt.goods.filter(function(id){return whN(id)>0;})).sort(function(x,y){return whN(y)-whN(x);});if(!ids.length)return;var id=ids[0],n=Math.min(3,whN(id));addWh(id,-n);var pay=money50(n*ITEMS[id].price*priceMult());S.coins+=pay;if(typeof actionIncome==='function'){actionIncome(pay);actionFeverPay(pay);}var sp0=shedPos('smelt');addFloat(sp0.x,sp0.y-22,'📦 남는 자재 판매 +'+fmt(pay),'#ffe27a',true);}
 function procYield(L){return L>=6?4:(L>=5?3:(L>=3?2:1));}
 /* v60: a bigger storage shed also packs extra goods from the same batch - +1 at storage Lv3, +2 at Lv5 */
 function shedYield(b){var L=(S.pst&&S.pst[b])||0;return L>=5?2:(L>=3?1:0);}
@@ -1063,7 +1063,7 @@ function updateTrucks(dt){
         for(var k=0;k<t.order.length;k++){var o=t.order[k];if(o.got<o.qty&&whN(o.id)>0){ld=true;addWh(o.id,-1);o.got++;t.bump=.45;var sh=shedPos(t.b);fly(o.id,sh.x,sh.y-6,t.x+10,t.y-10,.35);break;}}}
       if(truckDone(t)||(!ld&&t.order.some(function(o){return o.got>0;}))){
         var pay=0;t.order.forEach(function(o){pay+=o.got*truckPrice(o.id);});pay=money50(pay*(t.rush?2:1));
-        var tk='t_'+t.b,tcp=tcashPos(t.b);S.cash[tk]=(S.cash[tk]||0)+pay;S.h3=1;stat('truck',1);sfx('cash');addFloat(tcp.x,tcp.y-24,(t.rush?'⚡+':'🚚+')+pay,'#ffd35a',true);burst(tcp.x,tcp.y,'#ffe27a',t.rush?20:12,true);
+        var tk='t_'+t.b,tcp=tcashPos(t.b);if(typeof actionIncome==='function'){actionIncome(pay);actionFeverPay(pay);}S.cash[tk]=(S.cash[tk]||0)+pay;S.h3=1;stat('truck',1);sfx('cash');addFloat(tcp.x,tcp.y-24,(t.rush?'⚡+':'🚚+')+pay,'#ffd35a',true);burst(tcp.x,tcp.y,'#ffe27a',t.rush?20:12,true);
         for(var ci=0;ci<Math.min(8,3+Math.floor(pay/40));ci++)fly('coin',t.x+(Math.random()-.5)*20,t.y-12,tcp.x+(Math.random()-.5)*16,tcp.y-4,.5+ci*.05);if(t.rush)flash=.3;truckLeave(t);
       }else if(t.pat<=0){
         var got=0,pay2=0;t.order.forEach(function(o){got+=o.got;pay2+=o.got*truckPrice(o.id)*.85;});
@@ -1133,7 +1133,7 @@ function updateCustomers(dt){
   for(var i=customers.length-1;i>=0;i--){
     var c=customers[i];
     var ex=c.ex!==undefined?c.ex:entryX(c.seller);
-    if(c.state==='out'){if(Math.abs(c.x-ex)>1)moveC(c,ex,c.y,dt,1.4);else moveC(c,ex,-40,dt,1.4);if(c.y<-30)customers.splice(i,1);continue;}
+    if(c.state==='out'){if(c.cheerUntil>time){c.mv=false;continue;}if(Math.abs(c.x-ex)>1)moveC(c,ex,c.y,dt,1.4);else moveC(c,ex,-40,dt,1.4);if(c.y<-30)customers.splice(i,1);continue;}
     c.pat-=dt;
     var sp=slotPos(c.seller,c.slot),arr;if(c.y<sp.y-1)arr=moveC(c,ex,sp.y,dt,1.3)&&false;else arr=moveC(c,sp.x,sp.y,dt,1);
     if(c.pat<=0&&c.state!=='serve'){
@@ -1152,11 +1152,11 @@ function updateCustomers(dt){
       if(c.st<=0){
         var tip=c.pat/c.max>.5;
         var pay=customerPayment(c,tip);
-        S.cash[c.seller]=(S.cash[c.seller]||0)+pay;S.h2=1;stat('serve',1);sfx('coin',.09);var cp0=cashPos(c.seller);
+        if(typeof actionIncome==='function'){actionIncome(pay);actionFeverPay(pay);}S.cash[c.seller]=(S.cash[c.seller]||0)+pay;S.h2=1;stat('serve',1);sfx('coin',.09);var cp0=cashPos(c.seller);
         addFloat(cp0.x,cp0.y-18,'💵+'+pay,'#c9f5c0',true);
         for(var cfi=0;cfi<Math.min(6,2+Math.ceil(pay/20));cfi++)fly('coin',c.x+(Math.random()-.5)*10,c.y-6,cp0.x+(Math.random()-.5)*12,cp0.y-4,.36+cfi*.05);
         checkPop(c.x,c.y-24);if(c.regular&&Math.random()<.15)addFloat(c.x,c.y-40,c.seller==='fish'?'호수 쪽 물소리가 다시 들려요':'밤에 숲 뿌리가 파랗게 빛났대요','#ffe6a0',true);
-        c.state='out';c.mood='happy';
+        c.state='out';c.mood='happy';c.cheerUntil=time+1;c.happyUntil=time+1.8;
       }
     }
   }
@@ -1762,7 +1762,7 @@ function spawnFinaleBoss(){
   if(S.finaleDone||hasFinaleBoss())return;
   var fx0=Math.min(MX,fenceX()),ent=bearEntry('top',fx0),hp=350*bearMult();
   var fb={x:ent.x,y:ent.y,side:'top',ex:ent.ex,ey:ent.ey,stole:0,tgt:{kind:'purse'},state:'in',hp:hp,max:hp,boss:true,king:true,finale:true,t:0,flash:0,dir:1,bob:0,kx:0,hitT:0,swipeT:1,dmg:0,swipe:0,climb:0,homeY:HT+16,roar:3,roarMax:3};
-  BEARS.push(fb);S.finaleSpawned=1;save();sfx('horn');flash=.6;shake(1);
+  BEARS.push(fb);if(typeof actionBoss==='function')actionBoss();S.finaleSpawned=1;save();sfx('horn');flash=.6;shake(1);
   STAGEBAN={t:4,max:4,text:'👑 세 마을의 불빛을 본 대왕곰!',sub:'숲·호수·광산의 사냥꾼이 함께 막아내요'};
   addFloat(MX/2,120,'🐻‍❄️👑 끝판왕 북극곰이 나타났어요!','#ffe27a');
 }
@@ -1829,7 +1829,7 @@ function heroAttackHit(pl,b,baseDmg,ranged){
   if(pl.combo>=COMBO_N){pl.combo=0;heroUltFx(pl,b);BEARS.slice().forEach(function(ob){if(ob.state==='dead'||ob.state==='out')return;if(ob===b||Math.hypot(ob.x-pl.x,ob.y-pl.y)<=135)hitBear(ob,pl,baseDmg*ULT_MUL,false);});}
   else{hitBear(b,pl,baseDmg,ranged);heroHitFx(pl,b);}
 }
-function hitBear(b,from,dmg,ranged){
+function hitBear(b,from,dmg,ranged){if(typeof actionHit==='function')actionHit();
   if(b.state==='dead')return;
   b.hp-=dmg;b.flash=.2;var d=Math.max(1,Math.hypot(b.x-from.x,b.y-from.y));b.kx=(b.x-from.x)/d*(ranged?1.8:4);b.hitT=.5;
   /* v89 (director 2026-10-06: hits need to feel like they hurt) - a pain face, a recoil and now and then a cry; big hits leave it dizzy */
@@ -2288,7 +2288,7 @@ function drawBear(b){
   if(b.state!=='dead'){var pr=(time*1.6)%1,pc=b.king?'214,52,70':'232,38,48';
     g.strokeStyle='rgba('+pc+',.95)';g.lineWidth=3;g.beginPath();g.arc(0,-14*s,13*s+Math.sin(time*5)*1.6*s,0,7);g.stroke();
     g.strokeStyle='rgba('+pc+','+(0.7*(1-pr))+')';g.lineWidth=2.2;g.beginPath();g.arc(0,-14*s,10*s+pr*22*s,0,7);g.stroke();}
-  var rendered=drawSprite(g,b.king?'boss_bear':'polar_bear',b.state==='dead'||b.hurtT>0?'hurt':(b.state==='attack'?'attack':'walk'),time+b.bob*.1,0,0,SPRITE_PPU*(b.king?s/2.1:s),b.dir>0);
+  var rendered=drawSprite(g,b.king?'boss_bear':'polar_bear',b.state==='dead'||b.hurtT>0?'hurt':(b.state==='attack'?'attack':b.roar>0||b.state==='wait'?'idle':'walk'),time+b.bob*.1,0,0,SPRITE_PPU*(b.king?s/2.1:s),b.dir>0);
   if(!rendered){
   g.scale(b.dir*s,s);
   if(b.state==='dead'){g.rotate(-.5*Math.min(1,b.t*3));}
@@ -2551,7 +2551,7 @@ function storySeen(){if(!S.storySeen||typeof S.storySeen!=='object'||Array.isArr
 function storyTypingClear(){if(storyTyping){clearInterval(storyTyping);storyTyping=null;}}
 function storyRenderList(){storyList.innerHTML='';var max=Math.min(3,Math.max(1,S.stage||1));STORY_SCENES.forEach(function(sc){var b=document.createElement('button');b.type='button';b.className='storyChapterBtn';b.disabled=sc.id>max;
   var title=document.createElement('b');title.textContent=(sc.id>max?'🔒 ':'📖 ')+sc.title;b.appendChild(title);var sm=document.createElement('small');sm.textContent=sc.id>max?'마을을 열면 이야기를 읽을 수 있어요':(storySeen()[sc.id]?'다시 읽기 · 이야기를 끝내면 읽음 표시':'이야기를 읽어보기');b.appendChild(sm);if(sc.id<=max)b.addEventListener('click',function(){storyStart(sc.id,'book');});storyList.appendChild(b);});storyFilmButtons();}
-function storyFilmButtons(){if(typeof filmStart!=='function')return;[['인트로 다시 보기',introFrames,true],['엔딩 다시 보기',Array.isArray(window.ENDING_SCENES)?window.ENDING_SCENES:[],!!S.finaleDone]].forEach(function(row){var b=document.createElement('button');b.type='button';b.className='storyChapterBtn';b.textContent=row[0];b.disabled=!row[2]||!row[1].length;if(!b.disabled)b.addEventListener('click',function(){storyTypingClear();storyBox.hidden=true;cancelControl();filmStart(row[1],{video:row[0].indexOf('인트로')===0?'intro':'ending',holdLast:row[0].indexOf('인트로')===0,done:function(){storyBox.hidden=false;storyBook.hidden=false;storyPlayer.hidden=true;}});});storyList.appendChild(b);});}
+function storyFilmButtons(){if(S.finaleDone){var journey=document.createElement('button');journey.className='storyChapterBtn';journey.textContent='다음 여정 · 오로라 온천마을';journey.onclick=auroraOpen;storyList.appendChild(journey);}if(typeof filmStart!=='function')return;[['인트로 다시 보기',introFrames,true],['엔딩 다시 보기',Array.isArray(window.ENDING_SCENES)?window.ENDING_SCENES:[],!!S.finaleDone]].forEach(function(row){var b=document.createElement('button');b.type='button';b.className='storyChapterBtn';b.textContent=row[0];b.disabled=!row[2]||!row[1].length;if(!b.disabled)b.addEventListener('click',function(){storyTypingClear();storyBox.hidden=true;cancelControl();filmStart(row[1],{video:row[0].indexOf('인트로')===0?'intro':'ending',holdLast:row[0].indexOf('인트로')===0,done:function(){storyBox.hidden=false;storyBook.hidden=false;storyPlayer.hidden=true;}});});storyList.appendChild(b);});}
 function storyBookOpen(){cancelControl();storyMode='book';storyTypingClear();storyPlayer.hidden=true;storyBook.hidden=false;storyRenderList();storyBox.hidden=false;setP.hidden=true;gearBtn.setAttribute('aria-expanded','false');goalBox.hidden=true;dayBox.hidden=true;dexBox.hidden=true;sfx('tap');}
 function storyFinish(mark){storyTypingClear();if(mark&&storyScene)storySeen()[storyScene.id]=1;if(mark)save();if(storyMode==='book'){storyPlayer.hidden=true;storyBook.hidden=false;storyRenderList();}else{storyBox.hidden=true;}sfx('tap');}
 function storyCloseNow(){storyTypingClear();storyBox.hidden=true;sfx('tap');}
@@ -2618,6 +2618,7 @@ function drawPile(sid){
   if(cvLv(sid)){drawLoader(sid);return;}
   var p=S.piles[sid]||{},n=pn(sid),pp=pilePos(sid),x=pp.x,y=pp.y,g=ctx,st=SITE[sid],cp=pcap();
   g.save();g.translate(x,y+4);g.scale(1.75,1.75);g.translate(-x,-(y+4));
+  if(st.kind==='forest'&&n)drawSprite(g,'log_pile','static',0,x,y+4,SPRITE_PPU*.35,false);
   g.fillStyle='rgba(0,0,0,.12)';g.beginPath();g.ellipse(x,y+4,11,3,0,0,7);g.fill();
   var list=[];Object.keys(p).sort(function(a,b){return ITEMS[a].sp.val-ITEMS[b].sp.val;}).forEach(function(id){for(var i=0;i<p[id];i++)list.push(id);});
   var m=Math.min(n,12),shown=[];for(var i=0;i<m;i++)shown.push(list[Math.floor(i*n/m)]);
@@ -3102,7 +3103,7 @@ function drawIndustrialBuilding(g,pl,L){
 }
 function drawWorkshopStorage(g,pl,L){
   var x=shedX(pl)+2,base=128,w=39,d=9,h=[30,40,48,59,69][L-1],col=['#a68a5f','#bfa175','#b9b8a1','#8bafb0','#c7d1be'][L-1];
-  if(drawFacilitySprite(g,'warehouse',x+w/2,base+4,w+10,h+18,L,5,0))return;
+  if(drawFacilitySprite(g,L<=2?'storage':'warehouse',x+w/2,base+4,w+10,h+18,L,5,0))return;
   isoBox(g,x-2,base+4,w+3,d,5,'#adb39e');
   if(L===1){isoBox(g,x,base,w,d,5,col);artPosts(g,x,base,w,h,'#9e8052');}
   else{isoBox(g,x,base,w,d,h,col);if(L===3)artBricks(g,x,base-h,w,h);if(L>=4)isoGlass(g,x+3,base-h+5,w-6,12);}
@@ -3438,7 +3439,7 @@ function drawChecks(){var g=ctx;CHECK.forEach(function(c){var k=c.t/c.dur,sc=k<.
   g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=1.4;g.beginPath();g.arc(0,0,9,0,7);g.stroke();
   g.strokeStyle='#fff';g.lineWidth=2.3;g.lineCap='round';g.lineJoin='round';g.beginPath();g.moveTo(-4,.3);g.lineTo(-1.1,3.6);g.lineTo(4.4,-3.7);g.stroke();
   g.restore();});}
-function celebrate(x,y,label,big){CELEB.push({x:x,y:y,t:1.6,max:1.6,label:label,big:!!big});flash=Math.max(flash,.12);sfx('cash');
+function celebrate(x,y,label,big){agents.forEach(function(a){if(Math.hypot(a.x-x,a.y-y)<180)a.cheerUntil=time+1;});CELEB.push({x:x,y:y,t:1.6,max:1.6,label:label,big:!!big});flash=Math.max(flash,.12);sfx('cash');
   var cc=['#e2463c','#f0bb3f','#3f7fb8','#4fb36a','#b85ac8','#ffffff'],nC=big?18:10;
   for(var cf=0;cf<nC;cf++){var an=-Math.PI/2+(Math.random()-.5)*2.4,sp2=50+Math.random()*80;parts.push({x:x,y:y-8,vx:Math.cos(an)*sp2,vy:Math.sin(an)*sp2,g:140,life:1.3,max:1.3,col:cc[cf%6],r:1.5,leaf:true});}
   burst(x,y-8,'#ffe27a',14,true);}
@@ -3461,7 +3462,7 @@ function drawStall(line){
 }
 function drawShopStaff(line){
   var g=ctx,st=STALL[line],side=shopSide(line),n=shopClerks(line);
-  for(var i=0;i<n;i++){var x=st.x+side*(24+i*9),y=st.y+101;if(!drawSprite(g,'shop_staff',customers.some(function(c){return c.seller===line&&c.state==='line';})?'work':'idle',time+i*.3,x,y+6,SPRITE_PPU*.65,side>0))drawActor3D(g,{x:x,y:y,dir:side,role:'courier',working:!!customers.some(function(c){return c.seller===line&&c.state==='line';})},{coat:line==='wood'?'#e78537':'#169ac7',apron:true,scale:.65});}
+  for(var i=0;i<n;i++){var x=st.x+side*(24+i*9),y=st.y+101;if(typeof drawStaffAction==='function'&&drawStaffAction(g,line,i,x,y,side))continue;if(!drawSprite(g,'shop_staff',customers.some(function(c){return c.seller===line&&c.cheerUntil>time;})?'cheer':customers.some(function(c){return c.seller===line&&c.state==='serve';})?'work':customers.some(function(c){return c.seller===line&&c.mv;})?'walk':'idle',time+i*.3,x,y+6,SPRITE_PPU*.65,side>0))drawActor3D(g,{x:x,y:y,dir:side,role:'courier',working:!!customers.some(function(c){return c.seller===line&&c.state==='line';})},{coat:line==='wood'?'#e78537':'#169ac7',apron:true,scale:.65});}
 
   for(var j=0;j<shopShelves(line);j++){var rx=st.x-19+j*13,ry=st.y+112;if(!drawFacilitySprite(g,'market_stall',rx+5,ry+2,18,20,1,1,time))isoBox(g,rx,ry,10,3,7,'#a68a60');drawItem(g,SHOPDEF[line].icon,rx+5,ry-8,.3);}
 }
@@ -3588,8 +3589,8 @@ function drawFish(q){
   ctx.fillStyle='rgba(20,60,90,.18)';ctx.beginPath();ctx.ellipse(q.x+1,q.y+4,10,3.4,0,0,7);ctx.fill();
   /* fish drift in a slow lazy loop under the surface */
   var fx=Math.sin(time*.8+q.ph)*3,fy=Math.cos(time*.6+q.ph)*2.2,fa=Math.cos(time*.8+q.ph)*.35;
-  ctx.save();ctx.translate(q.x+fx,q.y+fy);ctx.rotate(fa);ctx.globalAlpha=.92;
-  drawItem(ctx,FISH[q.sp].id,0,0,2.2);
+  ctx.save();ctx.translate(q.x+fx,q.y+fy);ctx.rotate(fa);ctx.globalAlpha=.92;ctx.filter='hue-rotate('+(q.sp*42)+'deg)';
+  if(!drawSprite(ctx,'fish','swim',time+q.ph,0,8,SPRITE_PPU*.55,Math.cos(time*.8+q.ph)<0))drawItem(ctx,FISH[q.sp].id,0,0,2.2);
   ctx.globalAlpha=1;ctx.restore();
   if(!teamOk(q))lockBadge(q.x+9,q.y-9);
 }
@@ -3733,6 +3734,7 @@ function superHands(a){var p=superWorkPose(a),dx=a.dir*(12+p.reach*10),dy=(-25-p
 function superNetBounds(a,N){var st=SITE.p1,h=superHands(a),t=N.t,out=t<.2?0:t<.6?(t-.2)/.4:t<.85?1:Math.max(0,1-(t-.85)/.75),e=out*out*(3-2*out),w=8+(st.w-18)*e,height=8+(st.h-18)*e,lift=N.lifted?Math.sin(Math.min(1,(t-.85)/.75)*Math.PI)*16:0;return {x:h.x+((st.x+st.w/2)-h.x)*e-w/2,y:h.y+((st.y+st.h/2)-h.y)*e-height/2-lift,w:w,h:height,hand:h,spread:e,lift:lift};}
 function superNetFish(box,fish){return {x:box.hand.x+(fish.x-box.hand.x)*box.spread,y:box.hand.y+(fish.y-box.hand.y)*box.spread-box.lift};}
 function drawMasterFisher(g,a){
+  if(!a.working&&drawSprite(g,'master_fisher',actorSpriteAnim(a),time,a.x,a.y+9,SPRITE_PPU*1.3,a.dir>0)){superPlate(g,a,true);return;}
   var p=superWorkPose(a);g.fillStyle='rgba(67,111,125,.2)';g.beginPath();g.ellipse(a.x,a.y+9,14,4,0,0,7);g.fill();
   g.save();g.translate(a.x,a.y+9);g.rotate(p.lean);g.scale(1.3,1.3*(1-p.crouch*.12));g.translate(-a.x,-a.y-9);
   curWalk=!!a.working||a.mv;curPh=a.net?Math.min(1,a.net.t/1.6)*Math.PI*2:a.bob;if(!drawSprite(g,'master_fisher_body',a.working?'work':'idle',a.net?a.net.t:(a.swT||0),a.x,a.y+9,SPRITE_PPU,a.dir>0))drawPerson(g,a.x,a.y,'fisher',a.dir,0,4,4,4,Object.assign({},a.gear,{customArms:true}));curWalk=null;
@@ -3741,6 +3743,7 @@ function drawMasterFisher(g,a){
   g.strokeStyle='#f4e5b4';g.lineWidth=1.4;g.beginPath();g.arc(handX,handY,4,0,7);g.stroke();g.restore();superPlate(g,a,true);
 }
 function drawMasterLumber(g,a){
+  if(!a.working&&drawSprite(g,'master_lumber',actorSpriteAnim(a),time,a.x,a.y+9,SPRITE_PPU*1.3,a.dir>0)){superPlate(g,a,true);return;}
   var pose={x:a.x,y:a.y,role:'lumber',appearanceTier:4,dir:-1,customArms:true,mv:false,bob:a.bob};
   g.fillStyle='rgba(193,172,119,.22)';g.beginPath();g.ellipse(a.x,a.y+9,13,4,0,0,7);g.fill();
   var motion=a.working?Math.sin(Math.min(1,(a.swT||0)/SUPER_T)*Math.PI):0;g.save();g.translate(a.x,a.y+9);g.rotate(-motion*.16);g.scale(1,1-motion*.08);g.translate(-a.x,-a.y-9);pose.mv=!!a.working;pose.bob=(a.swT||0)/SUPER_T*Math.PI*2;if(!drawSprite(g,'master_lumber_body',a.working?'work':'idle',(a.swT||0)*.9/SUPER_T,a.x,a.y+9,SPRITE_PPU*1.3,false))drawHero(g,pose,motion*2);
@@ -3796,7 +3799,7 @@ function drawSuperFx(){var g=ctx;for(var i=SUPERFX.length-1;i>=0;i--){var f=SUPE
     for(var nj=0;nj<=4;nj++){g.strokeStyle=RAINBOW[(nj*2)%7];var xx2=cx2-wx/2+wx*nj/4;g.beginPath();g.moveTo(xx2,cy2-hy2/2);g.lineTo(xx2,cy2+hy2/2);g.stroke();}
     g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=.8;g.beginPath();g.moveTo(hx0,hy0);g.lineTo(cx2+(fa.dir<0?wx/2:-wx/2),cy2-hy2/2);g.moveTo(hx0,hy0);g.lineTo(cx2+(fa.dir<0?wx/2:-wx/2),cy2+hy2/2);g.stroke();
     if(N.lifted){var hk=Math.min(1,(tt-.85)/.75);N.list.forEach(function(en,ei){var point=superNetFish(netBox,en),ex=point.x,ey=point.y,wig=Math.sin(time*18+ei)*.4;
-      g.save();g.translate(ex,ey);g.rotate(wig-.6);drawItem(g,en.id,0,0,1.7);g.restore();});}
+      g.save();g.translate(ex,ey);g.rotate(wig-.6);if(!drawSprite(g,'fish','flop',Math.max(0,tt-.85),0,6,SPRITE_PPU*.45,false))drawItem(g,en.id,0,0,1.7);g.restore();});}
     g.restore();continue;}
   if(f.k==='shot'){g.strokeStyle='rgba(255,180,90,'+(1-k)+')';g.lineWidth=3*(1-k)+.5;g.beginPath();g.arc(f.x,f.y-14,8+k*30,0,7);g.stroke();continue;}
   var c=f.k==='tree'?'255,236,150':(f.k==='ore'?'255,190,240':'190,240,255');
@@ -3872,7 +3875,7 @@ function drawAgent(a){
 }
 function drawCustomer(c){
  var g=ctx;
- if(!drawSprite(g,'customer',c.state==='out'&&c.mood!=='angry'?'happy':actorSpriteAnim(c),time+(c.x%7)*.1,c.x,c.y+6,SPRITE_PPU*.65,c.dir>0))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
+ if(!drawSprite(g,'customer',c.cheerUntil>time?'cheer':c.happyUntil>time?'happy':actorSpriteAnim(c),time+(c.x%7)*.1,c.x,c.y+6,SPRITE_PPU*.65,c.dir>0))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
   if(c.regular){g.font='11px sans-serif';g.textAlign='center';g.fillStyle='#e0b54c';g.fillText('⭐',c.x,c.y-40);}
   if(c.state==='out'){g.font='11px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#000';g.fillText(c.mood==='angry'?'💢':'💖',c.x,c.y-15);return;}
   if(c.slot>=serv(c.seller)&&c.state==='line')return;
@@ -3924,7 +3927,7 @@ function draw(){
   SITES.forEach(function(st){if(owned(st.id))drawPile(st.id);});
   SITES.forEach(function(st){drawExport(st.id);});
   LINES.forEach(drawStall);
-  drawCash();
+  drawCash();if(typeof drawCompleteActions==='function')drawCompleteActions();
   drawLocked();
   drawGuide();drawPads();drawTapMark();
   var list=[],vx0=camX-50,vx1=camX+W/Z+50,vy0=camY-60,vy1=camY+SH/Z+60;function vis(o){return o.x>vx0&&o.x<vx1&&o.y>vy0&&o.y<vy1;} /* v59: things off screen are not drawn */
@@ -4545,6 +4548,918 @@ if(window.ResizeObserver)new ResizeObserver(scheduleFit).observe(stageEl);
 window.addEventListener('resize',scheduleFit);
 if(window.visualViewport)window.visualViewport.addEventListener('resize',scheduleFit);
 
+/* Live action states and optional post-ending journey. Original art is retained. */
+var ACTION_STAFF = {};
+var ACTION_DOG = { x: 110, y: 410, dir: 1, mv: false, happy: 0 },
+  ACTION_CHEST = null,
+  ACTION_COMBO = 0,
+  ACTION_WINDOW = 0,
+  ACTION_ORDER = null,
+  ACTION_SLOW = 0,
+  ACTION_STOP = 0,
+  ACTION_HEART = 0;
+function actionState() {
+  var a = S.actions;
+  if (!a || typeof a !== "object")
+    a = S.actions = {
+      income: 0,
+      paid: 0,
+      chestWait: 85,
+      orderWait: 70,
+      wins: 0,
+      best: 0,
+    };
+  ["income", "paid", "chestWait", "orderWait", "wins", "best"].forEach(
+    function (k) {
+      if (!Number.isFinite(a[k]) || a[k] < 0)
+        a[k] = k === "chestWait" ? 85 : k === "orderWait" ? 70 : 0;
+    },
+  );
+  if (
+    a.chest &&
+    (!Number.isFinite(a.chest.x) ||
+      !Number.isFinite(a.chest.y) ||
+      !Number.isFinite(a.chest.left))
+  )
+    a.chest = null;
+  if (
+    a.order &&
+    (!Number.isFinite(a.order.left) ||
+      !Number.isFinite(a.order.got) ||
+      !Number.isFinite(a.order.target))
+  )
+    a.order = null;
+  a.elapsed = Number.isFinite(a.elapsed) ? Math.max(0, a.elapsed) : 0;
+  if (!Array.isArray(a.recent)) a.recent = [];
+  a.recent = a.recent
+    .filter(function (r) {
+      return (
+        r &&
+        Number.isFinite(r.t) &&
+        Number.isFinite(r.n) &&
+        r.n >= 0 &&
+        a.elapsed - r.t < 60
+      );
+    })
+    .slice(-256);
+  a.fever = Number.isFinite(a.fever) ? Math.max(0, Math.min(10, a.fever)) : 0;
+  if (
+    a.order &&
+    (!["gather", "serve", "truck", "bear"].includes(a.order.key) ||
+      a.order.target < 3 ||
+      a.order.left <= 0)
+  )
+    a.order = null;
+  if (a.chest)
+    a.chest.open = Number.isFinite(a.chest.open)
+      ? Math.max(0, a.chest.open)
+      : 0;
+  return a;
+}
+function actionFeverPay(n) {
+  var a = actionState();
+  if (a.fever) {
+    a.feverBank =
+      (Number.isFinite(a.feverBank) ? Math.max(0, a.feverBank) : 0) + n * 0.2;
+    var paid = actionReward(a.feverBank, agents[0].x, agents[0].y);
+    a.feverBank -= paid;
+  }
+}
+function actionIncome(n) {
+  if (Number.isFinite(n) && n > 0) {
+    var a = actionState();
+    a.income += n;
+    a.recent.push({ t: a.elapsed, k: "income", n: n });
+  }
+}
+function actionRecent(k) {
+  return actionState().recent.reduce(function (sum, r) {
+    return sum + (r.k === k ? r.n : 0);
+  }, 0);
+}
+function actionHit() {
+  if (!MOTION3D_REDUCED.matches) ACTION_STOP = 0.06;
+}
+function actionBoss() {
+  if (!MOTION3D_REDUCED.matches) ACTION_SLOW = 0.6;
+}
+function actionReward(n, x, y) {
+  var a = actionState(),
+    budget = Math.max(0, Math.floor((a.income * 0.15 - a.paid) / 50) * 50),
+    pay = Math.min(budget, Math.max(0, Math.floor(n / 50) * 50));
+  if (pay) {
+    S.coins += pay;
+    a.paid += pay;
+    addFloat(x, y - 25, "보너스 +" + fmt(pay), "#ffe27a", true);
+    burst(x, y, "#ffce54", 18, true);
+  }
+  return pay;
+}
+function actionEvent(k, n) {
+  var a = actionState();
+  a.recent.push({ t: a.elapsed, k: k, n: n });
+  if (["gather", "serve", "truck", "bear"].indexOf(k) < 0 || n <= 0) return;
+  if (k === "gather")
+    agents.forEach(function (w) {
+      if (w.role !== "player" && w.working) w.cheerUntil = time + 1;
+    });
+  var oldCombo = ACTION_COMBO;
+  ACTION_COMBO += n;
+  ACTION_WINDOW = 2.5;
+  a.best = Math.max(a.best, ACTION_COMBO);
+  [10, 25, 50].forEach(function (mark) {
+    if (oldCombo < mark && ACTION_COMBO >= mark)
+      actionReward(a.income * 0.005, agents[0].x, agents[0].y);
+  });
+  if (oldCombo < 20 && ACTION_COMBO >= 20) a.fever = 10;
+  if (a.order && a.order.key === k) {
+    a.order.got += n;
+    if (a.order.got >= a.order.target) {
+      a.wins++;
+      a.streak = (a.streak || 0) + 1;
+      actionReward(
+        (actionRecent("income") / 60) * 25 * (1 + 0.25 * (a.streak || 0)),
+        agents[0].x,
+        agents[0].y,
+      );
+      a.order = null;
+      a.orderWait = 75;
+      ACTION_DOG.happy = 1;
+      celebrate(agents[0].x, agents[0].y, "긴급 주문 성공!", true);
+      save();
+    }
+  }
+}
+function drawStaffAction(g, line, i, x, y, side) {
+  var key = line + ":" + i,
+    w = ACTION_STAFF[key];
+  if (!w)
+    w = ACTION_STAFF[key] = {
+      x: x,
+      y: y,
+      homeX: x,
+      homeY: y,
+      line: line,
+      cheerUntil: 0,
+    };
+  return drawSprite(
+    g,
+    "shop_staff",
+    actorSpriteAnim(w),
+    time + i * 0.3,
+    w.x,
+    w.y + 6,
+    SPRITE_PPU * 0.65,
+    side > 0,
+  );
+}
+function updateCompleteActions(dt) {
+  Object.keys(ACTION_STAFF).forEach(function (key) {
+    var w = ACTION_STAFF[key],
+      busy = customers.some(function (c) {
+        return c.seller === w.line && c.state === "serve";
+      }),
+      happy = customers.some(function (c) {
+        return c.seller === w.line && c.cheerUntil > time;
+      });
+    if (happy) w.cheerUntil = time + 0.2;
+    var targetY = w.homeY - (busy ? 25 : 0),
+      dy = targetY - w.y;
+    w.mv = Math.abs(dy) > 1;
+    w.working = busy && !w.mv;
+    if (w.mv) w.y += Math.sign(dy) * Math.min(Math.abs(dy), 35 * dt);
+  });
+  var p = agents[0],
+    a = actionState(),
+    dog = ACTION_DOG;
+  a.elapsed += dt;
+  ACTION_HEART = Math.max(0, ACTION_HEART - dt);
+  if (
+    !MOTION3D_REDUCED.matches &&
+    !ACTION_HEART &&
+    BEARS.some(function (b) {
+      return b.state !== "dead" && Math.hypot(b.x - p.x, b.y - p.y) < 120;
+    })
+  ) {
+    sfx("tap", 0.12);
+    ACTION_HEART = 0.8;
+  }
+  ACTION_WINDOW = Math.max(0, ACTION_WINDOW - dt);
+  if (!ACTION_WINDOW) ACTION_COMBO = 0;
+  a.fever = Math.max(0, (a.fever || 0) - dt);
+  dog.happy = Math.max(0, dog.happy - dt);
+  var target = { x: p.x - p.dir * 25, y: p.y + 16 },
+    d = Math.hypot(target.x - dog.x, target.y - dog.y);
+  dog.mv = false;
+  if (d > 12) {
+    var step = Math.min(d, 85 * dt),
+      nx = dog.x + ((target.x - dog.x) / d) * step,
+      ny = dog.y + ((target.y - dog.y) / d) * step;
+    if (walkXY(nx, ny)) {
+      dog.dir = nx > dog.x ? 1 : -1;
+      dog.x = nx;
+      dog.y = ny;
+      dog.mv = true;
+    } else if (d > 180) {
+      dog.x = p.x;
+      dog.y = p.y;
+    }
+  }
+  if (tutOn()) return;
+  a.chestWait -= dt;
+  if (!a.chest && a.chestWait <= 0) {
+    for (var i = 0; i < 24; i++) {
+      var x = p.x + (Math.random() - 0.5) * 300,
+        y = p.y + (Math.random() - 0.5) * 260;
+      if (
+        walkXY(x, y) &&
+        res.every(function (q) {
+          return !q.alive || Math.hypot(q.x - x, q.y - y) > 25;
+        }) &&
+        PLOTS.every(function (pl) {
+          return (
+            x < pl.x - 22 ||
+            x > pl.x + pl.w + 22 ||
+            y < pl.y - 22 ||
+            y > pl.y + pl.h + 22
+          );
+        }) &&
+        PADLIST.every(function (q) {
+          return Math.hypot(q.x - x, q.y - y) > 38;
+        })
+      ) {
+        a.chest = { x: x, y: y, left: 12, open: 0 };
+        break;
+      }
+    }
+    a.chestWait = 70 + Math.random() * 50;
+  }
+  if (a.chest) {
+    var c = a.chest;
+    c.left -= dt;
+    if (!c.open && Math.hypot(c.x - p.x, c.y - p.y) < 22) {
+      c.open = 0.001;
+      actionReward((actionRecent("income") / 60) * 15, c.x, c.y);
+      dog.happy = 1;
+      save();
+    }
+    if (c.open) c.open += dt;
+    if (c.left <= 0 || c.open > 0.85) {
+      a.chest = null;
+      save();
+    }
+  }
+  a.orderWait -= dt;
+  if (!a.order && a.orderWait <= 0) {
+    var choices = ["gather"];
+    if (S.h2) choices.push("serve");
+    if (S.h3) choices.push("truck");
+    if (S.bears) choices.push("bear");
+    var key = choices[Math.floor(Math.random() * choices.length)];
+    a.order = {
+      key: key,
+      target:
+        key === "truck" || key === "bear"
+          ? 3
+          : Math.max(3, Math.ceil((actionRecent(key) / 60) * 40 * 1.3)),
+      got: 0,
+      left: 40,
+    };
+    a.orderWait = 60 + Math.random() * 30;
+  }
+  if (a.order) {
+    a.order.left -= dt;
+    if (a.order.left <= 10 && a.order.warned !== Math.ceil(a.order.left)) {
+      a.order.warned = Math.ceil(a.order.left);
+      if (!MOTION3D_REDUCED.matches) sfx("tap", 0.08);
+    }
+    if (a.order.left <= 0) {
+      a.order = null;
+      a.streak = 0;
+      a.orderWait = 75;
+      addFloat(p.x, p.y - 40, "긴급 주문 종료", "#ffb3bf", true);
+    }
+  }
+  ACTION_CHEST = a.chest;
+  ACTION_ORDER = a.order;
+}
+function drawCompleteActions() {
+  if (!MOTION3D_REDUCED.matches && ACTION_HEART > 0.4) {
+    ctx.strokeStyle = "rgba(205,44,51,.35)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(agents[0].x, agents[0].y, 30 + Math.sin(time * 10) * 4, 0, 7);
+    ctx.stroke();
+  }
+  var d = ACTION_DOG;
+  if (spriteVisible(d.x, d.y, 55))
+    drawSprite(
+      ctx,
+      "corgi",
+      d.happy ? "happy" : d.mv ? "walk" : "idle",
+      time,
+      d.x,
+      d.y + 6,
+      SPRITE_PPU * 0.7,
+      d.dir > 0,
+    );
+  var c = ACTION_CHEST;
+  if (c && !spriteVisible(c.x, c.y, 70)) {
+    var ax = Math.max(camX + 30, Math.min(camX + W / Z - 30, c.x)),
+      ay = Math.max(camY + 70, Math.min(camY + SH / Z - 30, c.y));
+    ctx.font = "bold 12px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#925515";
+    ctx.fillText("◆ 상자 " + Math.ceil(c.left) + "초", ax, ay);
+  }
+  if (c && spriteVisible(c.x, c.y, 70)) {
+    if (c.left > 3 || MOTION3D_REDUCED.matches || Math.floor(time * 6) % 2)
+      drawSprite(
+        ctx,
+        "golden_chest",
+        c.open ? "open" : "idle",
+        c.open || time,
+        c.x,
+        c.y + 8,
+        SPRITE_PPU * 0.85,
+        false,
+      );
+    ctx.font = "bold 9px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#76511e";
+    ctx.fillText(c.open ? "획득!" : Math.ceil(c.left) + "초", c.x, c.y - 29);
+  }
+  if (ACTION_COMBO >= 2 || ACTION_ORDER) {
+    ctx.font = "bold 10px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#2b463e";
+    ctx.fillText(
+      ACTION_ORDER
+        ? "긴급 " +
+            { gather: "채집", serve: "판매", truck: "납품", bear: "방어" }[
+              ACTION_ORDER.key
+            ] +
+            " " +
+            ACTION_ORDER.got +
+            "/" +
+            ACTION_ORDER.target +
+            " · " +
+            Math.ceil(ACTION_ORDER.left) +
+            "초"
+        : "",
+      agents[0].x,
+      agents[0].y - 78,
+    );
+    if (ACTION_COMBO >= 2)
+      ctx.fillText(
+        ACTION_COMBO + " COMBO" + (actionState().fever ? " · FEVER" : ""),
+        agents[0].x,
+        agents[0].y - 64,
+      );
+  }
+}
+function auroraWalk(x, y) {
+  return (
+    x >= 30 &&
+    x <= 1050 &&
+    y >= 95 &&
+    y <= 565 &&
+    !(x > 475 && x < 545 && y > 225 && y < 303)
+  );
+}
+var AURORA_Z = window.innerWidth < 600 ? 2.5 : 1.2,
+  AURORA_VIEW = { x: 0, y: 0, z: 1 },
+  AURORA_TOUCH = {},
+  AURORA_PINCH = null;
+var AURORA_OPEN = false,
+  AURORA_UI = null,
+  AURORA_HERO = { x: 540, y: 500, tx: 540, ty: 500 },
+  AURORA_TIME = 0,
+  AURORA_GUESTS = [], AURORA_SAVE_T = 0;
+var AURORA_FAC = [
+  {
+    key: "canal",
+    model: "canal_segment",
+    name: "온수 수로",
+    x: 270,
+    y: 370,
+    cost: { oak: 30 },
+  },
+  {
+    key: "boiler",
+    model: "boiler",
+    name: "보일러",
+    x: 150,
+    y: 220,
+    cost: { ingot: 20 },
+  },
+  {
+    key: "lodge",
+    model: "lodge",
+    name: "온천 여관",
+    x: 830,
+    y: 250,
+    cost: { oak: 20, smoked: 10 },
+  },
+  {
+    key: "spring",
+    model: "hot_spring",
+    name: "온천",
+    x: 510,
+    y: 290,
+    cost: { oak: 20, ingot: 10 },
+  },
+  {
+    key: "lookout",
+    model: "aurora_lookout",
+    name: "오로라 전망대",
+    x: 840,
+    y: 450,
+    cost: { oak: 20, ingot: 10 },
+  },
+];
+function auroraState() {
+  var a = S.aurora;
+  if (!a || typeof a !== "object")
+    a = S.aurora = {
+      unlocked: false,
+      canal: 0,
+      boiler: 0,
+      lodge: 0,
+      spring: 0,
+      lookout: 0,
+      warmth: 0,
+      crew: 0,
+      dailyReady: false,
+    };
+  AURORA_FAC.forEach(function (f) {
+    a[f.key] = Math.max(0, Math.min(3, Math.floor(Number(a[f.key]) || 0)));
+  });
+  a.crew = Math.max(0, Math.min(3, Math.floor(Number(a.crew) || 0)));
+  a.warmth = Math.max(0, Math.min(100, Number(a.warmth) || 0));
+  a.service = Number.isFinite(a.service) ? Math.max(0, a.service) : 0;
+  a.cheer = Number.isFinite(a.cheer) ? Math.max(0, Math.min(1, a.cheer)) : 0;
+  return a;
+}
+function auroraInventory(id) {
+  var list = [];
+  function add(o, k) {
+    if (o && Number.isFinite(o[k]) && o[k] > 0)
+      list.push({ o: o, k: k, n: o[k] });
+  }
+  var keys =
+    id === "oak"
+      ? TREES.map(function (t) {
+          return t.id;
+        })
+      : id === "smoked"
+        ? ["smoked", "can", "gift"]
+        : [id];
+  keys.forEach(function (k) {
+    add(agents[0].bag, k);
+    add(S.wh, k);
+    Object.keys(S.piles || {}).forEach(function (s) {
+      add(S.piles[s], k);
+    });
+  });
+  return list;
+}
+function auroraRepair(key) {
+  if (!S.finaleDone || !auroraState().unlocked) return false;
+  var a = auroraState(),
+    f = AURORA_FAC.filter(function (f) {
+      return f.key === key;
+    })[0];
+  if (
+    !f ||
+    a[key] >= 3 ||
+    Math.hypot(AURORA_HERO.x - f.x, AURORA_HERO.y - f.y) >= 110
+  )
+    return false;
+  if (key === "lookout" && !a.dailyReady) return false;
+  var needs = Object.keys(f.cost).map(function (id) {
+    return { id: id, n: f.cost[id] * (a[key] + 1), stock: auroraInventory(id) };
+  });
+  if (
+    needs.some(function (n) {
+      return (
+        n.stock.reduce(function (t, s) {
+          return t + s.n;
+        }, 0) < n.n
+      );
+    })
+  )
+    return false;
+  needs.forEach(function (n) {
+    var left = n.n;
+    n.stock.forEach(function (s) {
+      var take = Math.min(left, s.n);
+      s.o[s.k] -= take;
+      left -= take;
+    });
+  });
+  a[key]++;
+  a.cheer = 1;
+  save();
+  return true;
+}
+function auroraHire() {
+  var a = auroraState(),
+    cost = money50(5000 * (a.crew + 1));
+  if (!S.finaleDone || !a.unlocked || a.crew >= 3 || S.coins < cost)
+    return false;
+  S.coins -= cost;
+  a.crew++;
+  a.cheer = 1;
+  save();
+  return true;
+}
+function auroraOpen() {
+  if (!S.finaleDone) return false;
+  var a = auroraState();
+  a.unlocked = true;
+  save();
+  cancelControl();
+  storyBox.hidden = true;
+  AURORA_OPEN = true;
+  if (!AURORA_UI) {
+    var box = document.createElement("section");
+    box.id = "auroraJourney";
+    box.setAttribute("aria-label", "오로라 온천마을");
+    box.innerHTML =
+      '<div class="aurora-head"><strong>오로라 온천마을</strong><span id="auroraStatus"></span><button id="auroraZoom">전체 보기</button><button id="auroraClose">기존 마을로</button></div><canvas id="auroraCanvas" width="1080" height="600" aria-label="클릭한 곳으로 이동"></canvas><div id="auroraControls"></div><p>바닥을 눌러 이동하세요. 시설에 가까이 가면 수리·강화할 수 있습니다. 재료는 기존 마을의 가방·창고·적재장에서 가져옵니다.</p>';
+    document.body.appendChild(box);
+    AURORA_UI = box;
+    box.querySelector("#auroraZoom").onclick = function () {
+      AURORA_Z = AURORA_Z === 1 ? 2.5 : 1;
+    };
+    box.querySelector("#auroraClose").onclick = function () {
+      AURORA_OPEN = false;
+      box.hidden = true;
+      save();
+      last = performance.now();
+    };
+    box.querySelector("canvas").onpointerdown = function (e) {
+      e.preventDefault();
+      try {
+        this.setPointerCapture(e.pointerId);
+      } catch (ignore) {}
+      AURORA_TOUCH[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var keys = Object.keys(AURORA_TOUCH);
+      if (keys.length === 2) {
+        var one = AURORA_TOUCH[keys[0]],
+          two = AURORA_TOUCH[keys[1]];
+        AURORA_PINCH = {
+          d: Math.hypot(one.x - two.x, one.y - two.y),
+          z: AURORA_Z,
+        };
+        AURORA_HERO.tx = AURORA_HERO.x;
+        AURORA_HERO.ty = AURORA_HERO.y;
+        return;
+      }
+      var r = this.getBoundingClientRect();
+      AURORA_HERO.tx = Math.max(
+        30,
+        Math.min(
+          1050,
+          ((e.clientX - r.left) * 1080) / r.width / AURORA_VIEW.z +
+            AURORA_VIEW.x,
+        ),
+      );
+      AURORA_HERO.ty = Math.max(
+        95,
+        Math.min(
+          565,
+          ((e.clientY - r.top) * this.height) / r.height / AURORA_VIEW.z +
+            AURORA_VIEW.y,
+        ),
+      );
+      if (!auroraWalk(AURORA_HERO.tx, AURORA_HERO.ty)) AURORA_HERO.ty = 325;
+    };
+    var canvas = box.querySelector("canvas");
+    canvas.onpointermove = function (e) {
+      if (!AURORA_TOUCH[e.pointerId]) return;
+      AURORA_TOUCH[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var keys = Object.keys(AURORA_TOUCH);
+      if (keys.length === 2 && AURORA_PINCH) {
+        var one = AURORA_TOUCH[keys[0]],
+          two = AURORA_TOUCH[keys[1]];
+        AURORA_Z = Math.max(
+          1,
+          Math.min(
+            4,
+            (AURORA_PINCH.z * Math.hypot(one.x - two.x, one.y - two.y)) /
+              Math.max(1, AURORA_PINCH.d),
+          ),
+        );
+      }
+    };
+    canvas.onpointerup = canvas.onpointercancel = function (e) {
+      delete AURORA_TOUCH[e.pointerId];
+      AURORA_PINCH = null;
+    };
+    canvas.onwheel = function (e) {
+      e.preventDefault();
+      AURORA_Z = Math.max(
+        1,
+        Math.min(4, AURORA_Z * (e.deltaY > 0 ? 0.9 : 1.1)),
+      );
+    };
+  }
+  AURORA_UI.hidden = false;
+  auroraControls();
+  return true;
+}
+function auroraControls() {
+  if (!AURORA_UI) return;
+  var a = auroraState(),
+    area = AURORA_UI.querySelector("#auroraControls");
+  area.replaceChildren();
+  AURORA_FAC.forEach(function (f) {
+    var b = document.createElement("button"),
+      near = Math.hypot(AURORA_HERO.x - f.x, AURORA_HERO.y - f.y) < 110;
+    b.textContent =
+      f.name +
+      " " +
+      (a[f.key] >= 3
+        ? "최고 레벨"
+        : (a[f.key] ? "강화" : "수리") +
+          " · " +
+          Object.keys(f.cost)
+            .map(function (id) {
+              return (
+                (id === "oak"
+                  ? "목재"
+                  : id === "smoked"
+                    ? "가공 식품"
+                    : "철 주괴") +
+                " " +
+                f.cost[id] * (a[f.key] + 1)
+              );
+            })
+            .join(" / "));
+    var affordable = Object.keys(f.cost).every(function (id) {
+      return (
+        auroraInventory(id).reduce(function (sum, v) {
+          return sum + v.n;
+        }, 0) >=
+        f.cost[id] * (a[f.key] + 1)
+      );
+    });
+    b.style.background = affordable ? "#dcf2cf" : "#ffe0d8";
+    b.disabled =
+      !near || a[f.key] >= 3 || (f.key === "lookout" && !a.dailyReady);
+    b.onclick = function () {
+      if (!auroraRepair(f.key))
+        AURORA_UI.querySelector("#auroraStatus").textContent =
+          "재료가 부족합니다";
+      auroraControls();
+    };
+    area.appendChild(b);
+  });
+  var hire = document.createElement("button");
+  hire.textContent =
+    "관리인 고용 " +
+    a.crew +
+    "/3 · " +
+    fmt(money50(5000 * (a.crew + 1))) +
+    "원";
+  hire.disabled = a.crew >= 3;
+  hire.onclick = function () {
+    auroraHire();
+    auroraControls();
+  };
+  area.appendChild(hire);
+}
+function updateAurora(dt) {
+  AURORA_SAVE_T += dt; if (AURORA_SAVE_T >= 5) { AURORA_SAVE_T = 0; save(); }
+  AURORA_TIME += dt;
+  var a = auroraState(),
+    p = AURORA_HERO,
+    dx = p.tx - p.x,
+    dy = p.ty - p.y,
+    d = Math.hypot(dx, dy);
+  p.mv = d > 1;
+  if (d) {
+    var step = Math.min(d, 90 * dt);
+    var nx = p.x + (dx / d) * step,
+      ny = p.y + (dy / d) * step;
+    if (auroraWalk(nx, ny)) {
+      p.x = nx;
+      p.y = ny;
+    } else {
+      var turn = p.x < 510 ? 455 : 565;
+      if (auroraWalk(p.x + (turn - p.x) * Math.min(1, dt * 4), p.y))
+        p.x += (turn - p.x) * Math.min(1, dt * 4);
+    }
+  }
+  a.cheer = Math.max(0, (a.cheer || 0) - dt);
+  a.warmth = Math.min(
+    100,
+    Math.max(
+      0,
+      a.warmth + dt * (a.boiler && a.canal ? a.boiler * a.canal * 0.4 : -0.2),
+    ),
+  );
+  a.dailyReady = a.canal >= 2 && a.boiler >= 2 && a.lodge >= 2 && a.crew === 3;
+  var earning = a.lodge && a.spring && a.warmth > 20;
+  a.service = (a.service || 0) + (earning ? dt * a.crew : 0);
+  if (a.service >= 15) {
+    a.service -= 15;
+    var pay = money50(100 * a.lodge * a.spring);
+    S.coins += pay;
+    actionIncome(pay);
+    a.cheer = 1;
+    save();
+  }
+  if (Math.floor(AURORA_TIME * 4) !== Math.floor((AURORA_TIME - dt) * 4)) {
+    auroraControls();
+    AURORA_UI.querySelector("#auroraStatus").textContent =
+      "온기 " +
+      Math.floor(a.warmth) +
+      "% · " +
+      fmt(S.coins) +
+      "원" +
+      (a.dailyReady ? " · 전망대 수리 가능" : "");
+  }
+  drawAurora();
+}
+function drawAurora() {
+  var canvas = AURORA_UI.querySelector("canvas"),
+    height = Math.round(
+      (1080 * Math.min(window.innerHeight * 0.58, 600)) /
+        Math.max(1, canvas.clientWidth),
+    );
+  if (canvas.height !== height) canvas.height = height;
+  var g = canvas.getContext("2d"),
+    a = auroraState(),
+    t = AURORA_TIME;
+  g.fillStyle = "#e3edf4";
+  g.fillRect(0, 0, 1080, height);
+  AURORA_VIEW = {
+    z: AURORA_Z,
+    x: Math.max(
+      0,
+      Math.min(1080 - 1080 / AURORA_Z, AURORA_HERO.x - 540 / AURORA_Z),
+    ),
+    y:
+      600 - height / AURORA_Z < 0
+        ? (600 - height / AURORA_Z) / 2
+        : Math.max(
+            0,
+            Math.min(
+              600 - height / AURORA_Z,
+              AURORA_HERO.y - height / AURORA_Z / 2,
+            ),
+          ),
+  };
+  g.save();
+  g.scale(AURORA_VIEW.z, AURORA_VIEW.z);
+  g.translate(-AURORA_VIEW.x, -AURORA_VIEW.y);
+  g.fillStyle = "#e3edf4";
+  g.fillRect(0, 0, 1080, 600);
+  var sky = g.createLinearGradient(0, 0, 1080, 130);
+  sky.addColorStop(0, "#17394b");
+  sky.addColorStop(0.5, "#549d8c");
+  sky.addColorStop(1, "#493b78");
+  g.fillStyle = sky;
+  g.fillRect(0, 0, 1080, 90);
+  if (!MOTION3D_REDUCED.matches) {
+    g.strokeStyle = "rgba(133,240,177,.25)";
+    g.lineWidth = 9;
+    for (var band = 0; band < 3; band++) {
+      g.beginPath();
+      for (var u = 0; u <= 1080; u += 30)
+        g.lineTo(u, 38 + band * 12 + Math.sin(u * 0.012 + t * 0.3 + band) * 12);
+      g.stroke();
+    }
+  }
+  for (var tree = 0; tree < 14; tree++) {
+    var tx = 40 + tree * 76;
+    drawSprite(g, "pine_small", "idle", t, tx, 150, 20, false);
+  }
+  for (var side = 0; side < 2; side++)
+    for (var row = 0; row < 4; row++)
+      drawSprite(
+        g,
+        "pine",
+        "idle",
+        t,
+        side ? 1035 : 45,
+        245 + row * 85,
+        22,
+        !!side,
+      );
+  g.strokeStyle = "#e8c08a";
+  g.lineWidth = 38;
+  g.lineCap = "round";
+  g.beginPath();
+  g.moveTo(150, 510);
+  g.lineTo(980, 510);
+  g.moveTo(510, 510);
+  g.lineTo(510, 160);
+  g.stroke();
+  AURORA_FAC.forEach(function (f) {
+    if (
+      !drawSprite(
+        g,
+        f.model,
+        a[f.key] ? "repaired" : "broken",
+        t,
+        f.x,
+        f.y,
+        32 * (0.9 + 0.1 * a[f.key]),
+        false,
+      )
+    ) {
+      g.fillStyle = a[f.key] ? "#8baf9c" : "#968c87";
+      g.fillRect(f.x - 45, f.y - 65, 90, 65);
+    }
+    g.font = "bold 17px sans-serif";
+    g.textAlign = "center";
+    g.fillStyle = "#29463f";
+    g.fillText(
+      f.name + " " + (a[f.key] ? "Lv" + a[f.key] : "수리 필요"),
+      f.x,
+      f.y + 35,
+    );
+  });
+  for (var i = 0; i < a.crew; i++) {
+    var phase = (t + i * 4) % 12,
+      moving = phase < 4,
+      x = 150 + (moving ? phase / 4 : 1) * 350,
+      y = 440 + i * 25;
+    drawSprite(
+      g,
+      "aurora_keeper",
+      a.cheer
+        ? "cheer"
+        : moving
+          ? "walk"
+          : a.boiler && a.canal
+            ? "work"
+            : "idle",
+      t,
+      x,
+      y,
+      25,
+      false,
+    );
+  }
+  if (a.lodge) {
+    for (var j = 0; j < 3; j++) {
+      var ph = (t + j * 8) % 32,
+        move = ph < 8 || ph > 24,
+        x = ph < 8 ? 1080 - ph * 28 : ph > 24 ? 856 + (ph - 24) * 28 : 856;
+      drawSprite(
+        g,
+        j === 0 ? "shopkeeper" : "villager",
+        a.cheer ? "cheer" : move ? "walk" : "idle",
+        t + j,
+        x,
+        350 + j * 32,
+        24,
+        ph > 24,
+      );
+    }
+  }
+  drawSprite(
+    g,
+    "hero",
+    a.cheer ? "cheer" : AURORA_HERO.mv ? "walk" : "idle",
+    t,
+    AURORA_HERO.x,
+    AURORA_HERO.y,
+    30,
+    AURORA_HERO.tx > AURORA_HERO.x,
+  );
+  g.restore();
+}
+
+if (/[?&]test=1/.test(location.search))
+  window.__completeActions = {
+    state: actionState,
+    event: actionEvent,
+    income: actionIncome,
+    reward: actionReward,
+    aurora: auroraState,
+    open: auroraOpen,
+    repair: auroraRepair,
+    hire: auroraHire,
+    move: function (x, y) {
+      AURORA_HERO.x = x;
+      AURORA_HERO.y = y;
+      AURORA_HERO.tx = x;
+      AURORA_HERO.ty = y;
+    },
+    view: function () {
+      return { z: AURORA_Z, camera: AURORA_VIEW };
+    },
+    tick: function (dt) {
+      if (AURORA_OPEN) updateAurora(dt);
+      else updateCompleteActions(dt);
+    },
+  };
 /* ---------- loop ---------- */
 var last=performance.now(),frameGate=last,uiT=0,saveT=0,titleT=0;
 function camClampX(x){var vw=W/Z;if(S.zoomOut&&vw>=W)return (W-vw)/2;var ax=S.zoomOut?W:fenceX();return Math.max(-96,Math.min(Math.max(-96,ax+96-vw),x));}
@@ -4565,6 +5480,8 @@ function loop(now){
   if(TITLE){titleT-=dt;if(titleT<=0){titleT=.4;ctx.setTransform(DPR,0,0,DPR,0,0);safe('draw',draw);}return;}
   /* Story scenes pause the village safely while the player reads. */
   if(storyBox&&!storyBox.hidden){titleT-=dt;if(titleT<=0){titleT=.4;ctx.setTransform(DPR,0,0,DPR,0,0);safe('draw',draw);}return;}
+  if(typeof AURORA_OPEN!=='undefined'&&AURORA_OPEN){safe('aurora',function(){updateAurora(dt);});return;}
+  if(typeof ACTION_STOP==='number'&&ACTION_STOP>0){ACTION_STOP=Math.max(0,ACTION_STOP-dt);ctx.setTransform(DPR,0,0,DPR,0,0);safe('draw',draw);return;}else if(typeof ACTION_SLOW==='number'&&ACTION_SLOW>0){ACTION_SLOW=Math.max(0,ACTION_SLOW-dt);dt*=.35;}
   time+=dt;update(dt);
   ctx.setTransform(DPR,0,0,DPR,0,0);safe('draw',draw);
   uiT-=dt;if(uiT<=0){uiT=.2;safe('ui',refreshUI);}
@@ -4579,10 +5496,12 @@ function upgradeOpenVillages(){
   SITES.forEach(function(st,i){if(i>=stage)return;S.sites[st.id]=5;S.cv[st.id]=1;S.cvLv[st.line]=CV_MAX;var b=PROC_OF[st.id];S[b]=8;S.pst[b]=5;S.pcv[b]=1;if(i){S.vt[i+1]=TOWER_MAX;S.vf[i+1]=5;VFBREACH[i+1]=0;VFHP[i+1]=fMaxV(i+1);}
     [VROLE[st.id],['hunter','hunter2','hunter3'][i]].forEach(function(role){var pr=PRIM[role];S.wlv[role]=MAXLV[pr];if(!count(role)){var look=newLook(),gear={role:role,name:look.name,hair:look.hair,skin:look.skin,acc:look.acc,boots:MAXLV.boots};gear[pr]=MAXLV[pr];S.w.push(gear);agents.push(mkAgent(role,gear));}S.w.forEach(function(g){if(g.role===role){g[pr]=MAXLV[pr];g.boots=MAXLV.boots;}});if(canMerge(role))mergeCrew(role,false);});
   });
+  if(S.aurora&&S.aurora.unlocked&&S.finaleDone){['canal','boiler','lodge','spring','lookout'].forEach(function(k){S.aurora[k]=3;});S.aurora.crew=3;S.aurora.warmth=100;S.aurora.dailyReady=true;}
   if(stage>=3){S.elec=8;S.pst.elec=5;S.pcv.elec=1;}FENCEHP=fenceMax();TOWERHP=towerMax();syncPlayerGear();res.forEach(function(q){if(owned(q.s))growRes(q);});PADLIST=buildPads();celebrate(agents[0].x,agents[0].y,'열린 마을 최고 강화 완료',true);save();refreshUI();
 }
 function updateCornerUpgrade(dt){var a=agents[0],inside=a.x<26&&a.y<26;if(!inside){cornerUpgradeT=0;cornerUpgradeUsed=false;return;}if(cornerUpgradeUsed)return;cornerUpgradeT+=dt;if(cornerUpgradeT>=1.5){cornerUpgradeUsed=true;upgradeOpenVillages();}}
 function update(dt){
+  if(typeof updateCompleteActions==='function')safe('actions',function(){updateCompleteActions(dt);});
   safe('corner',function(){updateCornerUpgrade(dt);});
   safe('res',function(){res.forEach(function(q){if(!q.alive&&owned(q.s)){q.timer-=dt;if(q.timer<=0)growRes(q);}});});
   agents.forEach(function(a){if(a.role==='player'&&(PINCH||PINCH_USED)){a.mv=false;a.moving=false;return;}try{step(a,dt);}catch(e){safe('agent-'+a.role,function(){throw e;});

@@ -51,7 +51,7 @@ function updateCustomers(dt){
   for(var i=customers.length-1;i>=0;i--){
     var c=customers[i];
     var ex=c.ex!==undefined?c.ex:entryX(c.seller);
-    if(c.state==='out'){if(Math.abs(c.x-ex)>1)moveC(c,ex,c.y,dt,1.4);else moveC(c,ex,-40,dt,1.4);if(c.y<-30)customers.splice(i,1);continue;}
+    if(c.state==='out'){if(c.cheerUntil>time){c.mv=false;continue;}if(Math.abs(c.x-ex)>1)moveC(c,ex,c.y,dt,1.4);else moveC(c,ex,-40,dt,1.4);if(c.y<-30)customers.splice(i,1);continue;}
     c.pat-=dt;
     var sp=slotPos(c.seller,c.slot),arr;if(c.y<sp.y-1)arr=moveC(c,ex,sp.y,dt,1.3)&&false;else arr=moveC(c,sp.x,sp.y,dt,1);
     if(c.pat<=0&&c.state!=='serve'){
@@ -70,11 +70,11 @@ function updateCustomers(dt){
       if(c.st<=0){
         var tip=c.pat/c.max>.5;
         var pay=customerPayment(c,tip);
-        S.cash[c.seller]=(S.cash[c.seller]||0)+pay;S.h2=1;stat('serve',1);sfx('coin',.09);var cp0=cashPos(c.seller);
+        if(typeof actionIncome==='function'){actionIncome(pay);actionFeverPay(pay);}S.cash[c.seller]=(S.cash[c.seller]||0)+pay;S.h2=1;stat('serve',1);sfx('coin',.09);var cp0=cashPos(c.seller);
         addFloat(cp0.x,cp0.y-18,'💵+'+pay,'#c9f5c0',true);
         for(var cfi=0;cfi<Math.min(6,2+Math.ceil(pay/20));cfi++)fly('coin',c.x+(Math.random()-.5)*10,c.y-6,cp0.x+(Math.random()-.5)*12,cp0.y-4,.36+cfi*.05);
         checkPop(c.x,c.y-24);if(c.regular&&Math.random()<.15)addFloat(c.x,c.y-40,c.seller==='fish'?'호수 쪽 물소리가 다시 들려요':'밤에 숲 뿌리가 파랗게 빛났대요','#ffe6a0',true);
-        c.state='out';c.mood='happy';
+        c.state='out';c.mood='happy';c.cheerUntil=time+1;c.happyUntil=time+1.8;
       }
     }
   }

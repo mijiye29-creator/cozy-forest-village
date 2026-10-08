@@ -74,7 +74,7 @@ function drawIndustrialBuilding(g,pl,L){
 }
 function drawWorkshopStorage(g,pl,L){
   var x=shedX(pl)+2,base=128,w=39,d=9,h=[30,40,48,59,69][L-1],col=['#a68a5f','#bfa175','#b9b8a1','#8bafb0','#c7d1be'][L-1];
-  if(drawFacilitySprite(g,'warehouse',x+w/2,base+4,w+10,h+18,L,5,0))return;
+  if(drawFacilitySprite(g,L<=2?'storage':'warehouse',x+w/2,base+4,w+10,h+18,L,5,0))return;
   isoBox(g,x-2,base+4,w+3,d,5,'#adb39e');
   if(L===1){isoBox(g,x,base,w,d,5,col);artPosts(g,x,base,w,h,'#9e8052');}
   else{isoBox(g,x,base,w,d,h,col);if(L===3)artBricks(g,x,base-h,w,h);if(L>=4)isoGlass(g,x+3,base-h+5,w-6,12);}

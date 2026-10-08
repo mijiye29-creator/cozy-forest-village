@@ -17,7 +17,7 @@ function spawnFinaleBoss(){
   if(S.finaleDone||hasFinaleBoss())return;
   var fx0=Math.min(MX,fenceX()),ent=bearEntry('top',fx0),hp=350*bearMult();
   var fb={x:ent.x,y:ent.y,side:'top',ex:ent.ex,ey:ent.ey,stole:0,tgt:{kind:'purse'},state:'in',hp:hp,max:hp,boss:true,king:true,finale:true,t:0,flash:0,dir:1,bob:0,kx:0,hitT:0,swipeT:1,dmg:0,swipe:0,climb:0,homeY:HT+16,roar:3,roarMax:3};
-  BEARS.push(fb);S.finaleSpawned=1;save();sfx('horn');flash=.6;shake(1);
+  BEARS.push(fb);if(typeof actionBoss==='function')actionBoss();S.finaleSpawned=1;save();sfx('horn');flash=.6;shake(1);
   STAGEBAN={t:4,max:4,text:'👑 세 마을의 불빛을 본 대왕곰!',sub:'숲·호수·광산의 사냥꾼이 함께 막아내요'};
   addFloat(MX/2,120,'🐻‍❄️👑 끝판왕 북극곰이 나타났어요!','#ffe27a');
 }

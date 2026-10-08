@@ -32,6 +32,7 @@ function drawPile(sid){
   if(cvLv(sid)){drawLoader(sid);return;}
   var p=S.piles[sid]||{},n=pn(sid),pp=pilePos(sid),x=pp.x,y=pp.y,g=ctx,st=SITE[sid],cp=pcap();
   g.save();g.translate(x,y+4);g.scale(1.75,1.75);g.translate(-x,-(y+4));
+  if(st.kind==='forest'&&n)drawSprite(g,'log_pile','static',0,x,y+4,SPRITE_PPU*.35,false);
   g.fillStyle='rgba(0,0,0,.12)';g.beginPath();g.ellipse(x,y+4,11,3,0,0,7);g.fill();
   var list=[];Object.keys(p).sort(function(a,b){return ITEMS[a].sp.val-ITEMS[b].sp.val;}).forEach(function(id){for(var i=0;i<p[id];i++)list.push(id);});
   var m=Math.min(n,12),shown=[];for(var i=0;i<m;i++)shown.push(list[Math.floor(i*n/m)]);

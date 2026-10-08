@@ -18,6 +18,8 @@ function loop(now){
   if(TITLE){titleT-=dt;if(titleT<=0){titleT=.4;ctx.setTransform(DPR,0,0,DPR,0,0);safe('draw',draw);}return;}
   /* Story scenes pause the village safely while the player reads. */
   if(storyBox&&!storyBox.hidden){titleT-=dt;if(titleT<=0){titleT=.4;ctx.setTransform(DPR,0,0,DPR,0,0);safe('draw',draw);}return;}
+  if(typeof AURORA_OPEN!=='undefined'&&AURORA_OPEN){safe('aurora',function(){updateAurora(dt);});return;}
+  if(typeof ACTION_STOP==='number'&&ACTION_STOP>0){ACTION_STOP=Math.max(0,ACTION_STOP-dt);ctx.setTransform(DPR,0,0,DPR,0,0);safe('draw',draw);return;}else if(typeof ACTION_SLOW==='number'&&ACTION_SLOW>0){ACTION_SLOW=Math.max(0,ACTION_SLOW-dt);dt*=.35;}
   time+=dt;update(dt);
   ctx.setTransform(DPR,0,0,DPR,0,0);safe('draw',draw);
   uiT-=dt;if(uiT<=0){uiT=.2;safe('ui',refreshUI);}
@@ -32,10 +34,12 @@ function upgradeOpenVillages(){
   SITES.forEach(function(st,i){if(i>=stage)return;S.sites[st.id]=5;S.cv[st.id]=1;S.cvLv[st.line]=CV_MAX;var b=PROC_OF[st.id];S[b]=8;S.pst[b]=5;S.pcv[b]=1;if(i){S.vt[i+1]=TOWER_MAX;S.vf[i+1]=5;VFBREACH[i+1]=0;VFHP[i+1]=fMaxV(i+1);}
     [VROLE[st.id],['hunter','hunter2','hunter3'][i]].forEach(function(role){var pr=PRIM[role];S.wlv[role]=MAXLV[pr];if(!count(role)){var look=newLook(),gear={role:role,name:look.name,hair:look.hair,skin:look.skin,acc:look.acc,boots:MAXLV.boots};gear[pr]=MAXLV[pr];S.w.push(gear);agents.push(mkAgent(role,gear));}S.w.forEach(function(g){if(g.role===role){g[pr]=MAXLV[pr];g.boots=MAXLV.boots;}});if(canMerge(role))mergeCrew(role,false);});
   });
+  if(S.aurora&&S.aurora.unlocked&&S.finaleDone){['canal','boiler','lodge','spring','lookout'].forEach(function(k){S.aurora[k]=3;});S.aurora.crew=3;S.aurora.warmth=100;S.aurora.dailyReady=true;}
   if(stage>=3){S.elec=8;S.pst.elec=5;S.pcv.elec=1;}FENCEHP=fenceMax();TOWERHP=towerMax();syncPlayerGear();res.forEach(function(q){if(owned(q.s))growRes(q);});PADLIST=buildPads();celebrate(agents[0].x,agents[0].y,'열린 마을 최고 강화 완료',true);save();refreshUI();
 }
 function updateCornerUpgrade(dt){var a=agents[0],inside=a.x<26&&a.y<26;if(!inside){cornerUpgradeT=0;cornerUpgradeUsed=false;return;}if(cornerUpgradeUsed)return;cornerUpgradeT+=dt;if(cornerUpgradeT>=1.5){cornerUpgradeUsed=true;upgradeOpenVillages();}}
 function update(dt){
+  if(typeof updateCompleteActions==='function')safe('actions',function(){updateCompleteActions(dt);});
   safe('corner',function(){updateCornerUpgrade(dt);});
   safe('res',function(){res.forEach(function(q){if(!q.alive&&owned(q.s)){q.timer-=dt;if(q.timer<=0)growRes(q);}});});
   agents.forEach(function(a){if(a.role==='player'&&(PINCH||PINCH_USED)){a.mv=false;a.moving=false;return;}try{step(a,dt);}catch(e){safe('agent-'+a.role,function(){throw e;});

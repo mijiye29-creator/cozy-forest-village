@@ -3,7 +3,7 @@ var KEY='cozy-village-v6';
 var S={coins:50,axe:0,rod:0,boots:0,cour:0,bag:0,pile:0,p:{axe:0,rod:0,boots:0,cour:0},w:[],auto:false,
   ss:{wood:{},fish:{},iron:{}},piles:{},shop:{wood:1,fish:1},conv:{wood:0,fish:0},cv:{},trunk:0,wh:{},whLv:0,h3:0,lost:0,h1:0,h2:0,sites:null,mill:0,smoke:0,sfx:1,bgm:1,pads:{},tutN:0,fuel:60,st:0};
 /* save format version: bump SAVE_VER whenever a migration below is added; the old save is backed up first */
-var SAVE_VER=11;
+var SAVE_VER=12;
 var FRESH=true;
 try{var raw=localStorage.getItem(KEY);if(raw){FRESH=false;var o=JSON.parse(raw);if((o.ver||0)<SAVE_VER){try{localStorage.setItem(KEY+'-bak-v'+(o.ver||0),raw);}catch(e2){}}for(var k in o)S[k]=o[k];}}catch(e){}
 var LOADV=S.ver||0;
@@ -73,7 +73,7 @@ function updateStage(dt){if(FXA){FXA.t+=dt;if(FXA.t>=1.6)FXA=null;}if(STAGEBAN){
   stageT-=dt;if(stageT>0)return;stageT=.5;if((S.stage||3)<3&&stageReady())expandStage();}
 function siteScore(){var n=0;SITES.forEach(function(st){n+=siteLv(st.id);});return n;}
 /* v75: running totals for today's goals (new save field S.stat - older saves start from zero) */
-function stat(k,n){if(!S.stat)S.stat={};S.stat[k]=(S.stat[k]||0)+(n||0);}
+function stat(k,n){if(typeof actionEvent==='function')actionEvent(k,n||0);if(!S.stat)S.stat={};S.stat[k]=(S.stat[k]||0)+(n||0);}
 var RESETTING=false;
 function save(){if(RESETTING)return;try{saveDefenseState();localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function startOver(){try{localStorage.setItem(KEY+'-bak-reset',JSON.stringify(S));localStorage.removeItem(KEY);}catch(e){}RESETTING=true;location.reload();}

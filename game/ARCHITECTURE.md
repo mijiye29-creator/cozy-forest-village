@@ -1,6 +1,6 @@
 # 게임 코드 지도
 
-index.html은 화면 구조, styles/game.css는 화면 디자인이다. 39개 기능 소스와
+index.html은 화면 구조, styles/game.css는 화면 디자인이다. 40개 기능 소스와
 시작 오류 처리 파일을 runtime-manifest.json 순서로 합쳐 runtime.js 하나를 제공한다.
 기존 IIFE·함수 호이스팅·초기화 순서를 유지하며 별도 npm 패키지가 필요 없다.
 브라우저에서 수십 개 스크립트를 차례로 요청하지 않는다. 빌드 단계의 기능 모듈화이며
@@ -76,5 +76,8 @@ rg로 찾는다. 브라우저 개발자 도구는 runtime.js.map으로 원본 �
 
 Claude 원천 에셋 표현은 sprite-atlas.js에서 관리한다. sprite-data.js는 build-game.cjs가 atlas.json/WebP 내용 해시에서 생성하며 직접 수정하지 않는다. sprites는 화면에서 필요할 때 2개 동시 로드, 실패 시 기존 렌더 fallback. 상위 특수 외형과 상품·가방·HP·강화 오버레이를 함께 보존한다.
 
-Claude 원천 에셋 카탈로그는 art-source/gpt/asset-catalog.json. 원본 48종과 슈퍼 일꾼 몸체 파생 2종은 game/assets/sprites에 있으며 sprite-data는 빌드가 atlas/이미지 해시에서 생성한다. 슈퍼 몸체는 원본 모델의 팔/도구를 숨기고 기존 Canvas 팔로 큰 도끼/전체 호수 그물을 잡는다. 차량의 Lv 표시, 손님 요청/인내/단골 표시, 창고 재고는 기존 오버레이를 유지한다. 4마을 디자인 모델은 게임에 로드하지 않는다.
+Claude 원천 에셋 카탈로그는 art-source/gpt/asset-catalog.json. 원본 48종과 슈퍼 일꾼 몸체 파생 2종은 game/assets/sprites에 있으며 sprite-data는 빌드가 atlas/이미지 해시에서 생성한다. 슈퍼 몸체는 원본 모델의 팔/도구를 숨기고 기존 Canvas 팔로 큰 도끼/전체 호수 그물을 잡는다. 차량의 Lv 표시, 손님 요청/인내/단골 표시, 창고 재고는 기존 오버레이를 유지한다. 온천마을 6개 모델은 엔딩 이후 이야기책의 다음 여정에서 지연 로드한다. 기존 3마을의 경계·보스 진행을 유지하고 별도 이동·복구·운영 화면을 사용한다.
 영상은 intro-scenes.js의 해시 URL로 인트로/엔딩 때만 로드. 거절/오류/5초 지연·데이터 절약·움직임 감소는 기존 이미지 재생으로 이어진다. 영화 종료/건너뛰기는 video 소스·타이머·콜백을 해제한다. 검사: tests/claude-assets-browser.cjs(실제 영상/자료 및 실패 대체), film-browser.cjs(이미지), super-actions-browser.cjs(전체 호수 운반), design-browser.cjs(실제 시트 로드 후 레벨/배치).
+
+complete-actions.js는 전체 동작 연결·강아지 동행·콤보/피버·긴급 주문/황금상자 및 엔딩 이후 온천 운영을 관리한다. 저장 버전 12, 키는 그대로 cozy-village-v6. S.actions는 정상 수입/추가 보상 원장과 남은 이벤트 시간을 저장하고 추가 보상 합계는 정상 수입의 15% 이내다. S.aurora는 선택 진입·시설 0~3·온기·관리인·여관 서비스 진행을 저장한다. 기존 stage를 4로 자동 승급하지 않는다. 재료 부족이면 어떤 재고도 차감하지 않으며, 시설 가까이에서만 수리한다. 모바일 핀치와 전체 보기·카메라 이동을 지원한다.
+검사: tests/complete-actions-browser.cjs — 엔딩 전 차단, 재료 원자적 차감, 시설 복구·인력·온기·저장 복구, 보상 상한·이벤트 상태, 3화면·핀치. 기존 design/film/super/browser 검사도 함께 수행한다. 원본 슈퍼의 모든 작업 프레임은 몸체 파생에 재사용하고 Canvas 팔이 큰 도끼/전체 호수 그물을 잡는다.

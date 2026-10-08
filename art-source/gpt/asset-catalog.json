@@ -779,7 +779,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/corgi.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawCompleteActions: idle / follow-walk / reward-happy"
     },
     "polar_bear": {
       "group": "animal",
@@ -997,7 +998,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/fish.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawFish swim / drawSuperFx captured-flop"
     },
     "pine": {
       "group": "nature",
@@ -1201,7 +1203,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/rock.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawOre common rock"
     },
     "ore_rock": {
       "group": "nature",
@@ -1287,7 +1290,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/log_pile.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawPile live forest stock"
     },
     "golden_chest": {
       "group": "prop",
@@ -1344,7 +1348,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/golden_chest.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawCompleteActions timed idle / collected open"
     },
     "cabin": {
       "group": "facility",
@@ -2130,8 +2135,9 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/master_lumber.png",
-      "runtime_connected": false,
-      "runtime_note": "Used through derived body variant; original GLB and sheet preserved."
+      "runtime_connected": true,
+      "runtime_note": "Used through derived body variant; original GLB and sheet preserved.",
+      "runtime_route": "drawMasterLumber idle / walk / cheer; original work body clip via master_lumber_body plus exact axe grips"
     },
     "master_fisher": {
       "group": "character",
@@ -2211,8 +2217,9 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/master_fisher.png",
-      "runtime_connected": false,
-      "runtime_note": "Used through derived body variant; original GLB and sheet preserved."
+      "runtime_connected": true,
+      "runtime_note": "Used through derived body variant; original GLB and sheet preserved.",
+      "runtime_route": "drawMasterFisher idle / walk / cheer; original work body clip via master_fisher_body plus full-lake net grips"
     },
     "excavator": {
       "group": "vehicle",
@@ -2692,7 +2699,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/aurora_keeper.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawAurora hired keeper idle / walking / operating / success cheer"
     },
     "hot_spring": {
       "group": "facility",
@@ -2752,7 +2760,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/hot_spring.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawAurora broken / repaired by actual material purchase"
     },
     "boiler": {
       "group": "facility",
@@ -2812,7 +2821,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/boiler.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawAurora broken / repaired by actual material purchase"
     },
     "lodge": {
       "group": "facility",
@@ -2872,7 +2882,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/lodge.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawAurora broken / repaired; guests and actual service income"
     },
     "canal_segment": {
       "group": "facility",
@@ -2932,7 +2943,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/canal_segment.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawAurora broken / repaired; enables warmth recovery"
     },
     "aurora_lookout": {
       "group": "facility",
@@ -2992,7 +3004,8 @@
         }
       },
       "turnaround_png": "art-source/previews/turnarounds/aurora_lookout.png",
-      "runtime_connected": false
+      "runtime_connected": true,
+      "runtime_route": "drawAurora broken / repaired; requires village restoration milestone"
     },
     "master_lumber_body": {
       "group": "character",

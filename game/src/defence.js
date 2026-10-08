@@ -307,7 +307,7 @@ function drawBear(b){
   if(b.state!=='dead'){var pr=(time*1.6)%1,pc=b.king?'214,52,70':'232,38,48';
     g.strokeStyle='rgba('+pc+',.95)';g.lineWidth=3;g.beginPath();g.arc(0,-14*s,13*s+Math.sin(time*5)*1.6*s,0,7);g.stroke();
     g.strokeStyle='rgba('+pc+','+(0.7*(1-pr))+')';g.lineWidth=2.2;g.beginPath();g.arc(0,-14*s,10*s+pr*22*s,0,7);g.stroke();}
-  var rendered=drawSprite(g,b.king?'boss_bear':'polar_bear',b.state==='dead'||b.hurtT>0?'hurt':(b.state==='attack'?'attack':'walk'),time+b.bob*.1,0,0,SPRITE_PPU*(b.king?s/2.1:s),b.dir>0);
+  var rendered=drawSprite(g,b.king?'boss_bear':'polar_bear',b.state==='dead'||b.hurtT>0?'hurt':(b.state==='attack'?'attack':b.roar>0||b.state==='wait'?'idle':'walk'),time+b.bob*.1,0,0,SPRITE_PPU*(b.king?s/2.1:s),b.dir>0);
   if(!rendered){
   g.scale(b.dir*s,s);
   if(b.state==='dead'){g.rotate(-.5*Math.min(1,b.t*3));}

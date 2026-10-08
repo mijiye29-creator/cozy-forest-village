@@ -129,6 +129,7 @@ function superHands(a){var p=superWorkPose(a),dx=a.dir*(12+p.reach*10),dy=(-25-p
 function superNetBounds(a,N){var st=SITE.p1,h=superHands(a),t=N.t,out=t<.2?0:t<.6?(t-.2)/.4:t<.85?1:Math.max(0,1-(t-.85)/.75),e=out*out*(3-2*out),w=8+(st.w-18)*e,height=8+(st.h-18)*e,lift=N.lifted?Math.sin(Math.min(1,(t-.85)/.75)*Math.PI)*16:0;return {x:h.x+((st.x+st.w/2)-h.x)*e-w/2,y:h.y+((st.y+st.h/2)-h.y)*e-height/2-lift,w:w,h:height,hand:h,spread:e,lift:lift};}
 function superNetFish(box,fish){return {x:box.hand.x+(fish.x-box.hand.x)*box.spread,y:box.hand.y+(fish.y-box.hand.y)*box.spread-box.lift};}
 function drawMasterFisher(g,a){
+  if(!a.working&&drawSprite(g,'master_fisher',actorSpriteAnim(a),time,a.x,a.y+9,SPRITE_PPU*1.3,a.dir>0)){superPlate(g,a,true);return;}
   var p=superWorkPose(a);g.fillStyle='rgba(67,111,125,.2)';g.beginPath();g.ellipse(a.x,a.y+9,14,4,0,0,7);g.fill();
   g.save();g.translate(a.x,a.y+9);g.rotate(p.lean);g.scale(1.3,1.3*(1-p.crouch*.12));g.translate(-a.x,-a.y-9);
   curWalk=!!a.working||a.mv;curPh=a.net?Math.min(1,a.net.t/1.6)*Math.PI*2:a.bob;if(!drawSprite(g,'master_fisher_body',a.working?'work':'idle',a.net?a.net.t:(a.swT||0),a.x,a.y+9,SPRITE_PPU,a.dir>0))drawPerson(g,a.x,a.y,'fisher',a.dir,0,4,4,4,Object.assign({},a.gear,{customArms:true}));curWalk=null;
@@ -137,6 +138,7 @@ function drawMasterFisher(g,a){
   g.strokeStyle='#f4e5b4';g.lineWidth=1.4;g.beginPath();g.arc(handX,handY,4,0,7);g.stroke();g.restore();superPlate(g,a,true);
 }
 function drawMasterLumber(g,a){
+  if(!a.working&&drawSprite(g,'master_lumber',actorSpriteAnim(a),time,a.x,a.y+9,SPRITE_PPU*1.3,a.dir>0)){superPlate(g,a,true);return;}
   var pose={x:a.x,y:a.y,role:'lumber',appearanceTier:4,dir:-1,customArms:true,mv:false,bob:a.bob};
   g.fillStyle='rgba(193,172,119,.22)';g.beginPath();g.ellipse(a.x,a.y+9,13,4,0,0,7);g.fill();
   var motion=a.working?Math.sin(Math.min(1,(a.swT||0)/SUPER_T)*Math.PI):0;g.save();g.translate(a.x,a.y+9);g.rotate(-motion*.16);g.scale(1,1-motion*.08);g.translate(-a.x,-a.y-9);pose.mv=!!a.working;pose.bob=(a.swT||0)/SUPER_T*Math.PI*2;if(!drawSprite(g,'master_lumber_body',a.working?'work':'idle',(a.swT||0)*.9/SUPER_T,a.x,a.y+9,SPRITE_PPU*1.3,false))drawHero(g,pose,motion*2);
@@ -192,7 +194,7 @@ function drawSuperFx(){var g=ctx;for(var i=SUPERFX.length-1;i>=0;i--){var f=SUPE
     for(var nj=0;nj<=4;nj++){g.strokeStyle=RAINBOW[(nj*2)%7];var xx2=cx2-wx/2+wx*nj/4;g.beginPath();g.moveTo(xx2,cy2-hy2/2);g.lineTo(xx2,cy2+hy2/2);g.stroke();}
     g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=.8;g.beginPath();g.moveTo(hx0,hy0);g.lineTo(cx2+(fa.dir<0?wx/2:-wx/2),cy2-hy2/2);g.moveTo(hx0,hy0);g.lineTo(cx2+(fa.dir<0?wx/2:-wx/2),cy2+hy2/2);g.stroke();
     if(N.lifted){var hk=Math.min(1,(tt-.85)/.75);N.list.forEach(function(en,ei){var point=superNetFish(netBox,en),ex=point.x,ey=point.y,wig=Math.sin(time*18+ei)*.4;
-      g.save();g.translate(ex,ey);g.rotate(wig-.6);drawItem(g,en.id,0,0,1.7);g.restore();});}
+      g.save();g.translate(ex,ey);g.rotate(wig-.6);if(!drawSprite(g,'fish','flop',Math.max(0,tt-.85),0,6,SPRITE_PPU*.45,false))drawItem(g,en.id,0,0,1.7);g.restore();});}
     g.restore();continue;}
   if(f.k==='shot'){g.strokeStyle='rgba(255,180,90,'+(1-k)+')';g.lineWidth=3*(1-k)+.5;g.beginPath();g.arc(f.x,f.y-14,8+k*30,0,7);g.stroke();continue;}
   var c=f.k==='tree'?'255,236,150':(f.k==='ore'?'255,190,240':'190,240,255');
@@ -268,7 +270,7 @@ function drawAgent(a){
 }
 function drawCustomer(c){
  var g=ctx;
- if(!drawSprite(g,'customer',c.state==='out'&&c.mood!=='angry'?'happy':actorSpriteAnim(c),time+(c.x%7)*.1,c.x,c.y+6,SPRITE_PPU*.65,c.dir>0))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
+ if(!drawSprite(g,'customer',c.cheerUntil>time?'cheer':c.happyUntil>time?'happy':actorSpriteAnim(c),time+(c.x%7)*.1,c.x,c.y+6,SPRITE_PPU*.65,c.dir>0))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
   if(c.regular){g.font='11px sans-serif';g.textAlign='center';g.fillStyle='#e0b54c';g.fillText('⭐',c.x,c.y-40);}
   if(c.state==='out'){g.font='11px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#000';g.fillText(c.mood==='angry'?'💢':'💖',c.x,c.y-15);return;}
   if(c.slot>=serv(c.seller)&&c.state==='line')return;

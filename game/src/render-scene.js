@@ -36,7 +36,7 @@ function draw(){
   SITES.forEach(function(st){if(owned(st.id))drawPile(st.id);});
   SITES.forEach(function(st){drawExport(st.id);});
   LINES.forEach(drawStall);
-  drawCash();
+  drawCash();if(typeof drawCompleteActions==='function')drawCompleteActions();
   drawLocked();
   drawGuide();drawPads();drawTapMark();
   var list=[],vx0=camX-50,vx1=camX+W/Z+50,vy0=camY-60,vy1=camY+SH/Z+60;function vis(o){return o.x>vx0&&o.x<vx1&&o.y>vy0&&o.y<vy1;} /* v59: things off screen are not drawn */

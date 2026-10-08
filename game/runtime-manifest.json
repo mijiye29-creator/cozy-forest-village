@@ -195,6 +195,11 @@
       "topic": "반응형 화면·확대·리사이즈"
     },
     {
+      "id": "complete-actions",
+      "path": "src/complete-actions.js",
+      "topic": "전체 동작·동행·이벤트·엔딩 이후 온천마을 운영"
+    },
+    {
       "id": "loop",
       "path": "src/loop.js",
       "topic": "프레임·시뮬레이션·테스트 훅·시작 순서"
