@@ -4849,7 +4849,7 @@ function loop(now){
 /* v58 (staff 7): one simulation step, split out of the frame loop so the automated tests can run the game faster than real time */
 var cornerUpgradeT=0,cornerUpgradeUsed=false;
 function upgradeOpenVillages(){
-  var stage=S.stage||1;S.shop.wood=8;if(stage>=2)S.shop.fish=8;S.tut=99;S.lodge=1;S.autocash=3;S.trunk=5;S.whLv=5;S.wh2=3;S.fence=5;S.tower=TOWER_MAX;S.fenceDown=0;S.towerDown=0;S.rep=[];
+  var stage=S.stage||1;S.shop.wood=8;if(stage>=2)S.shop.fish=8;S.tut=99;S.lodge=1;S.autocash=3;S.trunk=5;S.pile=6;S.whLv=5;S.wh2=3;S.fence=5;S.tower=TOWER_MAX;S.fenceDown=0;S.towerDown=0;S.rep=[];
   Object.keys(MAXLV).forEach(function(k){S.p[k]=MAXLV[k];S[k]=MAXLV[k];});
   S.pst=S.pst||{};S.pcv=S.pcv||{};S.cvLv=S.cvLv||{};S.vt=S.vt||{};S.vf=S.vf||{};
   SITES.forEach(function(st,i){if(i>=stage)return;S.sites[st.id]=5;S.cv[st.id]=1;S.cvLv[st.line]=CV_MAX;var b=PROC_OF[st.id];S[b]=8;S.pst[b]=5;S.pcv[b]=1;if(i){S.vt[i+1]=TOWER_MAX;S.vf[i+1]=5;VFBREACH[i+1]=0;VFHP[i+1]=fMaxV(i+1);}
