@@ -1011,7 +1011,7 @@ function bagN(a){var n=0;for(var k in a.bag)n+=a.bag[k];return n;}
 function bagLine(a,line){var n=0;for(var k in a.bag)if(ITEMS[k].line===line)n+=a.bag[k];return n;}
 function spdOf(a){return 70*(1+0.15*(a.gear.boots||0));}
 function release(a){if(a.res){a.res.by=null;a.res.prog=0;a.res=null;}a.prog=0;}
-function speedOf(a){return a.role==='player'?spdOf(a)*1.65:spdOf(a)*WMOVE;}
+function speedOf(a){return a.role==='player'?spdOf(a)*1.38:spdOf(a)*WMOVE;}
 function moveTo(a,x,y,dt){
   var dx=x-a.x,dy=y-a.y,d=Math.hypot(dx,dy),sp=speedOf(a)*dt;
   a.mv=d>.5;
@@ -1736,19 +1736,18 @@ function padObstacles(){
   out.push({x:666,y:356,w:48,h:54});return out;
 }
 var fencePadAnchor=null;
-function nearbyFenceSlot(){
+function nearbyFenceSlot(pads){
   var a=agents[0],fx=fenceX(),edges=[{side:'left',distance:a.x,v:1},{side:'right',distance:fx-a.x,v:S.stage||1},{side:'bottom',distance:H-a.y,v:villageAt(a.x)}];edges.sort(function(a,b){return a.distance-b.distance;});var e=edges[0];
   if(e.distance>90){fencePadAnchor=null;return null;}
   var key=e.side+'-'+e.v+'-'+Math.round(fx);
-  if(fencePadAnchor&&fencePadAnchor.requireIntent&&!fencePadAnchor.armed&&((a.tap&&Math.hypot(a.tap.x-fencePadAnchor.x,a.tap.y-fencePadAnchor.y)<8)||(joy.on&&joy.moved&&(fencePadAnchor.x-a.x)*joy.dx+(fencePadAnchor.y-a.y)*joy.dy>0)))fencePadAnchor.armed=true;
-  if(fencePadAnchor&&((fencePadAnchor.key===key&&Math.hypot(a.x-fencePadAnchor.x,a.y-fencePadAnchor.y)<46)||(a.tap&&Math.hypot(a.tap.x-fencePadAnchor.x,a.tap.y-fencePadAnchor.y)<8)))return fencePadAnchor;
-  var obstacles=padObstacles(),reserved=Object.keys(PAD_LAYOUT).filter(function(id){return !/^(v?fence|vfence)/.test(id);}).map(function(id){return padBounds(PAD_LAYOUT[id]);});
-  var best=null,score=Infinity,close=null,closeScore=Infinity;
-  [16,20,26,46,66,86,106].forEach(function(inset){if(e.side!=='bottom'&&inset===16)return;for(var off=-156;off<=156;off+=12){var p=e.side==='bottom'?{x:Math.max(22,Math.min(fx-22,a.x+off)),y:H-inset}:{x:e.side==='left'?inset:fx-inset,y:Math.max(24,Math.min(H-16,a.y+off))},box=padBounds(p);
-    if(box.x<3||box.x+box.w>fx-3||box.y<4||box.y+box.h>H-1||villageAt(p.x)!==e.v||obstacles.some(function(o){return rectTouches(box,o,3);})||reserved.some(function(o){return rectTouches(box,o,3);}))continue;
-    var distance=Math.hypot(p.x-a.x,p.y-a.y);if(distance<28){if(distance<closeScore){closeScore=distance;close=p;}continue;}var d=distance+inset*.2;if(d<score){score=d;best=p;}
-  }});
-  if(!best&&close){best=close;best.requireIntent=true;best.armed=false;}if(!best){best={x:Math.max(24,Math.min(fx-24,a.x+(a.x>fx/2?-42:42))),y:Math.max(42,a.y-42),floating:true,requireIntent:true,armed:false};}best.key=key;best.side=e.side;best.v=e.v;fencePadAnchor=best;return best;
+  if(fencePadAnchor&&fencePadAnchor.key===key&&Math.hypot(a.x-fencePadAnchor.x,a.y-fencePadAnchor.y)<46){
+    if(!fencePadAnchor.armed&&joy.on&&joy.moved&&(fencePadAnchor.x-a.x)*joy.dx+(fencePadAnchor.y-a.y)*joy.dy>0)fencePadAnchor.armed=true;
+    return fencePadAnchor;
+  }
+  var slot=e.side==='bottom'?{x:Math.max(24,Math.min(fx-24,a.x)),y:H+2}:{x:e.side==='left'?3:fx-3,y:Math.max(24,Math.min(H-24,a.y))};
+  var neighbors=(pads||PADLIST).filter(function(p){return !/^(fence|fence_fix|vfence[23]|vfence_fix[23])$/.test(p.id);});
+  for(var i=0;i<7;i++){var off=i===0?0:Math.ceil(i/2)*36*(i%2?1:-1),candidate=e.side==='bottom'?{x:Math.max(24,Math.min(fx-24,a.x+off)),y:H+2}:{x:slot.x,y:Math.max(24,Math.min(H-24,a.y+off))};if(villageAt(candidate.x)!==e.v||neighbors.some(function(p){return rectTouches(padBounds(candidate),padBounds(p),3);}))continue;slot=candidate;break;}
+  slot.key=key;slot.side=e.side;slot.v=e.v;slot.floating=true;slot.requireIntent=true;slot.armed=false;fencePadAnchor=slot;return slot;
 }
 var CONSTRUCTION_SLOTS={};
 function constructionSlot(p){return CONSTRUCTION_SLOTS[p.id]||(CONSTRUCTION_SLOTS[p.id]=plannedConstructionSlot(p));}
@@ -1788,7 +1787,7 @@ function arrangePads(pads){
       if(placed.some(function(q){return rectTouches(box,padBounds(q),6);}))continue;
       var d=Math.hypot(x-p.x,y-p.y);if(d<score){score=d;best={x:x,y:y};}}
     if(best){p.x=best.x;p.y=best.y;}placed.push(p);
-  });return pads.filter(function(p){return p.x+PAD_W/2<=fenceX()-3;});
+  });return pads.filter(function(p){return !!p.perimeter||p.x+PAD_W/2<=fenceX()-3;});
 }
 function padPos(id){for(var pi=0;pi<PADLIST.length;pi++)if(PADLIST[pi].id===id)return {x:PADLIST[pi].x,y:PADLIST[pi].y};return null;}
 function buildPads(){
@@ -1841,7 +1840,7 @@ function buildPads(){
   LINES.forEach(function(l){var st=STALL[l];add('shopstaff_'+l,DEF['shopstaff_'+l],st.x+60,st.y-30,'가게 일손 · '+(shopStaffLevel(l)%2===0?'점원 고용':'진열대 추가'),'⭐','일손 Lv'+shopStaffLevel(l),null,'up');});
   LINES.forEach(function(l){var s0=STALL[l];add('shop_'+l,DEF['shop_'+l],s0.x+(l==='wood'?0:10),s0.y+52,SHOPDEF[l].name+' 키우기 · '+SHOP_STAGE[shopStage(S.shop[l]+1)]+(shopStage(S.shop[l]+1)>shopStage(S.shop[l])?'(으)로 변신!':'')+' · 동시 응대 '+Math.min(4,1+Math.floor(S.shop[l]/2))+'명','🏪',SHOPDEF[l].name+' Lv'+S.shop[l],null,'up');});
   repairs().forEach(function(e,i){var t=repTarget(e);add('rep_'+e.k+(e.key||e.line||e.sid||e.wi)+(e.tr||''),repDef(e),t.x,t.y+18,'곰이 부순 곳 고치기','🔧','수리',null,'fix');});
-  var edge=nearbyFenceSlot();L=L.filter(function(p){if(!/^(fence|fence_fix|vfence[23]|vfence_fix[23])$/.test(p.id))return true;var v=p.id.indexOf('vfence')===0?Number(p.id.slice(-1)):1;if(!edge||edge.v!==v)return false;p.perimeter=edge;return true;});
+  var edge=nearbyFenceSlot(L);L=L.filter(function(p){if(!/^(fence|fence_fix|vfence[23]|vfence_fix[23])$/.test(p.id))return true;var v=p.id.indexOf('vfence')===0?Number(p.id.slice(-1)):1;if(!edge||edge.v!==v)return false;p.perimeter=edge;return true;});
   return arrangePads(L);
 }
 var padHold=null,padInit=false,padHoldP=null;
@@ -1855,7 +1854,7 @@ function updatePads(dt){
   /* v54 (staff 7): the start-on-a-pad guard must look at the pad you are standing on before the short dwell delay - before, the first frame never had a pad yet so the guard did nothing */
   if(!padInit&&nearPad){padInit=true;padHold=nearPad.id;padHoldP={x:nearPad.x,y:nearPad.y};}
   if(nearPad){a.padDwell=(a.padDwell||0)+dt;if(a.padDwell>=.06)on=nearPad;}else{a.padDwell=0;a.payTick=0;a.payId=null;}
-  if(on&&!a.moving){a.x+=(on.x-a.x)*Math.min(1,dt*10);a.y+=(on.y-a.y)*Math.min(1,dt*10);}
+  if(on&&!a.moving&&!on.perimeter){a.x+=(on.x-a.x)*Math.min(1,dt*10);a.y+=(on.y-a.y)*Math.min(1,dt*10);}
   if(!padInit){padInit=true;if(on){padHold=on.id;padHoldP={x:on.x,y:on.y};}}
   if(on&&padHold&&padHold!==on.id&&padHoldP&&Math.hypot(on.x-padHoldP.x,on.y-padHoldP.y)<10)padHold=on.id;
   PADLIST.forEach(function(p){p.active=p===on;p.held=on&&p===on&&padHold===p.id;});
@@ -4943,7 +4942,7 @@ if(/[?&]test=1/.test(location.search))window.__stuck=function(){return res.filte
 if(/[?&]test=1/.test(location.search))window.__cozyTest={S:function(){return S;},DEF:DEF,buy:function(id){
     /* QA purchases walk the test hero onto the same world pad and wait through the real dwell/payment path. */
     var d=DEF[id];if(!d||d.isMax()||!d.canBuy()||(d.hidden&&d.hidden()))return false;PADLIST=buildPads();var pad=null;
-    for(var i=0;i<PADLIST.length;i++)if(PADLIST[i].id===id){pad=PADLIST[i];break;}if(!pad)return false;
+    for(var i=0;i<PADLIST.length;i++)if(PADLIST[i].id===id){pad=PADLIST[i];break;}if(!pad)return false;if(pad.perimeter)pad.perimeter.armed=true;
     var a=agents[0],coinsBefore=S.coins;a.x=pad.x;a.y=pad.y;a.path=[];a.tap=null;a.moving=false;a.mv=false;a.padDwell=0;padInit=true;padHold=null;padHoldP=null;
     for(var f=0;f<60;f++){updatePads(.05);if((!S.pads||!S.pads[id])&&S.coins<coinsBefore){window.__cozyPurchaseSeconds=(f+1)*.05;break;}}
     return S.coins<coinsBefore&&(!S.pads||!S.pads[id]);

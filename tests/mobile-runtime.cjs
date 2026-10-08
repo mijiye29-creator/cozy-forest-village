@@ -100,6 +100,9 @@ env.document.hidden=true;env.loop(20000);assert.equal(updates,0);assert.equal(dr
 env.document.hidden=false;env.storyBox.hidden=false;env.time=42;env.titleT=0;
 for(let i=1;i<=120;i++)env.loop(20000+i*1000/120);
 assert.equal(updates,0);assert.equal(env.time,42);assert(draws<=3,'Story background should render at low frequency');
+// Measure actual travel at the requested 20% increase over the original player speed.
+const motion={WMOVE:1};vm.createContext(motion);vm.runInContext(section('function spdOf(', 'function tileOf('),motion);
+for(const boots of [0,4,13]){const a={role:'player',gear:{boots},x:0,y:0,bob:0};motion.moveTo(a,1000,0,.1);assert(Math.abs(a.x/(70*(1+.15*boots)*1.15*.1)-1.2)<1e-9);}
 // Exercise the real layout against all reserved facilities and future belt routes.
 const layout = {S:{stage:1},fenceX:()=>layout.STAGE_W[layout.S.stage-1]};
 vm.createContext(layout);
