@@ -2,14 +2,14 @@
 var BG=document.createElement('canvas');BG.width=Math.ceil(W*RS);BG.height=Math.ceil((HT-WORLD_TOP)*RS);
 function paintStatic(){
   var g=BG.getContext('2d');g.setTransform(RS,0,0,RS,0,0);
-  var land=g.createLinearGradient(0,0,W,HT);land.addColorStop(0,'#e4e9d9');land.addColorStop(.45,'#e8eadb');land.addColorStop(1,'#d7e0cd');g.fillStyle=land;g.fillRect(0,0,W,HT);
-  g.fillStyle='#eee9dc';g.fillRect(0,0,W,178);
+  var land=g.createLinearGradient(0,0,W,HT);land.addColorStop(0,ART.land[0]);land.addColorStop(.45,ART.land[1]);land.addColorStop(1,ART.land[2]);g.fillStyle=land;g.fillRect(0,0,W,HT);
+  g.fillStyle=ART.plaza;g.fillRect(0,0,W,178);
   /* Paths follow the actual gaps; planting stays out of working and upgrade areas. */
-  g.fillStyle='#e3dcc9';rr(g,12,366,W-24,57,16);g.fill();
-  [150,570,1038].forEach(function(x){g.fillStyle='#ece6d4';rr(g,x-19,126,38,452,14);g.fill();
+  g.fillStyle=ART.path;rr(g,12,366,W-24,57,16);g.fill();
+  [150,570,1038].forEach(function(x){g.fillStyle=ART.pathLight;rr(g,x-19,126,38,452,14);g.fill();
     for(var sy=157;sy<568;sy+=24){g.fillStyle='rgba(255,253,243,.52)';g.beginPath();g.ellipse(x+(sy%48?3:-3),sy,10,5,0,0,7);g.fill();}});
-  g.fillStyle='#e7e3d0';rr(g,116,235,125,25,9);g.fill();
-  g.fillStyle='#dce3d6';g.fillRect(0,431,W,H-431);
+  g.fillStyle=ART.pathLight;rr(g,116,235,125,25,9);g.fill();
+  g.fillStyle=ART.garden;g.fillRect(0,431,W,H-431);
   [326,680,1008].forEach(function(x){
     var py=x===1008?240:x===680?132:220,ph=x===326?102:78;g.fillStyle='#adb6a0';rr(g,x-9,py,18,ph,8);g.fill();g.fillStyle='#e5e4d3';rr(g,x-8,py-1,16,ph-3,7);g.fill();
     for(var j=0;j<(x===326?8:6);j++){var yy=py+10+j*11;g.fillStyle=j%2?'#819579':'#9cac8c';g.beginPath();g.ellipse(x+(j%2?2:-2),yy,5,3,0,0,7);g.fill();g.fillStyle=j%3?'#e7dcc1':'#c7b692';g.beginPath();g.arc(x-2,yy-1,1.1,0,7);g.fill();}
@@ -17,8 +17,8 @@ function paintStatic(){
   /* Northern snow gardens frame the mining district without narrowing its entrance. */
   [[708,56,31],[788,75,25],[914,35,30],[996,58,24]].forEach(function(o){
     var x=o[0],y=o[1],r=o[2];g.fillStyle='rgba(93,123,106,.12)';g.beginPath();g.ellipse(x+3,y+4,r,r*.46,0,0,7);g.fill();
-    var mound=g.createLinearGradient(x-r,y-r,x+r,y+r);mound.addColorStop(0,'#f8faf0');mound.addColorStop(1,'#c6d3c5');g.fillStyle=mound;g.beginPath();g.ellipse(x,y,r,r*.46,0,0,7);g.fill();
-    [-8,9].forEach(function(off,i){var xx=x+off,yy=y+i*3;g.fillStyle='#8a7e60';g.fillRect(xx-1,yy-6,2,8);g.fillStyle=i?'#637e6f':'#557263';g.beginPath();g.moveTo(xx-7,yy-4);g.lineTo(xx,yy-24-i*4);g.lineTo(xx+7,yy-4);g.closePath();g.fill();g.fillStyle='#eef3e8';g.beginPath();g.moveTo(xx-4,yy-12);g.lineTo(xx,yy-24-i*4);g.lineTo(xx+4,yy-12);g.closePath();g.fill();});
+    var mound=g.createLinearGradient(x-r,y-r,x+r,y+r);mound.addColorStop(0,ART.snow);mound.addColorStop(1,ART.snowShade);g.fillStyle=mound;g.beginPath();g.ellipse(x,y,r,r*.46,0,0,7);g.fill();
+    [-8,9].forEach(function(off,i){var xx=x+off,yy=y+i*3;g.fillStyle='#8a7e60';g.fillRect(xx-1,yy-6,2,8);g.fillStyle=i?ART.pineLight:ART.pine;g.beginPath();g.moveTo(xx-7,yy-4);g.lineTo(xx,yy-24-i*4);g.lineTo(xx+7,yy-4);g.closePath();g.fill();g.fillStyle=ART.snow;g.beginPath();g.moveTo(xx-4,yy-12);g.lineTo(xx,yy-24-i*4);g.lineTo(xx+4,yy-12);g.closePath();g.fill();});
   });
   /* Timber benches, stone edging and lanterns give the long route a human scale. */
   [310,690,1036].forEach(function(x){var y=389;g.fillStyle='rgba(53,68,48,.12)';rr(g,x-11,y+5,25,7,3);g.fill();g.fillStyle='#786c53';g.fillRect(x-8,y+2,2,7);g.fillRect(x+7,y+2,2,7);g.fillStyle='#b39c72';rr(g,x-11,y-1,24,4,1);g.fill();g.fillStyle='#d2bd92';g.fillRect(x-11,y-1,24,1);g.fillStyle='#97825c';rr(g,x-11,y-8,24,4,1);g.fill();});
@@ -35,7 +35,7 @@ function paintPalisade(){var g=PAL.getContext('2d');g.setTransform(1,0,0,1,0,0);
   /* chunky round log posts (video-ref: thick round-cut wooden fence) - warm radial-lit end caps with a growth-ring and a bright rim highlight */
   function logV(x,y0,y1){for(var ly=y0;ly<y1;ly+=6.2){
       g.fillStyle='rgba(0,0,0,.22)';g.beginPath();g.ellipse(x+1.4,ly+2.3,4.4,3.5,0,0,7);g.fill();
-      var lg=g.createRadialGradient(x-1.3,ly-1.3,.4,x,ly,4.6);lg.addColorStop(0,'#ffd291');lg.addColorStop(.55,'#d98a3a');lg.addColorStop(1,'#a4601f');
+      var lg=g.createRadialGradient(x-1.3,ly-1.3,.4,x,ly,4.6);lg.addColorStop(0,ART.timber[0]);lg.addColorStop(.55,ART.timber[1]);lg.addColorStop(1,ART.timber[2]);
       g.fillStyle=lg;g.beginPath();g.ellipse(x,ly,4.3,3.5,0,0,7);g.fill();
       g.strokeStyle='rgba(90,50,15,.5)';g.lineWidth=.7;g.beginPath();g.ellipse(x,ly,2.5,2,0,0,7);g.stroke();
       g.strokeStyle='rgba(60,32,10,.65)';g.lineWidth=1.1;g.beginPath();g.ellipse(x,ly,4.3,3.5,0,0,7);g.stroke();

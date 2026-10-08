@@ -1,6 +1,6 @@
 # 게임 코드 지도
 
-index.html은 화면 구조, styles/game.css는 화면 디자인이다. 34개 기능 소스와
+index.html은 화면 구조, styles/game.css는 화면 디자인이다. 35개 기능 소스와
 시작 오류 처리 파일을 runtime-manifest.json 순서로 합쳐 runtime.js 하나를 제공한다.
 기존 IIFE·함수 호이스팅·초기화 순서를 유지하며 별도 npm 패키지가 필요 없다.
 브라우저에서 수십 개 스크립트를 차례로 요청하지 않는다. 빌드 단계의 기능 모듈화이며
@@ -21,7 +21,7 @@ index.html은 화면 구조, styles/game.css는 화면 디자인이다. 34개 �
 | 인트로·대사 | story-intro.js, game/intro-scenes.js | loop.js, game/styles/game.css | story |
 | 모바일·줌 | viewport.js, input.js | loop.js, panels.js, game/styles/game.css | movement |
 | 도감·일일 과제·레이더 | panels.js | goods.js, input.js, render-scene.js | all |
-| 그림·애니메이션 | 해당 render-*.js | render-primitives.js, effects.js | all + 관련 browser 검사 |
+| 그림·색감·애니메이션 | art-palette.js, 해당 render-*.js | render-primitives.js, effects.js | all + 관련 browser 검사 |
 | 프레임·정지 | loop.js | ambient.js, 해당 update 함수 모듈 | movement |
 | 음악·효과음 | audio.js | input.js | all |
 

@@ -1,6 +1,6 @@
 /* ---------- customers (market side only) ---------- */
 var customers=[],spawnT=3,lineSpawnT={wood:2,fish:3};
-var CUST_COL=['#7fb3e0','#c99be0','#e0a06a','#8fce9c','#e58fa3','#d8c25a'];
+var CUST_COL=['#3ea9eb','#aa72e5','#f2963b','#4bbf76','#ed668d','#edc331'];
 var HAIR=['#3a2c22','#7a4d2b','#c9a45a','#2b2b35','#a0522d'];
 function serv(line){return Math.min(4,1+Math.floor((S.shop[line]-1)/2))+shopClerks(line);}
 /* v60 (director 2026-10-04): a bigger shop keeps a longer queue - Lv1 4 people ... Lv7+ 10 */

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "ba9f3e76dd2b39a85b36b6c8a162d7cafa62a8365984318bb850140d482be232",
+  "runtime_sha256": "17972fd9361be4c40f2e91435b958f9389f20072eaed2eca1e4d751e617b5157",
   "modules": [
     {
       "id": "boot-errors",
@@ -56,6 +56,19 @@
         {
           "name": "time",
           "line": 16
+        }
+      ]
+    },
+    {
+      "id": "art-palette",
+      "path": "src/art-palette.js",
+      "topic": "표현 전용 공통 색상·레퍼런스 팔레트",
+      "bytes": 1362,
+      "lines": 19,
+      "symbols": [
+        {
+          "name": "ART",
+          "line": 5
         }
       ]
     },
@@ -638,7 +651,7 @@
       "id": "render-primitives",
       "path": "src/render-primitives.js",
       "topic": "공통 도형·아이템·자원 그리기",
-      "bytes": 16316,
+      "bytes": 16088,
       "lines": 173,
       "symbols": [
         {
@@ -2280,8 +2293,8 @@
       "id": "render-terrain",
       "path": "src/render-terrain.js",
       "topic": "자원 지형·부두·공장 부지",
-      "bytes": 24506,
-      "lines": 269,
+      "bytes": 24151,
+      "lines": 263,
       "symbols": [
         {
           "name": "loadFx",
@@ -2373,35 +2386,35 @@
         },
         {
           "name": "drawForestArt",
-          "line": 215
+          "line": 209
         },
         {
           "name": "drawRiverArt",
-          "line": 227
+          "line": 221
         },
         {
           "name": "siteAnim",
-          "line": 238
+          "line": 232
         },
         {
           "name": "mineDeco",
-          "line": 244
+          "line": 238
         },
         {
           "name": "drawOwnedSite",
-          "line": 251
+          "line": 245
         },
         {
           "name": "PLOTS",
-          "line": 260
+          "line": 254
         },
         {
           "name": "shedX",
-          "line": 268
+          "line": 262
         },
         {
           "name": "machOf",
-          "line": 269
+          "line": 263
         }
       ]
     },
@@ -2409,7 +2422,7 @@
       "id": "render-world",
       "path": "src/render-world.js",
       "topic": "정적 배경 캐시·공장 애니메이션",
-      "bytes": 17774,
+      "bytes": 17805,
       "lines": 177,
       "symbols": [
         {
@@ -2793,7 +2806,7 @@
       "id": "render-actors",
       "path": "src/render-actors.js",
       "topic": "일꾼·영웅·손님 아트",
-      "bytes": 42870,
+      "bytes": 42523,
       "lines": 341,
       "symbols": [
         {

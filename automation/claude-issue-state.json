@@ -172,29 +172,36 @@
     },
     "5": {
       "title": "[클로드 QA·심각] 끝판왕 등장 후 중단하면 엔딩 영구 도달 불가 — #3과 같은 구조",
-      "updated_at": "2026-10-08T11:46:10Z",
-      "github_state": "open",
-      "input_sha256": "cd6d32fac9a8e122d16d111658bd58d99c96f73164ead71803fe3fc98680d422",
+      "updated_at": "2026-10-08T13:54:18Z",
+      "github_state": "closed",
+      "input_sha256": "6080f20d4122c0229de0eccef36724d4f923428f931b6612767d61a023bd28b1",
       "body_sha256": "fd9e57c0a16fed42a609e47284cbcf937f5ecff20b5adc9970e4b0f039f91cb6",
       "comment_ids": [
-        6059157141
+        6059157141,
+        6061414832
       ],
       "comment_versions": [
         {
           "id": 6059157141,
           "updated_at": "2026-10-08T11:46:10Z",
           "body_sha256": "222d9cf8c51d5f5fd9fc3ec5ba1fae578263eb3a25168a3adf513cbdbd03d875"
+        },
+        {
+          "id": 6061414832,
+          "updated_at": "2026-10-08T13:54:02Z",
+          "body_sha256": "a48c0029c14db57541e94605673776ffee1eed379e1ebe3fa21fada3dac3957f"
         }
       ],
-      "status": "implemented_code_verified",
-      "notes": "기존 finaleSpawned 세이브에서 보스 실체가 없으면 재소환. 활성 보스 중복 방지. 완료/시네마틱 중단 세이브는 부팅 때 엔딩 화면 복원. 원래 해금·시네마틱 규칙 유지. 자체 VM 재현 및 회귀 통과; 직접 브라우저/실기기/전체 보스 플레이 미실시.",
+      "status": "resolved_claude_browser_verified",
+      "notes": "기존 finaleSpawned 세이브에서 보스 실체가 없으면 재소환. 활성 보스 중복 방지. 완료/시네마틱 중단 세이브는 부팅 때 엔딩 화면 복원. 원래 해금·시네마틱 규칙 유지. 자체 VM 재현 및 회귀 통과; 직접 브라우저/실기기/전체 보스 플레이 미실시. Claude 후속 댓글에서 수정 전 대조군과 수정본 525fbcb를 비교해 브라우저 복구/HP 보존을 확인하고 닫음. 기존 코드를 재적용하지 않음. 이번 자체 브라우저 검증은 아님.",
       "continue_pending_work": false,
       "request_type": "qa_report",
       "own_validation": "Node VM/code regression; browser/device/full boss not executed",
       "claude_report_reference": {
         "issue": 5,
         "comment_ids": [
-          6059157141
+          6059157141,
+          6061414832
         ]
       },
       "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
@@ -202,33 +209,54 @@
         "direct_browser_reproduction",
         "physical_device",
         "full_boss_playthrough"
-      ]
+      ],
+      "history": [
+        {
+          "input_sha256": "cd6d32fac9a8e122d16d111658bd58d99c96f73164ead71803fe3fc98680d422",
+          "updated_at": "2026-10-08T11:46:10Z",
+          "status": "implemented_code_verified",
+          "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
+          "notes": "기존 finaleSpawned 세이브에서 보스 실체가 없으면 재소환. 활성 보스 중복 방지. 완료/시네마틱 중단 세이브는 부팅 때 엔딩 화면 복원. 원래 해금·시네마틱 규칙 유지. 자체 VM 재현 및 회귀 통과; 직접 브라우저/실기기/전체 보스 플레이 미실시."
+        }
+      ],
+      "claude_validation": {
+        "commit": "525fbcba245adcfdc2f377b71fbc664f817f288a",
+        "comment_id": 6061414832,
+        "method": "Playwright headless Chromium 390x844 DPR2; accelerated test run(); no physical device or manual full playthrough"
+      }
     },
     "6": {
       "title": "[클로드 QA] 새로고침하면 울타리가 공짜로 완전 수리됨 — 전투 상태 미저장",
-      "updated_at": "2026-10-08T11:46:11Z",
-      "github_state": "open",
-      "input_sha256": "2822743903529941f4d43c4a42f1dd305eb24123ac29b8901b079fc8968efd7d",
+      "updated_at": "2026-10-08T13:54:19Z",
+      "github_state": "closed",
+      "input_sha256": "2ac0d632d4d362bc605b00e596bf4f6bb8bbad239cab1732f43606e386f62cef",
       "body_sha256": "add1203f9dddaba2e82882b93b308ea3fe73032f26602dbf91d4d409516a3707",
       "comment_ids": [
-        6059157367
+        6059157367,
+        6061415147
       ],
       "comment_versions": [
         {
           "id": 6059157367,
           "updated_at": "2026-10-08T11:46:11Z",
           "body_sha256": "acbb69ddb885541a0b3c18c5b2ca0bd4c49e4510b32ee7bf418cace03d0320e0"
+        },
+        {
+          "id": 6061415147,
+          "updated_at": "2026-10-08T13:54:03Z",
+          "body_sha256": "c8b725fcace9b94b9e8762e8543eb860daf0adb5b0c36afa6e6b5a831b609f8a"
         }
       ],
-      "status": "implemented_code_verified",
-      "notes": "선택 필드 defenseState로 울타리·망루·지역 성벽 HP/파손을 저장·복원. 구형 부분 수리 선결제에서 파손 증거 복구. 계절 전환 규칙 유지·불필요해진 수리 선결제 1회 환급. 자체 실제 save/복원/수리 구매/계절 전환 VM 검사 통과. 일반 곰 배열 전체는 저장하지 않음; 직접 브라우저/실기기 미실시.",
+      "status": "resolved_claude_browser_verified",
+      "notes": "선택 필드 defenseState로 울타리·망루·지역 성벽 HP/파손을 저장·복원. 구형 부분 수리 선결제에서 파손 증거 복구. 계절 전환 규칙 유지·불필요해진 수리 선결제 1회 환급. 자체 실제 save/복원/수리 구매/계절 전환 VM 검사 통과. 일반 곰 배열 전체는 저장하지 않음; 직접 브라우저/실기기 미실시. Claude 후속 댓글에서 수정 전 대조군과 수정본 525fbcb를 비교해 브라우저 복구/HP 보존을 확인하고 닫음. 기존 코드를 재적용하지 않음. 이번 자체 브라우저 검증은 아님.",
       "continue_pending_work": false,
       "request_type": "qa_report",
       "own_validation": "Node VM/code regression; browser/device/full boss not executed",
       "claude_report_reference": {
         "issue": 6,
         "comment_ids": [
-          6059157367
+          6059157367,
+          6061415147
         ]
       },
       "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
@@ -236,10 +264,24 @@
         "direct_browser_reproduction",
         "physical_device",
         "full_boss_playthrough"
-      ]
+      ],
+      "history": [
+        {
+          "input_sha256": "2822743903529941f4d43c4a42f1dd305eb24123ac29b8901b079fc8968efd7d",
+          "updated_at": "2026-10-08T11:46:11Z",
+          "status": "implemented_code_verified",
+          "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
+          "notes": "선택 필드 defenseState로 울타리·망루·지역 성벽 HP/파손을 저장·복원. 구형 부분 수리 선결제에서 파손 증거 복구. 계절 전환 규칙 유지·불필요해진 수리 선결제 1회 환급. 자체 실제 save/복원/수리 구매/계절 전환 VM 검사 통과. 일반 곰 배열 전체는 저장하지 않음; 직접 브라우저/실기기 미실시."
+        }
+      ],
+      "claude_validation": {
+        "commit": "525fbcba245adcfdc2f377b71fbc664f817f288a",
+        "comment_id": 6061415147,
+        "method": "Playwright headless Chromium 390x844 DPR2; accelerated test run(); no physical device or manual full playthrough"
+      }
     }
   },
   "input_format": "sha256(UTF-8 JSON, sorted keys, compact separators: number,title,body,state,updated_at,comments[id,body,updated_at])",
-  "checked_at_kst": "2026-10-08T20:54:30+09:00",
-  "source_head": "e6b47a06d16c7ba8a07bbf6d0bb68409b6d8b47c"
+  "checked_at_kst": "2026-10-08T23:25:47+09:00",
+  "source_head": "a1d91481682aacf0059e1060d27c3a6cc29cc3a9"
 }

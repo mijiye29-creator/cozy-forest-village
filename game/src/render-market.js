@@ -52,7 +52,7 @@ function brickWall(g,x,y,w,h,base,mortar){if(w<=0||h<=0)return;var key=Math.roun
     for(var by=4,row=0;by<h;by+=4,row++){b.moveTo(0,by);b.lineTo(w,by);for(var bx=(row%2?4:0);bx<w;bx+=8){b.moveTo(bx,by-4);b.lineTo(bx,by);}}b.stroke();BRICKC[key]=c;}
   g.drawImage(c,x,y,w,h);}
 function drawMarketShop(g,line,L){
-  var fish=line==='fish',side=shopSide(line),x=25,y=20,w=38,h=102,roof=['#9f875f','#567b62','#8d6e51','#527b94','#8d795b','#446d85','#8e7553','#274e5d'][L-1],wall=fish?'#b3c9be':'#cbb78f';
+  var fish=line==='fish',side=shopSide(line),x=25,y=20,w=38,h=102,roof=['#e2942d','#20a271','#ec773c','#238fc8','#dd9d27','#138db5','#d9822d','#245e9a'][L-1],wall=fish?'#8ddadd':'#ffd08d';
   isoBox(g,16,132,55,12,5,'#c7c9b6');
   var body=g.createLinearGradient(x,y,x+w,y+h);body.addColorStop(0,artShade(wall,1.15));body.addColorStop(1,artShade(wall,.8));g.fillStyle=body;g.fillRect(x,y+12,w,h-12);
   artPoly(g,[[x+w,y+12],[x+w+9,y+5],[x+w+9,y+h-7],[x+w,y+h]],artShade(wall,.65));
@@ -94,7 +94,7 @@ function treeSprite(level,species){
   c=document.createElement('canvas');c.width=96;c.height=128;
   var g=c.getContext('2d');g.scale(2,2);g.translate(24,52);
   var L=level,P=FOREST_LOOK[L-1],sp=TREES[species]||TREES[0];
-  var leaf=species===3?'#b87551':species===4?'#729e98':species===5?'#84a6bc':P.leaf;
+  var leaf=species===3?'#ef7e31':species===4?'#23c6d4':species===5?'#aa70e3':P.leaf;
   g.fillStyle='#6b5143';rr(g,-2,-18,4,23,1);g.fill();
   g.fillStyle='#b8a384';g.fillRect(-1.6,-16,1,20);
   if(L>=3){g.strokeStyle='#6b5143';g.lineWidth=1.5;g.beginPath();g.moveTo(0,-9);g.lineTo(-7,-17);g.moveTo(0,-14);g.lineTo(7,-22);g.stroke();}

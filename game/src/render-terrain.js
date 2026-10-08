@@ -205,16 +205,10 @@ function deck(g,x,y,w,h,col,edge){g.fillStyle='rgba(40,30,20,.14)';rr(g,x+1.5,y+
 function laneStrip(g,x,y0,y1){g.fillStyle='rgba(60,50,40,.16)';rr(g,x-12,y0,24,y1-y0,6);g.fill();g.fillStyle='#d8ccb0';rr(g,x-11,y0,22,y1-y0,6);g.fill();
   for(var i=0;i<(y1-y0)/5;i++){g.fillStyle='rgba(120,100,70,'+(.15+hs(i,x)*.2)+')';g.beginPath();blob(g,x-8+hs(i,3)*16,y0+3+i*5,.9);g.fill();}}
 function lantern(g,x,y,gold){g.fillStyle='rgba(255,210,120,.22)';g.beginPath();g.arc(x,y-9,9,0,7);g.fill();g.fillStyle='#5b4636';g.fillRect(x-.8,y-8,1.6,10);g.fillStyle=gold?'#e0b23c':'#3a3f45';rr(g,x-3,y-14,6,7,1.5);g.fill();g.fillStyle='#ffe29a';rr(g,x-2,y-13,4,5,1);g.fill();}
-var FOREST_LOOK=[
- {name:'서리 묘목',leaf:'#638577',light:'#8ba593',floor:'#dce5dd'},
- {name:'눈꽃 침엽수',leaf:'#3e7264',light:'#6e9781',floor:'#d4e1d6'},
- {name:'깊어진 숲',leaf:'#557b58',light:'#91a377',floor:'#cbd9c8'},
- {name:'푸른 거목',leaf:'#39656d',light:'#6f9697',floor:'#cedee1'},
- {name:'별빛 고목',leaf:'#355b55',light:'#7f9b73',floor:'#dbe0ca'}
-];
+var FOREST_LOOK=ART.forest;
 function drawForestArt(g,st,seed,L){
   var P=FOREST_LOOK[Math.max(0,Math.min(4,L-1))];
-  g.fillStyle='#e8ede3';rr(g,0,0,st.w,st.h,8);g.fill();
+  g.fillStyle='#edf9df';rr(g,0,0,st.w,st.h,8);g.fill();
   g.fillStyle=P.floor;rr(g,2,2,st.w-5,st.h-4,13);g.fill();
   /* Ground only: the resource renderer owns every visible tree. */
   g.strokeStyle='rgba(96,125,113,.15)';g.lineWidth=.7;
@@ -225,7 +219,7 @@ function drawForestArt(g,st,seed,L){
 }
 
 function drawRiverArt(g,st,seed,L){
-  var w=st.w,h=st.h,wc=[['#9bd4e6','#c2eaf5'],['#82cbe1','#b4e5f2'],['#70bfdd','#a2e0f4'],['#5aaed4','#92dafa'],['#56c4de','#a8f2ef']][L-1];
+  var w=st.w,h=st.h,wc=[['#54cdeb','#c2eaf5'],['#30bde8','#b4e5f2'],['#21aedf','#a2e0f4'],['#219bd8','#92dafa'],['#23c5d5','#a8f2ef']][L-1];
   g.fillStyle='#dce8df';rr(g,0,0,w,h,12);g.fill();
   var water=g.createLinearGradient(0,0,w,h);water.addColorStop(0,wc[0]);water.addColorStop(.5,wc[1]);water.addColorStop(1,wc[0]);g.fillStyle=water;rr(g,5,5,w-10,h-10,11);g.fill();
   g.strokeStyle='rgba(255,255,255,.5)';g.lineWidth=2;rr(g,5,5,w-10,h-10,11);g.stroke();

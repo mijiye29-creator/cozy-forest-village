@@ -20,7 +20,7 @@ function drawTarget(){
   if(tapFx){tapFx.t-=1/60;if(tapFx.t<=0)tapFx=null;else{g.fillStyle='rgba(255,240,170,'+(tapFx.t*.4)+')';rr(g,tapFx.c*T,tapFx.r*T,T,T,6);g.fill();}}
 }
 function draw(){
-  ctx.fillStyle='#e7ede3';ctx.fillRect(0,0,W,SH);
+  ctx.fillStyle='#d6eef5';ctx.fillRect(0,0,W,SH);
   ctx.save();if(SHAKE>0)ctx.translate(Math.sin(time*53)*SHAKE*3,Math.cos(time*47)*SHAKE*2.2);ctx.scale(Z,Z);ctx.translate(-camX,-camY);
   drawOutskirts(ctx,-112,'left');if(fenceX()>=W-1)drawOutskirts(ctx,W,'right');
   ctx.drawImage(BG,0,WORLD_TOP,W,HT-WORLD_TOP);

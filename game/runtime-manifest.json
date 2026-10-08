@@ -10,6 +10,11 @@
       "topic": "좌표·캔버스·월드 기본값"
     },
     {
+      "id": "art-palette",
+      "path": "src/art-palette.js",
+      "topic": "표현 전용 공통 색상·레퍼런스 팔레트"
+    },
+    {
       "id": "goods",
       "path": "src/goods.js",
       "topic": "나무·물고기·광물·제품 데이터"

@@ -378,3 +378,30 @@ header{align-items:center}
 @media(max-width:360px){#raidRadar #bearChip{font-size:22px;min-height:38px}}
 @media(max-height:500px) and (orientation:landscape){#raidRadar #bearChip{font-size:24px;min-height:38px}}
 @media(prefers-reduced-motion:reduce){#raidRadar #bearChip.warn{animation:none}}
+
+/* Colorful book world: color only; layout, touch targets and clock sizing stay intact. */
+:root{--bg:#d6eef5;--panel:#fff8e7;--ink:#214b56;--sub:#516c72;--line:#a5d9d9;--moss:#147c73;--coin:#ffc747;--coinInk:#65410f;--rose:#d95b52;--off:#e1e9e4}
+html,body,.app{background:#d6eef5}
+header{background:linear-gradient(#d9f3fbdd,#d9f3fb00)}
+.coins{background:#fff8de;border-color:#efbd45;box-shadow:0 3px 10px #80522318}
+.coinIcon{background:#ffc847;color:#65410f;border-color:#d79522}
+#coins{color:#65410f!important}
+.meta{background:#effcff;border-color:#86ccdc;color:#235668}
+#management{background:#fff8ecf7;border-color:#8fcec9}
+#management .tab.on{background:#147c73;color:#fff;border-color:#147c73}
+#quickDock button{background:#f1fcff;color:#235668;border-color:#88cbd7}
+#quickDock button:active{background:#d1f4ec}
+#quickDock button:first-child{background:#ffe7a2;color:#65410f;border-color:#efbd45}
+#dexBox,#dayBox,#setp,#goalList{background:#fff9e9;border-color:#8dcfc7;color:#214b56}
+#hint{background:#fff9e8f2!important;color:#294f52!important;border-color:#8bc8bd!important}
+#raidRadar{background:#edfafff2;border-color:#69b7cd}
+#radarLabel{color:#21586b}
+#raidRadar #bearChip{background:#126b7d;color:#fff;border-color:#55cbe0}
+#raidRadar #bearChip.calm{background:#147c73;border-color:#69dac1}
+#raidRadar #bearChip.warn,#raidRadar #bearChip.raid{background:#b62f43;color:#fff;border-color:#ffc05d}
+#eventToast{background:#ffecb4f5;color:#65410f;border-color:#e8aa33}
+.storyCard{background:linear-gradient(160deg,#fffdf1,#fff0ce);color:#214b56}
+.storyArt{background:linear-gradient(155deg,#71d0ee,#ffe0a0 58%,#83d781)}
+.storyArt[data-scene="2"]{background:linear-gradient(155deg,#3daddb,#bef2f1 54%,#84d591)}
+.storyArt[data-scene="3"]{background:linear-gradient(155deg,#235480,#5b9bcc 56%,#ffce87)}
+.storyBtn{background:#147c73}.storyBtn.alt{background:#d6f0e8;color:#245452}
