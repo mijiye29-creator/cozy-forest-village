@@ -17,10 +17,10 @@ function walkXY(x,y){
   for(var i=0;i<PADLIST.length;i++){if(Math.hypot(x-PADLIST[i].x,y-PADLIST[i].y)<20)return true;}
   if(x>MX-4)return false;var t=tileAt(x,y);var lake=SITE.p1;if(x>lake.x+3&&x<lake.x+lake.w-3&&y>lake.y+3&&y<lake.y+lake.h-3)return false;return !!t&&tileOk(t.c,t.r);
 }
-function fly(id,x0,y0,x1,y1,dur){FLY.push({id:id,x0:x0,y0:y0,x1:x1,y1:y1,t:0,dur:dur||.32});}
+function fly(id,x0,y0,x1,y1,dur,style){FLY.push({id:id,x0:x0,y0:y0,x1:x1,y1:y1,t:0,dur:dur||.32,payment:style==='payment',bend:style==='payment'?(x0-x1)*.4:0});}
 function updateFly(dt){for(var i=FLY.length-1;i>=0;i--){FLY[i].t+=dt;if(FLY[i].t>=FLY[i].dur)FLY.splice(i,1);}}
-function drawFly(){FLY.forEach(function(f){var k=f.t/f.dur,e=1-(1-k)*(1-k),x=f.x0+(f.x1-f.x0)*e,y=f.y0+(f.y1-f.y0)*e-Math.sin(k*Math.PI)*18;
-  if(f.id==='bigcoin'){var sq=Math.abs(Math.cos(time*10+f.x0))*.6+.4;ctx.save();ctx.translate(x,y);ctx.fillStyle='rgba(255,230,120,.35)';ctx.beginPath();ctx.arc(0,0,9,0,7);ctx.fill();ctx.scale(sq,1);
+function drawFly(){FLY.forEach(function(f){var k=f.t/f.dur,e=1-(1-k)*(1-k),x=f.x0+(f.x1-f.x0)*e+Math.sin(k*Math.PI)*(f.bend||0),y=f.y0+(f.y1-f.y0)*e-Math.sin(k*Math.PI)*18;
+  if(f.id==='bigcoin'){if(f.payment){ctx.strokeStyle='rgba(255,226,106,'+(.8*(1-k))+')';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-4,y-9);ctx.quadraticCurveTo(x+2,y-4,x,y);ctx.stroke();}var sq=Math.abs(Math.cos(time*10+f.x0))*.6+.4;ctx.save();ctx.translate(x,y);ctx.fillStyle='rgba(255,230,120,.35)';ctx.beginPath();ctx.arc(0,0,9,0,7);ctx.fill();ctx.scale(sq,1);
     ctx.fillStyle='#b8801a';ctx.beginPath();ctx.arc(0,1.2,6.4,0,7);ctx.fill();ctx.fillStyle='#f0bb3f';ctx.beginPath();ctx.arc(0,0,6.4,0,7);ctx.fill();ctx.strokeStyle='#fff1a8';ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,4.8,0,7);ctx.stroke();
     ctx.fillStyle='#8a5a10';ctx.font='900 7px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('₩',0,.4);ctx.fillStyle='rgba(255,255,255,.7)';ctx.beginPath();ctx.arc(-2.2,-2.4,1.3,0,7);ctx.fill();ctx.restore();}
   else if(f.id==='coin'){ctx.fillStyle='#f0bb3f';ctx.beginPath();ctx.arc(x,y,3.2,0,7);ctx.fill();ctx.fillStyle='#fff3c0';ctx.beginPath();ctx.arc(x-1,y-1,1.1,0,7);ctx.fill();}

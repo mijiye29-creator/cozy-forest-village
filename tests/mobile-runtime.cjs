@@ -221,12 +221,12 @@ for(const stage of [1,2,3]){
 let purchased=0,coinFlights=0,paymentLabels=0;
 const payment={PINCH:null,PINCH_USED:false,agents:[{x:100,y:100}],S:{coins:10000,pads:{},tut:99},PAD_RADIUS:14,padMsgT:0,fmt:String,
   buildPads:()=>[{id:'payment',x:100,y:100,d:{cost:()=>5000,isMax:()=>purchased>0}}],
-  fly(){coinFlights++;},addFloat(){paymentLabels++;},sfx(){},buy(){purchased++;payment.S.coins-=5000;}};
+  burst(){},fly(){coinFlights++;},addFloat(){paymentLabels++;},sfx(){},buy(){purchased++;payment.S.coins-=5000;}};
 vm.createContext(payment);vm.runInContext(section('var padHold=', 'function padIcon('),payment);payment.padInit=true;
 for(let frame=0;frame<120;frame++)payment.updatePads(1/60);
 assert.equal(purchased,1);assert.equal(payment.S.coins,5000);
 assert(paymentLabels<=4,'Upgrade payment labels must not accumulate every frame');
-assert(coinFlights<=12,'Coin feedback must stay bounded while pads are rebuilt');
+assert(coinFlights>=15&&coinFlights<=36,'Coin feedback must stay bounded while pads are rebuilt');
 // Event typography must retain a readable CSS size and wrap without shrinking.
 for(const [width,height] of [[320,568],[390,844],[844,390],[1280,800]]){
   const drawn=[],unit=1080/width,graphic={save(){},restore(){},fill(){},stroke(){},

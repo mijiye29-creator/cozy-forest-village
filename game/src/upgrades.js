@@ -48,7 +48,7 @@ function wLv(g){return g[PRIM[g.role]]||0;}
 function lowestOf(role){var best=null;S.w.forEach(function(g){if(g.role!==role||wLv(g)>=MAXLV[PRIM[role]])return;if(!best||wLv(g)<wLv(best))best=g;});return best;}
 var WROLE={lumber:'나무꾼',fisher:'낚시꾼',hunter:'사냥꾼',hunter2:'호수 사냥꾼',hunter3:'광산 사냥꾼',miner:'광부'};
 function wBehind(role){var L=(S.wlv&&S.wlv[role])||0;return S.w.filter(function(g){return g.role===role&&wLv(g)<L;});}
-function wupCost(role){return Math.round(wupCost0(role)*(role==='miner'?3:(role==='hunter'?.8:(role==='hunter2'?2.5:(role==='hunter3'?4:1))))*stageCostMult(role==='miner'?3:(role==='fisher'?2:1)));}
+function wupCost(role){return Math.round(wupCost0(role)*(role==='miner'?3:(role==='hunter'?.8:(role==='hunter2'?2.5:(role==='hunter3'?4:1))))*stageCostMult(role==='miner'||role==='hunter3'?3:(role==='fisher'||role==='hunter2'?2:1)));}
 function wupCost0(role){var L=S.wlv[role]||0,pr=PRIM[role],b=wBehind(role);
   if(b.length){var c=0;b.forEach(function(g){for(var l=wLv(g);l<L;l++)c+=gcost(pr,l,true);});return Math.max(10,Math.round(c*.9));}
   return Math.round(gcost(pr,L,true)*2*(.6+.4*count(role)));}
@@ -62,9 +62,9 @@ function wupDef(role,title){return mkUp({id:'wup_'+role,wup:role,lock:function()
   label:function(){var L=S.wlv[role]||0;if(wBehind(role).length)return WROLE[role]+' 모두 Lv'+L+'로 맞추기';if(SUPER_ROLES[role]&&L+1>=MAXLV[PRIM[role]])return '🌟 '+WROLE[role]+' 모두 Lv'+(L+1)+' · 슈퍼 '+WROLE[role]+' 1명으로 합체!';if(role==='hunter'&&!(SUPER_ROLES[role]&&L+1>=MAXLV[PRIM[role]])){var nk=wkind(L+2);return '사냥꾼 모두 Lv'+(L+1)+' · 임꺽정 권법·발차기도 강화';}return WROLE[role]+' 모두 Lv'+(L+1)+((L+1)===6?' · ✨ 첨단 장비!':' · 더 빨리 일해요');},
   desc:function(){return '';}});}
 function hireDef(role,name,base,max,desc){
-  return mkUp({id:'hire_'+role,role:role,max:max,hidden:function(){return (role==='miner'&&!owned('m1'))||(role==='fisher'&&(S.stage||1)<2);} /* v72: fisher hire only once the lake village opens */,cost:function(){return Math.round(base*Math.pow(2.1,count(role))*stageCostMult(role==='miner'?3:(role==='fisher'?2:1)));},
+  return mkUp({id:'hire_'+role,role:role,max:max,hidden:function(){return (role==='miner'&&!owned('m1'))||(role==='fisher'&&(S.stage||1)<2);} /* v72: fisher hire only once the lake village opens */,cost:function(){return Math.round(base*Math.pow(2.1,count(role))*stageCostMult(role==='miner'||role==='hunter3'?3:(role==='fisher'||role==='hunter2'?2:1)));},
     isMax:function(){return count(role)>=max;},lv:function(){return count(role)+'명';},
-    canBuy:function(){return S.lodge>0&&S.coins>=Math.round(base*Math.pow(2.1,count(role))*stageCostMult(role==='miner'?3:(role==='fisher'?2:1)));},
+    canBuy:function(){return S.lodge>0&&S.coins>=Math.round(base*Math.pow(2.1,count(role))*stageCostMult(role==='miner'||role==='hunter3'?3:(role==='fisher'||role==='hunter2'?2:1)));},
     why:function(){return S.lodge?'코인이 부족해요':'일꾼 숙소를 먼저 지어요';},
     name:function(){return name+' 고용';},desc:function(){return S.lodge?desc():'광장에 일꾼 숙소를 먼저 지어요';}});
 }
@@ -78,7 +78,7 @@ function procDef(b,name,base){return mkUp({id:b,cost:function(){var L=S[b]||0;re
   hidden:function(){var p=plotOf(b);return !(p.show()||p.built());},lv:function(){return S[b]?'Lv.'+S[b]:'미건설';},name:function(){return S[b]?name+' 강화':name+' 짓기';},desc:function(){return '';}});}
 function pstDef(b){var nm={mill:'제재소',smoke:'훈제소',smelt:'제련소',elec:'전자 공장'}[b];return mkUp({id:'pst_'+b,pst:b,hidden:function(){return !S[b];},cost:function(){var L=(S.pst&&S.pst[b])||0;return Math.round({mill:160,smoke:180,smelt:900,elec:1500}[b]*Math.pow(b==='smelt'||b==='elec'?2.4:2,L)*stageCostMult(b==='smelt'||b==='elec'?3:(b==='smoke'?2:1)));},
   isMax:function(){return ((S.pst&&S.pst[b])||0)>=5;},lv:function(){var L=(S.pst&&S.pst[b])||0;return L?'Lv.'+L+' · '+storeCap(b)+'칸':'없음';},name:function(){return (S.pst&&S.pst[b])?nm+' 창고 넓히기':nm+' 창고 짓기';},desc:function(){var L=((S.pst&&S.pst[b])||0)+1;return '보관 '+(30+26*(L-1))+'칸 · 가공 +'+(25*L)+'% 빨라요'+(b==='smelt'?'':' · 트럭 값 +'+(30*L)+'% · 더 자주, 더 많이');}});}
-function procBeltDef(b){return mkUp({id:'pbelt_'+b,pbelt:b,cost:function(){return 120;},isMax:function(){return !!(S.pcv&&S.pcv[b]);},hidden:function(){return !S[b]||(b==='elec'&&!S.smelt);},name:function(){return {mill:'숲→제재소',smoke:'강→훈제소',smelt:'광산→제련소',elec:'제련소→전자 공장'}[b]+' 벨트';},lv:function(){return '';},desc:function(){return '';}});}
+function procBeltDef(b){return mkUp({id:'pbelt_'+b,pbelt:b,cost:function(){return 120*stageCostMult(b==='smelt'||b==='elec'?3:b==='smoke'?2:1);},isMax:function(){return !!(S.pcv&&S.pcv[b]);},hidden:function(){return !S[b]||(b==='elec'&&!S.smelt);},name:function(){return {mill:'숲→제재소',smoke:'강→훈제소',smelt:'광산→제련소',elec:'제련소→전자 공장'}[b]+' 벨트';},lv:function(){return '';},desc:function(){return '';}});}
 function beltUpCost(line){var L=(S.cvLv&&S.cvLv[line])||1;return Math.round(70*Math.pow(2.2,L-1)*(L>=5?Math.pow(1.5,L-4):1)*(line==='fish'?stageCostMult(2):(line==='iron'?stageCostMult(3):1)));}
 function beltUpHidden(line){return function(){if(line==='wood')return !(S.cv.f1||(S.pcv&&S.pcv.mill));if(line==='fish')return !(S.cv.p1||(S.pcv&&S.pcv.smoke));return !((S.pcv&&S.pcv.smelt)||(S.pcv&&S.pcv.elec));};}
 function beltUpDef(line,nm){return mkUp({id:'beltup_'+line,cost:function(){return beltUpCost(line);},isMax:function(){return ((S.cvLv&&S.cvLv[line])||0)>=CV_MAX;},hidden:beltUpHidden(line),name:function(){return nm+' 벨트 전체 강화';},lv:function(){return 'Lv.'+lineBeltLv(line);},desc:function(){return '';}});}
@@ -95,7 +95,7 @@ function vfenceDef(v){return mkUp({id:'vfence'+v,vf:v,max:5,hidden:function(){re
   lv:function(){var L=(S.vf&&S.vf[v])||0;return L?'Lv.'+L:'없음';},name:function(){return (v===2?'호수':'광산')+' 성벽'+(((S.vf&&S.vf[v])||0)?' 강화':' 짓기');},desc:function(){var L=((S.vf&&S.vf[v])||0)+1;return '내구도 '+fenceHpAt(L)+' · 곰 공격 간격 '+(1.1+.45*L).toFixed(1)+'초 · 피해 감소';}});}
 function vfenceRepairDef(v){return mkUp({id:'vfence_fix'+v,vfRepair:v,hidden:function(){return (S.stage||1)<v||!VFBREACH[v];},cost:function(){return Math.round(100*stageCostMult(v));},isMax:function(){return !VFBREACH[v];},lv:function(){return '뚫림';},name:function(){return (v===2?'호수':'광산')+' 성벽 수리';},desc:function(){return '곰이 뚫은 성벽을 즉시 다시 막아요';}});}
 var VFIXDEF={2:vfenceRepairDef(2),3:vfenceRepairDef(3)};
-function hunterCost(role){role=role||'hunter';return Math.round(150*Math.pow(2,count(role))*({hunter:1,hunter2:3,hunter3:8}[role]));}
+function hunterCost(role){role=role||'hunter';return Math.round(150*Math.pow(2,count(role))*({hunter:1,hunter2:5,hunter3:16}[role]));}
 function hvTower(role){var v=HV[role];return v===1?S.tower>0:((S.vt&&S.vt[v])||0)>0;}
 function hunterDef(role){role=role||'hunter';var v=HV[role];return mkUp({id:'hire_'+role,role:role,max:5,hidden:function(){return !huntReady()||(S.stage||1)<v;},cost:function(){return hunterCost(role);},
   isMax:function(){return count(role)>=5;},lv:function(){return count(role)+'명';},
@@ -131,7 +131,7 @@ function beltDef(sid){
     name:function(){return st.name+' 벨트'+(cvLv(sid)?' 강화':' 설치');},
     desc:function(){var L=cvLv(sid)+1;return '초당 '+convRate(L).toFixed(1)+'회 · 한 번에 '+convBatch(L)+'개';}});
 }
-function shopStaffDef(line){return mkUp({id:'shopstaff_'+line,shopStaff:line,cost:function(){return 150*Math.pow(2.6,shopStaffLevel(line));},isMax:function(){return shopStaffLevel(line)>=6;},hidden:function(){return !lineOpen(line);},lv:function(){return 'Lv.'+shopStaffLevel(line);},name:function(){return SHOPDEF[line].name+' · 가게 일손';},desc:function(){return '손님이 많아졌어요. 일손을 더 들일까요? 다음: '+(shopStaffLevel(line)%2===0?'점원 고용 · 응대·계산 개선':'진열대 추가 · 판매대 +1')+' · Lv2부터 단골손님';}});}
+function shopStaffDef(line){return mkUp({id:'shopstaff_'+line,shopStaff:line,cost:function(){return 150*Math.pow(2.6,shopStaffLevel(line))*stageCostMult(line==='fish'?2:1);},isMax:function(){return shopStaffLevel(line)>=6;},hidden:function(){return !lineOpen(line);},lv:function(){return 'Lv.'+shopStaffLevel(line);},name:function(){return SHOPDEF[line].name+' · 가게 일손';},desc:function(){return '손님이 많아졌어요. 일손을 더 들일까요? 다음: '+(shopStaffLevel(line)%2===0?'점원 고용 · 응대·계산 개선':'진열대 추가 · 판매대 +1')+' · Lv2부터 단골손님';}});}
 function shopDef(line){
   var nm=SHOPDEF[line].name,base=line==='wood'?120:160;
   return mkUp({id:'shop_'+line,shop:line,cost:function(){return Math.round(base*Math.pow(1.9,S.shop[line]-1)*stageCostMult(line==='fish'?2:1));},

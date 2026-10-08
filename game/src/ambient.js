@@ -3,9 +3,9 @@ var DAY=300;
 function dayL(){return .5+.5*Math.cos(time/DAY*6.2832);}
 function nightAmt(){return 0;}
 /* raid cycle (names kept for save compatibility: S.season/S.winters): each chapter has a calm preparation window before bear raids */
-var SEASON_LEN=200,WINTER_LEN=75;
+var SEASON_LEN=185,WINTER_LEN=75;
 /* Shorter preparation and longer raids increase pressure as new villages open. */
-function seasonLen(){var st=S.stage||1;return st>=3?140:(st>=2?170:SEASON_LEN);}
+function seasonLen(){var st=S.stage||1;return st>=3?135:(st>=2?165:SEASON_LEN);}
 function raidLen(){var st=S.stage||1;return st>=3?85:(st>=2?80:WINTER_LEN);}
 function winterStart(){return seasonLen()-raidLen();}
 function isWinter(){return (S.season||0)>=winterStart();}

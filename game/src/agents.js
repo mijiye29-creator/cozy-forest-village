@@ -207,7 +207,7 @@ var SUPER_ROLES={lumber:'axe',fisher:'rod',hunter:'bow',hunter2:'bow',hunter3:'b
 /* v65 (director 2026-10-04): the three super hunters are the forest's 임꺽정, the lake's 거북선 (turtle ship) and the mine's 광개토대왕 on horseback */
 var SUPERNAME={lumber:'슈퍼 나무꾼',fisher:'슈퍼 낚시꾼',hunter:'임꺽정',hunter2:'이순신 장군',hunter3:'광개토대왕',miner:'슈퍼 광부'};
 function superGather(a){return !!(a.gear&&a.gear.super&&(a.role==='lumber'||a.role==='fisher'||a.role==='miner'));}
-function superPos(role){return role==='lumber'?{x:210,y:276}:(role==='miner'?{x:900,y:186}:{x:518,y:276});}
+function superPos(role){return role==='lumber'?{x:175,y:276}:(role==='miner'?{x:900,y:186}:{x:518,y:276});}
 function canMerge(role){var pr=SUPER_ROLES[role];if(!pr||!S.wlv||(S.wlv[role]||0)<MAXLV[pr])return false;var l=S.w.filter(function(g){return g.role===role;});return l.length>0&&!l.some(function(g){return g.super;})&&l.every(function(g){return (g[pr]||0)>=MAXLV[pr];});}
 function mergeCrew(role,show){var l=S.w.filter(function(g){return g.role===role;}),keep=l[0];keep.super=1;keep.name=SUPERNAME[role];
   /* v59: workers that leave in the merge must let go of the tree / fish they had reserved - before, those stayed reserved forever and the super worker could never take them */
@@ -224,13 +224,12 @@ function stepSuper(a,dt){var role=a.role,k={lumber:'tree',fisher:'fish',miner:'o
   a.working=false;if(!owned(sid)){idleInTile(a,dt);return;}
   if(Math.hypot(a.x-p.x,a.y-p.y)>3){moveTo(a,p.x,p.y,dt);return;}
   a.dir=-1;
-  /* v65 (director 2026-10-04): the super fisher's net now really lands the fish - thrown out (0-0.45s), settles, the fish are lifted out of the water (0.55s)
-     and hauled back inside the net, landing on the deck when the net is back (1.0s) */
+  /* Cast over the full lake, settle at 0.6s, lift at 0.85s, then haul the catch to shore by 1.6s. */
   if(a.net){var N=a.net;N.t+=dt;a.working=true;
-    if(N.t>=.55&&!N.lifted){N.lifted=true;N.list=N.list.filter(function(e){return e.q.alive&&(!e.q.by||e.q.by===a);});N.list.forEach(function(e){e.q.alive=false;e.q.timer=e.q.max;e.q.by=null;
+    if(N.t>=.85&&!N.lifted){N.lifted=true;N.list=N.list.filter(function(e){return e.q.alive&&(!e.q.by||e.q.by===a);});N.list.forEach(function(e){e.q.alive=false;e.q.timer=e.q.max;e.q.by=null;
       parts.push({x:e.x,y:e.y,vx:0,vy:0,g:0,life:.7,max:.7,col:'#ffffff',r:3,ring:1});for(var dr=0;dr<4;dr++)parts.push({x:e.x,y:e.y,vx:(Math.random()-.5)*40,vy:-30-Math.random()*30,g:120,life:.5,max:.5,col:'#bfe9f7',r:1.4});});
       if(Math.hypot(agents[0].x-a.x,agents[0].y-a.y)<160)sfx('splash',.2);}
-    if(N.t>=1){var plN=pileOf(sid),ppN=pilePos(sid),nN=0;N.list.forEach(function(e){plN[e.id]=(plN[e.id]||0)+1;nN++;fly(e.id,a.x+12,a.y-14,ppN.x,ppN.y-6,.35+nN*.03);
+    if(N.t>=1.6){var plN=pileOf(sid),ppN=pilePos(sid),nN=0,catchHand=superHands(a);N.list.forEach(function(e){plN[e.id]=(plN[e.id]||0)+1;nN++;fly(e.id,catchHand.x,catchHand.y,ppN.x,ppN.y-6,.35+nN*.03);
         for(var st6=0;st6<2;st6++)parts.push({x:a.x+14,y:a.y-14,vx:(Math.random()-.5)*70,vy:-30-Math.random()*40,g:90,life:.9,max:.9,col:'hsl('+Math.floor(Math.random()*360)+',95%,65%)',r:2.6,star:1});});
       stat('gather',N.list.length);nN+=superTopUp(sid,k);N.done=true;a.net=null;if(nN){burst(a.x+12,a.y-14,'#fff1a8',16,true);shake(.12);addFloat(ppN.x,ppN.y-30,'🎣 +'+nN+'!','#ffe27a');sfx('pickup',.1);}}
     return;}

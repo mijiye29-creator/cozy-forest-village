@@ -4,16 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>포근한 숲속 마을</title>
-<link rel="stylesheet" href="styles/game.css?v=866886e0fefb">
+<link rel="stylesheet" href="styles/game.css?v=116c279b617e">
 </head>
 <body>
 <div class="app">
   <header>
     <div class="coins"><div class="coinIcon">₩</div><div id="coins">0</div><button id="goal" type="button" aria-expanded="false" hidden><span class="gt"></span><span class="gb"><i></i></span><span class="gn"></span></button></div>
     <div class="meta"><div id="m1"></div><div id="m2"></div></div>
+    <span id="bearChip" hidden role="timer"></span>
   </header>
   <div id="eventToast" role="status" hidden></div>
-  <div id="raidRadar" hidden aria-label="곰 위치 지도"><span id="bearChip" hidden role="timer"></span><span id="radarLabel"></span><canvas id="radarCanvas" width="224" height="128"></canvas></div>
+  <div id="raidRadar" hidden aria-label="곰 위치 지도"><span id="radarLabel"></span><canvas id="radarCanvas" width="224" height="128"></canvas></div>
   <div class="inv" id="inv" aria-label="판매대 재고"></div>
   <nav class="tabs" id="tabs"></nav>
   <div class="drawer" id="drawer" hidden></div>
@@ -52,7 +53,7 @@
   </nav>
 
 <script src="intro-scenes.js"></script>
-<script src="runtime.js?v=96ce09737aa3"></script>
+<script src="runtime.js?v=92f21208a868"></script>
 </body>
 </html>
 

@@ -139,5 +139,5 @@ var SCARF=['','','#e2463c','#f0bb3f','#8fe8ff'];
 var PANTS={player:'#3f4f7a',lumber:'#3d4a6b',fisher:'#5d6b3d',courier:'#555b66',hunter:'#5b4a3a',imk:'#3a3f4a',hunter2:'#2b3f5a',hunter3:'#26262e',miner:'#4a4a52'},LEGH=5.5;
 function drawPerson(g,x,y,role,dir,by,bt,t,t2,look,actor){
  var level=look&&PRIM[role]?look[PRIM[role]]||0:0;
- drawActor3D(g,actor||{x:x,y:y,role:role,dir:dir,mv:curWalk,bob:curPh},{coat:level?ART.coats[Math.min(10,level-1)]:ART.roles[role],skin:look?LOOK_SKIN[look.skin||0]:'#ffe0c4',apron:true,level:level});
+ drawActor3D(g,actor||{x:x,y:y,role:role,dir:dir,mv:curWalk,bob:curPh},{coat:level?ART.coats[Math.min(10,level-1)]:ART.roles[role],skin:look?LOOK_SKIN[look.skin||0]:'#ffe0c4',apron:true,customArms:!!(look&&look.customArms),level:level});
 }

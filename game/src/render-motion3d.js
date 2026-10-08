@@ -37,8 +37,8 @@ function drawActor3D(g,a,style){
   motion3DBox(mesh,side*2.8,7+y+kick*5,Math.sin(s)*4+kick*12,3.2,12,3.6,pants,s+kick*.9);
   motion3DBox(mesh,side*2.8,1.8+Math.max(0,s)*2+kick*11,Math.sin(s)*7+2+kick*17,4,3.3,6,'#634333',s*.25);
   var hit=pose.attack*((a.strikeType==='punch-left'?side<0:side>0)?1:0),swing=-s*.7+pose.work*(side>0?1:.4);
-  motion3DBox(mesh,side*6.2,21+y,Math.sin(swing)*4+hit*9,3.2,11,3.7,coat,swing+hit*1.1);
-  motion3DBall(mesh,side*6.5,15+y+hit*6,Math.sin(swing)*7+hit*15,1.9,2,1.9,skin);
+  if(!style.customArms){motion3DBox(mesh,side*6.2,21+y,Math.sin(swing)*4+hit*9,3.2,11,3.7,coat,swing+hit*1.1);
+  motion3DBall(mesh,side*6.5,15+y+hit*6,Math.sin(swing)*7+hit*15,1.9,2,1.9,skin); }
  });
  motion3DBall(mesh,0,21+y,0,6,10,4.1,coat);
  motion3DBox(mesh,0,16+y,4,7,7,.7,style.apron?'#ffe1a3':coat);

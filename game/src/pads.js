@@ -190,12 +190,13 @@ function updatePads(dt){
   if(on.d.isMax()){delete S.pads[on.id];return;}
   if(on.d.lock&&on.d.lock()){if(padMsgT<=0){addFloat(on.x,on.y-26,on.d.lock(),'#ffb3b3');sfx('nope');padMsgT=2.5;}return;}
   if(a.payId!==on.id){a.payId=on.id;a.payTick=0;a.padFlyT=0;a.padAmtT=0;}
-  var rate=Math.max(500,cost/.30);a.payTick=(a.payTick||0)+rate*dt;
+  var rate=Math.max(80,cost/.70);a.payTick=(a.payTick||0)+rate*dt;
   var amt=Math.min(cost-paid,S.coins,Math.floor(a.payTick/50)*50);
   if(amt===0&&S.coins>=50)return;a.payTick=Math.max(0,a.payTick-amt);
   if(amt<=0){if(padMsgT<=0){addFloat(on.x,on.y-26,'코인이 부족해요','#ffb3b3');sfx('nope');padMsgT=2.5;}return;}
   S.coins-=amt;paid+=amt;S.pads[on.id]=paid;
-  a.padFlyT=(a.padFlyT||0)-dt;if(a.padFlyT<=0){a.padFlyT=.06;fly('bigcoin',a.x+(Math.random()-.5)*8,a.y-20,on.x+(Math.random()-.5)*10,on.y-4,.18);sfx('coin',.09);}a.padAmtT=(a.padAmtT||0)-dt;if(a.padAmtT<=0){a.padAmtT=.4;addFloat(on.x,on.y-28,'-₩'+fmt(amt),'#ffe27a',true);}
+  a.padFlyT=(a.padFlyT||0)-dt;if(a.padFlyT<=0){a.padFlyT=.075;for(var coin=0;coin<3;coin++)fly('bigcoin',a.x+(coin-1)*10,a.y-25-coin*3,on.x+(coin-1)*7,on.y-3,.28+coin*.06,'payment');burst(on.x,on.y-3,'#ffe27a',3,false);sfx('coin',.12);}a.padAmtT=(a.padAmtT||0)-dt;if(a.padAmtT<=0){a.padAmtT=.22;addFloat(on.x,on.y-31,'-₩'+fmt(amt),'#ffe27a',true);}
+
   if(paid>=cost-.001){a.payTick=0;S.coins+=paid;delete S.pads[on.id];padHold=on.id;padHoldP={x:on.x,y:on.y};buy(on.d,true);if(on.id==='lodge'&&S.tut===4)tutNext();}
 }
 function padIcon(p){if(p.icon)return p.icon;if(p.id.indexOf('site_')===0)return SITE[p.id.slice(5)].kind==='forest'?'🌲':'🎣';if(p.id.indexOf('belt_')===0)return '⚙️';return {lodge:'🏠',tower:'🏹',wh:'🏭',wh2:'🏭'}[p.id]||'⭐';}
@@ -239,7 +240,7 @@ function drawPads(floatingOnly){
     g.textAlign='center';g.textBaseline='middle';g.font='800 6px sans-serif';g.fillStyle='#344b40';g.fillText(t[0],0,-6,30);
     g.font='700 5.3px sans-serif';g.fillStyle='#285340';g.fillText(t[1],0,1,30);
     g.font='900 6.3px sans-serif';g.fillStyle=ready?'#16502c':'#792c2c';g.fillText('₩ '+fmt(Math.ceil(Math.max(0,cost-paid))),0,9,30);
-    if(paid>0){g.fillStyle='#a6b48a';rr(g,-14,13,28*Math.min(1,paid/Math.max(1,cost)),1.5,.75);g.fill();}
+    if(paid>0){var progress=Math.min(1,paid/Math.max(1,cost));g.fillStyle='#72562c';rr(g,-14,12,28,3,1.5);g.fill();g.fillStyle='#ffe76c';rr(g,-14,12,28*progress,3,1.5);g.fill();g.strokeStyle='rgba(255,243,169,'+(.65+.3*Math.sin(time*20))+')';g.lineWidth=2;rr(g,-18,-16,36,32,5);g.stroke();}
     if(ready&&!p.held){g.fillStyle='#fff6bd';g.beginPath();g.moveTo(11,-11);g.lineTo(15,-15);g.lineTo(19,-11);g.lineTo(16,-11);g.lineTo(16,-7);g.lineTo(14,-7);g.lineTo(14,-11);g.fill();}
     if(p.held){g.fillStyle='#52745c';g.beginPath();g.arc(14,-12,3.5,0,7);g.fill();g.fillStyle='#fff';g.font='5px sans-serif';g.fillText('✓',14,-12);}
     g.restore();

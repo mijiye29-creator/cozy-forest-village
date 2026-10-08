@@ -405,3 +405,10 @@ header{background:linear-gradient(#d9f3fbdd,#d9f3fb00)}
 .storyArt[data-scene="2"]{background:linear-gradient(155deg,#3daddb,#bef2f1 54%,#84d591)}
 .storyArt[data-scene="3"]{background:linear-gradient(155deg,#235480,#5b9bcc 56%,#ffce87)}
 .storyBtn{background:#147c73}.storyBtn.alt{background:#d6f0e8;color:#245452}
+
+/* Raid clock stays centered on the top HUD, clear of money and the minimap. */
+header #bearChip{left:50%;right:auto;top:50%;transform:translate(-50%,-50%);max-width:76px;padding:7px 6px;font-size:18px;font-weight:900;line-height:1.2;background:#126b7d;color:#fff;border-color:#55cbe0}
+header #bearChip.calm{background:#147c73;color:#fff;border-color:#69dac1}
+header #bearChip.warn,header #bearChip.raid{background:#b62f43;color:#fff;border-color:#ffc05d}
+@media(max-width:360px){header #bearChip{max-width:56px;font-size:14px;padding:6px 4px}}
+@media(min-width:640px){header #bearChip{max-width:112px;font-size:22px}}

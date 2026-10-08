@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "0929263b48cb0463532408d230e185f6c45bebdf7a3a23729b64024395ef2ae7",
+  "runtime_sha256": "186a888be6dc0e2662709124a8b8f660b57c2450af8c79cb6450407f0471e7c4",
   "modules": [
     {
       "id": "boot-errors",
@@ -76,7 +76,7 @@
       "id": "render-motion3d",
       "path": "src/render-motion3d.js",
       "topic": "3D 정점·광원·깊이 정렬·캐릭터 관절·시설 모션",
-      "bytes": 5017,
+      "bytes": 5041,
       "lines": 65,
       "symbols": [
         {
@@ -296,7 +296,7 @@
       "id": "save-progression",
       "path": "src/save-progression.js",
       "topic": "저장 키·구형 저장 이관·마을 해금·성장 규칙",
-      "bytes": 16633,
+      "bytes": 16631,
       "lines": 158,
       "symbols": [
         {
@@ -708,7 +708,7 @@
       "id": "render-primitives",
       "path": "src/render-primitives.js",
       "topic": "공통 도형·아이템·자원 그리기",
-      "bytes": 11296,
+      "bytes": 11333,
       "lines": 143,
       "symbols": [
         {
@@ -789,8 +789,8 @@
       "id": "agents",
       "path": "src/agents.js",
       "topic": "일꾼·BFS 경로·채집·납품·합성",
-      "bytes": 20434,
-      "lines": 257,
+      "bytes": 20325,
+      "lines": 256,
       "symbols": [
         {
           "name": "agents",
@@ -998,7 +998,7 @@
         },
         {
           "name": "step",
-          "line": 250
+          "line": 249
         }
       ]
     },
@@ -1325,7 +1325,7 @@
       "id": "movement",
       "path": "src/movement.js",
       "topic": "자유 이동·지형 충돌·현금 수령·물품 전달",
-      "bytes": 14581,
+      "bytes": 14846,
       "lines": 156,
       "symbols": [
         {
@@ -1438,8 +1438,8 @@
       "id": "pads",
       "path": "src/pads.js",
       "topic": "시설 발판·배치·충돌·울타리 조작",
-      "bytes": 23550,
-      "lines": 254,
+      "bytes": 23809,
+      "lines": 255,
       "symbols": [
         {
           "name": "PADLIST",
@@ -1511,27 +1511,27 @@
         },
         {
           "name": "padIcon",
-          "line": 201
-        },
-        {
-          "name": "drawTapMark",
           "line": 202
         },
         {
-          "name": "padTitle",
+          "name": "drawTapMark",
           "line": 203
         },
         {
-          "name": "padReady",
-          "line": 224
+          "name": "padTitle",
+          "line": 204
         },
         {
-          "name": "drawPads",
+          "name": "padReady",
           "line": 225
         },
         {
+          "name": "drawPads",
+          "line": 226
+        },
+        {
           "name": "drawJoy",
-          "line": 249
+          "line": 250
         }
       ]
     },
@@ -1620,7 +1620,7 @@
       "id": "raids",
       "path": "src/raids.js",
       "topic": "곰 생성·침입·시설 피해",
-      "bytes": 10714,
+      "bytes": 10718,
       "lines": 113,
       "symbols": [
         {
@@ -2863,8 +2863,8 @@
       "id": "render-actors",
       "path": "src/render-actors.js",
       "topic": "일꾼·영웅·손님 아트",
-      "bytes": 33346,
-      "lines": 266,
+      "bytes": 36153,
+      "lines": 281,
       "symbols": [
         {
           "name": "drawVehicleUpgrade",
@@ -2907,36 +2907,56 @@
           "line": 85
         },
         {
-          "name": "drawMasterLumber",
+          "name": "superWorkPose",
           "line": 123
         },
         {
+          "name": "superHands",
+          "line": 127
+        },
+        {
+          "name": "superNetBounds",
+          "line": 128
+        },
+        {
+          "name": "superNetFish",
+          "line": 129
+        },
+        {
+          "name": "drawMasterFisher",
+          "line": 130
+        },
+        {
+          "name": "drawMasterLumber",
+          "line": 138
+        },
+        {
           "name": "drawSuper",
-          "line": 133
+          "line": 150
         },
         {
           "name": "superPlate",
-          "line": 160
+          "line": 177
         },
         {
           "name": "drawSuperFx",
-          "line": 168
+          "line": 185
         },
         {
           "name": "heroTier",
-          "line": 192
+          "line": 207
         },
         {
           "name": "drawHero",
-          "line": 193
+          "line": 208
         },
         {
           "name": "drawAgent",
-          "line": 200
+          "line": 215
         },
         {
           "name": "drawCustomer",
-          "line": 251
+          "line": 266
         }
       ]
     },
@@ -3026,7 +3046,7 @@
       "id": "upgrades",
       "path": "src/upgrades.js",
       "topic": "구매 정의·가격·장비·직원·시설 강화",
-      "bytes": 38255,
+      "bytes": 38454,
       "lines": 348,
       "symbols": [
         {
@@ -3437,8 +3457,8 @@
       "id": "loop",
       "path": "src/loop.js",
       "topic": "프레임·시뮬레이션·테스트 훅·시작 순서",
-      "bytes": 13096,
-      "lines": 98,
+      "bytes": 14217,
+      "lines": 99,
       "symbols": [
         {
           "name": "last",
@@ -3482,11 +3502,11 @@
         },
         {
           "name": "suspendMobile",
-          "line": 80
+          "line": 81
         },
         {
           "name": "boot",
-          "line": 90
+          "line": 91
         }
       ]
     }

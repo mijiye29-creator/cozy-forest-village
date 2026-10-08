@@ -48,7 +48,7 @@ function areaW(){return STAGE_W[Math.min(3,S.stage||3)-1];}
 function fenceX(){if(FXA){var k=Math.min(1,FXA.t/1.6),e=1-Math.pow(1-k,3);return FXA.x0+(FXA.x1-FXA.x0)*e;}return areaW();}
 function lineOpen(l){return l==='wood'||(S.stage||3)>=2;}
 /* v99: later villages cost more for richer rewards, while keeping each chapter reachable */
-function stageCostMult(st){var s=st||1;return s>=3?10:(s>=2?3.5:1);}
+function stageCostMult(st){var s=st||1;return s>=3?16:(s>=2?5:1);}
 /* v101: each new village opens after every employed resident of the current village reaches max skill. */
 function goalCrewLevel(role,track){var level=(S.wlv&&S.wlv[role])||0;S.w.forEach(function(g){if(g.role===role)level=Math.min(level,g[track]||0);});return level;}
 var GOALS={

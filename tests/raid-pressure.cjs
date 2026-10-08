@@ -17,6 +17,6 @@ const chip={hidden:true,setAttribute(k,v){this[k]=v}},ui={S:{},TITLE:false,tutOn
 const panels=readRuntime('panels');vm.runInContext(panels.slice(panels.indexOf('function refreshBearChip('),panels.indexOf('/* v74')),ui);
 ui.refreshBearChip();assert(chip.textContent.endsWith('2:05'));assert.equal(chip['aria-label'],'북극곰 습격까지 2:05');ui.toWinter=()=>9;ui.refreshBearChip();assert.equal(chip.className,'warn');assert(chip.textContent.endsWith('0:09'));assert(!chip.textContent.includes('곰'),'Compact visible text fits enlarged digits');
 ui.isWinter=()=>true;ui.liveBears=()=>[{}];ui.refreshBearChip();assert.equal(chip.className,'raid');assert.equal(chip['aria-label'],'습격 종료까지 0:42');ui.tutOn=()=>true;ui.refreshBearChip();assert.equal(chip.hidden,true);
-const html=fs.readFileSync(path.resolve(__dirname,'../game/index.html'),'utf8');assert(/id="raidRadar"[^>]*><span id="bearChip"/.test(html));
+const html=fs.readFileSync(path.resolve(__dirname,'../game/index.html'),'utf8');assert(/<header>[\s\S]*id="bearChip"[\s\S]*<\/header>/.test(html));
 const css=fs.readFileSync(path.resolve(__dirname,'../game/styles/game.css'),'utf8');assert(css.includes('#raidRadar #bearChip{position:static'));assert(css.includes('font-size:26px'));assert(css.includes('#raidRadar #bearChip[hidden]{display:none}'));assert(css.includes('@media(prefers-reduced-motion:reduce)'));
 console.log('PASS: shorter preparation; longer raids; earlier/larger waves; stronger HP/attacks/movement; bounded spawn rate; stable upgrade scaling; countdown states/accessibility/tutorial hiding.');

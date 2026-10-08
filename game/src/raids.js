@@ -29,7 +29,7 @@ function raidP(){if(!isWinter())return 0;return Math.max(0,Math.min(1,((S.season
 /* how many bears may be in at once right now: a few at first, the full cap by mid-raid, +2 extra in the closing rush */
 function bearCapNow(){var p=raidP(),c=bearCap();return Math.max(1,Math.round(c*(.5+.7*Math.min(1,p/.7))))+(p>=.7?2:0);}
 /* Earlier pressure still ramps into a closing rush, with a bounded spawn rate. */
-function raidGap(){var p=raidP(),base=(Math.max(3,6.5-.3*(S.winters||1))+Math.random()*2)*((S.stage||1)>=3?.6:1);return Math.max(.8,base*(1.55-1.2*Math.pow(p,.85)));}
+function raidGap(){var p=raidP(),base=(Math.max(3,6.5-.3*(S.winters||1))+Math.random()*2)*((S.stage||1)>=3?.6:1);return Math.max(.8,base*.72*(1.55-1.2*Math.pow(p,.85)));}
 var RUSHMSG=0;
 /* v89: a bear's on-body radius (boss/king are drawn bigger) - used to keep the hero, workers and other bears from standing inside it */
 function bearR(b){return 15*(b.king?1.6:(b.boss?1.35:1));}
