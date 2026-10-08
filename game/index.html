@@ -292,7 +292,7 @@ header>*{pointer-events:auto}
 #quickDock button{flex:1;min-width:0;min-height:49px;border:0;border-radius:14px;background:transparent;color:#4c6353;font:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;touch-action:manipulation}
 #quickDock button:active{background:#e1e7d9;transform:scale(.96)}
 #quickDock button span{font-size:20px;line-height:1;width:22px;height:22px}
-#quickDock button small{font-size:10px;font-weight:700;opacity:.86}
+#quickDock button small{font-size:10px;font-weight:700;opacity:.86;white-space:nowrap}
 body.management-open #quickDock{transform:translateY(120%)}
 #title,#ending{inset:0;border-radius:0;background:linear-gradient(180deg,#e7ede315 20%,#243e3140 70%,#243e3180)}
 #title{align-items:flex-end;padding:0 24px calc(44px + env(safe-area-inset-bottom,0px));z-index:19}
@@ -1102,7 +1102,7 @@ function dropAt(a,line){
     var put=Math.min(a.bag[id],Math.max(0,room));if(put<=0)continue;
     addSs(line,id,put);a.bag[id]-=put;room-=put;n+=put;if(a.bag[id]<=0)delete a.bag[id];
   }
-  if(n>0){addFloat(STALL[line].x-20,STALL[line].y-26,'📦+'+n,'#ffffff',true);sfx('pickup');}
+  if(n>0){if(a.role==='player'&&line==='wood'&&S.tut===2)S.tutDelivered=true;addFloat(STALL[line].x-20,STALL[line].y-26,'📦+'+n,'#ffffff',true);sfx('pickup');}
   return n;
 }
 var DROP_TILE={wood:{c:0,r:2},fish:{c:4,r:2}},WH_TILE={c:1,r:2};
@@ -1873,7 +1873,7 @@ function drawJoy(){
 var TUT=[
   {t:'화면을 끌어요 · 화살표까지 왕복',at:function(){return (S.tutN||0)<1?TUT_A:{x:HOME.x,y:HOME.y};},done:function(){return (S.tutN||0)>=2;},prog:function(){return Math.min(2,S.tutN||0)+'/2';}},
   {t:'🌲 나무 옆에 서요 · 자동 채집',at:function(){var a=agents[0],best=null,bd=1e9;res.forEach(function(r){if(r.s==='f1'&&r.alive){var d=Math.hypot(r.x-a.x,r.y-a.y);if(d<bd){bd=d;best=r;}}});return best?{x:best.x,y:Math.max(26,best.y-22)}:null;},done:function(){return bagN(agents[0])>=cap();},prog:function(){return Math.min(cap(),bagN(agents[0]))+'/'+cap();}},
-  {t:'나무를 가게에 옮겨요',at:function(){return dropPt('wood');},done:function(){return bagN(agents[0])===0;},prog:function(){return bagN(agents[0])+'개 남음';}},
+  {t:'나무를 가게에 옮겨요',at:function(){return dropPt('wood');},done:function(){return bagN(agents[0])===0&&tutHasDelivery();},prog:function(){return bagN(agents[0])+'개 남음';}},
   {t:'💵 돈더미를 주워요',tt:function(){return (S.cash&&S.cash.wood>0)?'💵 돈더미 주우러 가요':'🧑‍🤝‍🧑 손님이 사는 중 · 곧 돈더미 생겨요';},at:function(){var p=cashPos('wood');return {x:p.x,y:p.y-8};},done:function(){return !!S.h4;}},
   {t:'🪓 [나무꾼 고용]에 서요 · 대신 베어요',at:function(){return padPos(TUTPAD[S.tut]);},done:function(){return S.w.length>0;}},
   {t:'🌲 [숲 키우기]에 서요 · 좋은 나무 등장',at:function(){return padPos(TUTPAD[S.tut]);},done:function(){return siteLv('f1')>=2;}},
@@ -1885,7 +1885,9 @@ var TUT=[
 var TUTPAD={4:'hire_lumber',5:'site_f1',6:'wup_lumber',7:'belt_f1',8:'fence',9:'tower'},TUT_A={x:40,y:392};
 var TUT_OK=['잘 움직였어요!','가득 찼어요! 납품하러 가요','납품 완료! 손님이 사 가요','돈을 챙겼어요!','첫 일꾼 고용!','숲 레벨 업!','나무꾼 레벨 업!','벨트 설치! 이제 자동으로 팔려요','울타리 완성!','망루 완성!'];
 /* each tutorial step allows only its own action: gather only in the gathering step, deliver only in the delivery step, cash only in the cash step */
-function tutNoGather(){return tutOn()&&S.tut!==1;}
+function tutHasDelivery(){return !!S.tutDelivered||lineStock('wood')>0||!!(S.cash&&S.cash.wood>0)||!!S.h4;}
+function tutRecoverDelivery(){if((S.tut===2||S.tut===3)&&bagN(agents[0])===0&&!tutHasDelivery()){S.tut=1;S.tutN=0;save();}}
+function tutNoGather(){return tutOn()&&S.tut!==1&&!((S.tut===2||S.tut===3)&&!tutHasDelivery()&&bagN(agents[0])===0);}
 function tutAllow(what){if(!tutOn())return true;return {deliver:2,cash:3}[what]===S.tut;}
 function tutOn(){return S.tut!=null&&S.tut<TUT.length;}
 function tutNext(){var done=S.tut;S.tut++;S.tutN=0;var a=agents[0];
@@ -1894,7 +1896,7 @@ function tutNext(){var done=S.tut;S.tut++;S.tutN=0;var a=agents[0];
     for(var i=0;i<8;i++)coinToHud(a.x+(Math.random()-.5)*20,a.y-20);}
   else{sfx('chime');burst(a.x,a.y-12,'#ffe27a',14,true);STAGEBAN={t:2.6,max:2.6,text:'👍 '+(TUT_OK[done]||'잘했어요!'),sub:'다음: '+TUT[S.tut].t.split(' · ')[0].replace(/[\[\]]/g,'').slice(0,22)};}
   save();}
-function updateTut(){if(S.tut==null||S.tut>=TUT.length)return;var st=TUT[S.tut];
+function updateTut(){if(S.tut==null||S.tut>=TUT.length)return;tutRecoverDelivery();var st=TUT[S.tut];
   if(S.tut===0){var a0=agents[0];if((S.tutN||0)===0&&Math.hypot(a0.x-TUT_A.x,a0.y-TUT_A.y)<20){S.tutN=1;sfx('chime');addFloat(a0.x,a0.y-44,'👍 좋아요! 이제 처음 자리로 돌아와요','#ffe27a');burst(a0.x,a0.y-10,'#ffe27a',10,true);}
     else if(S.tutN===1&&Math.hypot(a0.x-HOME.x,a0.y-HOME.y)<20)S.tutN=2;}
   var pd=TUTPAD[S.tut];if(pd&&DEF[pd]){var need=Math.ceil(DEF[pd].cost()-((S.pads&&S.pads[pd])||0)),gap=need-Math.floor(S.coins);
@@ -1915,6 +1917,8 @@ function drawGuide(){var tg=guideTarget();if(!tg)return;var a=agents[0],dx=tg.x-
   g.fillStyle='rgba(0,0,0,.25)';g.beginPath();g.moveTo(12,2);g.lineTo(-4,-8);g.lineTo(0,2);g.lineTo(-4,12);g.closePath();g.fill();
   g.scale(1.25,1.25);g.fillStyle='rgb('+tg.col+')';g.strokeStyle='#fff';g.lineWidth=2.4;g.lineJoin='round';g.beginPath();g.moveTo(11,0);g.lineTo(-5,-10);g.lineTo(-1,0);g.lineTo(-5,10);g.closePath();g.stroke();g.fill();
   g.restore();}
+function tutorialEdgePoint(p){var pad=24*screenUnit,x=(p.x-camX)*Z,y=(p.y-camY)*Z;if(x>=pad&&x<=W-pad&&y>=pad&&y<=SH-pad)return null;var dx=x-W/2,dy=y-SH/2,k=Math.min(dx?Math.max(0,W/2-pad)/Math.abs(dx):Infinity,dy?Math.max(0,SH/2-pad)/Math.abs(dy):Infinity);return {x:W/2+dx*k,y:SH/2+dy*k,angle:Math.atan2(dy,dx)};}
+function drawTutorialEdge(){if(!tutOn())return;var p=TUT[S.tut].at();if(!p)return;var edge=tutorialEdgePoint(p);if(!edge)return;var g=ctx;g.save();g.translate(edge.x,edge.y);g.rotate(edge.angle);g.fillStyle='#e2463c';g.strokeStyle='#fff';g.lineWidth=2*screenUnit;g.beginPath();g.moveTo(10*screenUnit,0);g.lineTo(-7*screenUnit,-7*screenUnit);g.lineTo(-7*screenUnit,7*screenUnit);g.closePath();g.stroke();g.fill();g.restore();}
 function drawTutArrow(){
   if(S.tut==null||S.tut>=TUT.length)return;var p=TUT[S.tut].at();if(!p)return;var g=ctx,b=Math.sin(time*6)*4;
   g.fillStyle='rgba(255,226,122,.35)';g.beginPath();g.ellipse(p.x,p.y+14,14+Math.sin(time*6)*2,5,0,0,7);g.fill();
@@ -4221,10 +4225,10 @@ function draw(){
   ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';
   floats.slice(-8).forEach(function(fl){var unit=screenUnit/Z,al=Math.min(1,Math.max(0,(2-fl.t)/.6));ctx.globalAlpha=al;ctx.font='600 '+((fl.small?9:10)*unit)+'px sans-serif';ctx.lineWidth=2*unit;ctx.strokeStyle='rgba(35,49,39,.8)';
     var chars=Array.from(String(fl.text)),lines=[];for(var i=0;i<chars.length;i+=24)lines.push(chars.slice(i,i+24).join(''));
-    lines.slice(0,2).forEach(function(line,i){var fw=ctx.measureText(line).width,fxx=Math.max(camX+fw/2+4*unit,Math.min(camX+W/Z-fw/2-4*unit,fl.x));var yy=fl.y-fl.t*12+i*11*unit;ctx.strokeText(line,fxx,yy);ctx.fillStyle=fl.col;ctx.fillText(line,fxx,yy);});});
+    lines.slice(0,2).forEach(function(line,i){var fw=ctx.measureText(line).width,fxx=Math.max(camX+fw/2+4*unit,Math.min(camX+W/Z-fw/2-4*unit,fl.x));var lineH=11*unit,minY=camY+10*unit,maxY=camY+SH/Z-10*unit-(Math.min(2,lines.length)-1)*lineH;var yy=Math.max(minY,Math.min(Math.max(minY,maxY),fl.y-fl.t*12))+i*lineH;ctx.strokeText(line,fxx,yy);ctx.fillStyle=fl.col;ctx.fillText(line,fxx,yy);});});
   ctx.globalAlpha=1;
   ctx.restore();
-  drawAmbient();
+  drawTutorialEdge();drawAmbient();
   ctx.save();ctx.scale(Z,Z);ctx.translate(-camX,-camY);
   drawPills();
   drawTutArrow();
@@ -4901,4 +4905,5 @@ requestAnimationFrame(loop);
 </script>
 </body>
 </html>
+
 
