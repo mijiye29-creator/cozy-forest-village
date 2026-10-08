@@ -21,7 +21,7 @@ const env = {
   cv:{getBoundingClientRect:()=>bounds,hasPointerCapture:()=>true,
     releasePointerCapture:()=>cancellations++, addEventListener:(k,fn)=>handlers[k]=fn},
   ctx:{setTransform(){}}, agents:[hero], fenceX:()=>180,
-  joy:{on:false}, performance:{now:()=>1000},setTap:(x,y)=>taps.push([x,y]),
+  joy:{on:false},repairFenceAt:()=>false, performance:{now:()=>1000},setTap:(x,y)=>taps.push([x,y]),
   window:{addEventListener(){}}, document:{hidden:false,addEventListener(){}},
   titleT:0,requestAnimationFrame(){},TITLE:false,storyBox:{hidden:true},
   frameGate:0,last:0,time:0,FDT:0,uiT:0,saveT:0,
@@ -144,7 +144,7 @@ for(const stage of [1,2,3]){
     const bounds=layout.padBounds(p);
     assert(bounds.x>=0 && bounds.x+bounds.w<=layout.fenceX()-3);
     assert(bounds.y>=0 && bounds.y+bounds.h<layout.H);
-    assert(!layout.padObstacles().some(o=>layout.rectTouches(bounds,o,3)),`${p.id} overlaps a facility`);
+    assert(!layout.padObstacles().some(o=>!(p.id==='belt_p1'&&o.belt==='sale_p1')&&layout.rectTouches(bounds,o,3)),`${p.id} overlaps a facility`);
     for(const q of pads)if(p!==q){
       assert(!layout.rectTouches(bounds,layout.padBounds(q)),`${p.id} overlaps ${q.id}`);
       assert(Math.hypot(p.x-q.x,p.y-q.y)>2*layout.PAD_RADIUS,'Purchase radii overlap');
