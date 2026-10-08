@@ -15,6 +15,11 @@
       "topic": "표현 전용 공통 색상·레퍼런스 팔레트"
     },
     {
+      "id": "render-motion3d",
+      "path": "src/render-motion3d.js",
+      "topic": "3D 정점·광원·깊이 정렬·캐릭터 관절·시설 모션"
+    },
+    {
       "id": "goods",
       "path": "src/goods.js",
       "topic": "나무·물고기·광물·제품 데이터"

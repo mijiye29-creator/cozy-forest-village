@@ -1,6 +1,6 @@
 # 게임 코드 지도
 
-index.html은 화면 구조, styles/game.css는 화면 디자인이다. 35개 기능 소스와
+index.html은 화면 구조, styles/game.css는 화면 디자인이다. 36개 기능 소스와
 시작 오류 처리 파일을 runtime-manifest.json 순서로 합쳐 runtime.js 하나를 제공한다.
 기존 IIFE·함수 호이스팅·초기화 순서를 유지하며 별도 npm 패키지가 필요 없다.
 브라우저에서 수십 개 스크립트를 차례로 요청하지 않는다. 빌드 단계의 기능 모듈화이며
@@ -21,7 +21,7 @@ index.html은 화면 구조, styles/game.css는 화면 디자인이다. 35개 �
 | 인트로·대사 | story-intro.js, game/intro-scenes.js | loop.js, game/styles/game.css | story |
 | 모바일·줌 | viewport.js, input.js | loop.js, panels.js, game/styles/game.css | movement |
 | 도감·일일 과제·레이더 | panels.js | goods.js, input.js, render-scene.js | all |
-| 그림·색감·애니메이션 | art-palette.js, 해당 render-*.js | render-primitives.js, effects.js | all + 관련 browser 검사 |
+| 그림·색감·애니메이션 | art-palette.js, render-motion3d.js, 해당 render-*.js | render-primitives.js, effects.js | all + 관련 browser 검사 |
 | 프레임·정지 | loop.js | ambient.js, 해당 update 함수 모듈 | movement |
 | 음악·효과음 | audio.js | input.js | all |
 
@@ -69,3 +69,5 @@ rg로 찾는다. 브라우저 개발자 도구는 runtime.js.map으로 원본 �
 - tests/static-server.cjs는 실제 JS/CSS/이미지를 제공한다. 모든 요청에 HTML을 반환하지 않는다.
 - 업로드 시 index.html, runtime.js, runtime.js.map, styles/, src/, manifest와 색인을 함께 보존한다.
 - 코드 검사 통과는 실기기·경제 균형·전체 보스 플레이 통과가 아니다.
+
+3D 모션은 render-motion3d.js의 정점/투영/광원/관절과 시설 회전 부품에서 조정한다. Canvas 출력의 소프트웨어 3D이며 WebGL 엔진은 아니다. 표현 함수는 저장/시뮬레이션 상태를 수정하지 않는다. 움직임 감소 설정은 장식 모션을 멈춘다.

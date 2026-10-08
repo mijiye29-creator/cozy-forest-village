@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs');
+const reduced={matches:false},e={window:{matchMedia:()=>reduced},time:0,ART:{roles:{lumber:'#29aa68'}}};vm.createContext(e);
+const source=fs.readFileSync('game/src/render-buildings.js','utf8');vm.runInContext(source.slice(source.indexOf('function artShade('),source.indexOf('function isoBox(')),e);vm.runInContext(fs.readFileSync('game/src/render-motion3d.js','utf8'),e);
+function context(){const ops=[];const g={ops};for(const k of ['save','restore','translate','scale','beginPath','closePath','fill','moveTo','lineTo','ellipse'])g[k]=(...args)=>{assert(args.every(v=>typeof v!=='number'||Number.isFinite(v)),k+' invalid vertex');ops.push([k,...args])};return g;}
+const a={x:90,y:300,mv:true,bob:1.2,role:'lumber',working:true,stab:.2,strikeType:'kick',bag:{oak:2}},before=JSON.stringify(a);let g=context();e.drawActor3D(g,a,{coat:'#149fca',level:4});assert.equal(JSON.stringify(a),before,'Drawing must never change game state');assert(g.ops.filter(x=>x[0]==='fill').length<200,'Bounded mesh size per actor');assert(g.ops.some(x=>x[0]==='lineTo'));
+const pose=JSON.stringify(e.motion3DPose(a));a.bob+=1;e.time=.4;assert.notEqual(JSON.stringify(e.motion3DPose(a)),pose,'Walk/work pose must advance');
+const render=(t,busy)=>{e.time=t;const g=context();e.drawFacilityMotion3D(g,50,80,'mill',4,busy);return JSON.stringify(g.ops)};assert.notEqual(render(0,true),render(.4,true),'Rotor must change geometry over time');assert.notEqual(render(.4,false),render(.4,true),'Busy rotor must turn faster');
+reduced.matches=true;assert.equal(render(0,true),render(10,true),'Reduced motion freezes decorative rotation');const p=e.motion3DPose(a);assert.equal(p.stride,0);assert.equal(p.work,0);
+for(const yaw of [-1,0,1]){const mesh=[];e.motion3DBox(mesh,0,0,0,10,20,5,'#29aa68',.6);e.motion3DDraw(context(),mesh,yaw);}e.drawFacilitySolid3D(context(),1,2,76,10,94,'#42b9c6');
+for(const role of ['player','lumber','fisher','miner','hunter','courier'])for(const dir of [-1,1])e.drawActor3D(context(),{...a,role,dir},{coat:'#149fca',level:13,scale:.65});
+console.log('PASS: finite 3D meshes, bounded faces, evolving walk/work/rotor geometry, reduced motion, both facing directions, immutable actor state.');

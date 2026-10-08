@@ -4,9 +4,7 @@ function artPoly(g,points,color){g.fillStyle=color;g.beginPath();points.forEach(
 function artShade(hex,factor){var n=parseInt(hex.slice(1),16);return '#'+[n>>16,(n>>8)&255,n&255].map(function(c){return Math.max(0,Math.min(255,Math.round(c*factor))).toString(16).padStart(2,'0');}).join('');}
 function isoBox(g,x,y,w,d,h,color){
   var rise=d*.58;artPoly(g,[[x+3,y+2],[x+w+3,y+2],[x+w+d+9,y-rise+7],[x+d+9,y-rise+7]],'rgba(25,43,39,.16)');
-  var face=g.createLinearGradient(x,y-h,x+w,y);face.addColorStop(0,artShade(color,1.13));face.addColorStop(.5,color);face.addColorStop(1,artShade(color,.87));g.fillStyle=face;g.fillRect(x,y-h,w,h);
-  artPoly(g,[[x+w,y-h],[x+w+d,y-h-rise],[x+w+d,y-rise],[x+w,y]],artShade(color,.66));
-  artPoly(g,[[x,y-h],[x+d,y-h-rise],[x+w+d,y-h-rise],[x+w,y-h]],artShade(color,1.25));
+  drawFacilitySolid3D(g,x,y,w,d,h,color);
   g.strokeStyle=artShade(color,1.34);g.lineWidth=.8;g.beginPath();g.moveTo(x,y-h);g.lineTo(x+w,y-h);g.lineTo(x+w+d,y-h-rise);g.stroke();
 }
 function isoRoof(g,x,y,w,d,h,color,metal){
@@ -95,6 +93,7 @@ function drawWorkshop(g,pl){
     var blades=L>=4?2:1;for(var blade=0;blade<blades;blade++){g.save();g.translate(mx+26+blade*19,pl.y+105);g.rotate(time*(busy?6+L:1));g.fillStyle='#e3e8dc';g.strokeStyle='#708a87';g.lineWidth=.7;g.beginPath();for(var tooth=0;tooth<18;tooth++){var an=tooth*Math.PI/9;g.lineTo(Math.cos(an)*9,Math.sin(an)*9);g.lineTo(Math.cos(an+.1)*7,Math.sin(an+.1)*7);}g.closePath();g.fill();g.stroke();g.fillStyle='#6e8884';g.beginPath();g.arc(0,0,2,0,7);g.fill();g.restore();}
     isoBox(g,mx+7+(busy?(time*8)%8:2),pl.y+121,35,5,5,'#c19b66');
   }
+  drawFacilityMotion3D(g,mx+57,pl.y+87,b,L,busy);
   if(busy){var puff=(time*.55)%1;g.fillStyle='rgba(250,246,229,'+(.35*(1-puff))+')';g.beginPath();g.ellipse(mx+61+puff*5,pl.y+22-puff*13,2+puff*3,2+puff*3,0,0,7);g.fill();g.fillStyle='#d1ad5d';rr(g,pl.x+8,pl.y+pl.h-4,(pl.w-16)*pr,2,1);g.fill();}
   if(cur)drawItem(g,cur.id,mx+40,pl.y+123,.55);
   if(SL){var sx=shedX(pl)+7,stocks=PROC[b].goods.filter(function(id){return whN(id)>0;}),units=[];stocks.forEach(function(id){for(var n=0;n<Math.min(12,whN(id));n++)units.push(id);});units.slice(0,12).forEach(function(id,i){drawItem(g,id,sx+(i%4)*8,pl.y+123-Math.floor(i/4)*7,.38);});g.fillStyle='#eaf1df';g.font='600 5px sans-serif';g.textAlign='center';g.fillText(storeN(b)+' / '+storeCap(b),shedX(pl)+21,pl.y+98);}

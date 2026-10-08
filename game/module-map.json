@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "17972fd9361be4c40f2e91435b958f9389f20072eaed2eca1e4d751e617b5157",
+  "runtime_sha256": "0929263b48cb0463532408d230e185f6c45bebdf7a3a23729b64024395ef2ae7",
   "modules": [
     {
       "id": "boot-errors",
@@ -69,6 +69,63 @@
         {
           "name": "ART",
           "line": 5
+        }
+      ]
+    },
+    {
+      "id": "render-motion3d",
+      "path": "src/render-motion3d.js",
+      "topic": "3D 정점·광원·깊이 정렬·캐릭터 관절·시설 모션",
+      "bytes": 5017,
+      "lines": 65,
+      "symbols": [
+        {
+          "name": "MOTION3D_REDUCED",
+          "line": 4
+        },
+        {
+          "name": "motion3DTime",
+          "line": 5
+        },
+        {
+          "name": "motion3DRotate",
+          "line": 6
+        },
+        {
+          "name": "motion3DProject",
+          "line": 7
+        },
+        {
+          "name": "motion3DFace",
+          "line": 8
+        },
+        {
+          "name": "motion3DBox",
+          "line": 9
+        },
+        {
+          "name": "motion3DBall",
+          "line": 14
+        },
+        {
+          "name": "motion3DDraw",
+          "line": 19
+        },
+        {
+          "name": "motion3DPose",
+          "line": 28
+        },
+        {
+          "name": "drawActor3D",
+          "line": 32
+        },
+        {
+          "name": "drawFacilityMotion3D",
+          "line": 55
+        },
+        {
+          "name": "drawFacilitySolid3D",
+          "line": 63
         }
       ]
     },
@@ -651,8 +708,8 @@
       "id": "render-primitives",
       "path": "src/render-primitives.js",
       "topic": "공통 도형·아이템·자원 그리기",
-      "bytes": 16088,
-      "lines": 173,
+      "bytes": 11296,
+      "lines": 143,
       "symbols": [
         {
           "name": "rr",
@@ -2487,8 +2544,8 @@
       "id": "render-buildings",
       "path": "src/render-buildings.js",
       "topic": "건물·창고·제품 장식",
-      "bytes": 14971,
-      "lines": 124,
+      "bytes": 14692,
+      "lines": 123,
       "symbols": [
         {
           "name": "artPoly",
@@ -2504,51 +2561,51 @@
         },
         {
           "name": "isoRoof",
-          "line": 12
+          "line": 10
         },
         {
           "name": "isoGlass",
-          "line": 21
+          "line": 19
         },
         {
           "name": "isoTank",
-          "line": 25
+          "line": 23
         },
         {
           "name": "artPosts",
-          "line": 30
+          "line": 28
         },
         {
           "name": "artBricks",
-          "line": 31
+          "line": 29
         },
         {
           "name": "drawIndustrialBuilding",
-          "line": 32
+          "line": 30
         },
         {
           "name": "drawWorkshopStorage",
-          "line": 77
+          "line": 75
         },
         {
           "name": "drawWorkshop",
-          "line": 86
+          "line": 84
         },
         {
           "name": "BOARD",
-          "line": 103
+          "line": 102
         },
         {
           "name": "drawBoard",
-          "line": 104
+          "line": 103
         },
         {
           "name": "drawPills",
-          "line": 121
+          "line": 120
         },
         {
           "name": "drawMarketGround",
-          "line": 123
+          "line": 122
         }
       ]
     },
@@ -2677,8 +2734,8 @@
       "id": "render-market",
       "path": "src/render-market.js",
       "topic": "가게·점원·판매 효과·작업 도구",
-      "bytes": 14885,
-      "lines": 171,
+      "bytes": 14782,
+      "lines": 172,
       "symbols": [
         {
           "name": "SHOPDEF",
@@ -2718,87 +2775,87 @@
         },
         {
           "name": "SHOP_STAGE",
-          "line": 42
-        },
-        {
-          "name": "shopStage",
           "line": 43
         },
         {
-          "name": "stallW",
+          "name": "shopStage",
           "line": 44
         },
         {
-          "name": "AWN",
+          "name": "stallW",
           "line": 45
         },
         {
-          "name": "shopLook",
+          "name": "AWN",
           "line": 46
         },
         {
-          "name": "BRICKC",
-          "line": 48
+          "name": "shopLook",
+          "line": 47
         },
         {
-          "name": "brickWall",
+          "name": "BRICKC",
           "line": 49
         },
         {
+          "name": "brickWall",
+          "line": 50
+        },
+        {
           "name": "drawMarketShop",
-          "line": 54
+          "line": 55
         },
         {
           "name": "drawStallBody",
-          "line": 75
+          "line": 76
         },
         {
           "name": "drawBar",
-          "line": 81
+          "line": 82
         },
         {
           "name": "lockBadge",
-          "line": 87
+          "line": 88
         },
         {
           "name": "TREE_SPRITES",
-          "line": 91
-        },
-        {
-          "name": "treeSprite",
           "line": 92
         },
         {
+          "name": "treeSprite",
+          "line": 93
+        },
+        {
           "name": "drawTree",
-          "line": 121
+          "line": 122
         },
         {
           "name": "drawOre",
-          "line": 137
+          "line": 138
         },
         {
           "name": "drawFish",
-          "line": 150
+          "line": 151
         },
         {
           "name": "toolTr",
-          "line": 163
-        },
-        {
-          "name": "toolTierFor",
           "line": 164
         },
         {
-          "name": "drawChainsaw",
+          "name": "toolTierFor",
           "line": 165
         },
         {
+          "name": "drawChainsaw",
+          "line": 166
+        },
+        {
           "name": "drawDrill",
-          "line": 167
+          "line": 168
         },
         {
           "name": "nameTag",
-          "line": 169
+          "line": 170
         }
       ]
     },
@@ -2806,8 +2863,8 @@
       "id": "render-actors",
       "path": "src/render-actors.js",
       "topic": "일꾼·영웅·손님 아트",
-      "bytes": 42523,
-      "lines": 341,
+      "bytes": 33346,
+      "lines": 266,
       "symbols": [
         {
           "name": "drawVehicleUpgrade",
@@ -2875,11 +2932,11 @@
         },
         {
           "name": "drawAgent",
-          "line": 260
+          "line": 200
         },
         {
           "name": "drawCustomer",
-          "line": 311
+          "line": 251
         }
       ]
     },

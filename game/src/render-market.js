@@ -35,7 +35,8 @@ function drawStall(line){
 }
 function drawShopStaff(line){
   var g=ctx,st=STALL[line],side=shopSide(line),n=shopClerks(line);
-  for(var i=0;i<n;i++){var x=st.x+side*24,y=st.y+32+i*28;g.fillStyle='#465f50';g.fillRect(x-4,y-1,8,10);g.fillStyle='#f0d4b0';g.beginPath();g.arc(x,y-5,4,0,7);g.fill();g.fillStyle='#473b30';g.fillRect(x-4,y-9,8,3);g.fillStyle=line==='wood'?'#cf9766':'#7daeb6';g.fillRect(x-5,y,10,2);g.fillStyle='#54463a';g.fillRect(x-4,y+8,3,3);g.fillRect(x+1,y+8,3,3);}
+  for(var i=0;i<n;i++){var x=st.x+side*24,y=st.y+32+i*28;drawActor3D(g,{x:x,y:y,dir:side,role:'courier',working:!!customers.some(function(c){return c.seller===line&&c.state==='line';})},{coat:line==='wood'?'#e78537':'#169ac7',apron:true,scale:.65});}
+
   for(var j=0;j<shopShelves(line);j++){var rx=st.x-19+j*13,ry=st.y+112;isoBox(g,rx,ry,10,3,7,'#a68a60');drawItem(g,SHOPDEF[line].icon,rx+5,ry-8,.3);}
 }
 
