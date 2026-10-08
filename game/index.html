@@ -307,7 +307,7 @@ body.management-open #quickDock{transform:translateY(120%)}
 #quickDock[hidden]{display:none}
 #quickDock svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
 @media(prefers-reduced-motion:reduce){.storyLandscape{animation:none}#management,#quickDock{transition:none}}
-/* v102: mobile viewport, reachable controls and bounded scroll panels. */
+/* v103: mobile viewport, reachable controls and bounded scroll panels. */
 html,body{overscroll-behavior:none;-webkit-text-size-adjust:100%}
 button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 #c{-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
@@ -342,6 +342,20 @@ header{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12
   #dexBox,#dayBox{top:calc(54px + env(safe-area-inset-top,0px));bottom:calc(62px + env(safe-area-inset-bottom,0px))}
   #title .tlogo{font-size:11px}.storyArt{height:70px}.storyText{min-height:0}
 }
+
+/* v103: wordless opening. Alt labels and button names remain available to assistive technology. */
+#title{background:linear-gradient(180deg,#172b3040,#172b3080);padding:0}
+#title[hidden]{display:none}
+#title.illustrated{position:fixed;inset:0;z-index:100;background:#172b30}
+#introImage{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#172b30}
+#introImage[hidden]{display:none}
+.introControls{position:absolute;bottom:max(32px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:2}
+#title .introControls button{width:56px;height:56px;min-width:44px;min-height:44px;margin:0;padding:0;border:1px solid #fff8;border-radius:50%;background:#f8f0d9ed;color:#244a3b;font:32px/1 system-ui;cursor:pointer;box-shadow:0 4px 20px #0003}
+#title .introControls button[hidden]{display:none}
+#title .introControls button:focus-visible{outline:3px solid #ffd88a;outline-offset:4px}
+#introDots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:2}
+#introDots span{width:6px;height:6px;border-radius:50%;background:#fff6}#introDots span.current{background:#fff}
+#title .tinfo{position:absolute;top:20px;background:#fff;padding:10px;border-radius:8px;max-width:90%;color:#b3263b}
 </style>
 </head>
 <body>
@@ -373,10 +387,9 @@ header{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12
         <div class="srow"><span>도감</span><button id="dexOpen" type="button">📖 0/0</button></div>
         <div class="srow"><span>이야기</span><button id="storyOpen" type="button">📚 마을 이야기</button></div>
         <div class="srow"><span>오늘의 목표</span><button id="dayOpen" type="button">🎯 0/3</button></div>
-        <div class="sver">포근한 숲속 마을 v102</div>
+        <div class="sver">포근한 숲속 마을 v103</div>
       </div>
-      <div id="title"><div class="tcard"><div class="tlogo" aria-hidden="true">THE WINTER ATELIER</div><h1>포근한 숲속 마을</h1><p class="tsub">얼어붙은 숲에 불을 피우고, 따뜻한 마을을 만들어요</p>
-        <button id="startBtn" type="button">마을에 들어가기</button><div class="tinfo" id="tinfo"></div><div class="tver">v102 · 겨울 아틀리에 · 모바일</div></div></div>
+      <div id="title" role="region" aria-label="책 속으로 떠나는 여행"><img id="introImage" hidden alt=""><div class="introControls"><button id="introBack" type="button" hidden aria-label="이전 장면">‹</button><button id="startBtn" type="button" aria-label="게임 시작">▶</button><button id="introSkip" type="button" hidden aria-label="인트로 건너뛰고 게임 시작">»</button></div><div id="introDots" aria-hidden="true"></div><div class="tinfo" id="tinfo" hidden role="alert"></div></div>
       <div id="ending" hidden role="dialog" aria-label="엔딩"><div class="tcard"><div class="tlogo" aria-hidden="true">🏆</div><h1>엔딩</h1><p class="tsub">세 마을의 창마다 불빛이 켜지고, 얼음 아래 푸른 물길이 흘러요. 겨울은 아직 남았지만 이제 마을은 혼자가 아니에요.</p>
         <button id="endBtn" type="button">🔄 다시 플레이</button></div></div>
     </div>
@@ -389,10 +402,11 @@ header{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12
     <button type="button" id="quickSettings"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h14"/><circle cx="9" cy="6" r="2" fill="#f7f4e9"/><circle cx="15" cy="12" r="2" fill="#f7f4e9"/><circle cx="10" cy="18" r="2" fill="#f7f4e9"/></svg></span><small>메뉴</small></button>
   </nav>
 
+<script src="intro-scenes.js"></script>
 <script>
 /* v57: any error while the game starts up is written on the title card (and in settings) so a frozen resume can be diagnosed from a screenshot */
 window.__bootErr='';window.addEventListener('error',function(e){var m=(e&&e.message)||'오류';if(!window.__bootErr)window.__bootErr=m+(e&&e.lineno?' @'+e.lineno:'');
-  try{var t=document.getElementById('tinfo');if(t){t.textContent='⚠️ '+window.__bootErr;t.style.color='#b3263b';}var v=document.querySelector('#setp .sver');if(v)v.textContent='v102 · 오류 '+window.__bootErr.slice(0,70);}catch(_e){}});
+  try{var t=document.getElementById('tinfo');if(t){t.hidden=false;t.textContent='⚠️ '+window.__bootErr;t.style.color='#b3263b';}var v=document.querySelector('#setp .sver');if(v)v.textContent='v103 · 오류 '+window.__bootErr.slice(0,70);}catch(_e){}});
 (function(){
 "use strict";
 /* left: gathering grid (GC x ROWS tiles). right: market strip */
@@ -2650,37 +2664,44 @@ sensBtn.addEventListener('click',function(){S.sens=((S.sens==null?1:S.sens)+1)%3
 syncSens();
 /* v53: title screen - the world is drawn behind it but nothing runs until the player taps start */
 var TITLE=true,titleEl=document.getElementById('title'),startBtn=document.getElementById('startBtn');
-(function(){if(!FRESH){startBtn.textContent='이어서 산책하기';document.getElementById('tinfo').textContent=(S.stage||1)+'단계 · 코인 '+Math.floor(S.coins).toLocaleString('ko-KR');}
-  else document.getElementById('tinfo').textContent='처음 오셨군요! 짧은 안내부터 시작해요';})();
+/* Four supplied illustrations are optional until their source is confirmed. Never substitute unrelated art. */
+var introFrames=Array.isArray(window.INTRO_SCENES)?window.INTRO_SCENES:[],introIndex=0,introReady=false;
+var introImage=document.getElementById('introImage'),introBack=document.getElementById('introBack'),introSkip=document.getElementById('introSkip'),introDots=document.getElementById('introDots');
+function introPaint(){var frame=introFrames[introIndex];introImage.src=frame.src;introImage.alt=frame.alt;introBack.hidden=introIndex===0;introSkip.hidden=false;startBtn.textContent=introIndex===3?'▶':'›';startBtn.setAttribute('aria-label',introIndex===3?'책 속 세계에서 게임 시작':'다음 장면');introDots.textContent='';for(var i=0;i<4;i++){var dot=document.createElement('span');dot.className=i===introIndex?'current':'';introDots.appendChild(dot);}}
+function introLoad(){if(!FRESH||introFrames.length!==4)return;Promise.all(introFrames.map(function(frame){return new Promise(function(resolve,reject){var im=new Image();im.onload=resolve;im.onerror=reject;im.src=frame.src;});})).then(function(){if(!TITLE)return;introReady=true;introImage.hidden=false;titleEl.classList.add('illustrated');introPaint();}).catch(function(){introReady=false;introImage.hidden=true;introBack.hidden=true;introSkip.hidden=true;startBtn.setAttribute('aria-label','게임 시작');});}
+introBack.addEventListener('click',function(){if(introReady&&introIndex>0){introIndex--;introPaint();}});
+introSkip.addEventListener('click',function(){introIndex=3;startBtn.click();});
+if(!FRESH)startBtn.setAttribute('aria-label','저장한 게임 이어하기');
+introLoad();
 /* Story scenes are short, replayable town prologues. Seen flags are save-local and optional for old saves. */
 var STORY_SCENES=[
  {id:1,title:'1장 · 숲속마을 — 불씨를 지키는 숲',headline:'마지막 불씨와 파란 뿌리',land:'🌲',cloud:'❄️',lines:[
-  {who:'이야기꾼',face:'📜',text:'눈은 며칠째 그치지 않았어요. 오두막의 불씨는 작아지고, 숲길은 눈 아래 잠겼지요.'},
+  {who:'이야기꾼',face:'📜',text:'부모님과 침대에서 책을 읽던 남자아이가 반짝이는 책장 속으로 들어왔어요. 눈앞에는 책에서 보던 겨울 숲이 펼쳐졌지요.'},
   {who:'나무꾼 모모',face:'🪓',text:'장작은 필요하지만 나무를 베기만 하면 숲이 더 아파져요. 묘목도 함께 심어야 해요.'},
-  {who:'마을지기',face:'🧣',text:'눈밭 아래에서 파란 뿌리가 별처럼 반짝였어요. 아직 숲이 우리를 포기하지 않은 걸까요?'},
+  {who:'남자아이',face:'🧒',text:'책 속에서 본 파란 뿌리가 여기에도 있어요! 저는 이 숲에 온 아이예요. 부모님께 돌아갈 길을 찾는 동안 마을을 도울게요.'},
   {who:'나무꾼 모모',face:'🪓',text:'숲을 다시 숨 쉬게 해줘요. 그러면 눈 녹은 물길도 어딘가로 이어질 거예요.'}
  ]},
  {id:2,title:'2장 · 호수마을 — 얼음 아래의 물길',headline:'얼음 밑에서 들려온 물소리',land:'🌊',cloud:'❄️',lines:[
   {who:'낚시꾼 여울',face:'🎣',text:'호수는 꽁꽁 얼었는데, 얼음 아래에서 물 흐르는 소리가 들려요.'},
   {who:'나무꾼 모모',face:'🪵',text:'숲에서 가져온 목재로 수문과 다리를 고칠게요. 물길을 다시 열어봐요.'},
   {who:'낚시꾼 여울',face:'🐟',text:'따뜻한 물이 돌아오자 물고기들이 나타났어요! 물은 산 아래에서 흘러오고 있어요.'},
-  {who:'마을지기',face:'🧣',text:'큰 발자국이 북쪽 산을 향해 있어요. 호수 밑의 푸른 물결도 그쪽에서 오나 봐요.'}
+  {who:'남자아이',face:'🧒',text:'책에서 본 별빛 길이 북쪽 산으로 이어져요. 마을을 도우며 따라가면 집으로 돌아갈 단서도 찾을 수 있겠죠?'}
  ]},
  {id:3,title:'3장 · 광산마을 — 산속에서 깨어난 빛',headline:'돌 속에 잠든 별빛',land:'⛏️',cloud:'✨',lines:[
   {who:'광부 단풍',face:'⛏️',text:'이 광맥을 보세요. 호수 얼음 아래에서 본 것과 똑같은 푸른빛이에요.'},
   {who:'제련공 보리',face:'🔥',text:'제련소의 불을 다시 붙이면, 갱도 깊은 곳의 오래된 보일러도 깨울 수 있을 거예요.'},
   {who:'사냥꾼 임꺽정',face:'🏹',text:'세 마을의 등불이 산 너머까지 이어졌어요. 하지만 저 눈보라 속에서 큰 그림자가 다가와요.'},
-  {who:'마을지기',face:'🧣',text:'숲도, 호수도, 광산도 혼자가 아니에요. 함께 이 불빛을 지켜요!'}
+  {who:'남자아이',face:'🧒',text:'부모님이 읽어주신 이야기처럼 우리도 함께하면 돼요. 이 불빛을 지키고, 산 너머 다음 책장을 찾아가요!'}
  ]}
 ];
 var storyBox=document.getElementById('storyBox'),storyBook=document.getElementById('storyBook'),storyPlayer=document.getElementById('storyPlayer'),storyList=document.getElementById('storyList'),storyMode='auto',storyScene=null,storyLine=0,storyTyping=null,storyTypingText='';
-function storySeen(){if(!S.storySeen)S.storySeen={};return S.storySeen;}
+function storySeen(){if(!S.storySeen||typeof S.storySeen!=='object'||Array.isArray(S.storySeen))S.storySeen={};return S.storySeen;}
 function storyTypingClear(){if(storyTyping){clearInterval(storyTyping);storyTyping=null;}}
 function storyRenderList(){storyList.innerHTML='';var max=Math.min(3,Math.max(1,S.stage||1));STORY_SCENES.forEach(function(sc){var b=document.createElement('button');b.type='button';b.className='storyChapterBtn';b.disabled=sc.id>max;
   var title=document.createElement('b');title.textContent=(sc.id>max?'🔒 ':'📖 ')+sc.title;b.appendChild(title);var sm=document.createElement('small');sm.textContent=sc.id>max?'마을을 열면 이야기를 읽을 수 있어요':(storySeen()[sc.id]?'다시 읽기 · 이야기를 끝내면 읽음 표시':'이야기를 읽어보기');b.appendChild(sm);if(sc.id<=max)b.addEventListener('click',function(){storyStart(sc.id,'book');});storyList.appendChild(b);});}
 function storyBookOpen(){cancelControl();storyMode='book';storyTypingClear();storyPlayer.hidden=true;storyBook.hidden=false;storyRenderList();storyBox.hidden=false;setP.hidden=true;gearBtn.setAttribute('aria-expanded','false');goalBox.hidden=true;dayBox.hidden=true;dexBox.hidden=true;sfx('tap');}
 function storyFinish(mark){storyTypingClear();if(mark&&storyScene)storySeen()[storyScene.id]=1;if(mark)save();if(storyMode==='book'){storyPlayer.hidden=true;storyBook.hidden=false;storyRenderList();}else{storyBox.hidden=true;}sfx('tap');}
-function storyCloseNow(){if(!storyPlayer.hidden&&storyScene){storySeen()[storyScene.id]=1;save();}storyTypingClear();storyBox.hidden=true;sfx('tap');}
+function storyCloseNow(){storyTypingClear();storyBox.hidden=true;sfx('tap');}
 function storyPaintLine(){if(!storyScene)return;storyTypingClear();var ln=storyScene.lines[storyLine];document.getElementById('storyAvatar').textContent=ln.face;document.getElementById('storySpeakerName').textContent=ln.who;var out=document.getElementById('storyText');storyTypingText=ln.text;out.textContent='';var i=0;storyTyping=setInterval(function(){i++;out.textContent=storyTypingText.slice(0,i);if(i>=storyTypingText.length)storyTypingClear();},22);document.getElementById('storyProgress').textContent='대화 '+(storyLine+1)+' / '+storyScene.lines.length;document.getElementById('storyNext').textContent=storyLine===storyScene.lines.length-1?'이야기 마치기':'다음';}
 function storyStart(id,mode){cancelControl();storyScene=STORY_SCENES.filter(function(x){return x.id===id;})[0];if(!storyScene)return;storyMode=mode||'auto';storyLine=0;storyTypingClear();storyBook.hidden=true;storyPlayer.hidden=false;storyBox.hidden=false;
   var art=document.getElementById('storyArt');art.setAttribute('data-scene',String(id));document.getElementById('storyLandscape').textContent=storyScene.land;document.getElementById('storyCloud').textContent=storyScene.cloud;document.getElementById('storyChapter').textContent=storyScene.title;document.getElementById('storyHeadline').textContent=storyScene.headline;document.getElementById('storyKicker').textContent='포근한 숲속 마을 · 이야기 장면';document.getElementById('storySkip').textContent=storyMode==='auto'?'건너뛰기':'목록으로';storyPaintLine();sfx('chime');}
@@ -2690,8 +2711,8 @@ document.getElementById('storyClose').addEventListener('click',storyCloseNow);
 storyBox.addEventListener('pointerdown',function(e){e.stopPropagation();});
 document.addEventListener('keydown',function(e){if(storyBox.hidden)return;if(e.key==='Escape'){e.preventDefault();storyCloseNow();}else if(e.key==='Enter'||e.key===' '){if(!storyBook.hidden)return;e.preventDefault();document.getElementById('storyNext').click();}});
 document.getElementById('storyOpen').addEventListener('click',storyBookOpen);
-function firstTownStory(){var v=Math.min(3,Math.max(1,S.stage||1));if(!storySeen()[v])storyStart(v,'auto');}
-startBtn.addEventListener('click',function(){audioInit();TITLE=false;titleEl.hidden=true;document.getElementById('quickDock').hidden=false;last=performance.now();sfx('chime');firstTownStory();});
+function firstTownStory(){var v=Math.min(3,Math.max(1,S.stage||1));if(v>1&&!storySeen()[v])storyStart(v,'auto');}
+startBtn.addEventListener('click',function(){audioInit();if(introReady&&introIndex<3){introIndex++;introPaint();return;}TITLE=false;titleEl.hidden=true;document.getElementById('quickDock').hidden=false;last=performance.now();sfx('chime');firstTownStory();});
 var endingEl=document.getElementById('ending'),endBtn=document.getElementById('endBtn');
 endBtn.addEventListener('click',function(){startOver();});
 var gearBtn=document.getElementById('gear'),setP=document.getElementById('setp');
@@ -4633,7 +4654,7 @@ function camClampX(x){var vw=W/Z;if(S.zoomOut&&vw>=W)return (W-vw)/2;var ax=S.zo
 function camClampY(y){var vh=SH/Z,ym=HT-vh;if(ym<WORLD_TOP)return ym/2;return Math.max(WORLD_TOP,Math.min(ym,y));}
 /* v56: each system runs in its own guard - one bad value in a save can no longer freeze the whole game (hero and workers stop moving).
    the last error is shown in the settings panel so it can be reported */
-var ERRN=0,ERRMSG='';function safe(name,fn){try{fn();}catch(e){ERRN++;if(!ERRMSG){ERRMSG=name+': '+(e&&e.message||e);var sv=document.querySelector('#setp .sver');if(sv)sv.textContent='v102 · 오류 '+ERRMSG.slice(0,70);}}}
+var ERRN=0,ERRMSG='';function safe(name,fn){try{fn();}catch(e){ERRN++;if(!ERRMSG){ERRMSG=name+': '+(e&&e.message||e);var sv=document.querySelector('#setp .sver');if(sv)sv.textContent='v103 · 오류 '+ERRMSG.slice(0,70);}}}
 function loop(now){
   requestAnimationFrame(loop);
   if(document.hidden){last=now;frameGate=now;return;}
@@ -4698,7 +4719,7 @@ window.addEventListener('pagehide',suspendMobile);
 window.addEventListener('pageshow',function(){last=performance.now();frameGate=last;scheduleFit();});
 /* v56: crews already at the top level merge into their super worker on load */
 /* v57: start-up steps are guarded one by one so a single bad value can't stop the game loop from ever starting */
-function boot(name,fn){try{fn();}catch(e){var m=name+': '+(e&&e.message||e);if(!window.__bootErr)window.__bootErr=m;var t=document.getElementById('tinfo');if(t){t.textContent='⚠️ '+m;t.style.color='#b3263b';}var v=document.querySelector('#setp .sver');if(v)v.textContent='v102 · 오류 '+m.slice(0,70);}}
+function boot(name,fn){try{fn();}catch(e){var m=name+': '+(e&&e.message||e);if(!window.__bootErr)window.__bootErr=m;var t=document.getElementById('tinfo');if(t){t.hidden=false;t.textContent='⚠️ '+m;t.style.color='#b3263b';}var v=document.querySelector('#setp .sver');if(v)v.textContent='v103 · 오류 '+m.slice(0,70);}}
 boot('merge',function(){['lumber','fisher','hunter','hunter2','hunter3','miner'].forEach(function(r){if(canMerge(r))mergeCrew(r,false);});S.w.forEach(function(g){if(g.super&&isHunter(g.role))g.name=SUPERNAME[g.role];});});
 boot('dex',function(){dexInit();DEXREADY=true;});boot('tab',applyTab);boot('ui',refreshUI);
 boot('fit',fit);boot('cam',function(){var pa=agents[0];Z=S.zoomOut?Math.min(W/(W+192),SH/HT):ZOOM_IN;camX=camClampX(pa.x-W/Z/2);camY=camClampY(pa.y-SH/Z*.5);});
@@ -4709,3 +4730,4 @@ requestAnimationFrame(loop);
 </script>
 </body>
 </html>
+
