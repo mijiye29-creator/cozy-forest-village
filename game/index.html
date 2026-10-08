@@ -164,7 +164,7 @@ header .meta{justify-self:end}
 #goalList div span:last-child{font-variant-numeric:tabular-nums}
 #goalList div:not(.ok) span:last-child{color:#b3263b}
 /* v53 (staff 6): title screen + joystick sensitivity */
-#title{position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-end;padding:0 24px calc(44px + env(safe-area-inset-bottom,0px));z-index:19}
+
 #title[hidden]{display:none}
 #ending{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;border-radius:16px;background:linear-gradient(180deg,rgba(28,48,36,.5),rgba(10,20,15,.88))}
 #ending[hidden]{display:none}
@@ -295,7 +295,7 @@ header>*{pointer-events:auto}
 #quickDock button small{font-size:10px;font-weight:700;opacity:.86;white-space:nowrap}
 body.management-open #quickDock{transform:translateY(120%)}
 #title,#ending{inset:0;border-radius:0;background:linear-gradient(180deg,#e7ede315 20%,#243e3140 70%,#243e3180)}
-#title{align-items:flex-end;padding:0 24px calc(44px + env(safe-area-inset-bottom,0px));z-index:19}
+
 #title .tcard,#ending .tcard{width:min(100%,400px);background:#f6f2e5;border:1px solid #fffdf6;border-radius:24px;padding:26px 24px 20px;box-shadow:0 14px 45px #1e3b3428;text-align:center;color:#344b3e}
 #title .tlogo{font-size:11px;font-weight:650;letter-spacing:.25em;line-height:1.6;color:#9b855d}
 #title h1{font-size:29px;font-weight:650;letter-spacing:-.055em;color:#304d3d;margin:10px 0 10px}
@@ -344,7 +344,7 @@ header{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12
 }
 
 /* v103: wordless opening. Alt labels and button names remain available to assistive technology. */
-#title{background:linear-gradient(180deg,#172b3040,#172b3080);padding:0}
+#title{position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-end;z-index:19;background:linear-gradient(180deg,#172b3040,#172b3080);padding:0}
 #title[hidden]{display:none}
 #title.illustrated{position:fixed;inset:0;z-index:100;background:#172b30}
 #introImage{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#172b30}
@@ -637,7 +637,13 @@ function count(role){var n=0;S.w.forEach(function(g){if(g.role===role)n+=g.super
 function isHunter(r){return r==='hunter'||r==='hunter2'||r==='hunter3';}
 var HV={hunter:1,hunter2:2,hunter3:3},HPOW={hunter:1,hunter2:2.4,hunter3:6},HNAME={hunter:'숲 사냥꾼',hunter2:'호수 사냥꾼',hunter3:'광산 사냥꾼'};
 function hunterDoor(role){var v=HV[role]||1;return v===1?{x:50,y:590}:{x:v===2?630:1042,y:592};}
-function stallCap(line){return 20+8*S.shop[line];}
+function shopStaffLevel(line){var n=S.shopStaff&&S.shopStaff[line];return Math.max(0,Math.min(6,Math.floor(Number(n)||0)));}
+function shopClerks(line){return Math.ceil(shopStaffLevel(line)/2);}
+function shopShelves(line){return Math.floor(shopStaffLevel(line)/2);}
+function shopRegularChance(line){var lv=shopStaffLevel(line);return lv>=2?Math.min(.36,.06*lv):0;}
+function shopCheckoutTime(line){return .5/(1+.25*shopClerks(line));}
+function customerPayment(c,tip){return money50(c.qty*unitPrice(c.want,c.seller)*(tip?1.3:1)*(c.regular?1.4:1));}
+function stallCap(line){return 20+8*S.shop[line]+shopShelves(line);}
 var SITE_MAX=5;
 function siteCost(sid){var st=SITE[sid],L=siteLv(sid),mul=stageCostMult(sid==='m1'?3:(sid==='p1'?2:1));if(!L)return Math.round(st.cost*mul);return Math.round((st.kind==='forest'?110:130)*Math.pow(2.3,L-1)*(st.cost?1.3:1)*mul);}
 /* a site's level decides which species grow there; lower tiers stay more common */
@@ -1433,7 +1439,7 @@ function updateTrucks(dt){
 var customers=[],spawnT=3,lineSpawnT={wood:2,fish:3};
 var CUST_COL=['#7fb3e0','#c99be0','#e0a06a','#8fce9c','#e58fa3','#d8c25a'];
 var HAIR=['#3a2c22','#7a4d2b','#c9a45a','#2b2b35','#a0522d'];
-function serv(line){return Math.min(4,1+Math.floor((S.shop[line]-1)/2));}
+function serv(line){return Math.min(4,1+Math.floor((S.shop[line]-1)/2))+shopClerks(line);}
 /* v60 (director 2026-10-04): a bigger shop keeps a longer queue - Lv1 4 people ... Lv7+ 10 */
 function qmax(line){return Math.min(10,3+S.shop[line]);}
 function slotPos(line,i){var s=STALL[line];return {x:s.x-38+(i%5)*18,y:s.y+76+Math.floor(i/5)*22};}
@@ -1460,10 +1466,10 @@ function newCustomer(only){
   var want=chooseWant(only);if(!want)return null;
   var line=ITEMS[want].line,goods=ITEMS[want].cat==='goods',s=ss(line,want);
   var qty=Math.min(3,1+Math.floor(Math.random()*2)+(s>=8&&Math.random()<.4?1:0));if(ITEMS[want].cat==='bear')qty=Math.max(1,Math.min(qty,s));
-  var pat=40+qty*1.3+6*S.shop[line];
+  var regular=Math.random()<shopRegularChance(line);if(regular)qty++;var pat=(40+qty*1.3+6*S.shop[line])*(regular?1.6:1);
   var sp=slotPos(line,lineOf(line).length);
   var ex=STALL[line].x+(line==='wood'?-76:76);
-  return {x:ex,ex:ex,y:-18,want:want,qty:qty,seller:line,pat:pat,max:pat,state:'line',slot:0,st:0,got:0,
+  return {x:ex,ex:ex,y:-18,want:want,qty:qty,regular:regular,seller:line,pat:pat,max:pat,state:'line',slot:0,st:0,got:0,
     col:CUST_COL[Math.floor(Math.random()*CUST_COL.length)],pants:['#4a4a5a','#3f4f7a','#5b4a3a','#5d6b3d'][Math.floor(Math.random()*4)],hair:HAIR[Math.floor(Math.random()*HAIR.length)],bob:0,dir:-1,mv:false,mood:''};
 }
 function moveC(c,x,y,dt,m){
@@ -1490,20 +1496,20 @@ function updateCustomers(dt){
     }
     if(c.state==='line'&&c.got===0&&ss(c.seller,c.want)<=0){var alt=null,an=0;ORDER.forEach(function(id){var it=ITEMS[id];if(it.line!==c.seller||it.cat==='goods')return;var n=ss(c.seller,id);if(n>an){an=n;alt=id;}});
       if(alt){c.want=alt;c.qty=Math.min(c.qty,Math.max(1,an));}}
-    if(c.state==='line'&&c.got>0&&c.got<c.qty&&ss(c.seller,c.want)<=0){c.waitT=(c.waitT||0)+dt;if(c.waitT>1.2){c.qty=c.got;c.state='serve';c.st=.4;}}else c.waitT=0;
+    if(c.state==='line'&&c.got>0&&c.got<c.qty&&ss(c.seller,c.want)<=0){c.waitT=(c.waitT||0)+dt;if(c.waitT>1.2){c.qty=c.got;c.state='serve';c.st=.8*shopCheckoutTime(c.seller);}}else c.waitT=0;
     if(c.state==='line'&&c.slot<serv(c.seller)&&arr){
       var take=Math.min(c.qty-c.got,ss(c.seller,c.want));
       if(take>0){S.ss[c.seller][c.want]-=take;c.got+=take;}
-      if(c.got>=c.qty){c.state='serve';c.st=.5;}
+      if(c.got>=c.qty){c.state='serve';c.st=shopCheckoutTime(c.seller);}
     }else if(c.state==='serve'){
       c.st-=dt;
       if(c.st<=0){
         var tip=c.pat/c.max>.5;
-        var pay=money50(c.qty*unitPrice(c.want,c.seller)*(tip?1.3:1));
+        var pay=customerPayment(c,tip);
         S.cash[c.seller]=(S.cash[c.seller]||0)+pay;S.h2=1;stat('serve',1);sfx('coin',.09);var cp0=cashPos(c.seller);
         addFloat(cp0.x,cp0.y-18,'💵+'+pay,'#c9f5c0',true);
         for(var cfi=0;cfi<Math.min(6,2+Math.ceil(pay/20));cfi++)fly('coin',c.x+(Math.random()-.5)*10,c.y-6,cp0.x+(Math.random()-.5)*12,cp0.y-4,.36+cfi*.05);
-        checkPop(c.x,c.y-24);
+        checkPop(c.x,c.y-24);if(c.regular&&Math.random()<.15)addFloat(c.x,c.y-40,c.seller==='fish'?'호수 쪽 물소리가 다시 들려요':'밤에 숲 뿌리가 파랗게 빛났대요','#ffe6a0',true);
         c.state='out';c.mood='happy';
       }
     }
@@ -1786,6 +1792,7 @@ function buildPads(){
       var sL=(S.pst&&S.pst[b])||0;add('pst_'+b,DEF['pst_'+b],pp.storage.x,pp.storage.y,b==='smelt'?(sL?'자재 창고 넓히기 · 철판·유리·플라스틱을 더 쌓아요':'자재 창고 짓기'):(sL?'창고 Lv'+(sL+1)+' · 가공 +'+(25*(sL+1))+'% · 트럭 값 +'+(30*(sL+1))+'%'+(sL+1===3||sL+1===5?' · 한 번에 +'+(sL+1===5?2:1)+'개!':''):'창고 짓기 · 가공 +25% · 트럭이 바로 실어 가요'),'📦',sL?'창고 Lv'+sL:'창고 짓기',null,sL?'up':'new');}
     else if(pl.id==='tower'){
       if(S.towerDown)add('tower_fix',FIXDEF.tower,110,440,'무너진 망루 수리','🔧','망루 수리',null,'fix');else add('tower',d,110,440,'망루 강화 · '+(S.tower<TOWER_MAX?TWNAME[TWPN[Math.min(TOWER_MAX,S.tower+1)]]+(S.tower+1>=2?' · 맵 전체 사격':''):'최대'),'🗼','망루 Lv'+S.tower,null,'up');}});
+  LINES.forEach(function(l){var st=STALL[l];add('shopstaff_'+l,DEF['shopstaff_'+l],st.x+60,st.y-30,'가게 일손 · '+(shopStaffLevel(l)%2===0?'점원 고용':'진열대 추가'),'⭐','일손 Lv'+shopStaffLevel(l),null,'up');});
   LINES.forEach(function(l){var s0=STALL[l];add('shop_'+l,DEF['shop_'+l],s0.x+(l==='wood'?0:10),s0.y+52,SHOPDEF[l].name+' 키우기 · '+SHOP_STAGE[shopStage(S.shop[l]+1)]+(shopStage(S.shop[l]+1)>shopStage(S.shop[l])?'(으)로 변신!':'')+' · 동시 응대 '+Math.min(4,1+Math.floor(S.shop[l]/2))+'명','🏪',SHOPDEF[l].name+' Lv'+S.shop[l],null,'up');});
   repairs().forEach(function(e,i){var t=repTarget(e);add('rep_'+e.k+(e.key||e.line||e.sid||e.wi)+(e.tr||''),repDef(e),t.x,t.y+18,'곰이 부순 곳 고치기','🔧','수리',null,'fix');});
   return arrangePads(L);
@@ -3695,11 +3702,12 @@ function drawStall(line){
     g.save();g.translate(s0.x,s0.y-10);g.rotate(time*.8);for(var r=0;r<10;r++){g.rotate(Math.PI/5);g.fillStyle='rgba(255,230,120,'+(.28*k)+')';g.beginPath();g.moveTo(0,0);g.lineTo(-8,-70);g.lineTo(8,-70);g.closePath();g.fill();}g.restore();
     g.strokeStyle='rgba(255,236,150,'+k+')';g.lineWidth=3*k;g.beginPath();g.ellipse(s0.x,s0.y+14,20+(1-k)*60,6+(1-k)*18,0,0,7);g.stroke();}
   var grow=1;g.save();g.translate(s0.x,s0.y+16);g.scale(grow,grow);if(fx>0){var e=fx/1.8,pop=1+Math.sin((1-e)*Math.PI*3)*.14*e;g.scale(2-pop,pop);}g.translate(-s0.x,-(s0.y+16));
-  drawStallBody(line);
+  drawStallBody(line);drawShopStaff(line);
   var x=s0.x,y=s0.y,aw=stallW(lv),ax=x-aw/2;
   g.restore();
 
 }
+function drawShopStaff(line){var g=ctx,st=STALL[line],n=shopClerks(line);for(var i=0;i<n;i++){var x=st.x-36+i*17,y=st.y+30;g.fillStyle='#465f50';g.fillRect(x-4,y-1,8,10);g.fillStyle='#f0d4b0';g.beginPath();g.arc(x,y-5,4,0,7);g.fill();g.fillStyle='#473b30';g.fillRect(x-4,y-9,8,3);g.fillStyle=line==='wood'?'#cf9766':'#7daeb6';g.fillRect(x-5,y,10,2);g.fillStyle='#54463a';g.fillRect(x-4,y+8,3,3);g.fillRect(x+1,y+8,3,3);}for(var j=0;j<shopShelves(line);j++){var rx=st.x+24+j*13;g.fillStyle='#97734f';g.fillRect(rx,st.y+34,10,8);g.fillStyle='#dac293';g.fillRect(rx,st.y+32,10,2);drawItem(g,SHOPDEF[line].icon,rx+5,st.y+31,.35);}}
 var SHOP_STAGE=['노점','나무 노점','벽돌 가게','큰 상점'];
 function shopStage(lv){return lv>=7?3:(lv>=5?2:(lv>=3?1:0));}
 function stallW(lv){return 92;}
@@ -4152,6 +4160,7 @@ function drawCustomer(c){
   g.fillStyle='#3a2c22';g.beginPath();g.arc(c.x+c.dir*2.2,c.y+by-5.2,.75,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(c.x+c.dir*2.2+.25,c.y+by-5.45,.25,0,7);g.fill();
   g.strokeStyle='#8a4a3a';g.lineWidth=.45;g.beginPath();g.arc(c.x+c.dir*1.8,c.y+by-3.4,.7,.3,Math.PI-.3);g.stroke();
   g.fillStyle=c.hair;g.beginPath();g.arc(c.x+c.dir,c.y+by-5.6,4.3,Math.PI,0);g.fill();g.beginPath();g.ellipse(c.x+c.dir*2,c.y+by-6,2.2,1,c.dir*.3,0,7);g.fill();
+  if(c.regular){g.font='11px sans-serif';g.textAlign='center';g.fillStyle='#e0b54c';g.fillText('⭐',c.x,c.y-40);}
   if(c.state==='out'){g.font='11px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#000';g.fillText(c.mood==='angry'?'💢':'💖',c.x,c.y-15);return;}
   if(c.slot>=serv(c.seller)&&c.state==='line')return;
   var short=c.got<c.qty,txt=c.got+'/'+c.qty;
@@ -4406,6 +4415,7 @@ function beltDef(sid){
     name:function(){return st.name+' 벨트'+(cvLv(sid)?' 강화':' 설치');},
     desc:function(){var L=cvLv(sid)+1;return '초당 '+convRate(L).toFixed(1)+'회 · 한 번에 '+convBatch(L)+'개';}});
 }
+function shopStaffDef(line){return mkUp({id:'shopstaff_'+line,shopStaff:line,cost:function(){return 150*Math.pow(2.6,shopStaffLevel(line));},isMax:function(){return shopStaffLevel(line)>=6;},hidden:function(){return !lineOpen(line);},lv:function(){return 'Lv.'+shopStaffLevel(line);},name:function(){return SHOPDEF[line].name+' · 가게 일손';},desc:function(){return '손님이 많아졌어요. 일손을 더 들일까요? 다음: '+(shopStaffLevel(line)%2===0?'점원 고용 · 응대·계산 개선':'진열대 추가 · 판매대 +1')+' · Lv2부터 단골손님';}});}
 function shopDef(line){
   var nm=SHOPDEF[line].name,base=line==='wood'?120:160;
   return mkUp({id:'shop_'+line,shop:line,cost:function(){return Math.round(base*Math.pow(1.9,S.shop[line]-1)*stageCostMult(line==='fish'?2:1));},
@@ -4438,7 +4448,7 @@ var TABS=[
       desc:function(){return '적재칸마다 '+pcap()+'→'+(pcap()+6)+'개까지';}}),
     towerDef(),fenceDef(),vtowerDef(2),vtowerDef(3),vfenceDef(2),vfenceDef(3),procDef('mill','제재소',260),procDef('smoke','훈제소',300),procDef('smelt','제련소',700),procDef('elec','전자 공장',2600),procBeltDef('mill'),procBeltDef('smoke'),procBeltDef('smelt'),procBeltDef('elec'),beltUpDef('wood','숲'),beltUpDef('fish','강'),beltUpDef('iron','광산'),pstDef('mill'),pstDef('smoke'),pstDef('smelt'),pstDef('elec'),siteDef('m1')
   ]},
-  {id:'shop',label:'🏪 가게',items:[shopDef('wood'),shopDef('fish'),autocashDef()]}
+  {id:'shop',label:'🏪 가게',items:[shopDef('wood'),shopDef('fish'),shopStaffDef('wood'),shopStaffDef('fish'),autocashDef()]}
 ];
 function drawIcon(d,cv2){
   var g=cv2.getContext('2d');g.setTransform(2,0,0,2,0,0);g.clearRect(0,0,28,28);
@@ -4612,6 +4622,7 @@ function buy(d,fromPad){
   }else if(d.id==='lodge'){S.lodge=1;var lp=LODGEP();addFloat(lp.x+lp.w/2,lp.y+10,'일꾼 숙소 완공!','#c9f5c0');burst(lp.x+lp.w/2,lp.y+24,'#ffe27a',16,true);
   }else if(d.trunkUp){S.trunk++;celebrate(agents[0].x,agents[0].y,'벨트 모터 Lv.'+S.trunk,false);LINES.forEach(function(l){burst(LANE[l],dropPt(l).y,'#ffe27a',8,true);});}
   else if(d.wh){S.whLv++;truckT=Math.min(truckT,6);celebrate(WH.door,WH.wall,S.whLv===1?'창고 완공!':'창고 Lv.'+S.whLv,true);addFloat(WH.door,WH.top,S.whLv===1?'창고 완공!':'창고 확장!','#ffe27a');burst(WH.door,WH.wall,'#ffe27a',16,true);flash=.4;}
+  else if(d.shopStaff){var line=d.shopStaff;if(!S.shopStaff||typeof S.shopStaff!=='object'||Array.isArray(S.shopStaff))S.shopStaff={};S.shopStaff[line]=Math.min(6,shopStaffLevel(line)+1);var st=STALL[line];STALLFX[line]=1.8;celebrate(st.x,st.y-35,shopStaffLevel(line)%2?'점원이 합류했어요!':'진열대가 늘었어요!');}
   else if(d.shop){S.shop[d.shop]++;var s=STALL[d.shop];STALLFX[d.shop]=1.8;flash=.45;sfx('cash');
     var cc=['#e2463c','#f0bb3f','#3f7fb8','#4fb36a','#b85ac8','#ffffff'];for(var cf=0;cf<46;cf++){var an=-Math.PI/2+(Math.random()-.5)*2.4,sp2=60+Math.random()*90;parts.push({x:s.x,y:s.y-20,vx:Math.cos(an)*sp2,vy:Math.sin(an)*sp2,g:140,life:1.5,max:1.5,col:cc[cf%6],r:1.6,leaf:true});}
     burst(s.x,s.y-20,'#ffe27a',18,true);var stg=shopStage(S.shop[d.shop]),newStg=stg>shopStage(S.shop[d.shop]-1);addFloat(s.x,s.y-86,newStg?'🏠 '+SHOP_STAGE[stg]+'(으)로 변신!':SHOPDEF[d.shop].name+' 확장!','#ffe27a');if(newStg){flash=.6;burst(s.x,s.y-40,'#ffffff',24,true);}}
@@ -4921,5 +4932,6 @@ requestAnimationFrame(loop);
 </script>
 </body>
 </html>
+
 
 

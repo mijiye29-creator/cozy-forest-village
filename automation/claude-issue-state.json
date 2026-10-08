@@ -2,17 +2,17 @@
   "schema_version": 1,
   "repository": "mijiye29-creator/cozy-forest-village",
   "checked_date_kst": "2026-10-08",
-  "implementation_commit": "0245aa4b40ad6641627f7e53e0856dfd1078bf16",
+  "implementation_commit": null,
   "issues": {
     "1": {
       "title": "[클로드 제안] 가게 일손 — 점원 고용·진열대 추가·⭐단골손님",
       "updated_at": "2026-10-08T07:45:32Z",
       "input_sha256": "1d2440e30babd35e71c9ae15a01c3bc1b1eec86d1030bf9fcb09383d4843d556",
       "comment_ids": [],
-      "status": "planned",
-      "implementation_commit": "0245aa4b40ad6641627f7e53e0856dfd1078bf16",
-      "notes": "가게 일손·점원·진열대·단골은 핵심 진행 오류보다 후순위. 아직 구현하지 않음. 다음 실행에서 계속 작업.",
-      "continue_pending_work": true
+      "status": "implemented_code_verified",
+      "implementation_commit": null,
+      "notes": "가게별 일손 Lv0~6, 홀수 점원·짝수 진열대, 발판 구매, Lv2부터 단골 확률/인내/수량/40% 추가금액 구현. 선택 필드 shopStaff로 구형 저장 유지. VM 회귀 통과; 브라우저/실기기/장기 수입 균형 미검증.",
+      "continue_pending_work": false
     },
     "2": {
       "title": "[클로드 제안] 튜토리얼 첫 목적지 보여 주기 + 가로 화면 탭 줄바꿈",
@@ -44,8 +44,8 @@
         6055294504
       ],
       "status": "partially_addressed",
-      "implementation_commit": "0245aa4b40ad6641627f7e53e0856dfd1078bf16",
-      "notes": "기존 시작 위치/가로 알림/읽음 오류 수정은 재적용하지 않음. 세로 알림 위치 제한 추가. CSS 통합과 탭 경로 정지는 후속 확인. Claude의 과거 Chromium QA와 직접 실행 VM 검사를 구분.",
+      "implementation_commit": null,
+      "notes": "기본 #title 규칙 통합 완료. 기존 수정과 과거 QA는 재적용하지 않음. 탭 경로탐색 증상은 최신 코드의 재현 필요; 실제 브라우저/실기기 검증 미완료.",
       "continue_pending_work": true
     }
   }
