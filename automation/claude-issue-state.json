@@ -334,14 +334,13 @@
           "body_sha256": "f74948be485c084d4c263a7c3c950e316484566bfcdd66faefd7847880886c71"
         }
       ],
-      "status": "expanded_source_assets_and_videos_integrated",
-      "implementation_commit": "2e800eebfca6fcf2ab1282cef29e0efa830557ae",
+      "status": "complete_actions_and_post_ending_gameplay_verified",
+      "implementation_commit": "6a42d57004f6422f9a29cf514bb3e1577684c039",
       "continue_pending_work": false,
-      "notes": "New user material-upgrade request: expanded Claude source-render integration plus intro/ending movies, image fallback for blocked playback/save-data/reduced-motion, snow/amber palette. Direct Chromium validates supplied source renders and movies, natural ending completion, cleanup, source-sheet failures, save/story and all-town render. Latest gameplay/economy unchanged. Optional thrill rewards remain separate proposals.",
+      "notes": "User explicitly requested all actions and previously deferred elements. All original model roles connected, including work-body derivatives for exact axe/net grips, facility motion, fish swim/flop, NPC walk/work/cheer, bear idle/attack/hurt, corgi and chest idle/open. Combo/fever/orders/chests and capped saved bonus ledger implemented. Optional post-ending aurora restoration uses six original models with material repairs, keepers, guests, warmth, lodge revenue and mobile pinch. Existing three-village progress/bounds unchanged. No external comments or issue closure.",
       "pending": [
         "physical_device_fps",
-        "full_boss_playthrough",
-        "optional_thrill_reward_design"
+        "full_boss_playthrough"
       ],
       "history": [
         {
@@ -355,7 +354,7 @@
           "notes": "사용자의 원천 데이터 활용 지시로 Claude GLB에서 만든 atlas/WebP를 캐릭터·시설·곰·일반 나무/바위에 통합. 지연 로드·최대2병렬·이미지 오류 fallback·화면 밖 culling·해시 버전. 이름/가방/HP/자원 진행/상품/수리·레벨 표시 유지. 상위 차량/슈퍼·희귀 자원 고유 외형 유지. 직접14개 코드 검사·native Canvas 실제 렌더 오류0. 실기기FPS/브라우저/전체보스 미실시. 신규 보상·경제 규칙과 영상 대안은 별도 제안 보류."
         }
       ],
-      "own_validation": "14 code checks; actual Chromium source video playback/seek-to-natural-end/skip, blocked-media fallback, four-viewport sprite/level design, nine-fish net, save/story smoke; device FPS/full boss unrun"
+      "own_validation": "14 code checks; actual Chromium original movies/source sheets/fallback, four viewport design and level differences, nine-fish net, save/story smoke, new three-viewport restoration/atomic materials/level cap/reload/reward cap/pointer pinch tests. Physical-device FPS and full boss playthrough not run."
     },
     "9": {
       "title": "[클로드 제안] 3D 캐릭터·시설 스프라이트 런타임 연결 (새 17종 포함, 4마을은 모델만)",
@@ -365,12 +364,16 @@
       "comment_ids": [],
       "comment_versions": [],
       "github_state": "open",
-      "status": "implemented_code_and_browser_verified",
-      "implementation_commit": "2e800eebfca6fcf2ab1282cef29e0efa830557ae",
+      "status": "complete_actions_and_post_ending_gameplay_verified",
+      "implementation_commit": "6a42d57004f6422f9a29cf514bb3e1577684c039",
       "request_type": "asset_integration",
       "continue_pending_work": false,
-      "notes": "Imported Claude PR #10 asset/handoff changes from 80d1565 without replacing newer main game code. Connected customer/staff/vehicles/workshop/warehouse/stalls/board, derived master body variants for exact two-hand axe/net grips. Original 48 models retained, 6 village-four models dormant. Existing state/overlays/fallback retained. Actual Chromium movies/source sprites/failure fallback verified. No external issue comment/close or device FPS/full boss claim.",
-      "own_validation": "14 code checks; actual Chromium source video playback/seek-to-natural-end/skip, blocked-media fallback, four-viewport sprite/level design, nine-fish net, save/story smoke; device FPS/full boss unrun"
+      "notes": "User explicitly requested all actions and previously deferred elements. All original model roles connected, including work-body derivatives for exact axe/net grips, facility motion, fish swim/flop, NPC walk/work/cheer, bear idle/attack/hurt, corgi and chest idle/open. Combo/fever/orders/chests and capped saved bonus ledger implemented. Optional post-ending aurora restoration uses six original models with material repairs, keepers, guests, warmth, lodge revenue and mobile pinch. Existing three-village progress/bounds unchanged. No external comments or issue closure.",
+      "own_validation": "14 code checks; actual Chromium original movies/source sheets/fallback, four viewport design and level differences, nine-fish net, save/story smoke, new three-viewport restoration/atomic materials/level cap/reload/reward cap/pointer pinch tests. Physical-device FPS and full boss playthrough not run.",
+      "pending": [
+        "physical_device_fps",
+        "full_boss_playthrough"
+      ]
     }
   },
   "input_format": "sha256(UTF-8 JSON, sorted keys, compact separators: number,title,body,state,updated_at,comments[id,body,updated_at])",
