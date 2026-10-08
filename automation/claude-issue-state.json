@@ -2,7 +2,7 @@
   "schema_version": 1,
   "repository": "mijiye29-creator/cozy-forest-village",
   "checked_date_kst": "2026-10-09",
-  "implementation_commit": "a4d1770c6d847c97e96ed00b298faa0360a13762",
+  "implementation_commit": "47f2e6020a1dc9ef4fe0537f29a5d2a9aad4e487",
   "issues": {
     "1": {
       "title": "[클로드 제안] 가게 일손 — 점원 고용·진열대 추가·⭐단골손님",
@@ -335,7 +335,7 @@
         }
       ],
       "status": "assets_integrated_code_verified",
-      "implementation_commit": null,
+      "implementation_commit": "47f2e6020a1dc9ef4fe0537f29a5d2a9aad4e487",
       "continue_pending_work": false,
       "notes": "사용자의 원천 데이터 활용 지시로 Claude GLB에서 만든 atlas/WebP를 캐릭터·시설·곰·일반 나무/바위에 통합. 지연 로드·최대2병렬·이미지 오류 fallback·화면 밖 culling·해시 버전. 이름/가방/HP/자원 진행/상품/수리·레벨 표시 유지. 상위 차량/슈퍼·희귀 자원 고유 외형 유지. 직접14개 코드 검사·native Canvas 실제 렌더 오류0. 실기기FPS/브라우저/전체보스 미실시. 신규 보상·경제 규칙과 영상 대안은 별도 제안 보류.",
       "pending": [
