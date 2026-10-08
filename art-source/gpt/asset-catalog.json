@@ -4,7 +4,12 @@
  "sprite_camera": "front 3/4 (yaw 28deg), looking down 30deg, 64 px per unit, dark outline; characters face front-left, mirror for dir>0",
  "runtime_connected": false,
  "handoff": "art-source/gpt/GPT-HANDOFF.md",
- "links": {},
+ "links": {
+  "canva_model_sheet": "https://www.canva.com/d/CCIvQGXodbIhNJD",
+  "figma_library": "https://www.figma.com/design/vU3EMGnGoRNJcm51kBenf2",
+  "dropbox_folder": "/cozy-forest-village/3d-assets (view link: owner only)",
+  "github_issue": "https://github.com/mijiye29-creator/cozy-forest-village/issues/9"
+ },
  "models": {
   "hero": {
    "group": "character",

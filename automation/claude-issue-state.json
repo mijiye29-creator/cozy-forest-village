@@ -279,6 +279,22 @@
         "comment_id": 6061415147,
         "method": "Playwright headless Chromium 390x844 DPR2; accelerated test run(); no physical device or manual full playthrough"
       }
+    },
+    "9": {
+      "title": "[클로드 제안] 3D 캐릭터·시설 스프라이트 런타임 연결 (새 17종 포함, 4마을은 모델만)",
+      "github_state": "open",
+      "created_by": "claude_session_2026-10-09_kst",
+      "request_type": "art_handoff",
+      "status": "handoff_open_not_implemented",
+      "continue_pending_work": true,
+      "notes": "Claude가 art-source 3D 모델 17종 추가·GPT 인계 팩 작성 후 연결 사양 이슈를 생성. game/src 무변경. 4마을 모델은 런타임 미구현이므로 연결 대상 아님.",
+      "own_validation": "glb 재로드·클립 트랙 확인, 렌더 육안 확인, build-game --check, run-code all, static-assets 통과; 게임 내 연결/실기기/보스 미실시",
+      "pending_validation": [
+        "runtime_wiring",
+        "browser_visual",
+        "physical_device"
+      ],
+      "source_branch": "ccr-281628a2-a7y494"
     }
   },
   "input_format": "sha256(UTF-8 JSON, sorted keys, compact separators: number,title,body,state,updated_at,comments[id,body,updated_at])",
