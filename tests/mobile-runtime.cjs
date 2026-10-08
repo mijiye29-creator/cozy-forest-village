@@ -91,4 +91,37 @@ env.document.hidden=true;env.loop(20000);assert.equal(updates,0);assert.equal(dr
 env.document.hidden=false;env.storyBox.hidden=false;env.time=42;env.titleT=0;
 for(let i=1;i<=120;i++)env.loop(20000+i*1000/120);
 assert.equal(updates,0);assert.equal(env.time,42);assert(draws<=3,'Story background should render at low frequency');
-console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause.');
+// Exercise the real layout against all reserved facilities and future belt routes.
+const layout = {S:{stage:1},fenceX:()=>[180,300,540][layout.S.stage-1]};
+vm.createContext(layout);
+vm.runInContext(script.match(/var GC=.*?;/)[0],layout);
+vm.runInContext(section('var SZ=', '/* tile grid:'),layout);
+vm.runInContext(script.match(/var STALL=.*?;/)[0],layout);
+vm.runInContext("var LINES=['wood','fish'];",layout);
+vm.runInContext(section('var BPATH=', 'function beltOn('),layout);
+vm.runInContext(section('var PLOTS=', '/* each factory:'),layout);
+vm.runInContext(section('var PADLIST=[];', 'function padPos('),layout);
+const allIds=Object.keys(layout.PAD_LAYOUT).filter(id=>!id.includes('fix'));
+for(const stage of [1,2,3]){
+  layout.S.stage=stage;
+  const pads=layout.arrangePads(allIds.map(id=>({id,x:150,y:200})));
+  assert(pads.length>0,'Layout must contain visible pads');
+  for(const p of pads){
+    const bounds=layout.padBounds(p);
+    assert(bounds.x>=0 && bounds.x+bounds.w<=layout.fenceX()-3);
+    assert(bounds.y>=0 && bounds.y+bounds.h<layout.H);
+    assert(!layout.padObstacles().some(o=>layout.rectTouches(bounds,o,3)),`${p.id} overlaps a facility`);
+    for(const q of pads)if(p!==q){
+      assert(!layout.rectTouches(bounds,layout.padBounds(q)),`${p.id} overlaps ${q.id}`);
+      assert(Math.hypot(p.x-q.x,p.y-q.y)>2*layout.PAD_RADIUS,'Purchase radii overlap');
+    }
+  }
+  const remaining=layout.arrangePads(pads.slice(1).map(p=>({...p})));
+  for(const p of remaining){const previous=pads.find(q=>q.id===p.id);assert.equal(p.x,previous.x);assert.equal(p.y,previous.y);}
+  const repair={id:'rep_worker_test',x:150,y:200};
+  const repaired=layout.arrangePads([...pads.map(p=>({...p})),repair]);
+  assert(repaired.includes(repair),'Repair must remain accessible');
+  assert(!layout.padObstacles().some(o=>layout.rectTouches(layout.padBounds(repair),o,3)));
+  assert(!pads.some(p=>layout.rectTouches(layout.padBounds(repair),layout.padBounds(p),3)));
+}
+console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; 3 village layouts, facility/belt clearance, stable slots and repairs.');
