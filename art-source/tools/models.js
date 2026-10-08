@@ -638,3 +638,29 @@ export const MODELS = {
 for (const name of ['master_lumber','master_fisher']) {
  MODELS[name+'_body'] = () => { const m=MODELS[name]();m.nodes.armL.scale.setScalar(0.0001);m.nodes.armR.scale.setScalar(0.0001);return m; };
 }
+
+// KakaoTalk reference derivatives. Keep the supplied originals untouched.
+// Blue snow crowns, rounded cut timber and insulated cyan parkas share all
+// original pivots and clips, so movement/work/cheer stay in sync with gameplay.
+function referencePine(name,scale=1){
+ const root=new THREE.Group();root.name=name;const sway=pivot(root,'sway');
+ cyl(sway,.115*scale,.145*scale,.55*scale,'#92572f',0,.275*scale,0,12);
+ [[.73,.88,.62],[.57,.77,1.12],[.37,.67,1.55]].forEach(([r,h,y],i)=>{
+  cone(sway,r*scale,h*scale,['#689ac2','#79acce','#91bfd8'][i],0,y*scale,0,12,{flat:true});
+  const cap=cone(sway,r*.94*scale,h*.84*scale,'#dfeef6',0,(y+h*.12)*scale,0,12,{flat:true});
+  // Drooping lobes break the hard cone edge, like heavy snow on branches.
+  for(let j=0;j<6;j++){const a=j*TAU/6,lobe=ball(sway,.17*scale,'#dfeef6',Math.cos(a)*r*.64*scale,(y-h*.08)*scale,Math.sin(a)*r*.64*scale,10);lobe.scale.set(1.35,.52,1.1);}
+ });
+ return {root,nodes:{sway},kind:'prop',anims:{idle:{dur:3,frames:6,fn(t,n){n.sway.rotation.z=S(t*TAU)*.025;}},chop:{dur:.4,frames:5,fn(t,n){n.sway.rotation.z=S(t*TAU*2)*.09*(1-t);}}}};
+}
+function referenceWinter(name,role,tool,extra){return character(name,{coat:role==='customer'?'#3ba9c3':'#168fba',scarf:'#f4f4ed',hatColor:'#169bc6',pom:'#f5f7f3',hat:role==='customer'?hats.fur:hats.hood,hair:PAL.hairDark,pants:'#384858',boots:'#705338',mitten:'#574f45',trim:'#eac070',toolOnlyAtWork:role==='hero'?1:0,extra:(N)=>{N.head.scale.setScalar(1.08);if(extra)extra(N,{scarf:'#f4f4ed'});torus(N.torso,.235,.065,'#f6f4ea',0,.035,0).rotation.x=Math.PI/2;[-1,1].forEach((side)=>{const arm=N[side<0?'armL':'armR'];torus(arm,.083,.04,'#f6f4ea',0,-.39,0).rotation.x=Math.PI/2;});rbox(N.torso,.055,.5,.035,'#d8aa61',0,.25,.186,.014);}},tool);}
+MODELS.reference_hero=()=>{const m=referenceWinter('reference_hero','hero','axe',heroExtra)();for(const kind of ['punch','kick'])m.anims[kind]={dur:.32,frames:8,fn(t,n){if(n.tool)n.tool.scale.setScalar(.0001);const k=S(t*Math.PI);n.body.rotation.y=k*(kind==='kick'?-.35:.25);n.body.rotation.z=-k*.08;n.armL.rotation.x=-.9-k*.3;n.armR.rotation.x=kind==='punch'?-1.1-k*1.1:-.9;n.armR.rotation.z=-k*.2;if(kind==='kick'){n.legR.rotation.x=-k*1.4;n.body.position.y=k*.045;}else n.legR.rotation.x=k*.1;}};m.nodes.rod=tools.rod(m.nodes.handR);m.nodes.rod.name='fishingRod';m.nodes.pick=tools.pick(m.nodes.handR);m.nodes.pick.name='miningPick';for(const A of Object.values(m.anims)){const fn=A.fn;A.fn=(t,n)=>{fn(t,n);n.rod.scale.setScalar(.0001);n.pick.scale.setScalar(.0001);};}for(const [clip,kind] of [['fishwork','rod'],['minework','pick']]){const original=humanAnims(kind).work;m.anims[clip]={...original,fn(t,n){original.fn(t,n);n.tool.scale.setScalar(.0001);n.rod.scale.setScalar(kind==='rod'?1:.0001);n.pick.scale.setScalar(kind==='pick'?1:.0001);}};}return m;};
+MODELS.reference_lumberjack=referenceWinter('reference_lumberjack','lumber','axe');
+MODELS.reference_fisher=referenceWinter('reference_fisher','fisher','rod');
+MODELS.reference_customer=withAnims(referenceWinter('reference_customer','customer'),{happy});
+MODELS.reference_pine=()=>referencePine('reference_pine',1);
+MODELS.reference_pine_small=()=>referencePine('reference_pine_small',.7);
+MODELS.reference_fence=()=>{const root=new THREE.Group();root.name='reference_fence';for(let i=0;i<6;i++){const x=-.65+i*.26,h=1.02+(i%2)*.025;cyl(root,.135,.14,h,'#c38d4e',x,h/2,0,16);cyl(root,.127,.127,.016,'#f2d8a6',x,h+.006,0,16);torus(root,.082,.003,'#caad7c',x,h+.016,0).rotation.x=Math.PI/2;}[.28,.72].forEach(y=>rbox(root,1.55,.07,.08,'#a8743d',0,y,-.1,.015));return {root,nodes:{},kind:'facility',anims:{}};};
+MODELS.reference_hunter=referenceWinter('reference_hunter','hunter','bow',quiver);
+MODELS.reference_staff=withAnims(referenceWinter('reference_staff','customer'),{work:serve});
+MODELS.reference_bear=()=>{const o={len:1.42,wid:.76,hip:.48,bodyH:.65,legW:.21,headW:.47,snout:.34,fur:'#f5f5ed',belly:'#dce4e5',muzzle:'#f6f4ed',paw:'#cfd9dc',tailR:.07,scale:1,attack:1,hurt:1,walkDur:.9};const N=quadruped('reference_bear',o);ball(N.body,.34,'#f5f5ed',0,1.09,.27,16).scale.set(1,1.1,1.25);return {root:N.root,nodes:N,anims:quadAnims(o),kind:'actor'};};

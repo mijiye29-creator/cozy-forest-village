@@ -3186,7 +3186,112 @@
       "runtime_connected": true,
       "derived_from": "master_fisher",
       "notes": "Original retained. Body variant suppresses source arms/tool; runtime draws both arms gripping enlarged axe/full-lake net."
+    },
+    "reference_hero": {
+      "group": "reference-derivative",
+      "kind": "actor",
+      "runtime_connected": true,
+      "source_model": "hero",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_hero.glb",
+      "sprite": "game/assets/sprites/reference_hero.webp",
+      "original_preserved": true
+    },
+    "reference_lumberjack": {
+      "group": "reference-derivative",
+      "kind": "actor",
+      "runtime_connected": true,
+      "source_model": "lumberjack",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_lumberjack.glb",
+      "sprite": "game/assets/sprites/reference_lumberjack.webp",
+      "original_preserved": true
+    },
+    "reference_fisher": {
+      "group": "reference-derivative",
+      "kind": "actor",
+      "runtime_connected": true,
+      "source_model": "fisher",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_fisher.glb",
+      "sprite": "game/assets/sprites/reference_fisher.webp",
+      "original_preserved": true
+    },
+    "reference_customer": {
+      "group": "reference-derivative",
+      "kind": "actor",
+      "runtime_connected": true,
+      "source_model": "customer",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_customer.glb",
+      "sprite": "game/assets/sprites/reference_customer.webp",
+      "original_preserved": true
+    },
+    "reference_pine": {
+      "group": "reference-derivative",
+      "kind": "prop",
+      "runtime_connected": true,
+      "source_model": "pine",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_pine.glb",
+      "sprite": "game/assets/sprites/reference_pine.webp",
+      "original_preserved": true
+    },
+    "reference_pine_small": {
+      "group": "reference-derivative",
+      "kind": "prop",
+      "runtime_connected": true,
+      "source_model": "pine_small",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_pine_small.glb",
+      "sprite": "game/assets/sprites/reference_pine_small.webp",
+      "original_preserved": true
+    },
+    "reference_fence": {
+      "group": "reference-derivative",
+      "kind": "prop",
+      "runtime_connected": true,
+      "source_model": "fence",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_fence.glb",
+      "sprite": "game/assets/sprites/reference_fence.webp",
+      "original_preserved": true
+    },
+    "reference_hunter": {
+      "group": "reference-derivative",
+      "kind": "actor",
+      "runtime_connected": true,
+      "source_model": "hunter",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_hunter.glb",
+      "sprite": "game/assets/sprites/reference_hunter.webp",
+      "original_preserved": true
+    },
+    "reference_staff": {
+      "group": "reference-derivative",
+      "kind": "actor",
+      "runtime_connected": true,
+      "source_model": "staff",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_staff.glb",
+      "sprite": "game/assets/sprites/reference_staff.webp",
+      "original_preserved": true
+    },
+    "reference_bear": {
+      "group": "reference-derivative",
+      "kind": "actor",
+      "runtime_connected": true,
+      "source_model": "bear",
+      "ko": "카카오톡 사진 3장 기준 겨울 스타일 파생 모델",
+      "model": "art-source/models/reference_bear.glb",
+      "sprite": "game/assets/sprites/reference_bear.webp",
+      "original_preserved": true
     }
   },
-  "runtime_note": "Three-village source render integration; aurora/village-four models are design assets only. Master body variants preserve exact Canvas axe/net grips."
+  "runtime_note": "Three-village source render integration; aurora/village-four models are design assets only. Master body variants preserve exact Canvas axe/net grips.",
+  "reference_photos": [
+    "KakaoTalk_Photo_2026-10-06-22-03-26 001.jpeg",
+    "KakaoTalk_Photo_2026-10-06-22-03-26 002.jpeg",
+    "KakaoTalk_Photo_2026-10-06-22-03-27 003.jpeg"
+  ]
 }

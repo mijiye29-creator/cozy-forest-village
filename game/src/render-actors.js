@@ -210,7 +210,7 @@ function drawSuperFx(){var g=ctx;for(var i=SUPERFX.length-1;i>=0;i--){var f=SUPE
 function heroTier(){var st=S.stage||1,w=S.wlv||{};if(st>=3)return (w.hunter3||0)>=5?4:3;if(st>=2)return (w.hunter2||0)>=8?3:2;return (w.hunter||0)>=8?1:0;}
 function drawHero(g,a,by){
  var master=a.role==='lumber',level=master?12:(a.martialLevel||wpnLv());
- var fromSprite=!master&&!a.customArms&&drawSprite(g,'hero',actorSpriteAnim(a),time+(a.x%7)*.1,a.x,a.y+9,SPRITE_PPU,a.dir>0);
+ var fromSprite=!master&&!a.customArms&&drawSprite(g,'reference_hero',a.stab>0?(a.strikeType==='kick'?'kick':'punch'):a.working&&a.res&&a.res.k==='fish'?'fishwork':a.working&&a.res&&a.res.k==='ore'?'minework':actorSpriteAnim(a),time+(a.x%7)*.1,a.x,a.y+9,SPRITE_PPU,a.dir>0);
  if(fromSprite)drawSpriteLevel(g,a.x,a.y+16,level,13);
  if(!fromSprite)drawActor3D(g,a,{coat:master?'#e6872a':ART.coats[Math.min(12,level-1)],scarf:master?'#ffe06b':ART.scarves[Math.min(12,level-1)],customArms:!!a.customArms,level:level});
  if((a.stab||0)>0){var force=Math.sin(Math.min(1,a.stab/.32)*Math.PI);g.save();g.translate(a.x,a.y);g.scale(a.dir||1,1);g.strokeStyle='rgba(255,216,102,'+force*.75+')';g.lineWidth=1.4;g.beginPath();g.arc(3,a.strikeType==='kick'?0:-14,12+force*8,-.8,.8);g.stroke();g.restore();}
@@ -224,6 +224,8 @@ function drawAgent(a){
   if(a.role==='miner'&&(a.gear.pick||0)>=4){drawExcavator(a);drawVehicleUpgrade(ctx,a,a.gear.pick,'miner');return;}
   if(a.role==='lumber'&&(a.gear.axe||0)>=4){drawHarvester(a);drawVehicleUpgrade(ctx,a,a.gear.axe,'lumber');return;}
   if(a.role==='fisher'&&(a.gear.rod||0)>=4){drawFishRig(a);drawVehicleUpgrade(ctx,a,a.gear.rod,'fisher');return;}
+  ctx.save();ctx.fillStyle='rgba(41,62,75,.08)';ctx.beginPath();ctx.ellipse(a.x+2,a.y+9,15,5,0,0,7);ctx.fill();ctx.fillStyle='rgba(41,62,75,.14)';ctx.beginPath();ctx.ellipse(a.x+1,a.y+9,10,3.4,0,0,7);ctx.fill();ctx.restore();
+  if(a.role==='player')drawCarriedTimber(ctx,a);
   var kind=a.role==='lumber'?'tree':(a.role==='fisher'?'fish':(a.role==='miner'?'ore':a.kind));
   var t=a.role==='courier'?tierOf('cour',a.gear.cour||0):(isHunter(a.role)?tierOf('bow',a.gear.bow||0):toolTierFor(a,a.role==='player'?'tree':kind));
   var t2=a.role==='player'?toolTierFor(a,'fish'):t;
@@ -231,12 +233,13 @@ function drawAgent(a){
   ctx.save();ctx.translate(a.x,a.y);ctx.scale(a.sc,a.sc);ctx.translate(-a.x,-a.y);
   curWalk=a.mv;curPh=a.bob;
   if(a.role==='player'){drawHero(ctx,a,by);}
-  else if(!drawSprite(ctx,SPRITE_ROLE[a.role],actorSpriteAnim(a),time+(a.x%7)*.1,a.x,a.y+9,SPRITE_PPU,a.dir>0))drawPerson(ctx,a.x,a.y,a.role,a.dir,by,tierOf('boots',a.gear.boots),t,t2,a.role==='player'?null:a.gear,a);
-  curWalk=null;if(a.role!=='player'&&!isHunter(a.role)&&SPRITE_ROLE[a.role]&&spriteReady(SPRITE_ROLE[a.role]))drawSpriteLevel(ctx,a.x,a.y+14,a.gear[PRIM[a.role]]||0,12);
+  else if(!drawSprite(ctx,SPRITE_ROLE[a.role],actorSpriteAnim(a),time+(a.x%7)*.1,a.x,a.y+9,SPRITE_PPU*(1+.025*Math.min(12,a.gear[PRIM[a.role]]||0)),a.dir>0))drawPerson(ctx,a.x,a.y,a.role,a.dir,by,tierOf('boots',a.gear.boots),t,t2,a.role==='player'?null:a.gear,a);
+  curWalk=null;if(a.role!=='player'&&SPRITE_ROLE[a.role]&&spriteReady(SPRITE_ROLE[a.role]))drawSpriteLevel(ctx,a.x,a.y+14,a.gear[PRIM[a.role]]||0,12);
   var fishing=a.working&&a.res&&a.res.k==='fish';
+  if(fishing&&a.role==='player'&&spriteReady('reference_hero')){var cyc=(a.swing/9)%2.6;a.castCyc=cyc;a.castCa=cyc<.4?.2-cyc/.4*1.3:cyc<.6?-1.1+(cyc-.4)/.2*1.7:.6-Math.min(.25,(cyc-.6)*.5)+Math.sin(time*3)*.05;}
   if(a.role==='player'&&(!a.working||bearNear(a,150)||a.stab>0)){}
   else if(isHunter(a.role)){ctx.restore();ctx.save();if((a.gear.bow||0)>=7){ctx.save();ctx.translate(a.x+a.dir*9,a.y-14+by);ctx.scale(a.dir,1);drawWpn(ctx,'gun',Math.min(4,Math.floor((a.gear.bow||0)/3)),0,a.aim>.12);ctx.restore();}else drawBow(ctx,a,by,tierOf('bow',a.gear.bow||0),a.aim||0);}
-  else if(a.role!=='courier'){
+  else if(a.role!=='courier'&&!((a.role==='lumber'&&spriteReady(SPRITE_ROLE[a.role]))||(a.role==='player'&&spriteReady('reference_hero')))){
     ctx.save();ctx.translate(a.x+a.dir*11,a.y-3-LEGH+by);ctx.scale(a.dir,1);
     var tl=a.gear[toolTr(kind)]||0;
     if(kind==='tree'){if(tl>=6){if(a.working&&Math.random()<.4)parts.push({x:a.x+a.dir*22,y:a.y-8,vx:a.dir*(10+Math.random()*20),vy:-10-Math.random()*10,g:60,life:.4,max:.4,col:'#f3e3c3',r:1});drawChainsaw(ctx,a.working,toolTierFor(a,'tree'));}else drawAxe(ctx,0,0,a.working?Math.sin(a.swing)*.75:-.25,toolTierFor(a,'tree'),.8);}
@@ -270,7 +273,7 @@ function drawAgent(a){
 }
 function drawCustomer(c){
  var g=ctx;
- if(!drawSprite(g,'customer',c.cheerUntil>time?'cheer':c.happyUntil>time?'happy':actorSpriteAnim(c),time+(c.x%7)*.1,c.x,c.y+6,SPRITE_PPU*.65,c.dir>0))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
+ if(!drawSprite(g,'reference_customer',c.cheerUntil>time?'cheer':c.happyUntil>time?'happy':actorSpriteAnim(c),time+(c.x%7)*.1,c.x,c.y+6,SPRITE_PPU*.65,c.dir>0))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
   if(c.regular){g.font='11px sans-serif';g.textAlign='center';g.fillStyle='#e0b54c';g.fillText('⭐',c.x,c.y-40);}
   if(c.state==='out'){g.font='11px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#000';g.fillText(c.mood==='angry'?'💢':'💖',c.x,c.y-15);return;}
   if(c.slot>=serv(c.seller)&&c.state==='line')return;
@@ -284,3 +287,6 @@ function drawCustomer(c){
   var pct=Math.max(0,c.pat/c.max);
   g.fillStyle=pct>.5?'#6fcf7f':(pct>.25?'#f0bb3f':'#e2566a');g.fillRect(bx,byy+12.5,tw*pct,1.8);
 }
+
+/* Reference timber stack is driven by actual carried wood, never decorative stock. */
+function drawCarriedTimber(g,a){var count=Object.keys(a.bag||{}).reduce(function(sum,k){return sum+(ITEMS[k]&&ITEMS[k].cat==='wood'?(a.bag[k]||0):0);},0),shown=Math.min(36,count);if(!shown)return;var x=a.x-a.dir*12,y=a.y-7;g.save();g.translate(x,y);g.rotate(a.mv?Math.sin(a.bob)*.025:0);for(var i=0;i<shown;i++){var row=Math.floor(i/3),col=i%3,xx=col*5-5,yy=-row*5;var wood=g.createLinearGradient(xx-5,yy-3,xx+7,yy+3);wood.addColorStop(0,'#a36235');wood.addColorStop(.5,'#d29859');wood.addColorStop(1,'#8c522e');g.fillStyle=wood;rr(g,xx-6,yy-3,13,5.5,2.2);g.fill();g.fillStyle='#ebd0a0';g.beginPath();g.ellipse(xx+6,yy-.2,2,2.6,-.18,0,7);g.fill();g.strokeStyle='rgba(143,101,52,.6)';g.lineWidth=.5;g.beginPath();g.ellipse(xx+6,yy-.2,1.1,1.7,-.18,0,7);g.stroke();}g.restore();}

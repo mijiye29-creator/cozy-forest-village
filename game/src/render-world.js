@@ -3,13 +3,14 @@ var BG=document.createElement('canvas');BG.width=Math.ceil(W*RS);BG.height=Math.
 function paintStatic(){
   var g=BG.getContext('2d');g.setTransform(RS,0,0,RS,0,0);
   var land=g.createLinearGradient(0,0,W,HT);land.addColorStop(0,ART.land[0]);land.addColorStop(.45,ART.land[1]);land.addColorStop(1,ART.land[2]);g.fillStyle=land;g.fillRect(0,0,W,HT);
-  g.fillStyle=ART.plaza;g.fillRect(0,0,W,178);
+  var soil=g.createLinearGradient(0,0,W,H);soil.addColorStop(0,'#d9ad94');soil.addColorStop(.55,'#cf9a7e');soil.addColorStop(1,'#c9987f');g.fillStyle=soil;rr(g,22,-32,W-44,H+14,38);g.fill();
+  g.strokeStyle='rgba(245,248,251,.65)';g.lineWidth=14;rr(g,18,-32,W-36,H+16,40);g.stroke();
   /* Paths follow the actual gaps; planting stays out of working and upgrade areas. */
   g.fillStyle=ART.path;rr(g,12,366,W-24,57,16);g.fill();
   [150,570,1038].forEach(function(x){g.fillStyle=ART.pathLight;rr(g,x-19,126,38,452,14);g.fill();
-    for(var sy=157;sy<568;sy+=24){g.fillStyle='rgba(255,253,243,.52)';g.beginPath();g.ellipse(x+(sy%48?3:-3),sy,10,5,0,0,7);g.fill();}});
+    for(var sy=157;sy<568;sy+=24){g.fillStyle='rgba(255,253,243,.07)';g.beginPath();g.ellipse(x+(sy%48?3:-3),sy,2.5,1.3,0,0,7);g.fill();}});
   g.fillStyle=ART.pathLight;rr(g,116,235,125,25,9);g.fill();
-  g.fillStyle=ART.garden;g.fillRect(0,431,W,H-431);
+  g.fillStyle='rgba(171,115,84,.06)';rr(g,24,431,W-48,H-443,18);g.fill();
   [326,680,1008].forEach(function(x){
     var py=x===1008?240:x===680?132:220,ph=x===326?102:78;g.fillStyle='#adb6a0';rr(g,x-9,py,18,ph,8);g.fill();g.fillStyle='#e5e4d3';rr(g,x-8,py-1,16,ph-3,7);g.fill();
     for(var j=0;j<(x===326?8:6);j++){var yy=py+10+j*11;g.fillStyle=j%2?'#819579':'#9cac8c';g.beginPath();g.ellipse(x+(j%2?2:-2),yy,5,3,0,0,7);g.fill();g.fillStyle=j%3?'#e7dcc1':'#c7b692';g.beginPath();g.arc(x-2,yy-1,1.1,0,7);g.fill();}
@@ -64,7 +65,7 @@ function drawCampfire(g,x,y){
 function drawPlaza(){
   var g=ctx,nt=nightAmt();
   /* warm safe zone at the heart of the cold forest */
-  g.fillStyle='rgba(245,190,139,.25)';g.beginPath();g.ellipse(690,384,67,27,0,0,7);g.fill();drawCampfire(g,690,384);
+  g.fillStyle='rgba(245,190,139,.25)';g.beginPath();g.ellipse(690,384,67,27,0,0,7);g.fill();drawCampfire(g,690,384);drawCampfire(g,140,126);if(S.stage>=2)drawCampfire(g,490,452);
   PLOTS.forEach(function(pl){
     if(!pl.built()){
       if(pl.show&&!pl.show())return;

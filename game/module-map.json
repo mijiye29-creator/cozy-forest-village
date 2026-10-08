@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "5497c60802311e5c5d61c46b5f9bf1c8c105d351045da9bd4a318334eaa1bb4d",
+  "runtime_sha256": "0ef55904cccd6d8706760a0a6c6b6e2eb61493d3699dadea4ae30c4a3235c290",
   "modules": [
     {
       "id": "boot-errors",
@@ -133,7 +133,7 @@
       "id": "sprite-data",
       "path": "src/sprite-data.js",
       "topic": "생성된 Claude atlas·이미지 해시",
-      "bytes": 16553,
+      "bytes": 20864,
       "lines": 3,
       "symbols": [
         {
@@ -150,7 +150,7 @@
       "id": "sprite-atlas",
       "path": "src/sprite-atlas.js",
       "topic": "지연 로드·2개 병렬 큐·스프라이트 프레임·시설 레벨",
-      "bytes": 2979,
+      "bytes": 3009,
       "lines": 13,
       "symbols": [
         {
@@ -1504,8 +1504,8 @@
       "id": "pads",
       "path": "src/pads.js",
       "topic": "시설 발판·배치·충돌·울타리 조작",
-      "bytes": 23809,
-      "lines": 255,
+      "bytes": 25810,
+      "lines": 259,
       "symbols": [
         {
           "name": "PADLIST",
@@ -1541,63 +1541,63 @@
         },
         {
           "name": "CONSTRUCTION_SLOTS",
-          "line": 76
+          "line": 80
         },
         {
           "name": "constructionSlot",
-          "line": 77
+          "line": 81
         },
         {
           "name": "plannedConstructionSlot",
-          "line": 78
+          "line": 82
         },
         {
           "name": "isConstructionPad",
-          "line": 94
+          "line": 98
         },
         {
           "name": "arrangePads",
-          "line": 102
+          "line": 106
         },
         {
           "name": "padPos",
-          "line": 116
+          "line": 120
         },
         {
           "name": "buildPads",
-          "line": 117
+          "line": 121
         },
         {
           "name": "padHold",
-          "line": 170
+          "line": 174
         },
         {
           "name": "updatePads",
-          "line": 171
+          "line": 175
         },
         {
           "name": "padIcon",
-          "line": 202
+          "line": 206
         },
         {
           "name": "drawTapMark",
-          "line": 203
+          "line": 207
         },
         {
           "name": "padTitle",
-          "line": 204
+          "line": 208
         },
         {
           "name": "padReady",
-          "line": 225
+          "line": 229
         },
         {
           "name": "drawPads",
-          "line": 226
+          "line": 230
         },
         {
           "name": "drawJoy",
-          "line": 250
+          "line": 254
         }
       ]
     },
@@ -1937,8 +1937,8 @@
       "id": "defence",
       "path": "src/defence.js",
       "topic": "마을별 방어·사냥꾼·수리·울타리 그리기",
-      "bytes": 46704,
-      "lines": 411,
+      "bytes": 46630,
+      "lines": 405,
       "symbols": [
         {
           "name": "TOWER",
@@ -2154,83 +2154,83 @@
         },
         {
           "name": "LOCKC",
-          "line": 206
+          "line": 200
         },
         {
           "name": "SIGNP",
-          "line": 216
+          "line": 210
         },
         {
           "name": "drawOutskirts",
-          "line": 217
+          "line": 211
         },
         {
           "name": "drawLocked",
-          "line": 227
+          "line": 221
         },
         {
           "name": "drawSideFence",
-          "line": 237
+          "line": 231
         },
         {
           "name": "bannerLines",
-          "line": 246
+          "line": 240
         },
         {
           "name": "drawStageBanner",
-          "line": 249
+          "line": 243
         },
         {
           "name": "drawFence",
-          "line": 256
+          "line": 250
         },
         {
           "name": "drawFenceV",
-          "line": 257
+          "line": 251
         },
         {
           "name": "fenceCracks",
-          "line": 282
+          "line": 276
         },
         {
           "name": "towerBase",
-          "line": 287
+          "line": 281
         },
         {
           "name": "autoHunt",
-          "line": 293
+          "line": 287
         },
         {
           "name": "drawBear",
-          "line": 302
+          "line": 296
         },
         {
           "name": "drawLoot",
-          "line": 378
+          "line": 372
         },
         {
           "name": "toScreen",
-          "line": 384
+          "line": 378
         },
         {
           "name": "edgeMark",
-          "line": 385
+          "line": 379
         },
         {
           "name": "drawTutEdge",
-          "line": 394
+          "line": 388
         },
         {
           "name": "ZBTN",
-          "line": 395
+          "line": 389
         },
         {
           "name": "drawZoomBtn",
-          "line": 396
+          "line": 390
         },
         {
           "name": "drawBearChip",
-          "line": 399
+          "line": 393
         }
       ]
     },
@@ -2238,84 +2238,96 @@
       "id": "input",
       "path": "src/input.js",
       "topic": "터치·드래그·탭 경로·핀치·설정",
-      "bytes": 7985,
-      "lines": 91,
+      "bytes": 7836,
+      "lines": 87,
       "symbols": [
         {
           "name": "PILLS",
           "line": 2
         },
         {
-          "name": "TOUCHES",
+          "name": "bearTapTarget",
           "line": 3
         },
         {
-          "name": "zoomRange",
+          "name": "heroCombatBusy",
           "line": 4
         },
         {
-          "name": "zoomTarget",
+          "name": "beginBearTap",
           "line": 5
         },
         {
-          "name": "touchPair",
+          "name": "TOUCHES",
           "line": 6
         },
         {
-          "name": "registerTouch",
+          "name": "zoomRange",
           "line": 7
         },
         {
+          "name": "zoomTarget",
+          "line": 8
+        },
+        {
+          "name": "touchPair",
+          "line": 9
+        },
+        {
+          "name": "registerTouch",
+          "line": 10
+        },
+        {
           "name": "moveTouch",
-          "line": 15
+          "line": 18
         },
         {
           "name": "endTouch",
-          "line": 21
+          "line": 24
         },
         {
           "name": "wpt",
-          "line": 27
+          "line": 30
         },
         {
           "name": "siteAt",
-          "line": 28
+          "line": 31
         },
         {
           "name": "lineClear",
-          "line": 64
+          "line": 60
         },
         {
           "name": "setTap",
-          "line": 65
+          "line": 61
         },
         {
           "name": "repairFenceAt",
-          "line": 70
+          "line": 66
         },
         {
           "name": "endJoy",
-          "line": 71
+          "line": 67
         },
         {
           "name": "endPointer",
-          "line": 72
+          "line": 68
         },
         {
           "name": "cancelControl",
-          "line": 76
+          "line": 72
         },
         {
           "name": "modeBtn",
-          "line": 86
+          "line": 82
         },
         {
           "name": "SENS_D",
-          "line": 88
+          "line": 84
         },
         {
           "name": "syncSens",
-          "line": 89
+          "line": 85
         }
       ]
     },
@@ -2485,7 +2497,7 @@
       "id": "render-terrain",
       "path": "src/render-terrain.js",
       "topic": "자원 지형·부두·공장 부지",
-      "bytes": 24242,
+      "bytes": 24367,
       "lines": 264,
       "symbols": [
         {
@@ -2614,8 +2626,8 @@
       "id": "render-world",
       "path": "src/render-world.js",
       "topic": "정적 배경 캐시·공장 애니메이션",
-      "bytes": 18111,
-      "lines": 179,
+      "bytes": 18435,
+      "lines": 180,
       "symbols": [
         {
           "name": "BG",
@@ -2627,51 +2639,51 @@
         },
         {
           "name": "bgWh",
-          "line": 31
+          "line": 32
         },
         {
           "name": "PAL",
-          "line": 33
-        },
-        {
-          "name": "paintPalisade",
           "line": 34
         },
         {
+          "name": "paintPalisade",
+          "line": 35
+        },
+        {
           "name": "GLOW",
-          "line": 48
+          "line": 49
         },
         {
           "name": "VIG",
-          "line": 50
+          "line": 51
         },
         {
           "name": "drawCampfire",
-          "line": 52
+          "line": 53
         },
         {
           "name": "drawPlaza",
-          "line": 64
+          "line": 65
         },
         {
           "name": "facilityLabelSlot",
-          "line": 78
+          "line": 79
         },
         {
           "name": "facilitySign",
-          "line": 81
+          "line": 82
         },
         {
           "name": "drawFacilityLabels",
-          "line": 87
+          "line": 88
         },
         {
           "name": "drawWatchtower",
-          "line": 92
+          "line": 93
         },
         {
           "name": "PLOT_DRAW",
-          "line": 123
+          "line": 124
         }
       ]
     },
@@ -2869,7 +2881,7 @@
       "id": "render-market",
       "path": "src/render-market.js",
       "topic": "가게·점원·판매 효과·작업 도구",
-      "bytes": 16015,
+      "bytes": 16035,
       "lines": 178,
       "symbols": [
         {
@@ -2998,8 +3010,8 @@
       "id": "render-actors",
       "path": "src/render-actors.js",
       "topic": "일꾼·영웅·손님 아트",
-      "bytes": 38028,
-      "lines": 286,
+      "bytes": 39676,
+      "lines": 292,
       "symbols": [
         {
           "name": "drawVehicleUpgrade",
@@ -3091,7 +3103,11 @@
         },
         {
           "name": "drawCustomer",
-          "line": 271
+          "line": 274
+        },
+        {
+          "name": "drawCarriedTimber",
+          "line": 292
         }
       ]
     },
@@ -3099,7 +3115,7 @@
       "id": "render-scene",
       "path": "src/render-scene.js",
       "topic": "납품 매트·장면 합성·화면 안내",
-      "bytes": 6166,
+      "bytes": 6045,
       "lines": 75,
       "symbols": [
         {
@@ -3592,7 +3608,7 @@
       "id": "complete-actions",
       "path": "src/complete-actions.js",
       "topic": "전체 동작·동행·이벤트·엔딩 이후 온천마을 운영",
-      "bytes": 25561,
+      "bytes": 25566,
       "lines": 946,
       "symbols": [
         {
@@ -3701,8 +3717,8 @@
       "id": "loop",
       "path": "src/loop.js",
       "topic": "프레임·시뮬레이션·테스트 훅·시작 순서",
-      "bytes": 15241,
-      "lines": 104,
+      "bytes": 15356,
+      "lines": 105,
       "symbols": [
         {
           "name": "last",
@@ -3746,11 +3762,11 @@
         },
         {
           "name": "suspendMobile",
-          "line": 86
+          "line": 87
         },
         {
           "name": "boot",
-          "line": 96
+          "line": 97
         }
       ]
     }

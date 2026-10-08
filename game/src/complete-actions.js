@@ -154,7 +154,7 @@ function drawStaffAction(g, line, i, x, y, side) {
     };
   return drawSprite(
     g,
-    "shop_staff",
+    "reference_staff",
     actorSpriteAnim(w),
     time + i * 0.3,
     w.x,

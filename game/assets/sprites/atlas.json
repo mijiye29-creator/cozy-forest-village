@@ -1230,6 +1230,423 @@
    "idle"
   ]
  },
+ "reference_bear": {
+  "file": "reference_bear.webp",
+  "frameW": 116,
+  "frameH": 136,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   },
+   "attack": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   },
+   "hurt": {
+    "row": 3,
+    "frames": 5,
+    "fps": 10,
+    "loop": true
+   }
+  },
+  "anchor": [
+   61,
+   107
+  ],
+  "glb": "art-source/models/reference_bear.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "hurt"
+  ]
+ },
+ "reference_customer": {
+  "file": "reference_customer.webp",
+  "frameW": 88,
+  "frameH": 140,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "happy": {
+    "row": 3,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   123
+  ],
+  "glb": "art-source/models/reference_customer.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "happy"
+  ]
+ },
+ "reference_fence": {
+  "file": "reference_fence.webp",
+  "frameW": 112,
+  "frameH": 104,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "static": {
+    "row": 0,
+    "frames": 1,
+    "fps": 0,
+    "loop": true
+   }
+  },
+  "anchor": [
+   53,
+   79
+  ],
+  "glb": "art-source/models/reference_fence.glb",
+  "clips": []
+ },
+ "reference_fisher": {
+  "file": "reference_fisher.webp",
+  "frameW": 104,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   126
+  ],
+  "glb": "art-source/models/reference_fisher.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "reference_hero": {
+  "file": "reference_hero.webp",
+  "frameW": 96,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   },
+   "punch": {
+    "row": 4,
+    "frames": 8,
+    "fps": 25,
+    "loop": true
+   },
+   "kick": {
+    "row": 5,
+    "frames": 8,
+    "fps": 25,
+    "loop": true
+   },
+   "fishwork": {
+    "row": 6,
+    "frames": 8,
+    "fps": 5,
+    "loop": true
+   },
+   "minework": {
+    "row": 7,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   126
+  ],
+  "glb": "art-source/models/reference_hero.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work",
+   "punch",
+   "kick",
+   "fishwork",
+   "minework"
+  ]
+ },
+ "reference_hunter": {
+  "file": "reference_hunter.webp",
+  "frameW": 88,
+  "frameH": 136,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   121
+  ],
+  "glb": "art-source/models/reference_hunter.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "reference_lumberjack": {
+  "file": "reference_lumberjack.webp",
+  "frameW": 100,
+  "frameH": 136,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   121
+  ],
+  "glb": "art-source/models/reference_lumberjack.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "reference_pine": {
+  "file": "reference_pine.webp",
+  "frameW": 112,
+  "frameH": 140,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 2,
+    "loop": true
+   },
+   "chop": {
+    "row": 1,
+    "frames": 5,
+    "fps": 12.5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   55,
+   115
+  ],
+  "glb": "art-source/models/reference_pine.glb",
+  "clips": [
+   "idle",
+   "chop"
+  ]
+ },
+ "reference_pine_small": {
+  "file": "reference_pine_small.webp",
+  "frameW": 84,
+  "frameH": 104,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 2,
+    "loop": true
+   },
+   "chop": {
+    "row": 1,
+    "frames": 5,
+    "fps": 12.5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   41,
+   83
+  ],
+  "glb": "art-source/models/reference_pine_small.glb",
+  "clips": [
+   "idle",
+   "chop"
+  ]
+ },
+ "reference_staff": {
+  "file": "reference_staff.webp",
+  "frameW": 88,
+  "frameH": 140,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 6.67,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   123
+  ],
+  "glb": "art-source/models/reference_staff.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
  "rock": {
   "file": "rock.webp",
   "frameW": 68,

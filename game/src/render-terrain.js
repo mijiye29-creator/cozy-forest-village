@@ -29,7 +29,7 @@ function drawLoader(sid){
   }
 }
 function drawPile(sid){
-  if(cvLv(sid)){drawLoader(sid);return;}
+  if(cvLv(sid)){if(sid==='f1'&&pn(sid)>0){var pp0=pilePos(sid);drawCarriedTimber(ctx,{x:pp0.x-8,y:pp0.y+7,dir:1,mv:false,bag:S.piles[sid]});}drawLoader(sid);return;}
   var p=S.piles[sid]||{},n=pn(sid),pp=pilePos(sid),x=pp.x,y=pp.y,g=ctx,st=SITE[sid],cp=pcap();
   g.save();g.translate(x,y+4);g.scale(1.75,1.75);g.translate(-x,-(y+4));
   if(st.kind==='forest'&&n)drawSprite(g,'log_pile','static',0,x,y+4,SPRITE_PPU*.35,false);
@@ -209,7 +209,7 @@ function lantern(g,x,y,gold){g.fillStyle='rgba(255,210,120,.22)';g.beginPath();g
 var FOREST_LOOK=ART.forest;
 function drawForestArt(g,st,seed,L){
   var P=FOREST_LOOK[Math.max(0,Math.min(4,L-1))];
-  g.fillStyle='#edf9df';rr(g,0,0,st.w,st.h,8);g.fill();
+  g.fillStyle='#f5f8fc';rr(g,0,0,st.w,st.h,8);g.fill();
   g.fillStyle=P.floor;rr(g,2,2,st.w-5,st.h-4,13);g.fill();
   /* Ground only: the resource renderer owns every visible tree. */
   g.strokeStyle='rgba(96,125,113,.15)';g.lineWidth=.7;

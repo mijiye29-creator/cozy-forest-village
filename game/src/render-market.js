@@ -128,7 +128,7 @@ function drawTree(q,dtv){
   if(q.alive){
     var sway=Math.sin(time*.8+q.ph)*.022+(q.by&&q.prog>0?Math.sin(time*27)*.045:0);
     var scale=1;if(q.pop>0){q.pop=Math.max(0,q.pop-step*2.2);scale=1-.16*Math.sin(q.pop*Math.PI);}
-    g.save();g.translate(q.x,q.y+7);g.rotate(sway);g.scale(scale*1.35,scale*1.35);if(q.sp>=3||!drawSprite(g,L<=1?'pine_small':'pine',q.by&&q.prog>0?'chop':'idle',time+q.ph,0,0,SPRITE_PPU*(1+.08*(L-1)),false))g.drawImage(treeSprite(L,q.sp),-24,-52,48,64);g.restore();
+    g.save();g.translate(q.x,q.y+7);g.rotate(sway);g.scale(scale*1.35,scale*1.35);if(q.sp>=5||!drawSprite(g,L<=1?'reference_pine_small':'reference_pine',q.by&&q.prog>0?'chop':'idle',time+q.ph,0,0,SPRITE_PPU*(1+.08*(L-1)),false))g.drawImage(treeSprite(L,q.sp),-24,-52,48,64);g.restore();
     if(!teamOk(q))lockBadge(q.x+9,q.y-28);drawBar(q,-45);
   }else{
     var stump=drawSprite(g,'stump','static',0,q.x,q.y+7,SPRITE_PPU,false);

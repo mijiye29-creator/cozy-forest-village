@@ -1,5 +1,8 @@
 /* ---------- input: all purchases require standing on the matching world pad ---------- */
-var PILLS=[],DEF={},tapFx=null;
+var PILLS=[],DEF={},tapFx=null,combatTapUntil=0;
+function bearTapTarget(x,y){var found=null,distance=70;BEARS.forEach(function(b){if(b.state==='dead'||b.state==='out')return;var d=Math.hypot(x-b.x,y-b.y);if(d<distance){distance=d;found=b;}});return found;}
+function heroCombatBusy(){var a=agents[0];return time<combatTapUntil||a.stab>0||BEARS.some(function(b){return b.state!=='dead'&&b.state!=='out'&&Math.hypot(a.x-b.x,a.y-b.y)<145;});}
+function beginBearTap(b){if(!b)return false;cancelControl();var a=agents[0];combatTapUntil=time+.8;a.chaseBear=b;a.chaseT=0;a.tap=null;a.path=[];if(wkind()&&Math.hypot(a.x-b.x,a.y-b.y)<heroReach(b)+45&&(!a.tapAtkT||time-a.tapAtkT>=.12)){a.tapAtkT=time;a.stabT=0;a.bowT=0;sfx('tap');}return true;}
 var TOUCHES={},PINCH=null,PINCH_USED=false,CAMERA_HELD=false;
 function zoomRange(){return {min:Math.min(W/(W+192),SH/HT),max:ZOOM_IN*1.5};}
 function zoomTarget(){var r=zoomRange();return !Number.isFinite(S.manualZoom)?(S.zoomOut?r.min:ZOOM_IN):Math.max(r.min,Math.min(r.max,S.manualZoom));}
@@ -35,6 +38,7 @@ cv.addEventListener('pointerdown',function(e){
   if(!dexBox.hidden){dexBox.hidden=true;return;}
   if(!dayBox.hidden){dayBox.hidden=true;return;}
   var p=wpt(e),pw={x:p.x/Z+camX,y:p.y/Z+camY};
+  if(beginBearTap(bearTapTarget(pw.x,pw.y))){goalBox.hidden=true;return;}
   var hit=null,hd=1e9;
   PILLS.forEach(function(b){var px=Math.max(4,(40-b.w)/2),py=Math.max(4,(40-b.h)/2);
     if(pw.x>=b.x-px&&pw.x<=b.x+b.w+px&&pw.y>=b.y-py&&pw.y<=b.y+b.h+py){var d=Math.hypot(pw.x-(b.x+b.w/2),pw.y-(b.y+b.h/2));if(d<hd){hd=d;hit=b;}}});
@@ -46,15 +50,7 @@ cv.addEventListener('pointerdown',function(e){
     else if(!b.d.canBuy()){sfx('nope');addFloat(pw.x,pw.y-8,b.d.why?b.d.why():'코인이 부족해요','#ffb3b3');}
     else buy(b.d);
     return;}
-  /* v80: tapping a nearby bear attacks right away instead of waiting out the auto-attack cooldown - fast repeated taps keep the hero swinging */
-  /* v83: tap radius on a bear widened (50->70) and the instant-attack buffer widened (+30->+45) - easier for small, imprecise taps to land */
-  /* v86: if the tap landed on (or right next to) a level-up/world pad, treat it as pad-directed movement, not a bear attack -
-     otherwise a pad standing near a bear could never be reached while chasing/fighting that bear */
-  var padHitP=false;for(var pdi=0;pdi<PADLIST.length;pdi++){if(Math.hypot(pw.x-PADLIST[pdi].x,pw.y-PADLIST[pdi].y)<28){padHitP=true;break;}}
-  var tapB=null,tapBd=70;if(!padHitP)BEARS.forEach(function(bb){if(bb.state==='dead'||bb.state==='out')return;var dd=Math.hypot(pw.x-bb.x,pw.y-bb.y);if(dd<tapBd){tapBd=dd;tapB=bb;}});
-  if(tapB){var plT=agents[0],pdT=Math.hypot(plT.x-tapB.x,plT.y-tapB.y),wkT=wkind(),rngT=heroReach(tapB);
-    plT.chaseBear=tapB;plT.chaseT=0;
-    if(wkT&&pdT<rngT+45&&(!plT.tapAtkT||time-plT.tapAtkT>=.12)){plT.tapAtkT=time;plT.stabT=0;plT.bowT=0;sfx('tap');return;}}
+  var tapB=null;
   try{cv.setPointerCapture(e.pointerId);}catch(_e){}
   var pl=agents[0];pl.path=[];
   pl.tap=null;if(!tapB)pl.chaseBear=null;
@@ -67,7 +63,7 @@ function setTap(wx,wy){idleT=0;var a0=agents[0];
   a0.tap={x:wx,y:wy};a0.tapStuck=0;a0.path=[];release(a0);
   if(!lineClear(a0.x,a0.y,wx,wy)){var tt=tileAt(wx,wy);if(tt)goTile(a0,tt);}
   sfx('tap');}
-function repairFenceAt(x,y){var pad=PADLIST.filter(function(p){return p.perimeter&&(p.d.fix==='fence'||p.d.vfRepair||p.perimeter.floating)&&Math.hypot(p.x-x,p.y-y)<24;})[0];if(!pad)return false;if(!padReady(pad)){sfx('nope');addFloat(pad.x,pad.y-26,'코인이 부족해요','#ffb3b3');return true;}var paid=(S.pads&&S.pads[pad.id])||0;S.coins+=paid;if(S.pads)delete S.pads[pad.id];buy(pad.d,true);fencePadAnchor=null;return true;}
+function repairFenceAt(x,y){var pad=PADLIST.filter(function(p){return p.perimeter&&(p.d.fix==='fence'||p.d.vfRepair||p.perimeter.floating)&&Math.hypot(p.x-x,p.y-y)<24;})[0];if(!pad)return false;if(pad.d.fix!=='fence'&&!pad.d.vfRepair&&heroCombatBusy())return false;if(Math.hypot(agents[0].x-pad.x,agents[0].y-pad.y)>90){pad.perimeter.armed=true;return false;}if(!padReady(pad)){sfx('nope');addFloat(pad.x,pad.y-26,'코인이 부족해요','#ffb3b3');return true;}var paid=(S.pads&&S.pads[pad.id])||0;S.coins+=paid;if(S.pads)delete S.pads[pad.id];buy(pad.d,true);fencePadAnchor=null;return true;}
 function endJoy(e){if(joy.on&&(!e||e.pointerId===joy.id)){if(e&&e.type==='pointerup'&&!joy.moved&&performance.now()-joy.t0<450){var wx=joy.ox/Z+camX,wy=joy.oy/Z+camY;if(!repairFenceAt(wx,wy))setTap(wx,wy);}joy.on=false;joy.dx=joy.dy=0;}}
 function endPointer(e){if(!endTouch(e))endJoy(e);}
 cv.addEventListener('pointerup',endPointer);cv.addEventListener('pointercancel',endPointer);

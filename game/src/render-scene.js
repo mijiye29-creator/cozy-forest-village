@@ -4,9 +4,9 @@ function drawMats(){
     var bw=36,bh=34,x0=-bw/2,y0=-17,pulse=has?1+.05*Math.sin(time*8):1;
     g.save();g.translate(x,y);g.scale(pulse,pulse);
     g.fillStyle='rgba(0,0,0,.16)';rr(g,x0,y0+2,bw,bh,8);g.fill();
-    var pg=g.createLinearGradient(0,y0,0,y0+bh);pg.addColorStop(0,m.line==='wood'?'#8a5a30':'#2f6b98');pg.addColorStop(1,m.line==='wood'?'#5f3c1e':'#1f4a6e');g.fillStyle=pg;rr(g,x0,y0,bw,bh,8);g.fill();
+    var pg=g.createLinearGradient(0,y0,0,y0+bh);pg.addColorStop(0,'#4d3b32');pg.addColorStop(1,'#382b28');g.fillStyle=pg;rr(g,x0,y0,bw,bh,8);g.fill();
     g.fillStyle='rgba(255,255,255,.14)';rr(g,x0+2,y0+1.5,bw-4,bh*.35,6);g.fill();
-    g.strokeStyle=has?'rgba(255,236,150,'+(.7+.3*Math.sin(time*8))+')':'rgba(255,255,255,.55)';g.lineWidth=has?2:1.4;g.setLineDash(has?[]:[3,2]);rr(g,x0+2,y0+2,bw-4,bh-4,6.5);g.stroke();g.setLineDash([]);
+    g.strokeStyle=has?'#92de6d':'#f06860';g.lineWidth=2.5;g.setLineDash([]);rr(g,x0+2,y0+2,bw-4,bh-4,6.5);g.stroke();g.setLineDash([]);
     drawItem(g,m.line==='wood'?'oak':'carp',-5,-5,.8);g.font='12px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('📦',7,-3);
     g.fillStyle='rgba(0,0,0,.45)';rr(g,x0+3,y0+bh-11.5,bw-6,9,4.5);g.fill();g.font='800 6.5px sans-serif';g.fillStyle='#fff';g.fillText('▼ 납품',0,y0+bh-6.8);
     g.restore();

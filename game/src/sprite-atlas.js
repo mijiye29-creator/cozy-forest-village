@@ -2,7 +2,7 @@
  * embedded at build time; sheets load on demand, at most two concurrently.
  * Missing/broken images return false so callers retain their original art. */
 var SPRITE_ART_CAPTURE=false,SPRITE_PPU=19,SPRITES={atlas:SPRITE_DATA,img:{},state:{},queue:[],active:0};
-var SPRITE_ROLE={player:'hero',lumber:'lumberjack',fisher:'fisher',miner:'miner',hunter:'hunter',hunter2:'hunter_blue',hunter3:'hunter_violet',courier:'villager',imk:'shopkeeper'};
+var SPRITE_ROLE={player:'hero',lumber:'reference_lumberjack',fisher:'reference_fisher',miner:'miner',hunter:'reference_hunter',hunter2:'hunter_blue',hunter3:'hunter_violet',courier:'villager',imk:'shopkeeper'};
 function spritePump(){while(SPRITES.active<2&&SPRITES.queue.length){var name=SPRITES.queue.shift(),m=SPRITES.atlas[name],im=new Image();SPRITES.active++;SPRITES.img[name]=im;im.decoding='async';(function(key,image){var finished=false;function done(ok){if(finished)return;finished=true;SPRITES.state[key]=ok?'ready':'failed';SPRITES.active--;spritePump();}image.onload=function(){done(!!image.naturalWidth);};image.onerror=function(){done(false);};})(name,im);im.src='assets/sprites/'+m.file+'?v='+SPRITE_VERSIONS[name];}}
 function spriteReady(name){if(!SPRITES.atlas[name])return false;if(!SPRITES.state[name]){SPRITES.state[name]='queued';SPRITES.queue.push(name);spritePump();}return SPRITES.state[name]==='ready';}
 function spriteAnim(m,anim){return m.anims[anim]||m.anims.idle||m.anims.static||m.anims[Object.keys(m.anims)[0]];}
