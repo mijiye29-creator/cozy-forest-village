@@ -115,8 +115,15 @@ for(const [id,site] of [['site_f1','f1'],['hire_lumber','f1'],['site_p1','p1'],[
 }
 for(const [id,def] of [['mill','mill'],['smoke','smoke'],['smelt','smelt'],['elec','elec']]){
   const facility=layout.PLOTS.find(p=>p.def===def),pad=layout.PAD_LAYOUT[id];
-  assert(pad.x>facility.x+facility.w && pad.x-facility.x-facility.w>=30 && pad.x-facility.x-facility.w<=60,'Workshop pads need an adjacent clear walkway');
+  const distance=Math.max(facility.x-pad.x,pad.x-facility.x-facility.w);
+  assert(distance>=30 && distance<=60,'Workshop pads need an adjacent clear walkway');
 }
+vm.runInContext(section('var TUT=[', 'var TUTPAD='),layout);
+vm.runInContext(section('function dropPt(', 'var LANE='),layout);
+assert.equal(layout.TUT[2].at().x,layout.dropPt('wood').x,'Tutorial must lead to the relocated delivery point');
+assert.equal(layout.TUT[2].at().y,layout.dropPt('wood').y);
+assert(layout.BPATH.sale_f1[0][0]-(layout.SITE.f1.x+layout.SITE.f1.w)>=100,'Wood belt must leave a wide gap from harvesting');
+assert(layout.PAD_LAYOUT.site_f1.y-layout.PAD_H/2>layout.SITE.f1.y+layout.SITE.f1.h,'Forest upgrade must be outside the harvesting area');
 const allIds=Object.keys(layout.PAD_LAYOUT).filter(id=>!id.includes('fix'));
 for(const stage of [1,2,3]){
   layout.S.stage=stage;
@@ -155,4 +162,18 @@ for(const b of [{side:'left',x:-8,y:250},{side:'right',x:layout.W+8,y:250},{side
   walls.S.fenceDown=0;walls.VFBREACH={};
 }
 assert.equal(walls.blockBearAtFence({side:'top',x:100,y:-1},100,1),false,'Top has no fence');
-console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; horizontal expansion; 3 village layouts and repairs; left/right/bottom fence blocking and breach entry.');
+// Exercise real economy rounding and combat combo logic, including radius boundaries.
+const economy={fmt:n=>String(Math.floor(n)),S:{coins:1000}};vm.createContext(economy);
+vm.runInContext(section('function money50(', 'function gearDef('),economy);
+for(const [input,expected] of [[0,0],[1,50],[49,50],[50,50],[51,100],[99.5,100]])assert.equal(economy.money50(input),expected);
+const upgrade=economy.mkUp({id:'test',max:1,cost:()=>123});assert.equal(upgrade.cost(),150);assert(upgrade.canBuy());
+const hits=[],combat={time:1,COMBO_N:8,ULT_MUL:5,BEARS:[],hitBear:(b,p,d)=>hits.push([b.id,d]),heroUltFx(){},heroHitFx(){}};
+vm.createContext(combat);vm.runInContext(section('function heroAttackHit(', 'function hitBear('),combat);
+const fighter={x:0,y:0},target={id:'target',x:40,y:0,state:'in'},near={id:'near',x:134,y:0,state:'in'},far={id:'far',x:136,y:0,state:'in'},dead={id:'dead',x:20,y:0,state:'dead'};
+combat.BEARS=[target,near,far,dead];
+for(let i=0;i<7;i++){combat.time+=.4;combat.heroAttackHit(fighter,target,10,false);}
+assert.equal(hits.length,7,'Regular strikes should hit one bear');hits.length=0;
+combat.time+=.4;combat.heroAttackHit(fighter,target,10,false);
+assert.deepEqual(hits,[['target',50],['near',50]],'Ultimate must damage living enemies within the hero radius');assert.equal(fighter.combo,0);
+hits.length=0;combat.time+=4;combat.heroAttackHit(fighter,target,10,false);assert.equal(fighter.combo,1,'Expired combo must restart');
+console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; horizontal expansion; 3 village layouts and repairs; left/right/bottom fence blocking and breach entry; 50-won costs; single-target martial strikes and area ultimate.');
