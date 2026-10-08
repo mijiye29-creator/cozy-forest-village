@@ -32,7 +32,7 @@ for (const pair of [
   ['function camClampX(', '/* v56: each system'],
   ['function endJoy(', "document.addEventListener('pointerdown',function(){audioInit();}"],
   ['function fit(){','var fitFrame=0;'],
-  ['function wpt(', 'function siteAt('],
+  ['var TOUCHES=', 'function siteAt('],
   ["cv.addEventListener('pointermove'",'function lineClear('],
   ['function loop(now){','/* v58 (staff 7): one simulation step'],
 ]) vm.runInContext(section(...pair),env);
@@ -68,6 +68,15 @@ handlers.pointerup({pointerId:8,type:'pointerup'});assert.equal(env.joy.on,true)
 handlers.pointerup({pointerId:7,type:'pointerup'});assert.equal(taps.length,1);
 hero.tap={x:10,y:10};hero.path=[1];hero.chaseBear={};hero.padDwell=1;
 env.cancelControl();assert.equal(hero.tap,null);assert.equal(hero.path.length,0);assert.equal(hero.padDwell,0);
+// Two real touch pointers zoom around their midpoint, then lift without generating a tap.
+bounds={left:0,top:0,width:390,height:844};env.S={zoomOut:false};env.fit();env.joy={on:true,id:1,dx:0,dy:0,moved:false};env.cv.setPointerCapture=()=>{};
+const event=(id,x,y)=>({pointerId:id,pointerType:'touch',clientX:x,clientY:y,preventDefault(){}});
+const z0=env.Z;env.registerTouch(event(1,150,330));assert.equal(env.registerTouch(event(2,240,330)),true);assert.equal(env.joy.on,false);
+env.moveTouch(event(2,285,330));assert(env.Z>z0,'Separating fingers must zoom in');
+env.moveTouch(event(2,180,330));assert(env.Z<z0,'Bringing fingers together must zoom out');
+assert.equal(env.zoomTarget(),env.Z,'Zoom must persist after the gesture');
+taps=[];handlers.pointerup({...event(1,150,330),type:'pointerup'});handlers.pointerup({...event(2,180,330),type:'pointerup'});assert.equal(taps.length,0);assert.equal(env.PINCH,null);assert.equal(Object.keys(env.TOUCHES).length,0);
+env.S={zoomOut:false};env.fit();env.registerTouch(event(1,150,330));env.registerTouch(event(2,240,330));handlers.pointercancel({...event(1,150,330),type:'pointercancel'});env.cancelControl();assert.equal(env.PINCH,null);assert.equal(Object.keys(env.TOUCHES).length,0);
 // Exercise the real movement calculation: a 20 CSS-pixel drag must move equally on all phones.
 const movement = section('function stepPlayerFree(', '\nfunction ');
 vm.runInContext(movement,env);
@@ -115,8 +124,9 @@ for(const [id,site] of [['site_f1','f1'],['hire_lumber','f1'],['site_p1','p1'],[
 }
 for(const [id,def] of [['mill','mill'],['smoke','smoke'],['smelt','smelt'],['elec','elec']]){
   const facility=layout.PLOTS.find(p=>p.def===def),pad=layout.PAD_LAYOUT[id];
-  const distance=Math.max(facility.x-pad.x,pad.x-facility.x-facility.w);
-  assert(distance>=30 && distance<=60,'Workshop pads need an adjacent clear walkway');
+  const distance=facility.y-(pad.y+layout.PAD_H/2);
+  assert(distance>=16 && distance<=72,'Workshop pads need a clear space immediately above the facility');
+  assert(pad.x>=facility.x&&pad.x<=facility.x+facility.w,'Workshop upgrade must sit above its own facility');
 }
 vm.runInContext(section('var TUT=[', 'var TUTPAD='),layout);
 vm.runInContext(section('function dropPt(', 'var LANE='),layout);
@@ -161,6 +171,12 @@ for(const b of [{side:'left',x:-8,y:250},{side:'right',x:layout.W+8,y:250},{side
   assert.equal(walls.blockBearAtFence(b,nx,ny),false,'Breach must allow entry');
   walls.S.fenceDown=0;walls.VFBREACH={};
 }
+// A crowd can push a waiting bear inward without crossing from its previous x/y.
+for(const b of [{side:'left',x:3,y:250},{side:'right',x:layout.W-3,y:250},{side:'bottom',x:420,y:layout.H-3}]){
+  assert(walls.blockBearAtFence(b,b.x,b.y),'Crowd displacement must still be blocked');
+  assert(b.side==='left'?b.x<=-25:b.side==='right'?b.x>=layout.W+25:b.y>=layout.H+30);
+  b.swipeT=.2;walls.blockBearAtFence(b,b.x,b.y);assert.equal(b.swipeT,.2,'Fence guard must not reset the bear attack clock');
+}
 assert.equal(walls.blockBearAtFence({side:'top',x:100,y:-1},100,1),false,'Top has no fence');
 // Exercise real economy rounding and combat combo logic, including radius boundaries.
 const economy={fmt:n=>String(Math.floor(n)),S:{coins:1000}};vm.createContext(economy);
@@ -194,7 +210,7 @@ for(const stage of [1,2,3]){
 }
 // Rebuilding pads every frame must not reset payment feedback throttles.
 let purchased=0,coinFlights=0,paymentLabels=0;
-const payment={agents:[{x:100,y:100}],S:{coins:10000,pads:{},tut:99},PAD_RADIUS:14,padMsgT:0,fmt:String,
+const payment={PINCH:null,PINCH_USED:false,agents:[{x:100,y:100}],S:{coins:10000,pads:{},tut:99},PAD_RADIUS:14,padMsgT:0,fmt:String,
   buildPads:()=>[{id:'payment',x:100,y:100,d:{cost:()=>5000,isMax:()=>purchased>0}}],
   fly(){coinFlights++;},addFloat(){paymentLabels++;},sfx(){},buy(){purchased++;payment.S.coins-=5000;}};
 vm.createContext(payment);vm.runInContext(section('var padHold=', 'function padIcon('),payment);payment.padInit=true;
