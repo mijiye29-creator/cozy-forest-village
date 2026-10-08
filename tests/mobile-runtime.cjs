@@ -92,9 +92,13 @@ env.document.hidden=false;env.storyBox.hidden=false;env.time=42;env.titleT=0;
 for(let i=1;i<=120;i++)env.loop(20000+i*1000/120);
 assert.equal(updates,0);assert.equal(env.time,42);assert(draws<=3,'Story background should render at low frequency');
 // Exercise the real layout against all reserved facilities and future belt routes.
-const layout = {S:{stage:1},fenceX:()=>[180,300,540][layout.S.stage-1]};
+const layout = {S:{stage:1},fenceX:()=>layout.STAGE_W[layout.S.stage-1]};
 vm.createContext(layout);
 vm.runInContext(script.match(/var GC=.*?;/)[0],layout);
+vm.runInContext(script.match(/var STAGE_W=.*?;/)[0],layout);
+vm.runInContext(section('function worldX(', 'var cv='),layout);
+assert.equal(layout.H,600,'World height must remain unchanged');
+assert(layout.W>540,'Additional room must be horizontal');
 vm.runInContext(section('var SZ=', '/* tile grid:'),layout);
 vm.runInContext(script.match(/var STALL=.*?;/)[0],layout);
 vm.runInContext("var LINES=['wood','fish'];",layout);
@@ -124,4 +128,19 @@ for(const stage of [1,2,3]){
   assert(!layout.padObstacles().some(o=>layout.rectTouches(layout.padBounds(repair),o,3)));
   assert(!pads.some(p=>layout.rectTouches(layout.padBounds(repair),layout.padBounds(p),3)));
 }
-console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; 3 village layouts, facility/belt clearance, stable slots and repairs.');
+const walls={S:{stage:3,fence:1,vf:{2:1,3:1}},STAGE_W:layout.STAGE_W,H:layout.H,VFBREACH:{},fenceX:()=>layout.W,shake(){},addFloat(){}};
+vm.createContext(walls);
+vm.runInContext(section('function villageAt(', 'function fixDef('),walls);
+vm.runInContext(section('function blockBearAtFence(', 'function spawnBear('),walls);
+for(const b of [{side:'left',x:-8,y:250},{side:'right',x:layout.W+8,y:250},{side:'bottom',x:420,y:layout.H+19}]){
+  const nx=b.side==='left'?-6:b.side==='right'?layout.W+6:b.x;
+  const ny=b.side==='bottom'?layout.H+17:b.y;
+  assert.equal(walls.blockBearAtFence(b,nx,ny),true,`${b.side} must block entry`);
+  assert.equal(b.state,'fence');
+  assert(b.side==='left'?b.x<0:b.side==='right'?b.x>layout.W:b.y>layout.H);
+  if(b.wallV===1)walls.S.fenceDown=1;else walls.VFBREACH[b.wallV]=1;
+  assert.equal(walls.blockBearAtFence(b,nx,ny),false,'Breach must allow entry');
+  walls.S.fenceDown=0;walls.VFBREACH={};
+}
+assert.equal(walls.blockBearAtFence({side:'top',x:100,y:-1},100,1),false,'Top has no fence');
+console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; horizontal expansion; 3 village layouts and repairs; left/right/bottom fence blocking and breach entry.');
