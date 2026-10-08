@@ -505,7 +505,7 @@ var SZ=120,PLAZA={x:0,y:120,w:MX,h:180};
 var SITES=[
   {id:'f1',kind:'forest',x:60,y:180,w:120,h:180,cost:0,name:'숲',gather:[[1,3],[1,4],[1,5],[2,3],[2,4],[2,5]],st:[4,3],pt:[1,6],xt:[4,5],padDx:0},
   {id:'p1',kind:'pond',x:420,y:180,w:180,h:180,cost:0,name:'호수',gather:[[8,3],[8,4],[8,5],[9,3],[9,4],[9,5]],st:[7,3],pt:[8,6],xt:[7,5],padDx:0},
-  {id:'m1',kind:'mine',x:780,y:120,w:180,h:120,cost:300,name:'광산',sd:[1,1],pd:[0,1],gather:[[13,2],[14,2],[15,2]],st:[15,3],pt:[14,3],padDx:0}
+  {id:'m1',kind:'mine',x:780,y:120,w:180,h:120,cost:300,name:'광산',sd:[2,1],pd:[1,1],gather:[[13,2],[14,2],[15,2]],st:[15,3],pt:[14,3],padDx:0}
 ];
 var WORLD_TOP=0,TOPROW=0,camY=0,camX=0,ZOOM_IN=5.2,Z=5.2;
 var SITE={};
@@ -2987,7 +2987,7 @@ function drawPadDeck(g,x,y){
 function drawSiteArt(g,st,seed){
   var kind=st.kind,px=st.pd[0]*60,sx=st.sd[0]*60,sy=st.sd[1]*60;
   var gg=g.createLinearGradient(0,0,120,120);gg.addColorStop(0,kind==='mine'?'#cfc6b4':'#c6e4a6');gg.addColorStop(1,kind==='mine'?'#b9ae98':'#a9d18c');
-  g.fillStyle=gg;g.fillRect(0,0,120,120);
+  g.fillStyle=gg;g.fillRect(0,0,st.w,120);
   if(kind==='forest'){
     g.fillStyle='rgba(90,140,70,.18)';rr(g,3,63,114,54,14);g.fill();grassTufts(g,0,60,120,60,seed+3,6,2);
     for(var j=0;j<10;j++){var fx=6+hs(seed,j+20)*108,fy=64+hs(seed,j+40)*50;g.fillStyle=['#d9a441','#c9743a','#e0b85a','#b8883a'][j%4];g.save();g.translate(fx,fy);g.rotate(hs(seed,j)*6);g.beginPath();g.ellipse(0,0,2,1,0,0,7);g.fill();g.restore();}
@@ -3004,10 +3004,10 @@ function drawSiteArt(g,st,seed){
     [[100,110,4.6],[16,100,3.6]].forEach(function(l,i){g.fillStyle=i%2?'#6db873':'#5fa86a';g.beginPath();g.moveTo(l[0],l[1]);g.arc(l[0],l[1],l[2],.35,6.0);g.closePath();g.fill();});
   }else{
     /* quarry: cracked stone floor with gravel */
-    g.save();g.translate(0,-sy);g.fillStyle='#a89c88';rr(g,3,63,114,54,10);g.fill();g.strokeStyle='rgba(60,50,40,.3)';g.lineWidth=.8;
-    for(var cr=0;cr<7;cr++){var cx=10+hs(seed,cr)*100,cy=68+hs(cr,seed)*44;g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+6,cy+3);g.lineTo(cx+9,cy+1);g.stroke();}
-    for(var gv=0;gv<24;gv++){g.fillStyle='rgba(80,70,60,'+(.2+hs(gv,7)*.3)+')';g.beginPath();blob(g,6+hs(gv,3)*108,66+hs(gv,5)*50,.8+hs(gv,9)*1.2);g.fill();}
-    g.fillStyle='#6b5a44';g.fillRect(4,114,112,2);g.restore();
+    g.save();g.translate(0,-sy);g.fillStyle='#a89c88';rr(g,3,63,st.w-6,54,10);g.fill();g.strokeStyle='rgba(60,50,40,.3)';g.lineWidth=.8;
+    for(var cr=0;cr<7;cr++){var cx=10+hs(seed,cr)*(st.w-20),cy=68+hs(cr,seed)*44;g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+6,cy+3);g.lineTo(cx+9,cy+1);g.stroke();}
+    for(var gv=0;gv<24;gv++){g.fillStyle='rgba(80,70,60,'+(.2+hs(gv,7)*.3)+')';g.beginPath();blob(g,6+hs(gv,3)*(st.w-12),66+hs(gv,5)*50,.8+hs(gv,9)*1.2);g.fill();}
+    g.fillStyle='#6b5a44';g.fillRect(4,114,st.w-8,2);g.restore();
   }
   drawPadDeck(g,px,sy);
   drawStoreTile(g,st,sx,sy);
@@ -3030,18 +3030,19 @@ var FOREST_LOOK=[
 function drawForestArt(g,st,seed,L){
   var P=FOREST_LOOK[Math.max(0,Math.min(4,L-1))];
   g.fillStyle='#e8ede3';rr(g,0,0,st.w,st.h,8);g.fill();
-  g.fillStyle=P.floor;rr(g,2,2,55,st.h-4,13);g.fill();
+  g.fillStyle=P.floor;rr(g,2,2,st.w-5,st.h-4,13);g.fill();
   /* Ground only: the resource renderer owns every visible tree. */
   g.strokeStyle='rgba(96,125,113,.15)';g.lineWidth=.7;
-  for(var j=0;j<13;j++){var x=8+hs(seed,j)*42,y=9+hs(j,seed)*(st.h-18);g.beginPath();g.moveTo(x,y);g.lineTo(x+3,y-1);g.stroke();}
+  for(var j=0;j<13;j++){var x=8+hs(seed,j)*(st.w-18),y=9+hs(j,seed)*(st.h-18);g.beginPath();g.moveTo(x,y);g.lineTo(x+3,y-1);g.stroke();}
   if(L>=3){g.strokeStyle='#b9ad8f';g.lineWidth=1;g.beginPath();g.moveTo(4,9);g.lineTo(4,st.h-9);g.stroke();}
-  if(L>=4){lantern(g,54,64,L===5);lantern(g,54,125,L===5);}
+  if(L>=4){lantern(g,st.w-6,64,L===5);lantern(g,st.w-6,125,L===5);}
   if(L===5){g.fillStyle='#d5bb84';[[8,65],[48,125],[9,163]].forEach(function(p){g.beginPath();g.arc(p[0],p[1],1.5,0,7);g.fill();});}
 }
 
 function drawRiverArt(g,st,seed,L){
   var W2=st.w,H2=st.h,gr=['#eff6f8','#e7f2f6','#deedf3','#d5e8f0','#cde4ee'][L-1];
   g.fillStyle=gr;g.fillRect(0,0,W2,H2);grassTufts(g,0,0,60,H2,seed,8,L>=2?6:0);
+  for(var column=60;column<W2;column+=60){g.save();g.translate(column-60,0);
   /* water column: murky stream at Lv1, clear river, then a bright crystal river */
   var wc=[['#c2eaf5','#9bd4e6'],['#b4e5f2','#82cbe1'],['#a2e0f4','#70bfdd'],['#92dafa','#5aaed4'],['#a8f2ef','#56c4de']][L-1];
   g.fillStyle='rgba(60,90,60,.25)';rr(g,68,0,52,H2,4);g.fill();
@@ -3060,6 +3061,7 @@ function drawRiverArt(g,st,seed,L){
   for(var p=0;p<9;p++){g.fillStyle='#8a6440';rr(g,70,6+p*20,3,5,1);g.fill();}
   if(L>=5){g.fillStyle='#e0b23c';g.fillRect(71,0,1.6,H2);}
   if(L>=4){lantern(g,66,58,L>=5);lantern(g,66,120,L>=5);lantern(g,66,178,L>=5);}
+  g.restore();}
   deck(g,2,2,56,56,['#dcbd8c','#caa472'],'#a8743f');g.strokeStyle='rgba(110,75,40,.25)';g.lineWidth=.8;for(var py=10;py<56;py+=7){g.beginPath();g.moveTo(4,py);g.lineTo(56,py);g.stroke();}
   deck(g,4,64,52,52,['#efe6cf','#e2d6b8'],'rgba(160,130,90,.6)');deck(g,2,122,56,56,['#d6d0c4','#c4bcae'],'rgba(120,110,95,.6)');
   if(!cvLv(st.id)){g.font='700 6.5px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='rgba(90,60,30,.7)';g.fillText('적재칸',30,52);}
@@ -3542,7 +3544,7 @@ function drawSplitters(g){
   for(var i=FEEDFX.length-1;i>=0;i--){FEEDFX[i].t+=FDT;if(FEEDFX[i].t>=.7)FEEDFX.splice(i,1);}
   for(var sk in SPLIT){SPLIT[sk].t+=FDT;}
   ['f1','p1'].forEach(function(sid){if(!owned(sid)||!cvLv(sid)||!beltOn('sale_'+sid)||!beltOn('proc_'+sid))return;
-    var st=SITE[sid],x=BPATH['sale_'+sid][0][0],y0=st.store.r*T+T,y1=st.xtT.r*T+16,L=cvLv(sid),P=tierOfBelt(L),w=beltW(L)*.8;
+    var st=SITE[sid],x=pilePos(sid).x,y0=st.store.r*T+T,y1=st.xtT.r*T+16,L=cvLv(sid),P=tierOfBelt(L),w=beltW(L)*.8;
     beltRun(g,x,y0,x,y1,w,convSpeed(L),P);beltCap(g,x,y0+1,w,false,P);
     FEEDFX.forEach(function(f){if(f.sid!==sid)return;var k=f.t/.7,yy=y0+(y1-y0)*k;for(var sk2=0;sk2<Math.min(3,f.n);sk2++)drawItem(g,f.id,x+(sk2%2?.6:-.6),yy-3-sk2*3,.72);});
     /* diverter sign on the deck's left edge */
