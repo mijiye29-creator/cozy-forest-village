@@ -171,7 +171,7 @@ function drawWarehouse(){
     return;
   }
   var nt=nightAmt();
-  if(!drawFacilitySprite(g,'storage',x0+w/2,H,w+6,H-WH.top,S.whLv,5,0)){
+  if(!drawFacilitySprite(g,'warehouse',x0+w/2,H,w+6,H-WH.top,S.whLv,5,0)){
   g.fillStyle='rgba(40,30,20,.18)';g.fillRect(x0+4,WH.wall+4,w,H-WH.wall);
   /* plank walls */
   g.fillStyle='#d8b687';g.fillRect(x0,WH.wall,w,H-WH.wall);

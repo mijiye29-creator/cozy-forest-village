@@ -119,5 +119,23 @@ window.checkGLB = async (url) => {
     out.clips[c.name] = { dur: +c.duration.toFixed(2), tracks: c.tracks.length, moved: +moved.toFixed(3) }; a.stop(); }
   return out;
 };
+// ---------- GPT pack helpers (used by build_gpt_pack.py): 4-view turnaround + facts for the catalog
+window.renderTurnaround = (name, anim, ppu = 96) => {
+  const m = build(name), scene = new THREE.Scene(); lights(scene); scene.add(m.root);
+  const an = anim && m.anims[anim] ? anim : (Object.keys(m.anims)[0] || null); pose(m, an, 0);
+  const yaws = [0, YAW, Math.PI / 2, Math.PI], cams = yaws.map(y => { const c = new THREE.OrthographicCamera(-1, 1, 1, -1, -100, 100); c.position.set(Math.sin(y) * 20 * Math.cos(ELEV * 0.5), Math.sin(ELEV * 0.5) * 20, Math.cos(y) * 20 * Math.cos(ELEV * 0.5)); c.lookAt(0, 0, 0); c.updateMatrixWorld(); return c; });
+  const bs = cams.map(c => screenBounds(m, c, [[an, 0]])), pad = 0.15;
+  const W = Math.max(...bs.map(b => b.x1 - b.x0)) + pad * 2, H = Math.max(...bs.map(b => b.y1 - b.y0)) + pad * 2, fw = Math.ceil(W * ppu), fh = Math.ceil(H * ppu);
+  renderer.setSize(fw, fh, false); const out = document.createElement('canvas'); out.width = fw * 4; out.height = fh; const g = out.getContext('2d');
+  cams.forEach((c, i) => { const b = bs[i], cx = (b.x0 + b.x1) / 2; c.left = cx - W / 2; c.right = cx + W / 2; c.bottom = b.y0 - pad; c.top = b.y0 - pad + H; c.updateProjectionMatrix(); pose(m, an, 0); renderer.render(scene, c); g.drawImage(outlineCanvas(renderer.domElement, 2), i * fw, 0); });
+  return out.toDataURL('image/png');
+};
+window.modelFacts = (name) => {
+  const m = build(name); pose(m, null, 0); const box = new THREE.Box3().setFromObject(m.root), size = box.getSize(new THREE.Vector3()), w = new Map();
+  m.root.traverse(o => { if (!o.isMesh || o.material.transparent) return; const k = '#' + o.material.color.getHexString(), v = o.geometry.attributes.position.count; w.set(k, (w.get(k) || 0) + v); });
+  let meshes = 0; m.root.traverse(o => o.isMesh && meshes++);
+  return { kind: m.kind, size_m: [size.x, size.y, size.z].map(v => +v.toFixed(2)), meshes, colors: [...w.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(e => e[0]),
+    anims: Object.fromEntries(Object.entries(m.anims).map(([a, v]) => [a, { frames: v.frames, dur: v.dur }])) };
+};
 window.studioReady = true;
 </script></body></html>

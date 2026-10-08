@@ -23,6 +23,7 @@ function assemble(){
  const index={schema_version:1,runtime_sha256:hash(raw),modules:parts.map(p=>({id:p.id,path:p.path,topic:p.topic,bytes:Buffer.byteLength(p.text),lines:p.text.split('\n').length-1,symbols:p.text.split('\n').flatMap((l,i)=>{const m=l.match(/^(?:function|var)\s+([A-Za-z_$][\w$]*)/);return m?[{name:m[1],line:i+1}]:[]})}))};
  let html=fs.readFileSync(path.join(game,'index.html'),'utf8');
  html=html.replace(/href="styles\/game\.css(?:\?v=[a-f0-9]+)?"/,'href="styles/game.css?v='+hash(fs.readFileSync(path.join(game,'styles/game.css'))).slice(0,12)+'"');
+ html=html.replace(/src="intro-scenes\.js(?:\?v=[a-f0-9]+)?"/,'src="intro-scenes.js?v='+hash(fs.readFileSync(path.join(game,'intro-scenes.js'))).slice(0,12)+'"');
  html=html.replace(/src="runtime\.js(?:\?v=[a-f0-9]+)?"/,'src="runtime.js?v='+hash(bundle).slice(0,12)+'"');
  return {raw,manifest,index,outputs:{'src/sprite-data.js':spriteSource,'runtime.js':bundle,'runtime.js.map':map,'module-map.json':JSON.stringify(index,null,2)+'\n','index.html':html}};
 }

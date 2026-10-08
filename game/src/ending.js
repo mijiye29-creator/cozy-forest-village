@@ -22,7 +22,7 @@ function spawnFinaleBoss(){
   addFloat(MX/2,120,'🐻‍❄️👑 끝판왕 북극곰이 나타났어요!','#ffe27a');
 }
 function showEnding(){var el=document.getElementById('ending');if(el)el.hidden=false;sfx('chime');flash=.5;shake(.6);}
-function playEndingFilm(){var frames=Array.isArray(window.ENDING_SCENES)?window.ENDING_SCENES:[];if(frames.length===3&&typeof filmStart==='function')filmStart(frames,{done:showEnding});else showEnding();}
+function playEndingFilm(){var frames=Array.isArray(window.ENDING_SCENES)?window.ENDING_SCENES:[];if(frames.length===3&&typeof filmStart==='function')filmStart(frames,{video:'ending',done:showEnding});else showEnding();}
 function hasFinaleBoss(){return BEARS.some(function(b){return b.finale&&b.state!=='dead'&&b.state!=='out';});}
 function restoreFinale(){if(S.finaleDone){TITLE=false;titleEl.hidden=true;document.getElementById('quickDock').hidden=false;showEnding();}}
 var finaleT=1;

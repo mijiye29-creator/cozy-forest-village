@@ -10,3 +10,5 @@ assert(r.raw.includes("var KEY='cozy-village-v6'"));assert(r.raw.includes('var S
 assert.equal((r.raw.match(/\(function\(\)\{\n"use strict";/g)||[]).length,1);
 new vm.Script(fs.readFileSync(path.join(game,'runtime.js'),'utf8'));
 console.log('PASS: source/bundle consistency; module syntax/order; source map; single runtime closure; stable save key/version; cache versions.');
+
+assert(html.includes('intro-scenes.js?v='+require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(game,'intro-scenes.js'))).digest('hex').slice(0,12)),'Story metadata must invalidate stale video/image URLs');

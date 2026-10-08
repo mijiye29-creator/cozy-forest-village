@@ -423,3 +423,6 @@ header #bearChip.warn,header #bearChip.raid{background:#b62f43;color:#fff;border
 #title.film-paused .drifting{animation-play-state:paused}
 #title.still-film img{transition:none;animation:none;transform:none}
 @media(prefers-reduced-motion:reduce){#introImage,#introImageNext{transition:none;animation:none!important;transform:none}}
+
+#storyVideo{position:absolute;left:3%;top:3%;width:94%;height:94%;object-fit:contain;background:#172b30;cursor:pointer}
+#storyVideo[hidden]{display:none}

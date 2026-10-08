@@ -23,6 +23,10 @@ export const PAL = {
   bear: '#eef3f6', bearShade: '#c9d6df', bearNose: '#2a2a30', boss: '#d7e6f2', ice: '#8fd6ff', iceGlow: '#bff0ff',
   corgi: '#d9893b', corgiWhite: '#fbf3e6', fish: '#8fa9b8', fishBelly: '#e6eef2', ore: '#7fd0ff', gold: '#ffcf4a',
   awningA: '#d9483b', awningB: '#fbf1e1', awningC: '#2f7fb0', canvas: '#efe2c8', truck: '#d9573b', tire: '#2b2b30',
+  // added with the 2026-10 set (machines, market extras, aurora hot-spring village); earlier colours unchanged
+  machineYellow: '#f0bb3f', machineGreen: '#4f9a6a', rigBlue: '#3f7fb8', track: '#2b2f36', glass: '#bfe8ff',
+  spring: '#3fc6c0', springDeep: '#2a8f9e', steam: '#eef6f8', keeper: '#2f9e9a', brick: '#b86a4a', rust: '#9a5a3a',
+  auroraG: '#6ef0b0', auroraB: '#5ad1ff', auroraV: '#9a86f2', paper: '#f6ecd2',
 };
 
 const mats = new Map();
@@ -107,6 +111,9 @@ const tools = {
   rod(hand) { const t = pivot(hand, 'tool', 0, 0, 0.02); t.rotation.x = Math.PI / 2.6; cyl(t, 0.012, 0.022, 1.1, PAL.woodDark, 0, 0.5, 0, 6); torus(t, 0.04, 0.012, PAL.metalDark, 0.03, 0.1, 0); ball(t, 0.035, '#e8463a', 0, 1.06, 0, 8); return t; },
   pick(hand) { const t = pivot(hand, 'tool', 0, 0, 0.02); t.rotation.x = Math.PI / 2; cyl(t, 0.025, 0.03, 0.6, PAL.woodLight, 0, 0.2, 0, 6); const hd = rbox(t, 0.05, 0.05, 0.42, PAL.metal, 0, 0.47, 0, 0.02, { metal: 0.5, rough: 0.4 }); hd.rotation.x = 0.15; return t; },
   bow(hand) { const t = pivot(hand, 'tool', 0, 0, 0.04); const b = torus(t, 0.36, 0.02, PAL.woodDark, 0, 0, 0, Math.PI * 0.9); b.rotation.z = Math.PI / 2 + Math.PI * 0.05; box(t, 0.005, 0.7, 0.005, '#eee', -0.06, 0, 0); return t; },
+  rainbowAxe(hand) { const t = tools.axe(hand); const hd = t.children[1]; hd.material = mat(PAL.gold, { metal: 0.6, rough: 0.3 }); ['#e8463a', '#f2c14e', '#5ac46a', '#3fa3e0', '#9a86f2'].forEach((c, i) => box(t, 0.065, 0.028, 0.19, c, 0, 0.4 + i * 0.03, 0.07, { emissive: c, ei: 0.5 })); return t; },
+  rainbowRod(hand) { const t = tools.rod(hand); ['#e8463a', '#f2c14e', '#5ac46a', '#3fa3e0', '#9a86f2'].forEach((c, i) => cyl(t, 0.026, 0.026, 0.05, c, 0, 0.3 + i * 0.12, 0, 6, { emissive: c, ei: 0.4 })); torus(t, 0.16, 0.012, '#f4e5b4', 0, 1.15, 0.12).rotation.x = 1.2; return t; },
+  ladle(hand) { const t = pivot(hand, 'tool', 0, 0, 0.02); t.rotation.x = Math.PI / 2; cyl(t, 0.022, 0.026, 0.8, PAL.woodLight, 0, 0.3, 0, 6); const cup = cyl(t, 0.1, 0.07, 0.1, PAL.wood, 0, 0.72, 0.06, 10); cup.rotation.x = Math.PI / 2; return t; },
   spear(hand) { const t = pivot(hand, 'tool', 0, 0, 0.02); t.rotation.x = Math.PI / 2; cyl(t, 0.022, 0.022, 1.2, PAL.woodLight, 0, 0.3, 0, 6); cone(t, 0.05, 0.16, PAL.metal, 0, 0.98, 0, 6, { metal: 0.5, rough: 0.4 }); return t; },
 };
 function humanAnims(kind) {
@@ -126,7 +133,7 @@ function character(name, o, toolKind) {
   return () => {
     const N = humanoid({ name, ...o });
     if (toolKind) N.tool = tools[toolKind](N.handR);
-    const anims = humanAnims(toolKind || 'axe');
+    const anims = humanAnims(o.animKind || toolKind || 'axe');
     if (o.toolOnlyAtWork && N.tool) Object.entries(anims).forEach(([k, A]) => { if (k === 'work') return; const f = A.fn; A.fn = (t, n) => { f(t, n); n.tool.scale.setScalar(0.0001); }; });
     if (!toolKind) delete anims.work;
     return { root: N.root, nodes: N, anims, kind: 'actor' };
@@ -374,6 +381,228 @@ function chest() {
     open: { dur: 0.8, frames: 8, fn(t, n) { const k = Math.min(1, t * 1.6); n.lid.rotation.x = -k * 1.9; n.glow.children.forEach((b, i) => { const a = i / 6 * TAU; b.position.set(C(a) * t * 0.6, 0.1 + t * 1.2, S(a) * t * 0.4); b.scale.setScalar(1 + t * 1.5); }); } } } };
 }
 
+/* ------------------------------------------------------------------ 2026-10 set: extra people */
+const hide = (o) => o.scale.setScalar(0.0001);           // state switches stay plain transforms, so glTF clips can carry them
+const basket = (N) => { const b = cyl(N.handL, 0.12, 0.09, 0.14, PAL.woodLight, 0, -0.06, 0.06, 10); torus(b, 0.1, 0.012, PAL.wood, 0, 0.1, 0).rotation.x = 0; ball(b, 0.05, PAL.heroScarf, 0.03, 0.08, 0, 8); ball(b, 0.045, PAL.gold, -0.04, 0.08, 0.02, 8); };
+const masterCape = (c) => (N) => { const cp = pivot(N.torso, 'cape', 0, 0.5, -0.18); N.cape = cp; rbox(cp, 0.56, 0.62, 0.04, c, 0, -0.3, 0, 0.03); torus(N.torso, 0.08, 0.02, PAL.gold, 0, 0.36, 0.18, TAU, { metal: 0.6, rough: 0.3 }); ball(N.torso, 0.05, PAL.gold, 0, 0.36, 0.19, 8, { emissive: PAL.gold, ei: 0.8 }); };
+const keeperExtra = (N) => { // towel over the shoulder + lantern in the free hand
+  rbox(N.torso, 0.12, 0.42, 0.06, PAL.snow, -0.18, 0.32, 0.12, 0.03).rotation.z = -0.5;
+  const l = pivot(N.handL, 'lantern', 0, -0.05, 0.05); cyl(l, 0.008, 0.008, 0.12, PAL.metalDark, 0, -0.02, 0, 4); rbox(l, 0.12, 0.15, 0.12, PAL.metalDark, 0, -0.16, 0, 0.02); ball(l, 0.045, PAL.window, 0, -0.16, 0, 8, { emissive: PAL.glow, ei: 2 });
+};
+function withAnims(factory, extra) { return () => { const m = factory(); Object.entries(extra).forEach(([k, A]) => { m.anims[k] = A; }); return m; }; }
+const serve = { dur: 1.2, frames: 8, fn(t, n) { const k = S(t * TAU) * 0.5 + 0.5; n.armR.rotation.x = -0.6 - k * 0.8; n.armL.rotation.x = -0.6 - k * 0.8; n.armL.rotation.z = 0.1; n.armR.rotation.z = -0.1; n.torso.rotation.x = k * 0.12; n.head.rotation.x = k * 0.1; } };
+const happy = { dur: 0.8, frames: 8, fn(t, n) { const j = Math.abs(S(t * TAU)); n.body.position.y = j * 0.1; n.armR.rotation.x = -2.4; n.armR.rotation.z = 0.2 + S(t * TAU * 2) * 0.35; n.head.rotation.z = S(t * TAU) * 0.12; } };
+const capeAnims = (A) => Object.entries(A).forEach(([k, a]) => { const f = a.fn; a.fn = (t, n) => { f(t, n); n.cape.rotation.x = 0.12 + Math.abs(S(t * TAU)) * (k === 'walk' || k === 'work' ? 0.35 : 0.08); }; });
+function master(name, o, tool, animKind) { return () => { const m = character(name, { ...o, animKind }, tool)(); capeAnims(m.anims); m.root.scale.setScalar(1.12); m.scale = 1.12; return m; }; }
+
+/* ------------------------------------------------------------------ 2026-10 set: machines */
+function treads(p, len, x, N, key) { // rubber track with moving tread blocks (scrolled by the drive clip)
+  rbox(p, 0.26, 0.32, len, PAL.track, x, 0.18, 0, 0.12);
+  const tr = pivot(p, key, x, 0, 0); N[key] = tr;
+  for (let i = 0; i < 8; i++) box(tr, 0.28, 0.04, 0.08, '#4a525c', 0, 0.35, -len / 2 + 0.1 + i * (len - 0.2) / 7);
+  [-1, 0, 1].forEach(z => { const w = cyl(p, 0.1, 0.1, 0.28, '#5d6670', x, 0.15, z * len * 0.36, 10); w.rotation.z = Math.PI / 2; });
+}
+function excavator() {
+  const root = new THREE.Group(); root.name = 'excavator'; const body = pivot(root, 'body'); const N = { root, body };
+  treads(body, 1.4, -0.42, N, 'treadL'); treads(body, 1.4, 0.42, N, 'treadR');
+  const cab = pivot(body, 'cab', 0, 0.36, 0); N.cab = cab;
+  cyl(cab, 0.45, 0.45, 0.08, PAL.metalDark, 0, 0.02, 0, 16);
+  rbox(cab, 1.0, 0.42, 1.1, PAL.machineYellow, 0, 0.27, -0.1, 0.08); rbox(cab, 1.02, 0.06, 1.12, artShadeHex(PAL.machineYellow, 0.75), 0, 0.12, -0.1, 0.03);
+  rbox(cab, 0.5, 0.55, 0.5, PAL.machineYellow, -0.22, 0.72, 0.12, 0.07); box(cab, 0.4, 0.34, 0.02, PAL.glass, -0.22, 0.76, 0.375, { emissive: '#5aa9d6', ei: 0.15, rough: 0.2 });
+  rbox(cab, 0.54, 0.06, 0.54, PAL.snow, -0.22, 1.02, 0.12, 0.03); rbox(cab, 0.3, 0.3, 0.25, PAL.metalDark, 0.25, 0.6, -0.45, 0.05);
+  cyl(cab, 0.05, 0.05, 0.35, PAL.metalDark, 0.35, 0.85, -0.5, 8); ball(cab, 0.06, PAL.window, 0.2, 0.55, 0.36, 8, { emissive: PAL.glow, ei: 2 });
+  const boom = pivot(cab, 'boom', 0.22, 0.42, 0.35); N.boom = boom; boom.rotation.x = -0.55;
+  rbox(boom, 0.16, 0.16, 1.0, PAL.machineYellow, 0, 0, 0.5, 0.05); cyl(boom, 0.04, 0.04, 0.7, PAL.metal, 0, 0.12, 0.45, 6).rotation.x = Math.PI / 2;
+  const stick = pivot(boom, 'stick', 0, 0, 1.0); N.stick = stick; stick.rotation.x = 1.4;
+  rbox(stick, 0.13, 0.13, 0.75, PAL.machineYellow, 0, 0, 0.37, 0.04);
+  const bucket = pivot(stick, 'bucket', 0, 0, 0.75); N.bucket = bucket; bucket.rotation.x = 0.4;
+  rbox(bucket, 0.36, 0.26, 0.24, PAL.metalDark, 0, -0.05, 0.1, 0.05); for (let i = 0; i < 4; i++) cone(bucket, 0.03, 0.08, PAL.metal, -0.12 + i * 0.08, -0.2, 0.2, 4).rotation.x = Math.PI;
+  const ore = pivot(bucket, 'load', 0, 0.06, 0.1); N.load = ore; [[-0.08, 0], [0.07, 0.02], [0, 0.05]].forEach(([x, y]) => cone(ore, 0.06, 0.13, PAL.ore, x, y, 0, 5, { emissive: PAL.ore, ei: 0.45 }));
+  const restLoad = () => hide(N.load);
+  return { root, nodes: N, kind: 'actor', anims: {
+    idle: { dur: 2, frames: 4, fn(t, n) { restLoad(); n.body.position.y = S(t * TAU) * 0.01; } },
+    drive: { dur: 0.6, frames: 6, fn(t, n) { restLoad(); n.treadL.position.z = ((t * 0.17) % 0.17); n.treadR.position.z = ((t * 0.17) % 0.17); n.body.position.y = Math.abs(S(t * TAU * 2)) * 0.015; } },
+    work: { dur: 1.4, frames: 8, fn(t, n) { const d = S(t * TAU) * 0.5 + 0.5; n.cab.rotation.y = S(t * TAU) * 0.35; n.boom.rotation.x = -0.55 + d * 0.5; n.stick.rotation.x = 1.4 - d * 0.6; n.bucket.rotation.x = 0.4 + (1 - d) * 0.9; if (t < 0.5) hide(n.load); n.body.position.y = 0; } } } };
+}
+function harvester() {
+  const root = new THREE.Group(); root.name = 'harvester'; const body = pivot(root, 'body'); const N = { root, body }; const wheels = [];
+  [-0.55, 0, 0.55].forEach((z, i) => [-1, 1].forEach(s => { const w = pivot(root, 'wheel' + i + (s < 0 ? 'L' : 'R'), s * 0.5, 0.28, z); const t = cyl(w, 0.28, 0.28, 0.2, PAL.tire, 0, 0, 0, 14); t.rotation.z = Math.PI / 2; const h = cyl(w, 0.11, 0.11, 0.21, '#8f969e', 0, 0, 0, 8); h.rotation.z = Math.PI / 2; wheels.push(w); }));
+  N.wheels = wheels;
+  rbox(body, 0.9, 0.42, 1.7, PAL.machineGreen, 0, 0.62, 0, 0.08); rbox(body, 0.92, 0.07, 1.72, '#3e7f56', 0, 0.44, 0, 0.03);
+  rbox(body, 0.7, 0.62, 0.6, PAL.machineGreen, 0, 1.12, -0.42, 0.08); box(body, 0.55, 0.38, 0.02, PAL.glass, 0, 1.16, -0.115, { emissive: '#5aa9d6', ei: 0.15, rough: 0.2 });
+  const drv = pivot(body, 'driver', 0, 1.05, -0.4); ball(drv, 0.13, PAL.skin, 0, 0.05, 0, 10); ball(drv, 0.14, PAL.machineYellow, 0, 0.11, 0, 10).scale.set(1, 0.6, 1);
+  rbox(body, 0.74, 0.06, 0.64, PAL.snow, 0, 1.46, -0.42, 0.03); ball(body, 0.06, PAL.window, 0.3, 0.7, 0.86, 8, { emissive: PAL.glow, ei: 2 }); ball(body, 0.06, PAL.window, -0.3, 0.7, 0.86, 8, { emissive: PAL.glow, ei: 2 });
+  const crane = pivot(body, 'crane', 0.2, 0.9, 0.3); N.crane = crane; crane.rotation.x = -0.9;
+  rbox(crane, 0.12, 0.12, 0.85, '#e0a03a', 0, 0, 0.42, 0.04);
+  const arm2 = pivot(crane, 'arm2', 0, 0, 0.85); N.arm2 = arm2; arm2.rotation.x = 1.2; rbox(arm2, 0.1, 0.1, 0.6, '#e0a03a', 0, 0, 0.3, 0.04);
+  const head = pivot(arm2, 'head', 0, 0, 0.62); N.head = head; rbox(head, 0.22, 0.2, 0.18, PAL.metalDark, 0, 0, 0, 0.04);
+  const saw = cyl(head, 0.13, 0.13, 0.02, '#c9d2da', 0, -0.15, 0, 16, { metal: 0.8, rough: 0.25 }); saw.rotation.z = Math.PI / 2;
+  [-1, 1].forEach(s => { const c = box(head, 0.03, 0.18, 0.12, PAL.metal, s * 0.1, -0.1, 0.08); c.rotation.z = s * 0.3; });
+  return { root, nodes: N, kind: 'actor', anims: {
+    idle: { dur: 2, frames: 4, fn(t, n) { n.crane.rotation.y = S(t * TAU) * 0.05; } },
+    drive: { dur: 0.5, frames: 6, fn(t, n) { n.wheels.forEach(w => w.rotation.x = t * TAU); n.body.position.y = Math.abs(S(t * TAU * 2)) * 0.02; } },
+    work: { dur: 1.0, frames: 8, fn(t, n) { const sw = S(t * TAU); n.crane.rotation.y = sw * 0.35; n.crane.rotation.x = -0.9 + Math.abs(sw) * 0.2; n.arm2.rotation.x = 1.2 - sw * 0.3; n.head.rotation.x = sw * 0.4; } } } };
+}
+function fishRig() {
+  const root = new THREE.Group(); root.name = 'fish_rig'; const body = pivot(root, 'body'); const N = { root, body }; const wheels = [];
+  [[-1, 0.35], [1, 0.35], [-1, -0.35], [1, -0.35]].forEach(([x, z], i) => { const w = pivot(root, 'wheel' + i, x * 0.42, 0.22, z); const t = cyl(w, 0.22, 0.22, 0.16, PAL.tire, 0, 0, 0, 14); t.rotation.z = Math.PI / 2; wheels.push(w); }); N.wheels = wheels;
+  // boat-shaped hull on wheels
+  rbox(body, 0.78, 0.36, 1.25, PAL.rigBlue, 0, 0.5, 0, 0.14); rbox(body, 0.82, 0.06, 1.3, PAL.snow, 0, 0.7, 0, 0.03);
+  cone(body, 0.39, 0.4, PAL.rigBlue, 0, 0.5, 0.78, 4).rotation.x = Math.PI / 2;
+  rbox(body, 0.84, 0.08, 1.3, '#f4e1b0', 0, 0.4, 0, 0.03);
+  const drv = pivot(body, 'driver', 0, 0.75, -0.25); rbox(drv, 0.32, 0.3, 0.24, '#f58a3c', 0, 0.12, 0, 0.08); ball(drv, 0.12, PAL.skin, 0, 0.38, 0, 10); ball(drv, 0.13, '#e8845a', 0, 0.44, 0, 10).scale.set(1, 0.55, 1);
+  const crate = rbox(body, 0.36, 0.22, 0.3, PAL.wood, 0, 0.82, 0.28, 0.03); [0, 1].forEach(i => { const f = fishModel().root; f.scale.setScalar(0.7); f.position.set(-0.07 + i * 0.14, 0.88, 0.28); body.add(f); });
+  const crane = pivot(body, 'crane', 0.28, 0.75, -0.1); N.crane = crane; cyl(crane, 0.03, 0.04, 1.3, PAL.woodDark, 0, 0.6, 0.15, 6).rotation.x = 0.4;
+  const reel = pivot(crane, 'reel', 0, 0.2, 0.04); N.reel = reel; const rr = torus(reel, 0.08, 0.025, PAL.metalDark, 0, 0, 0); rr.rotation.y = Math.PI / 2;
+  const net = pivot(crane, 'net', 0, 1.15, 0.65); N.net = net; box(net, 0.006, 0.6, 0.006, '#dfe6ec', 0, -0.3, 0); const nb = ball(net, 0.16, '#dfe6ec', 0, -0.62, 0, 8, { opacity: 0.55 }); nb.scale.set(1, 0.7, 1); torus(net, 0.15, 0.015, PAL.metalDark, 0, -0.55, 0).rotation.x = Math.PI / 2;
+  return { root, nodes: N, kind: 'actor', anims: {
+    idle: { dur: 2, frames: 4, fn(t, n) { n.net.rotation.x = S(t * TAU) * 0.08; } },
+    drive: { dur: 0.5, frames: 6, fn(t, n) { n.wheels.forEach(w => w.rotation.x = t * TAU); n.body.position.y = Math.abs(S(t * TAU * 2)) * 0.02; n.net.rotation.x = -0.2 + S(t * TAU) * 0.1; } },
+    work: { dur: 1.6, frames: 8, fn(t, n) { n.reel.rotation.x = t * TAU * 2; n.net.position.y = 1.15 - (0.5 - Math.abs(t - 0.5)) * 0.6; n.net.rotation.x = S(t * TAU) * 0.15; n.crane.rotation.y = S(t * TAU) * 0.12; } } } };
+}
+
+/* ------------------------------------------------------------------ 2026-10 set: market + village extras */
+function workshop() {
+  const root = new THREE.Group(); root.name = 'workshop'; base(root, 2.0, 1.4, PAL.woodLight);
+  const shed = pivot(root, 'shed', 0, 0.12, 0);
+  rbox(shed, 2.0, 1.2, 0.12, PAL.wood, 0, 0.6, -0.65, 0.03); [-1, 1].forEach(s => rbox(shed, 0.12, 1.2, 1.4, PAL.wood, s * 0.95, 0.6, 0, 0.03));
+  for (let i = 0; i < 6; i++) box(shed, 0.03, 1.2, 0.13, PAL.woodDark, -0.85 + i * 0.34, 0.6, -0.64);
+  snowRoof(shed, 2.0, 1.6, 0.6, '#6f8c77', 1.2);
+  rbox(shed, 1.3, 0.08, 0.55, PAL.woodLight, 0, 0.62, 0.1, 0.02); [-0.55, 0.55].forEach(x => [-0.12, 0.3].forEach(z => box(shed, 0.07, 0.58, 0.07, PAL.woodDark, x, 0.29, z)));
+  const lg = cyl(shed, 0.1, 0.1, 0.7, PAL.log, -0.2, 0.76, 0.12, 8); lg.rotation.z = Math.PI / 2; cyl(shed, 0.095, 0.095, 0.01, PAL.logEnd, 0.155, 0.76, 0.12, 8).rotation.z = Math.PI / 2;
+  // tools on the back wall
+  const saw = rbox(shed, 0.5, 0.14, 0.02, '#c9d2da', -0.45, 0.95, -0.58, 0.02, { metal: 0.7, rough: 0.3 }); rbox(shed, 0.14, 0.12, 0.03, PAL.woodDark, -0.73, 0.95, -0.58, 0.02);
+  [[0.3, PAL.metal], [0.55, PAL.woodLight]].forEach(([x, c]) => { cyl(shed, 0.02, 0.02, 0.45, PAL.woodLight, x, 0.95, -0.58, 6); rbox(shed, 0.14, 0.07, 0.06, c, x, 1.17, -0.58, 0.02); });
+  const anvil = rbox(root, 0.32, 0.18, 0.18, PAL.metalDark, 0.75, 0.42, 0.7, 0.03, { metal: 0.5, rough: 0.4 }); cyl(root, 0.1, 0.13, 0.3, PAL.log, 0.75, 0.27, 0.7, 8);
+  const hammer = pivot(root, 'hammer', 0.62, 0.62, 0.7); cyl(hammer, 0.018, 0.018, 0.3, PAL.woodLight, 0.12, 0, 0, 6).rotation.z = Math.PI / 2; rbox(hammer, 0.08, 0.12, 0.08, PAL.metal, 0.26, 0, 0, 0.02);
+  const sparks = pivot(root, 'sparks', 0.86, 0.55, 0.7); for (let i = 0; i < 4; i++) ball(sparks, 0.025, PAL.gold, 0, 0, 0, 6, { emissive: PAL.glow, ei: 2.5 });
+  const lamp = ball(shed, 0.08, PAL.window, 0, 1.12, 0.3, 8, { emissive: PAL.glow, ei: 2 });
+  return { root, nodes: { hammer, sparks }, kind: 'facility', anims: { idle: { dur: 0.9, frames: 6, fn(t, n) { const k = S(t * TAU); n.hammer.rotation.z = -Math.max(0, k) * 0.9; const hit = Math.max(0, -k); n.sparks.children.forEach((b, i) => { const a = i / 4 * TAU + 0.4; b.position.set(C(a) * hit * 0.2, hit * 0.18 + S(a) * hit * 0.05, S(a) * hit * 0.15); b.scale.setScalar(hit + 0.0001); }); } } } };
+}
+function warehouse() {
+  const root = new THREE.Group(); root.name = 'warehouse'; base(root, 3.0, 2.0, PAL.stone);
+  const hall = pivot(root, 'hall', 0, 0.12, 0);
+  rbox(hall, 3.0, 1.5, 2.0, '#b9a37a', 0, 0.75, 0, 0.05); for (let i = 0; i < 9; i++) box(hall, 0.04, 1.5, 2.02, '#9e8a62', -1.4 + i * 0.35, 0.75, 0);
+  rbox(hall, 3.02, 0.25, 2.02, PAL.stone, 0, 0.12, 0, 0.03, { flat: true });
+  snowRoof(hall, 3.0, 2.2, 1.0, PAL.roofBlue, 1.5);
+  const doors = pivot(hall, 'doors', 0, 0, 1.01); [-1, 1].forEach(s => { const d = pivot(doors, s < 0 ? 'doorL' : 'doorR', s * 0.7, 0, 0); rbox(d, 0.68, 1.15, 0.06, PAL.woodDark, -s * 0.34, 0.58, 0, 0.03); const x = box(d, 0.06, 1.2, 0.02, PAL.wood, -s * 0.34, 0.58, 0.04); x.rotation.z = s * 0.52; });
+  box(hall, 1.5, 1.1, 0.02, '#3a2a1e', 0, 0.56, 0.99); [[-0.35, 0.25], [0.2, 0.25], [-0.08, 0.6]].forEach(([x, y]) => { const c = rbox(hall, 0.36, 0.32, 0.3, PAL.wood, x, y, 0.8, 0.03); });
+  windowGlow(hall, -1.05, 1.15, 1.01, 0.34, 0.24); windowGlow(hall, 1.05, 1.15, 1.01, 0.34, 0.24);
+  { const lp = logPile().root; lp.position.set(1.65, 0.12, 0.6); lp.rotation.y = Math.PI / 2; root.add(lp); }
+  { const c = crates().root; c.scale.setScalar(0.55); c.position.set(-1.75, 0.12, 0.6); root.add(c); }
+  ball(root, 0.09, PAL.window, 0.95, 1.55, 1.08, 8, { emissive: PAL.glow, ei: 2 });
+  return { root, nodes: { doors }, kind: 'facility', anims: {} };
+}
+function marketStall() {
+  const root = new THREE.Group(); root.name = 'market_stall';
+  const shelf = pivot(root, 'shelf'); rbox(shelf, 1.0, 0.08, 0.36, PAL.woodLight, 0, 0.62, 0, 0.02); rbox(shelf, 1.0, 0.08, 0.36, PAL.woodLight, 0, 0.3, 0, 0.02);
+  [[-0.46, -0.15], [0.46, -0.15], [-0.46, 0.15], [0.46, 0.15]].forEach(([x, z]) => box(shelf, 0.06, 0.7, 0.06, PAL.woodDark, x, 0.35, z));
+  for (let i = 0; i < 3; i++) { const l = cyl(shelf, 0.06, 0.06, 0.3, PAL.log, -0.3 + i * 0.13, 0.72, 0, 8); l.rotation.x = Math.PI / 2; cyl(shelf, 0.055, 0.055, 0.01, PAL.logEnd, -0.3 + i * 0.13, 0.72, 0.151, 8).rotation.x = Math.PI / 2; }
+  for (let i = 0; i < 2; i++) { const f = fishModel().root; f.scale.setScalar(0.65); f.position.set(0.18 + i * 0.18, 0.6, 0); f.rotation.y = Math.PI / 2; shelf.add(f); }
+  [[-0.25, 0], [0, 0.04], [0.25, -0.02]].forEach(([x, z], i) => cone(shelf, 0.05, 0.14, [PAL.ore, PAL.gold, PAL.ore][i], x, 0.41, z, 5, { emissive: PAL.ore, ei: 0.3 }));
+  rbox(shelf, 1.06, 0.05, 0.4, PAL.snow, 0, 0.68 + 0.0, -0.0, 0.02).scale.set(1, 1, 0.3);
+  return { root, nodes: {}, kind: 'facility', anims: {} };
+}
+function noticeBoard() {
+  const root = new THREE.Group(); root.name = 'notice_board';
+  [-0.5, 0.5].forEach(x => cyl(root, 0.05, 0.06, 1.4, PAL.woodDark, x, 0.7, 0, 6));
+  rbox(root, 1.15, 0.75, 0.08, '#b98b5e', 0, 1.0, 0, 0.03); rbox(root, 1.0, 0.6, 0.02, '#8a6a44', 0, 1.0, 0.04, 0.01);
+  const roof = rbox(root, 1.35, 0.06, 0.4, PAL.roofRed, 0, 1.47, 0.02, 0.02); rbox(root, 1.38, 0.05, 0.38, PAL.snow, 0, 1.51, 0.02, 0.02);
+  const papers = pivot(root, 'papers', 0, 1.0, 0.06); [[-0.3, 0.1, 0.05], [0.05, 0.12, -0.08], [0.32, 0.05, 0.1], [-0.12, -0.15, 0.04], [0.22, -0.16, -0.06]].forEach(([x, y, r], i) => { const p = pivot(papers, 'paper' + i, x, y + 0.1, 0); const s = box(p, 0.22, 0.26, 0.01, i === 2 ? PAL.gold : PAL.paper, 0, -0.12, 0); p.rotation.z = r; ball(p, 0.018, PAL.heroScarf, 0, 0, 0.01, 6); });
+  return { root, nodes: { papers }, kind: 'facility', anims: { idle: { dur: 2.4, frames: 6, fn(t, n) { n.papers.children.forEach((p, i) => { p.rotation.x = -Math.max(0, S(t * TAU + i * 1.3)) * 0.25; }); } } } };
+}
+
+/* ------------------------------------------------------------------ 2026-10 set: aurora hot-spring village (models only; runtime not implemented) */
+// Facilities expose two clips matching design/fourth-village-implementation.md: `broken` (discovered) and `repaired`.
+function steamPuffs(p, name, x, y, z, n = 4, r = 0.16) { const s = pivot(p, name, x, y, z); for (let i = 0; i < n; i++) ball(s, r, PAL.steam, 0, 0, 0, 8, { name: 'steam', opacity: 0.85, emissive: '#e8f4f6', ei: 0.4 }); return s; }
+function rise(s, t, h, spread = 0.12) { s.children.forEach((b, i) => { const u = (t + i / s.children.length) % 1; b.position.set(S(u * 6 + i) * spread, u * h, C(u * 5 + i) * spread * 0.5); b.scale.setScalar(0.5 + u * 1.3); }); }
+function hotSpring() {
+  const root = new THREE.Group(); root.name = 'hot_spring'; const N = { root };
+  ball(root, 1.6, PAL.snow, 0, 0, 0, 14).scale.set(1, 0.05, 0.8);
+  for (let i = 0; i < 14; i++) { const a = i / 14 * TAU, m = add(root, new THREE.Mesh(new THREE.DodecahedronGeometry(0.2 + (i % 3) * 0.04, 0), mat(i % 2 ? PAL.stone : PAL.stoneDark, { flat: true })), C(a) * 1.15, 0.14, S(a) * 0.85); m.rotation.set(i, i * 1.7, 0); if (i % 3 === 0) ball(root, 0.13, PAL.snow, C(a) * 1.15, 0.3, S(a) * 0.85, 8).scale.set(1, 0.4, 1); }
+  cyl(root, 1.05, 0.95, 0.12, '#5b6670', 0, 0.06, 0, 18).scale.set(1, 1, 0.74);
+  const water = pivot(root, 'water', 0, 0.16, 0); N.water = water; cyl(water, 1.0, 1.0, 0.04, PAL.spring, 0, 0, 0, 18, { emissive: PAL.springDeep, ei: 0.35, rough: 0.15 }).scale.set(1, 1, 0.74);
+  const ripple = pivot(water, 'ripple', 0, 0.03, 0); N.ripple = ripple; [0.3, 0.55, 0.8].forEach(r => torus(ripple, r, 0.012, '#bff3ee', 0, 0, 0, TAU, { emissive: '#bff3ee', ei: 0.4 }).rotation.x = Math.PI / 2); ripple.scale.set(1, 1, 0.74);
+  const ice = pivot(root, 'ice', 0, 0.14, 0); N.ice = ice; cyl(ice, 0.98, 0.98, 0.05, '#d9eef7', 0, 0, 0, 18, { rough: 0.3 }).scale.set(1, 1, 0.74); [[-0.3, 0.1], [0.25, -0.2], [0.1, 0.3]].forEach(([x, z]) => { const c = box(ice, 0.5, 0.012, 0.02, '#9fbccb', x, 0.03, z); c.rotation.y = x * 3; });
+  const steam = steamPuffs(root, 'steam', 0, 0.3, 0, 6, 0.2); N.steam = steam;
+  // wooden bucket + ladle, little bamboo spout
+  cyl(root, 0.15, 0.12, 0.22, PAL.wood, 0.9, 0.11, 0.9, 10); torus(root, 0.15, 0.015, PAL.metalDark, 0.9, 0.18, 0.9).rotation.x = Math.PI / 2;
+  const sp = cyl(root, 0.05, 0.05, 0.7, '#9cb86a', -0.95, 0.45, -0.5, 8); sp.rotation.z = 1.1; const pour = pivot(root, 'pour', -0.7, 0.3, -0.5); N.pour = pour; box(pour, 0.04, 0.22, 0.04, PAL.spring, 0, 0, 0, { opacity: 0.8, emissive: PAL.spring, ei: 0.4 });
+  const lan = pivot(root, 'lantern', 1.2, 0, -0.45); cyl(lan, 0.04, 0.05, 0.75, PAL.woodDark, 0, 0.37, 0, 6); rbox(lan, 0.16, 0.18, 0.16, PAL.woodDark, 0, 0.82, 0, 0.03); const lg = ball(lan, 0.06, PAL.window, 0, 0.82, 0, 8, { emissive: PAL.glow, ei: 2 }); N.lanternGlow = lg;
+  const broken = (n) => { hide(n.water); hide(n.steam); hide(n.pour); hide(n.lanternGlow); };
+  const fixed = (n) => hide(n.ice);
+  return { root, nodes: N, kind: 'facility', anims: {
+    repaired: { dur: 2.4, frames: 6, fn(t, n) { fixed(n); rise(n.steam, t, 1.2, 0.35); n.ripple.scale.set(0.9 + t * 0.25, 1, (0.9 + t * 0.25) * 0.74); n.pour.scale.set(1, 0.9 + S(t * TAU * 3) * 0.1, 1); } },
+    broken: { dur: 2, frames: 2, fn(t, n) { broken(n); } } } };
+}
+function boiler() {
+  const root = new THREE.Group(); root.name = 'boiler'; const N = { root }; base(root, 1.8, 1.4, PAL.stoneDark);
+  rbox(root, 1.7, 0.5, 1.3, PAL.brick, 0, 0.37, 0, 0.05, { flat: true }); for (let r = 0; r < 3; r++) box(root, 1.72, 0.02, 1.32, '#8e4d36', 0, 0.2 + r * 0.15, 0);
+  const tank = cyl(root, 0.5, 0.5, 1.4, PAL.metal, 0, 1.05, 0, 16, { metal: 0.5, rough: 0.45 }); tank.rotation.z = Math.PI / 2;
+  [-0.55, 0, 0.55].forEach(x => { const b = torus(root, 0.51, 0.03, PAL.metalDark, x, 1.05, 0); b.rotation.y = Math.PI / 2; });
+  ball(root, 0.5, PAL.snow, 0, 1.38, 0, 12).scale.set(1.3, 0.18, 0.75);
+  cyl(root, 0.15, 0.17, 1.3, PAL.metalDark, -0.5, 1.95, -0.25, 10); rbox(root, 0.38, 0.06, 0.38, PAL.snow, -0.5, 2.6, -0.25, 0.03);
+  const pipe = pivot(root, 'pipe', 0.7, 1.05, 0.2); N.pipe = pipe; cyl(pipe, 0.07, 0.07, 0.7, '#c9a24a', 0.3, -0.25, 0, 8, { metal: 0.6, rough: 0.35 }).rotation.z = 0.6;
+  const gauge = pivot(root, 'gauge', 0.2, 1.35, 0.42); cyl(gauge, 0.13, 0.13, 0.05, '#f4f1e6', 0, 0, 0, 14).rotation.x = Math.PI / 2; torus(gauge, 0.13, 0.02, '#c9a24a', 0, 0, 0.02);
+  const needle = pivot(gauge, 'needle', 0, 0, 0.035); N.needle = needle; box(needle, 0.015, 0.1, 0.01, PAL.heroScarf, 0, 0.05, 0);
+  const fire = rbox(root, 0.5, 0.32, 0.12, PAL.glowHot, 0, 0.36, 0.66, 0.06, { emissive: PAL.glowHot, ei: 2.2 }); fire.name = 'fire'; N.fire = fire;
+  const coal = rbox(root, 0.5, 0.32, 0.12, '#2b2b30', 0, 0.36, 0.665, 0.06); coal.name = 'cold'; N.coal = coal;
+  const glow = pivot(root, 'glow', 0, 0.36, 0.76); N.glow = glow; ball(glow, 0.2, PAL.glow, 0, 0, 0, 10, { emissive: PAL.glow, ei: 2.5 }).scale.set(1.3, 0.7, 0.3);
+  const rust = pivot(root, 'rust', 0, 1.05, 0); N.rust = rust; [[-0.35, 0.35, 0.3], [0.4, 0.2, 0.38], [0.1, -0.3, 0.42]].forEach(([x, y, z]) => ball(rust, 0.12, PAL.rust, x, y, z, 8).scale.set(1, 0.8, 0.3));
+  const steam = steamPuffs(root, 'steam', -0.5, 2.7, -0.25, 4, 0.16); N.steam = steam; const valve = steamPuffs(root, 'valve', 0.75, 1.55, 0.1, 3, 0.08); N.valve = valve;
+  return { root, nodes: N, kind: 'facility', anims: {
+    repaired: { dur: 2, frames: 6, fn(t, n) { hide(n.rust); hide(n.coal); n.glow.scale.setScalar(0.9 + S(t * TAU * 2) * 0.12); n.needle.rotation.z = -1.0 + S(t * TAU) * 0.15; rise(n.steam, t, 1.1); rise(n.valve, (t * 2) % 1, 0.5, 0.06); } },
+    broken: { dur: 2, frames: 2, fn(t, n) { hide(n.fire); hide(n.glow); hide(n.steam); hide(n.valve); n.needle.rotation.z = 1.2; n.pipe.rotation.z = -0.5; } } } };
+}
+function lodge() {
+  const root = new THREE.Group(); root.name = 'lodge'; const N = { root }; base(root, 2.8, 1.8);
+  const walls = pivot(root, 'walls', 0, 0.12, 0); logWalls(walls, 2.8, 1.8, 1.6);
+  snowRoof(walls, 2.8, 2.0, 1.1, '#2f8f8a', 1.6);
+  rbox(walls, 3.0, 0.1, 0.5, PAL.woodLight, 0, 1.05, 1.15, 0.02); [-1.3, 1.3].forEach(x => cyl(walls, 0.05, 0.05, 1.05, PAL.woodDark, x, 0.52, 1.35, 6)); rbox(walls, 3.04, 0.06, 0.5, PAL.snow, 0, 1.12, 1.15, 0.02);
+  door(walls, 0, 0.99, 0.8);
+  const lit = pivot(walls, 'lit'); N.lit = lit; const dark = pivot(walls, 'dark'); N.dark = dark;
+  [[-0.85, 0.6], [0.85, 0.6], [-0.85, 1.35], [0.85, 1.35]].forEach(([x, y]) => { windowGlow(lit, x, y, 1.0, 0.42, 0.34); box(dark, 0.46, 0.38, 0.06, '#2a3440', x, y, 1.03); });
+  const boards = pivot(walls, 'boards', 0, 0.42, 1.05); N.boards = boards; [-0.2, 0.15].forEach((y, i) => { const b = box(boards, 0.6, 0.1, 0.03, PAL.woodLight, 0, y, 0); b.rotation.z = i ? -0.3 : 0.3; });
+  const hole = pivot(walls, 'roofHole', 0.7, 2.05, 0.45); N.roofHole = hole; const hb = box(hole, 0.5, 0.04, 0.45, '#1e1a18', 0, 0, 0); hb.rotation.x = 0.6;
+  const ch = rbox(walls, 0.3, 0.8, 0.3, PAL.stone, -0.9, 2.4, -0.4, 0.04); rbox(walls, 0.34, 0.08, 0.34, PAL.snow, -0.9, 2.82, -0.4, 0.03);
+  const smoke = steamPuffs(root, 'smoke', -0.9, 3.05, -0.4, 3, 0.13); N.smoke = smoke;
+  const line = pivot(root, 'towels', 1.55, 0, 0.6); N.towels = line; [-0.4, 0.4].forEach(z => cyl(line, 0.03, 0.03, 0.9, PAL.woodDark, 0, 0.45, z, 6)); const rope = cyl(line, 0.008, 0.008, 0.8, '#eee', 0, 0.86, 0, 4); rope.rotation.x = Math.PI / 2;
+  [[-0.2, PAL.snow], [0.05, PAL.spring], [0.28, PAL.heroScarf]].forEach(([z, c], i) => { const tw = pivot(line, 'towel' + i, 0, 0.86, z); rbox(tw, 0.03, 0.26, 0.18, c, 0, -0.13, 0, 0.01); });
+  [-1.3, 1.3].forEach(x => ball(walls, 0.08, PAL.window, x, 0.9, 1.38, 8, { emissive: PAL.glow, ei: 2 }).name = 'porchLamp');
+  return { root, nodes: N, kind: 'facility', anims: {
+    repaired: { dur: 3, frames: 6, fn(t, n) { hide(n.dark); hide(n.boards); hide(n.roofHole); rise(n.smoke, t, 0.9); n.towels.children.slice(3).forEach((tw, i) => { tw.rotation.x = S(t * TAU + i) * 0.25; }); } },
+    broken: { dur: 2, frames: 2, fn(t, n) { hide(n.lit); hide(n.smoke); hide(n.towels); } } } };
+}
+function canalSegment() {
+  const root = new THREE.Group(); root.name = 'canal_segment'; const N = { root };
+  ball(root, 1.2, PAL.snow, 0, 0, 0, 12).scale.set(0.9, 0.05, 1.1);
+  [-1, 1].forEach(s => { for (let i = 0; i < 5; i++) { const m = rbox(root, 0.3, 0.26, 0.42, i % 2 ? PAL.stone : PAL.stoneDark, s * 0.45, 0.13, -0.84 + i * 0.42, 0.06, { flat: true }); m.rotation.y = (i % 2) * 0.1; } rbox(root, 0.32, 0.06, 2.1, PAL.snow, s * 0.45, 0.29, 0, 0.03).scale.set(1, 1, 1); });
+  box(root, 0.6, 0.06, 2.1, '#5b6670', 0, 0.03, 0);
+  const water = pivot(root, 'water', 0, 0.12, 0); N.water = water; box(water, 0.58, 0.06, 2.08, PAL.spring, 0, 0, 0, { emissive: PAL.springDeep, ei: 0.35, rough: 0.15 });
+  const flow = pivot(water, 'flow', 0, 0.035, 0); N.flow = flow; for (let i = 0; i < 6; i++) box(flow, 0.3 - (i % 2) * 0.1, 0.01, 0.06, '#d4fbf6', (i % 3 - 1) * 0.12, 0, -0.9 + i * 0.36, { emissive: '#d4fbf6', ei: 0.5 });
+  const steam = steamPuffs(root, 'steam', 0, 0.2, 0.3, 3, 0.1); N.steam = steam;
+  const rubble = pivot(root, 'rubble', 0, 0.08, 0); N.rubble = rubble; [[-0.12, -0.5], [0.1, 0.1], [-0.05, 0.6]].forEach(([x, z], i) => { const m = add(rubble, new THREE.Mesh(new THREE.DodecahedronGeometry(0.13, 0), mat(PAL.stoneDark, { flat: true })), x, 0.05, z); m.rotation.set(i, i * 2, 0); }); box(rubble, 0.56, 0.04, 1.2, '#d9eef7', 0, 0, -0.2, { rough: 0.3 });
+  return { root, nodes: N, kind: 'facility', anims: {
+    repaired: { dur: 1.2, frames: 6, fn(t, n) { hide(n.rubble); n.flow.position.z = t * 0.36; rise(n.steam, t, 0.6, 0.15); } },
+    broken: { dur: 2, frames: 2, fn(t, n) { hide(n.water); hide(n.steam); } } } };
+}
+function auroraLookout() {
+  const root = new THREE.Group(); root.name = 'aurora_lookout'; const N = { root }; base(root, 1.6, 1.4);
+  rbox(root, 1.6, 0.5, 1.4, PAL.stone, 0, 0.37, 0, 0.06, { flat: true }); rbox(root, 1.7, 0.08, 1.5, PAL.woodLight, 0, 0.66, 0, 0.02);
+  for (let i = 0; i < 4; i++) rbox(root, 0.6, 0.1, 0.3, PAL.stoneDark, 0, 0.1 + i * 0.13, 0.85 + 0.0 - i * 0.0, 0.03).position.set(0.4, 0.06 + i * 0.13, 0.85 - i * 0.08);
+  [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([x, z]) => { cyl(root, 0.04, 0.04, 0.5, PAL.woodDark, x * 0.78, 0.95, z * 0.68, 6); ball(root, 0.06, PAL.snow, x * 0.78, 1.22, z * 0.68, 6); });
+  [-1, 1].forEach(s => { const r = cyl(root, 0.025, 0.025, 1.56, PAL.wood, 0, 1.1, s * 0.68, 6); r.rotation.z = Math.PI / 2; });
+  const scope = pivot(root, 'telescope', -0.2, 0.7, -0.1); N.scope = scope; [-0.15, 0, 0.15].forEach((x, i) => { const l = cyl(scope, 0.02, 0.02, 0.6, PAL.woodDark, x, 0.25, (i - 1) * 0.1, 5); l.rotation.z = x * 1.5; });
+  const tube = pivot(scope, 'tube', 0, 0.55, 0); N.tube = tube; tube.rotation.x = -0.6; cyl(tube, 0.06, 0.09, 0.6, '#c9a24a', 0, 0, 0.1, 10, { metal: 0.6, rough: 0.35 }).rotation.x = Math.PI / 2;
+  const rope = pivot(root, 'rope', 0.4, 0.7, 1.0); N.rope = rope; const rp = cyl(rope, 0.02, 0.02, 0.7, PAL.heroScarf, 0, 0.25, 0, 5); rp.rotation.z = Math.PI / 2;
+  const sky = pivot(root, 'aurora', 0, 2.1, -0.5); N.sky = sky;
+  [PAL.auroraG, PAL.auroraB, PAL.auroraV].forEach((c, k) => { const band = pivot(sky, 'band' + k, 0, k * 0.28, -k * 0.2); for (let i = 0; i < 9; i++) rbox(band, 0.22, 0.5 - Math.abs(i - 4) * 0.05, 0.02, c, -0.9 + i * 0.22, S(i * 0.9 + k) * 0.18, 0, 0.01, { opacity: 0.55, emissive: c, ei: 1.2, name: 'aurora' + k }); });
+  for (let i = 0; i < 7; i++) ball(sky, 0.025, '#fffbe6', -1.0 + i * 0.33, 0.85 + (i % 3) * 0.12, -0.3, 6, { emissive: '#fffbe6', ei: 2 });
+  return { root, nodes: N, kind: 'facility', anims: {
+    repaired: { dur: 4, frames: 8, fn(t, n) { hide(n.rope); n.sky.children.slice(0, 3).forEach((band, k) => band.children.forEach((s, i) => { s.position.y = S(i * 0.9 + k) * 0.18 + S(t * TAU + i * 0.7 + k) * 0.08; s.scale.y = 1 + S(t * TAU * 2 + i) * 0.15; })); n.tube.rotation.y = S(t * TAU) * 0.3; } },
+    broken: { dur: 2, frames: 2, fn(t, n) { hide(n.sky); } } } };
+}
+
 export const MODELS = {
   // characters (sprites: idle/walk/work/cheer)
   hero: character('hero', { coat: PAL.heroCoat, scarf: PAL.heroScarf, hatColor: PAL.heroHat, pom: PAL.snow, hat: hats.beanie, hair: PAL.hairBrown, mitten: PAL.heroScarf, extra: heroExtra, toolOnlyAtWork: 1 }, 'spear'),
@@ -390,4 +619,22 @@ export const MODELS = {
   pine: pine('pine', 1), pine_small: pine('pine_small', 0.65), stump, rock: rock('rock'), ore_rock: rock('ore_rock', PAL.ore), log_pile: logPile, golden_chest: chest,
   // facilities
   cabin, shop_wood: shop('wood'), shop_fish: shop('fish'), watchtower: tower, storage: crates, sawmill, smokehouse, smelter, power_plant: generator, fence_segment: fence, truck,
+  // 2026-10 set — people missing from the 3D library
+  customer: withAnims(character('customer', { coat: '#e07a9a', scarf: '#7bc4e0', hatColor: '#f4e1b0', hat: hats.beanie, hair: PAL.hairGinger, extra: basket }), { happy }),
+  shop_staff: withAnims(character('shop_staff', { coat: '#e78537', scarf: '#f4e1b0', hatColor: '#e78537', hat: hats.cap, hair: PAL.hairDark, apron: '#f4e1b0' }), { work: serve }),
+  master_lumber: master('master_lumber', { coat: PAL.lumber, scarf: PAL.gold, hatColor: '#c8382c', hat: hats.beanie, hair: PAL.hairGinger, trim: PAL.gold, extra: masterCape('#c8382c') }, 'rainbowAxe', 'axe'),
+  master_fisher: master('master_fisher', { coat: PAL.fisher, scarf: PAL.gold, hatColor: '#f2c14e', hat: hats.cap, hair: PAL.hairDark, trim: PAL.gold, extra: masterCape('#2c3e9e') }, 'rainbowRod', 'rod'),
+  // 2026-10 set — machines (game: drawExcavator / drawHarvester / drawFishRig)
+  excavator, harvester, fish_rig: fishRig,
+  // 2026-10 set — market / village extras
+  workshop, warehouse, market_stall: marketStall, notice_board: noticeBoard,
+  // 2026-10 set — aurora hot-spring village (village 4, design only)
+  aurora_keeper: character('aurora_keeper', { coat: PAL.keeper, scarf: '#f58a3c', hatColor: '#f4e1b0', hat: hats.hood, hair: PAL.hairBrown, apron: '#e9e1cf', extra: keeperExtra, animKind: 'pick' }, 'ladle'),
+  hot_spring: hotSpring, boiler, lodge, canal_segment: canalSegment, aurora_lookout: auroraLookout,
 };
+
+// Runtime body variants retain Claude's model/cape/leg motion; game arms grip
+// the enlarged axe or exact full-lake net. Originals remain unchanged.
+for (const name of ['master_lumber','master_fisher']) {
+ MODELS[name+'_body'] = () => { const m=MODELS[name]();m.nodes.armL.scale.setScalar(0.0001);m.nodes.armR.scale.setScalar(0.0001);return m; };
+}

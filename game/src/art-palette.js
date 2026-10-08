@@ -3,7 +3,7 @@
  * icy snow, warm ground and bright green/red activity accents.
  * No replacement opening images; original four scenes remain a dependency. */
 var ART={
- land:['#ffe8c8','#ffdfb3','#f4c996'],plaza:'#ffedcf',path:'#f3bd7b',pathLight:'#ffe4ad',garden:'#bce7a0',
+ land:['#eef4f8','#e3edf4','#d3e2ec'],plaza:'#f4ead8',path:'#e8c08a',pathLight:'#f6dcb0',garden:'#cfe6c4',
  snow:'#f8fdff',snowShade:'#b5dfef',pine:'#138c69',pineLight:'#36bc8a',
  timber:['#ffe19a','#f6a02f','#b7631e'],
  forest:[

@@ -35,9 +35,9 @@ function drawStall(line){
 }
 function drawShopStaff(line){
   var g=ctx,st=STALL[line],side=shopSide(line),n=shopClerks(line);
-  for(var i=0;i<n;i++){var x=st.x+side*(24+i*9),y=st.y+101;if(!drawSprite(g,'shopkeeper','idle',time,x,y+6,SPRITE_PPU*.65,side>0))drawActor3D(g,{x:x,y:y,dir:side,role:'courier',working:!!customers.some(function(c){return c.seller===line&&c.state==='line';})},{coat:line==='wood'?'#e78537':'#169ac7',apron:true,scale:.65});}
+  for(var i=0;i<n;i++){var x=st.x+side*(24+i*9),y=st.y+101;if(!drawSprite(g,'shop_staff',customers.some(function(c){return c.seller===line&&c.state==='line';})?'work':'idle',time+i*.3,x,y+6,SPRITE_PPU*.65,side>0))drawActor3D(g,{x:x,y:y,dir:side,role:'courier',working:!!customers.some(function(c){return c.seller===line&&c.state==='line';})},{coat:line==='wood'?'#e78537':'#169ac7',apron:true,scale:.65});}
 
-  for(var j=0;j<shopShelves(line);j++){var rx=st.x-19+j*13,ry=st.y+112;isoBox(g,rx,ry,10,3,7,'#a68a60');drawItem(g,SHOPDEF[line].icon,rx+5,ry-8,.3);}
+  for(var j=0;j<shopShelves(line);j++){var rx=st.x-19+j*13,ry=st.y+112;if(!drawFacilitySprite(g,'market_stall',rx+5,ry+2,18,20,1,1,time))isoBox(g,rx,ry,10,3,7,'#a68a60');drawItem(g,SHOPDEF[line].icon,rx+5,ry-8,.3);}
 }
 
 var SHOP_STAGE=['노점','나무 노점','벽돌 가게','큰 상점'];

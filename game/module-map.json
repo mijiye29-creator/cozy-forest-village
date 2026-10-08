@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "204be1c19ea4b23d2823e4657b252baba59372669b38fcd1ac291b6d01d24352",
+  "runtime_sha256": "80c9b21a1b4f9e18b02be42b943a811514cc19908ac1e09cd6c424be06f52f6e",
   "modules": [
     {
       "id": "boot-errors",
@@ -133,7 +133,7 @@
       "id": "sprite-data",
       "path": "src/sprite-data.js",
       "topic": "생성된 Claude atlas·이미지 해시",
-      "bytes": 9806,
+      "bytes": 16553,
       "lines": 3,
       "symbols": [
         {
@@ -150,11 +150,11 @@
       "id": "sprite-atlas",
       "path": "src/sprite-atlas.js",
       "topic": "지연 로드·2개 병렬 큐·스프라이트 프레임·시설 레벨",
-      "bytes": 2832,
+      "bytes": 2891,
       "lines": 13,
       "symbols": [
         {
-          "name": "SPRITE_PPU",
+          "name": "SPRITE_ART_CAPTURE",
           "line": 4
         },
         {
@@ -1819,7 +1819,7 @@
       "id": "ending",
       "path": "src/ending.js",
       "topic": "최종 보스 시작·엔딩·시네마틱",
-      "bytes": 6137,
+      "bytes": 6152,
       "lines": 71,
       "symbols": [
         {
@@ -2323,8 +2323,8 @@
       "id": "film-player",
       "path": "src/film-player.js",
       "topic": "무문자 이미지 공통 재생·자동 진행·중단 정리",
-      "bytes": 3803,
-      "lines": 20,
+      "bytes": 6454,
+      "lines": 33,
       "symbols": [
         {
           "name": "FILM",
@@ -2361,6 +2361,22 @@
         {
           "name": "filmVisibility",
           "line": 18
+        },
+        {
+          "name": "filmVideoStop",
+          "line": 24
+        },
+        {
+          "name": "filmVideoFallback",
+          "line": 25
+        },
+        {
+          "name": "filmVideoTry",
+          "line": 26
+        },
+        {
+          "name": "storyVideo",
+          "line": 33
         }
       ]
     },
@@ -2368,7 +2384,7 @@
       "id": "story-intro",
       "path": "src/story-intro.js",
       "topic": "무문자 인트로·마을별 대화·읽음 저장",
-      "bytes": 10637,
+      "bytes": 10706,
       "lines": 70,
       "symbols": [
         {
@@ -2663,8 +2679,8 @@
       "id": "render-buildings",
       "path": "src/render-buildings.js",
       "topic": "건물·창고·제품 장식",
-      "bytes": 15191,
-      "lines": 128,
+      "bytes": 15414,
+      "lines": 129,
       "symbols": [
         {
           "name": "artPoly",
@@ -2712,19 +2728,19 @@
         },
         {
           "name": "BOARD",
-          "line": 107
-        },
-        {
-          "name": "drawBoard",
           "line": 108
         },
         {
+          "name": "drawBoard",
+          "line": 109
+        },
+        {
           "name": "drawPills",
-          "line": 125
+          "line": 126
         },
         {
           "name": "drawMarketGround",
-          "line": 127
+          "line": 128
         }
       ]
     },
@@ -2732,7 +2748,7 @@
       "id": "render-logistics",
       "path": "src/render-logistics.js",
       "topic": "벨트·운송·트럭 그리기",
-      "bytes": 24914,
+      "bytes": 24916,
       "lines": 269,
       "symbols": [
         {
@@ -2853,7 +2869,7 @@
       "id": "render-market",
       "path": "src/render-market.js",
       "topic": "가게·점원·판매 효과·작업 도구",
-      "bytes": 15424,
+      "bytes": 15573,
       "lines": 178,
       "symbols": [
         {
@@ -2982,8 +2998,8 @@
       "id": "render-actors",
       "path": "src/render-actors.js",
       "topic": "일꾼·영웅·손님 아트",
-      "bytes": 36523,
-      "lines": 282,
+      "bytes": 37672,
+      "lines": 284,
       "symbols": [
         {
           "name": "drawVehicleUpgrade",
@@ -2991,91 +3007,91 @@
         },
         {
           "name": "drawHarvester",
-          "line": 16
+          "line": 17
         },
         {
           "name": "drawFishRig",
-          "line": 30
+          "line": 31
         },
         {
           "name": "drawExcavator",
-          "line": 45
+          "line": 46
         },
         {
           "name": "RAINBOW",
-          "line": 63
-        },
-        {
-          "name": "rbGrad",
           "line": 64
         },
         {
+          "name": "rbGrad",
+          "line": 65
+        },
+        {
           "name": "drawRainbowAxe",
-          "line": 66
+          "line": 67
         },
         {
           "name": "drawStarPick",
-          "line": 80
+          "line": 81
         },
         {
           "name": "drawRainbowRod",
-          "line": 83
+          "line": 84
         },
         {
           "name": "drawHeroHunter",
-          "line": 85
+          "line": 86
         },
         {
           "name": "superWorkPose",
-          "line": 123
+          "line": 124
         },
         {
           "name": "superHands",
-          "line": 127
-        },
-        {
-          "name": "superNetBounds",
           "line": 128
         },
         {
-          "name": "superNetFish",
+          "name": "superNetBounds",
           "line": 129
         },
         {
-          "name": "drawMasterFisher",
+          "name": "superNetFish",
           "line": 130
         },
         {
+          "name": "drawMasterFisher",
+          "line": 131
+        },
+        {
           "name": "drawMasterLumber",
-          "line": 138
+          "line": 139
         },
         {
           "name": "drawSuper",
-          "line": 150
+          "line": 151
         },
         {
           "name": "superPlate",
-          "line": 177
+          "line": 178
         },
         {
           "name": "drawSuperFx",
-          "line": 185
+          "line": 186
         },
         {
           "name": "heroTier",
-          "line": 207
-        },
-        {
-          "name": "drawHero",
           "line": 208
         },
         {
+          "name": "drawHero",
+          "line": 209
+        },
+        {
           "name": "drawAgent",
-          "line": 216
+          "line": 218
         },
         {
           "name": "drawCustomer",
-          "line": 267
+          "line": 269
         }
       ]
     },
@@ -3576,8 +3592,8 @@
       "id": "loop",
       "path": "src/loop.js",
       "topic": "프레임·시뮬레이션·테스트 훅·시작 순서",
-      "bytes": 14217,
-      "lines": 99,
+      "bytes": 14585,
+      "lines": 100,
       "symbols": [
         {
           "name": "last",
@@ -3621,11 +3637,11 @@
         },
         {
           "name": "suspendMobile",
-          "line": 81
+          "line": 82
         },
         {
           "name": "boot",
-          "line": 91
+          "line": 92
         }
       ]
     }

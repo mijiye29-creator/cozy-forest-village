@@ -74,7 +74,7 @@ function drawIndustrialBuilding(g,pl,L){
 }
 function drawWorkshopStorage(g,pl,L){
   var x=shedX(pl)+2,base=128,w=39,d=9,h=[30,40,48,59,69][L-1],col=['#a68a5f','#bfa175','#b9b8a1','#8bafb0','#c7d1be'][L-1];
-  if(drawFacilitySprite(g,'storage',x+w/2,base+4,w+10,h+18,L,5,0))return;
+  if(drawFacilitySprite(g,'warehouse',x+w/2,base+4,w+10,h+18,L,5,0))return;
   isoBox(g,x-2,base+4,w+3,d,5,'#adb39e');
   if(L===1){isoBox(g,x,base,w,d,5,col);artPosts(g,x,base,w,h,'#9e8052');}
   else{isoBox(g,x,base,w,d,h,col);if(L===3)artBricks(g,x,base-h,w,h);if(L>=4)isoGlass(g,x+3,base-h+5,w-6,12);}
@@ -93,6 +93,7 @@ function drawWorkshop(g,pl){
     else{var sx=pl.shedLeft?3:pl.w-39;c.strokeStyle='#93a38c';c.setLineDash([2,3]);c.strokeRect(sx,88,32,38);c.setLineDash([]);}
   },pl.h);g.drawImage(art,pl.x,pl.y,pl.w,pl.h);
   }else if(SL){g.save();g.translate(pl.x,pl.y);drawWorkshopStorage(g,{x:0,y:0,w:pl.w,def:b,shedLeft:pl.shedLeft},SL);g.restore();}
+  if(fromSprite&&L>=4)drawFacilitySprite(g,'workshop',pl.x+pl.w-22,pl.y+pl.h-10,40,34,L,8,procBusy[b]>0?time:0);
   var busy=procBusy[b]>0,cur=procCur[b],pr=cur?Math.min(1,procT[b]/cur.t):0,mx=pl.x+(pl.shedLeft?46:4);
   if(b==='mill'){
     var blades=L>=4?2:1;for(var blade=0;blade<blades;blade++){g.save();g.translate(mx+26+blade*19,pl.y+105);g.rotate(time*(busy?6+L:1));g.fillStyle='#e3e8dc';g.strokeStyle='#708a87';g.lineWidth=.7;g.beginPath();for(var tooth=0;tooth<18;tooth++){var an=tooth*Math.PI/9;g.lineTo(Math.cos(an)*9,Math.sin(an)*9);g.lineTo(Math.cos(an+.1)*7,Math.sin(an+.1)*7);}g.closePath();g.fill();g.stroke();g.fillStyle='#6e8884';g.beginPath();g.arc(0,0,2,0,7);g.fill();g.restore();}
@@ -107,11 +108,11 @@ function drawWorkshop(g,pl){
 var BOARD={x:6,y:188,w:52,h:44};
 function drawBoard(){
   var g=ctx,b=BOARD;
-  g.fillStyle='#8a6a44';g.fillRect(b.x+6,b.y+b.h-8,3,12);g.fillRect(b.x+b.w-9,b.y+b.h-8,3,12);
+  var boardSprite=drawFacilitySprite(g,'notice_board',b.x+b.w/2,b.y+b.h+4,b.w+6,b.h+16,1,1,0);if(!boardSprite){g.fillStyle='#8a6a44';g.fillRect(b.x+6,b.y+b.h-8,3,12);g.fillRect(b.x+b.w-9,b.y+b.h-8,3,12);
   g.fillStyle='rgba(40,30,20,.18)';rr(g,b.x+2,b.y+2,b.w,b.h-4,4);g.fill();
   g.fillStyle='#b98b5e';rr(g,b.x,b.y,b.w,b.h-4,4);g.fill();
   g.fillStyle='#f6ecd2';rr(g,b.x+3,b.y+10,b.w-6,b.h-17,2);g.fill();
-  g.font='800 7px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#fff3d6';g.fillText('시장 게시판',b.x+b.w/2,b.y+5.5);
+  }g.font='800 7px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#5b4636';g.fillText('시장 게시판',b.x+b.w/2,b.y-8);
   if(HOT.id){
     var bob=Math.sin(time*3)*1;drawItem(g,HOT.id,b.x+13,b.y+21+bob,1);
     g.fillStyle='#e2463c';g.font='800 8px sans-serif';g.textAlign='left';g.fillText('+50%',b.x+22,b.y+21);

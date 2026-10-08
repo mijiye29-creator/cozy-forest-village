@@ -1,5 +1,6 @@
 /* forestry harvester: wheeled cab with a crane arm and a saw head (red laser rig at Lv6+) */
 function drawVehicleUpgrade(g,a,L,role){
+  var model={lumber:'harvester',fisher:'fish_rig',miner:'excavator'}[role];if(model&&spriteReady(model))return;
   var tint=role==='lumber'?'#24a565':role==='fisher'?'#159ccc':'#e7ad31',x=a.x,y=a.y;
   g.save();g.translate(x,y);g.scale(a.dir||1,1);
   var body=g.createLinearGradient(-10,-13,11,-3);body.addColorStop(0,'#c8cdb2');body.addColorStop(.3,tint);body.addColorStop(1,'#3c5549');g.fillStyle=body;rr(g,-12,-10,16,8,1.5);g.fill();g.fillStyle='#344d40';g.beginPath();g.moveTo(4,-10);g.lineTo(8,-13);g.lineTo(8,-6);g.lineTo(4,-2);g.closePath();g.fill();g.fillStyle='#a9bd9c';g.beginPath();g.moveTo(-12,-10);g.lineTo(-8,-13);g.lineTo(8,-13);g.lineTo(4,-10);g.closePath();g.fill();
@@ -13,7 +14,7 @@ function drawVehicleUpgrade(g,a,L,role){
   if(L>=11){g.fillStyle='#476b78';g.fillRect(-5,-24,9,2);g.fillStyle='#cfc18a';g.fillRect(-12,-9,15,1);}
   g.restore();
 }
-function drawHarvester(a){var g=ctx,L=a.gear.axe||0,big=L>=6,on=a.working,d=a.dir||1,by=a.mv?Math.sin(a.bob*2)*.6:0,bc=big?'#c8453d':'#4f9a6a';
+function drawHarvester(a){if(drawSprite(ctx,'harvester',a.working?'work':a.mv?'drive':'idle',time,a.x,a.y+7,SPRITE_PPU*(.84+.025*(a.gear.axe||4)),a.dir>0)){drawSpriteLevel(ctx,a.x,a.y-34,a.gear.axe,12);return;}var g=ctx,L=a.gear.axe||0,big=L>=6,on=a.working,d=a.dir||1,by=a.mv?Math.sin(a.bob*2)*.6:0,bc=big?'#c8453d':'#4f9a6a';
   g.save();g.translate(a.x,a.y+by);g.scale(d*.92,.92);
   g.fillStyle='rgba(0,0,0,.2)';g.beginPath();g.ellipse(0,6,14,3,0,0,7);g.fill();
   [-8,0,8].forEach(function(wx){g.fillStyle='#2b2f36';g.beginPath();g.arc(wx,3,3.6,0,7);g.fill();g.fillStyle='#8f969e';g.beginPath();g.arc(wx,3,1.4,0,7);g.fill();});
@@ -27,7 +28,7 @@ function drawHarvester(a){var g=ctx,L=a.gear.axe||0,big=L>=6,on=a.working,d=a.di
   if(on&&Math.random()<.4)parts.push({x:a.x+d*22,y:a.y-10,vx:d*(10+Math.random()*20),vy:-10-Math.random()*10,g:60,life:.4,max:.4,col:big?'#ffb3b3':'#f3e3c3',r:1.1});
   nameTag(a,-26);}
 /* fishing rig on the bank: a winch cart that dips a net (sonar dish + golden net at Lv6+) */
-function drawFishRig(a){var g=ctx,L=a.gear.rod||0,big=L>=6,on=a.working,by=a.mv?Math.sin(a.bob*2)*.6:0,bc=big?'#2c3e9e':'#3f7fb8';
+function drawFishRig(a){if(drawSprite(ctx,'fish_rig',a.working?'work':a.mv?'drive':'idle',time,a.x,a.y+7,SPRITE_PPU*(.84+.025*(a.gear.rod||4)),a.dir>0)){drawSpriteLevel(ctx,a.x,a.y-34,a.gear.rod,12);return;}var g=ctx,L=a.gear.rod||0,big=L>=6,on=a.working,by=a.mv?Math.sin(a.bob*2)*.6:0,bc=big?'#2c3e9e':'#3f7fb8';
   g.save();g.translate(a.x,a.y+by);g.translate(4,0);g.scale(.78,.78);
   g.fillStyle='rgba(0,0,0,.2)';g.beginPath();g.ellipse(-2,6,11,3,0,0,7);g.fill();
   g.fillStyle='#2b2f36';g.beginPath();g.arc(-8,3.5,3,0,7);g.arc(3,3.5,3,0,7);g.fill();
@@ -42,7 +43,7 @@ function drawFishRig(a){var g=ctx,L=a.gear.rod||0,big=L>=6,on=a.working,by=a.mv?
   g.restore();
   if(on&&dip>.8&&Math.random()<.3)parts.push({x:a.x+20,y:a.y+6,vx:0,vy:0,g:0,life:.7,max:.7,col:'#ffffff',r:3,ring:1});
   a.dir=1;nameTag(a,-24);}
-function drawExcavator(a){var g=ctx,L=a.gear.pick||0,big=L>=6,on=a.working,d=a.dir||1,by=a.mv?Math.sin(a.bob*2)*.6:0;
+function drawExcavator(a){if(drawSprite(ctx,'excavator',a.working?'work':a.mv?'drive':'idle',time,a.x,a.y+7,SPRITE_PPU*(.84+.025*(a.gear.pick||4)),a.dir>0)){drawSpriteLevel(ctx,a.x,a.y-34,a.gear.pick,12);return;}var g=ctx,L=a.gear.pick||0,big=L>=6,on=a.working,d=a.dir||1,by=a.mv?Math.sin(a.bob*2)*.6:0;
   g.save();g.translate(a.x,a.y+by);g.scale(d*(big?1.08:.95),big?1.08:.95);
   g.fillStyle='rgba(0,0,0,.2)';g.beginPath();g.ellipse(0,5,14,3,0,0,7);g.fill();
   g.fillStyle='#2b2f36';rr(g,-12,-1,22,7,3.5);g.fill();for(var w=0;w<4;w++){g.fillStyle='#5d6670';g.beginPath();g.arc(-8.5+w*5.3,2.5,1.8,0,7);g.fill();}
@@ -130,7 +131,7 @@ function superNetFish(box,fish){return {x:box.hand.x+(fish.x-box.hand.x)*box.spr
 function drawMasterFisher(g,a){
   var p=superWorkPose(a);g.fillStyle='rgba(67,111,125,.2)';g.beginPath();g.ellipse(a.x,a.y+9,14,4,0,0,7);g.fill();
   g.save();g.translate(a.x,a.y+9);g.rotate(p.lean);g.scale(1.3,1.3*(1-p.crouch*.12));g.translate(-a.x,-a.y-9);
-  curWalk=!!a.working||a.mv;curPh=a.net?Math.min(1,a.net.t/1.6)*Math.PI*2:a.bob;drawPerson(g,a.x,a.y,'fisher',a.dir,0,4,4,4,Object.assign({},a.gear,{customArms:true}));curWalk=null;
+  curWalk=!!a.working||a.mv;curPh=a.net?Math.min(1,a.net.t/1.6)*Math.PI*2:a.bob;if(!drawSprite(g,'master_fisher_body',a.working?'work':'idle',a.net?a.net.t:(a.swT||0),a.x,a.y+9,SPRITE_PPU,a.dir>0))drawPerson(g,a.x,a.y,'fisher',a.dir,0,4,4,4,Object.assign({},a.gear,{customArms:true}));curWalk=null;
   g.lineCap='round';g.lineJoin='round';var handX=a.x+a.dir*(12+p.reach*10)/1.3,handY=a.y+9+(-25-p.lift*12)/1.3;
   [-1,1].forEach(function(side){g.strokeStyle=side<0?'#335e78':'#5e96a9';g.lineWidth=4;g.beginPath();g.moveTo(a.x+side*5,a.y-17);g.lineTo(a.x+a.dir*(5+p.reach*5),a.y-8-p.lift*6+side*2);g.lineTo(handX,handY+side*2);g.stroke();g.fillStyle='#eac6a4';g.beginPath();g.arc(handX,handY+side*2,2,0,7);g.fill();});
   g.strokeStyle='#f4e5b4';g.lineWidth=1.4;g.beginPath();g.arc(handX,handY,4,0,7);g.stroke();g.restore();superPlate(g,a,true);
@@ -138,7 +139,7 @@ function drawMasterFisher(g,a){
 function drawMasterLumber(g,a){
   var pose={x:a.x,y:a.y,role:'lumber',appearanceTier:4,dir:-1,customArms:true,mv:false,bob:a.bob};
   g.fillStyle='rgba(193,172,119,.22)';g.beginPath();g.ellipse(a.x,a.y+9,13,4,0,0,7);g.fill();
-  var motion=a.working?Math.sin(Math.min(1,(a.swT||0)/SUPER_T)*Math.PI):0;g.save();g.translate(a.x,a.y+9);g.rotate(-motion*.16);g.scale(1,1-motion*.08);g.translate(-a.x,-a.y-9);pose.mv=!!a.working;pose.bob=(a.swT||0)/SUPER_T*Math.PI*2;drawHero(g,pose,motion*2);
+  var motion=a.working?Math.sin(Math.min(1,(a.swT||0)/SUPER_T)*Math.PI):0;g.save();g.translate(a.x,a.y+9);g.rotate(-motion*.16);g.scale(1,1-motion*.08);g.translate(-a.x,-a.y-9);pose.mv=!!a.working;pose.bob=(a.swT||0)/SUPER_T*Math.PI*2;if(!drawSprite(g,'master_lumber_body',a.working?'work':'idle',(a.swT||0)*.9/SUPER_T,a.x,a.y+9,SPRITE_PPU*1.3,false))drawHero(g,pose,motion*2);
   var phase=a.working?Math.min(1,(a.swT||0)/SUPER_T):0;
   var axeAngle=a.working?-.9+Math.sin(phase*Math.PI)*1.25:-.3,gripX=a.x-16-motion*4,gripY=a.y-12-motion*3;
   [-1,1].forEach(function(side){var gy=(side<0?2:6)*1.6,hx=gripX-Math.sin(axeAngle)*gy,hy=gripY+Math.cos(axeAngle)*gy;g.strokeStyle=side<0?'#715438':'#ab8b5e';g.lineWidth=4;g.lineCap='round';g.beginPath();g.moveTo(a.x+side*5,a.y-15);g.lineTo(a.x-9-motion*3,a.y-5+side*2);g.lineTo(hx,hy);g.stroke();g.fillStyle='#e8c19b';g.beginPath();g.arc(hx,hy,2.2,0,7);g.fill();});
@@ -208,6 +209,7 @@ function heroTier(){var st=S.stage||1,w=S.wlv||{};if(st>=3)return (w.hunter3||0)
 function drawHero(g,a,by){
  var master=a.role==='lumber',level=master?12:(a.martialLevel||wpnLv());
  var fromSprite=!master&&!a.customArms&&drawSprite(g,'hero',actorSpriteAnim(a),time+(a.x%7)*.1,a.x,a.y+9,SPRITE_PPU,a.dir>0);
+ if(fromSprite)drawSpriteLevel(g,a.x,a.y+16,level,13);
  if(!fromSprite)drawActor3D(g,a,{coat:master?'#e6872a':ART.coats[Math.min(12,level-1)],scarf:master?'#ffe06b':ART.scarves[Math.min(12,level-1)],customArms:!!a.customArms,level:level});
  if((a.stab||0)>0){var force=Math.sin(Math.min(1,a.stab/.32)*Math.PI);g.save();g.translate(a.x,a.y);g.scale(a.dir||1,1);g.strokeStyle='rgba(255,216,102,'+force*.75+')';g.lineWidth=1.4;g.beginPath();g.arc(3,a.strikeType==='kick'?0:-14,12+force*8,-.8,.8);g.stroke();g.restore();}
  if((a.ultFxT||0)>0){var wave=1-a.ultFxT/.65;g.strokeStyle='rgba(255,220,110,'+(1-wave)*.8+')';g.lineWidth=2.2;g.beginPath();g.ellipse(a.x,a.y+9,135*wave,52*wave,0,0,7);g.stroke();}
@@ -228,7 +230,7 @@ function drawAgent(a){
   curWalk=a.mv;curPh=a.bob;
   if(a.role==='player'){drawHero(ctx,a,by);}
   else if(!drawSprite(ctx,SPRITE_ROLE[a.role],actorSpriteAnim(a),time+(a.x%7)*.1,a.x,a.y+9,SPRITE_PPU,a.dir>0))drawPerson(ctx,a.x,a.y,a.role,a.dir,by,tierOf('boots',a.gear.boots),t,t2,a.role==='player'?null:a.gear,a);
-  curWalk=null;
+  curWalk=null;if(a.role!=='player'&&!isHunter(a.role)&&SPRITE_ROLE[a.role]&&spriteReady(SPRITE_ROLE[a.role]))drawSpriteLevel(ctx,a.x,a.y+14,a.gear[PRIM[a.role]]||0,12);
   var fishing=a.working&&a.res&&a.res.k==='fish';
   if(a.role==='player'&&(!a.working||bearNear(a,150)||a.stab>0)){}
   else if(isHunter(a.role)){ctx.restore();ctx.save();if((a.gear.bow||0)>=7){ctx.save();ctx.translate(a.x+a.dir*9,a.y-14+by);ctx.scale(a.dir,1);drawWpn(ctx,'gun',Math.min(4,Math.floor((a.gear.bow||0)/3)),0,a.aim>.12);ctx.restore();}else drawBow(ctx,a,by,tierOf('bow',a.gear.bow||0),a.aim||0);}
@@ -266,7 +268,7 @@ function drawAgent(a){
 }
 function drawCustomer(c){
  var g=ctx;
- if(!drawSprite(g,'villager',actorSpriteAnim(c),time+(c.x%7)*.1,c.x,c.y+6,SPRITE_PPU*.65,c.dir>0))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
+ if(!drawSprite(g,'customer',c.state==='out'&&c.mood!=='angry'?'happy':actorSpriteAnim(c),time+(c.x%7)*.1,c.x,c.y+6,SPRITE_PPU*.65,c.dir>0))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
   if(c.regular){g.font='11px sans-serif';g.textAlign='center';g.fillStyle='#e0b54c';g.fillText('⭐',c.x,c.y-40);}
   if(c.state==='out'){g.font='11px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#000';g.fillText(c.mood==='angry'?'💢':'💖',c.x,c.y-15);return;}
   if(c.slot>=serv(c.seller)&&c.state==='line')return;

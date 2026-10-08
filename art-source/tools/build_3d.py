@@ -10,7 +10,7 @@ MODELS=os.path.join(ROOT,'art-source','models'); SPR=os.path.join(ROOT,'game','a
 URL=os.environ.get('STUDIO_URL','http://localhost:8788/art-source/tools/studio.html')
 for d in (MODELS,SPR,PREV): os.makedirs(d,exist_ok=True)
 with sync_playwright() as p:
-    b=p.chromium.launch(args=['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])
+    b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or None,args=['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])
     pg=b.new_page(); errs=[]; pg.on('pageerror',lambda e: errs.append(str(e))); pg.on('console',lambda m: m.type=='error' and errs.append(m.text))
     pg.goto(URL); pg.wait_for_function('window.studioReady===true',timeout=30000)
     lst=pg.evaluate('listModels()'); names=sys.argv[1:] or [m['name'] for m in lst]
@@ -33,6 +33,6 @@ with sync_playwright() as p:
             sheet.alpha_composite(t,(x+(cell-t.width)//2,y+cell-t.height-4)); d.text((x+8,y+cell+4),n,fill=(40,40,40,255))
         sheet.convert('RGB').save(os.path.join(PREV,'contact-sheet.png'))
     print('errors:',errs[:5]); b.close()
-import subprocess
-subprocess.run(['node',os.path.join(ROOT,'art-source','tools','optimize_glb.mjs'),MODELS],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+import subprocess  # optimise only the .glb files written this run: re-quantizing an optimised file changes it
+subprocess.run(['node',os.path.join(ROOT,'art-source','tools','optimize_glb.mjs'),MODELS,*names],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 print('glb optimised (dedup/weld/join/quantize)')

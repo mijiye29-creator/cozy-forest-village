@@ -23,6 +23,9 @@ function drawSprite(g,name,anim,t,x,y,ppu,flip,alpha){
   g.restore();return true;
 }
 /* Suggested mapping from game roles to model names (art-source/models). */
-var SPRITE_ROLE={player:'hero',lumber:'lumberjack',fisher:'fisher',miner:'miner',hunter:'hunter',hunter2:'hunter_blue',hunter3:'hunter_violet',courier:'villager',imk:'shopkeeper'};
+var SPRITE_ROLE={player:'hero',lumber:'lumberjack',fisher:'fisher',miner:'miner',hunter:'hunter',hunter2:'hunter_blue',hunter3:'hunter_violet',courier:'villager',imk:'shopkeeper',
+  /* 2026-10 set: suggested keys, not yet game role ids — see art-source/gpt/asset-catalog.json */
+  customer:'customer',shopStaff:'shop_staff',masterLumber:'master_lumber',masterFisher:'master_fisher',
+  harvester:'harvester',excavator:'excavator',fishRig:'fish_rig',auroraKeeper:'aurora_keeper'};
 function actorSpriteAnim(a){return a.working?'work':((a.mv||a.moving)?'walk':'idle');}
 spritesLoad();

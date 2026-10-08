@@ -15,3 +15,6 @@ window.ENDING_SCENES = [
  {src:"assets/ending/02.webp",alt:"빛을 타고 책으로 돌아가는 아이"},
  {src:"assets/ending/03.webp",alt:"아침에 책을 안고 깨어나는 아이"}
 ];
+
+// Claude source movies; source hashes avoid stale published media.
+window.STORY_VIDEOS={"intro": {"webm": "assets/video/intro.webm?v=553bd773ceb7", "mp4": "assets/video/intro.mp4?v=6f62f4ac0050", "poster": "assets/video/intro-poster.jpg?v=5b56bb637f07"}, "ending": {"webm": "assets/video/ending.webm?v=66f5ebba7638", "mp4": "assets/video/ending.mp4?v=7202f98e94ad", "poster": "assets/video/ending-poster.jpg?v=66effa35c2a6"}};
