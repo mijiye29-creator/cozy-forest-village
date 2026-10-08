@@ -202,4 +202,16 @@ for(let frame=0;frame<120;frame++)payment.updatePads(1/60);
 assert.equal(purchased,1);assert.equal(payment.S.coins,5000);
 assert(paymentLabels<=4,'Upgrade payment labels must not accumulate every frame');
 assert(coinFlights<=12,'Coin feedback must stay bounded while pads are rebuilt');
-console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; horizontal expansion; 3 village layouts and repairs; left/right/bottom fence blocking and breach entry; 50-won costs; single-target martial strikes and area ultimate; separate facility signs; radar directions; bounded upgrade feedback.');
+// Event typography must retain a readable CSS size and wrap without shrinking.
+for(const [width,height] of [[320,568],[390,844],[844,390],[1280,800]]){
+  const drawn=[],unit=1080/width,graphic={save(){},restore(){},fill(){},stroke(){},
+    measureText(text){const size=parseFloat(this.font.match(/([\d.]+)px/)[1]);return {width:Array.from(text).reduce((n,ch)=>n+size*(/^[a-zA-Z0-9 ]$/.test(ch)?.55:1),0)};},
+    fillText(text,x,y,maxWidth){drawn.push({text,x,y,maxWidth,font:this.font,width:this.measureText(text).width});}};
+  const banner={ctx:graphic,W:1080,SH:height*unit,screenUnit:unit,rr(){},STAGEBAN:{t:1,max:2,text:'👑 세 마을의 불빛을 본 대왕곰!',sub:'왼쪽에서 침입 · 가장자리 화살표를 따라가요'}};
+  vm.createContext(banner);vm.runInContext(section('function bannerLines(', '/* v63:'),banner);banner.drawStageBanner();
+  const main=drawn.filter(v=>v.font.startsWith('700'));
+  assert(main.length>0);if(width===320)assert(main.length>1,'Long alert titles must wrap on narrow phones');
+  for(const text of drawn){assert.equal(text.maxWidth,undefined,'Canvas maxWidth must not squash alert text');assert(parseFloat(text.font.match(/([\d.]+)px/)[1])/unit>=13);assert(text.width<=Math.min(width-24,440)*unit-32*unit+.01);assert(text.y>0&&text.y<height*unit);}
+  assert(main.every(v=>parseFloat(v.font.match(/([\d.]+)px/)[1])/unit>=18));
+}
+console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; horizontal expansion; 3 village layouts and repairs; left/right/bottom fence blocking and breach entry; 50-won costs; single-target martial strikes and area ultimate; separate facility signs; radar directions; bounded upgrade feedback; readable wrapping event alerts.');
