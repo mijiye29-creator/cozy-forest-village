@@ -132,7 +132,8 @@ vm.runInContext(section('var TUT=[', 'var TUTPAD='),layout);
 vm.runInContext(section('function dropPt(', 'var LANE='),layout);
 assert.equal(layout.TUT[2].at().x,layout.dropPt('wood').x,'Tutorial must lead to the relocated delivery point');
 assert.equal(layout.TUT[2].at().y,layout.dropPt('wood').y);
-assert(layout.BPATH.sale_f1[0][0]-(layout.SITE.f1.x+layout.SITE.f1.w)>=100,'Wood belt must leave a wide gap from harvesting');
+assert.equal(layout.BPATH.sale_f1[0][0],layout.SITE.f1.x+layout.SITE.f1.w,'Wood belt must connect to the edge of the expanded forest');
+assert.deepEqual(Array.from(layout.BPATH.sale_f1[0]),Array.from(layout.BPATH.proc_f1[0]),'Both destinations share the woodland feeder');
 assert(layout.PAD_LAYOUT.site_f1.y-layout.PAD_H/2>layout.SITE.f1.y+layout.SITE.f1.h,'Forest upgrade must be outside the harvesting area');
 const allIds=Object.keys(layout.PAD_LAYOUT).filter(id=>!id.includes('fix'));
 for(const stage of [1,2,3]){
