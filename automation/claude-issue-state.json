@@ -2,51 +2,244 @@
   "schema_version": 1,
   "repository": "mijiye29-creator/cozy-forest-village",
   "checked_date_kst": "2026-10-08",
-  "implementation_commit": "501bf80518cb0904c12b6fdacc97b0ab9caa135f",
+  "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
   "issues": {
     "1": {
       "title": "[클로드 제안] 가게 일손 — 점원 고용·진열대 추가·⭐단골손님",
-      "updated_at": "2026-10-08T07:45:32Z",
-      "input_sha256": "1d2440e30babd35e71c9ae15a01c3bc1b1eec86d1030bf9fcb09383d4843d556",
-      "comment_ids": [],
+      "updated_at": "2026-10-08T11:19:00Z",
+      "input_sha256": "32431d11f6b736810217966b3d0adc32c98a5c0916d3ba1fa96fcc70a0733756",
+      "comment_ids": [
+        6058709114
+      ],
       "status": "implemented_code_verified",
       "implementation_commit": "501bf80518cb0904c12b6fdacc97b0ab9caa135f",
-      "notes": "가게별 일손 Lv0~6, 홀수 점원·짝수 진열대, 발판 구매, Lv2부터 단골 확률/인내/수량/40% 추가금액 구현. 선택 필드 shopStaff로 구형 저장 유지. VM 회귀 통과; 브라우저/실기기/장기 수입 균형 미검증.",
-      "continue_pending_work": false
+      "notes": "기존 구현 유지. Claude가 57c009e에서 구현을 확인하고 닫음. Claude의 발판 구매·단골 효과 실제 플레이는 미실시. 자체 기존 VM 구매/구형 저장 검사 통과.",
+      "continue_pending_work": false,
+      "history": [
+        {
+          "input_sha256": "1d2440e30babd35e71c9ae15a01c3bc1b1eec86d1030bf9fcb09383d4843d556",
+          "updated_at": "2026-10-08T07:45:32Z",
+          "status": "implemented_code_verified",
+          "implementation_commit": "501bf80518cb0904c12b6fdacc97b0ab9caa135f",
+          "notes": "가게별 일손 Lv0~6, 홀수 점원·짝수 진열대, 발판 구매, Lv2부터 단골 확률/인내/수량/40% 추가금액 구현. 선택 필드 shopStaff로 구형 저장 유지. VM 회귀 통과; 브라우저/실기기/장기 수입 균형 미검증."
+        }
+      ],
+      "github_state": "closed",
+      "body_sha256": "6369572fade7504fcf57f2cd7e8ef673c8084c89adcdf0a33e3902983b459c5b",
+      "comment_versions": [
+        {
+          "id": 6058709114,
+          "updated_at": "2026-10-08T11:18:59Z",
+          "body_sha256": "ba1324d9fef655f1efa703a0e47f2a252cb6b4c65cf64bd972123675dfba7d72"
+        }
+      ],
+      "request_type": "proposal",
+      "own_validation": "Node VM/code regression; browser/device/full boss not executed",
+      "claude_report_reference": {
+        "issue": 1,
+        "comment_ids": [
+          6058709114
+        ]
+      }
     },
     "2": {
       "title": "[클로드 제안] 튜토리얼 첫 목적지 보여 주기 + 가로 화면 탭 줄바꿈",
-      "updated_at": "2026-10-08T07:45:43Z",
-      "input_sha256": "21d1485db0fb2b62b12a6a8216d95f9c2bd2fa06e01ea0c58ee69b1ca67f38ac",
-      "comment_ids": [],
+      "updated_at": "2026-10-08T11:18:58Z",
+      "input_sha256": "a10316f71bdb2047677569310ce16d9b5af1f0c9b03a6c7a8208f454e8e74515",
+      "comment_ids": [
+        6058708541
+      ],
       "status": "implemented_code_verified",
       "implementation_commit": "0245aa4b40ad6641627f7e53e0856dfd1078bf16",
-      "notes": "화면 밖 튜토리얼 목표 가장자리 화살표 및 메뉴 한 줄 유지. 초기 카메라 변경은 대안 화살표로 대체. 실기기 시각 QA 미실시.",
-      "continue_pending_work": false
+      "notes": "기존 가장자리 화살표·탭 한 줄 유지. Claude가 57c009e 헤드리스 브라우저 740×360/390×844에서 확인하고 닫음. 이번 자체 브라우저 검증 아님.",
+      "continue_pending_work": false,
+      "history": [
+        {
+          "input_sha256": "21d1485db0fb2b62b12a6a8216d95f9c2bd2fa06e01ea0c58ee69b1ca67f38ac",
+          "updated_at": "2026-10-08T07:45:43Z",
+          "status": "implemented_code_verified",
+          "implementation_commit": "0245aa4b40ad6641627f7e53e0856dfd1078bf16",
+          "notes": "화면 밖 튜토리얼 목표 가장자리 화살표 및 메뉴 한 줄 유지. 초기 카메라 변경은 대안 화살표로 대체. 실기기 시각 QA 미실시."
+        }
+      ],
+      "github_state": "closed",
+      "body_sha256": "c62bf07208f79f852cb70ea1d78631226a87ed06d6a8a802bd39e223829b9561",
+      "comment_versions": [
+        {
+          "id": 6058708541,
+          "updated_at": "2026-10-08T11:18:57Z",
+          "body_sha256": "49164a6e6bffa873580e5d2294da6c8095e60cc19a6863371bc56e87caddd605"
+        }
+      ],
+      "request_type": "proposal",
+      "own_validation": "Node VM/code regression; browser/device/full boss not executed",
+      "claude_report_reference": {
+        "issue": 2,
+        "comment_ids": [
+          6058708541
+        ]
+      }
     },
     "3": {
       "title": "[클로드 QA·심각] 튜토리얼 3→4단계 소프트락 — 납품 전 앱 전환/새로고침 시 진행 불가 (v103 재현)",
-      "updated_at": "2026-10-08T07:49:09Z",
-      "input_sha256": "bc35bd4d292276fe1144abd5ae747e2ea9c96891795d6542cd791f1c22f9d208",
+      "updated_at": "2026-10-08T11:18:55Z",
+      "input_sha256": "f62315d067936ab8346d0e5539a0c5e313096cfc2f25a2ded11f5951d3c5e77e",
       "comment_ids": [
-        6055294216
+        6055294216,
+        6058707952
       ],
       "status": "implemented_code_verified",
       "implementation_commit": "0245aa4b40ad6641627f7e53e0856dfd1078bf16",
-      "notes": "실제 납품 증거 요구. 가방 유실 또는 막힌 기존 3~4단계 저장은 채집 단계로 복구. 회귀 검사 통과. 브라우저 재현 검증 미실시.",
-      "continue_pending_work": false
+      "notes": "기존 실제 납품 증거·막힌 저장 복구 유지. Claude가 57c009e에서 두 재시작 사례의 채집 단계 복구를 확인하고 닫음. Claude는 복구 후 수동 채집/납품 완주는 미실시. 자체 튜토리얼 VM 회귀 통과.",
+      "continue_pending_work": false,
+      "history": [
+        {
+          "input_sha256": "bc35bd4d292276fe1144abd5ae747e2ea9c96891795d6542cd791f1c22f9d208",
+          "updated_at": "2026-10-08T07:49:09Z",
+          "status": "implemented_code_verified",
+          "implementation_commit": "0245aa4b40ad6641627f7e53e0856dfd1078bf16",
+          "notes": "실제 납품 증거 요구. 가방 유실 또는 막힌 기존 3~4단계 저장은 채집 단계로 복구. 회귀 검사 통과. 브라우저 재현 검증 미실시."
+        }
+      ],
+      "github_state": "closed",
+      "body_sha256": "f1836d33dc9b92169c873e626f07c0c361ec055645b9e013b68b1ff4f184987c",
+      "comment_versions": [
+        {
+          "id": 6055294216,
+          "updated_at": "2026-10-08T07:49:09Z",
+          "body_sha256": "ddc7a95fbab503188c09543c8abcbc7de278e6f8e80b0af814b556c0af6fac9b"
+        },
+        {
+          "id": 6058707952,
+          "updated_at": "2026-10-08T11:18:54Z",
+          "body_sha256": "e57b76e0fe5991f39baa3b65228735f303332969bb6c7d6a8ffb659cbf86c167"
+        }
+      ],
+      "request_type": "qa_report",
+      "own_validation": "Node VM/code regression; browser/device/full boss not executed",
+      "claude_report_reference": {
+        "issue": 3,
+        "comment_ids": [
+          6055294216,
+          6058707952
+        ]
+      }
     },
     "4": {
       "title": "[클로드 QA] v103 브라우저 플레이 검증 결과 — 고쳐진 것·남은 것 (HTTP QA 대행)",
-      "updated_at": "2026-10-08T07:49:10Z",
-      "input_sha256": "84753f2880633f5c9dea9ec970b1fbda665f86c92a35c17d4e94d90209f60605",
+      "updated_at": "2026-10-08T11:26:13Z",
+      "input_sha256": "90522284c0ffc49dcf6803f3d5c9ac5919fbe00e08a9f6fe653130c2ba880cf4",
       "comment_ids": [
-        6055294504
+        6055294504,
+        6058821701
       ],
-      "status": "partially_addressed",
+      "status": "resolved_report_archived",
       "implementation_commit": "501bf80518cb0904c12b6fdacc97b0ab9caa135f",
-      "notes": "기본 #title 규칙 통합 완료. 기존 수정과 과거 QA는 재적용하지 않음. 탭 경로탐색 증상은 최신 코드의 재현 필요; 실제 브라우저/실기기 검증 미완료.",
-      "continue_pending_work": true
+      "notes": "Claude 후속 댓글로 기존 수정 확인·상태 보고 종료. 불확정 탭 경로 증상은 Claude가 재현 후 별도 이슈로 보고 예정. 반복 작업 종료. 신규 #5/#6은 독립 추적. 실기기 QA는 미실시.",
+      "continue_pending_work": false,
+      "history": [
+        {
+          "input_sha256": "84753f2880633f5c9dea9ec970b1fbda665f86c92a35c17d4e94d90209f60605",
+          "updated_at": "2026-10-08T07:49:10Z",
+          "status": "partially_addressed",
+          "implementation_commit": "501bf80518cb0904c12b6fdacc97b0ab9caa135f",
+          "notes": "기본 #title 규칙 통합 완료. 기존 수정과 과거 QA는 재적용하지 않음. 탭 경로탐색 증상은 최신 코드의 재현 필요; 실제 브라우저/실기기 검증 미완료."
+        }
+      ],
+      "github_state": "closed",
+      "body_sha256": "4e5eb37358b187f9cd72ccdb04d7cb258864fae4f314fa82cfa6be4180e9ef53",
+      "comment_versions": [
+        {
+          "id": 6055294504,
+          "updated_at": "2026-10-08T07:49:10Z",
+          "body_sha256": "ddc7a95fbab503188c09543c8abcbc7de278e6f8e80b0af814b556c0af6fac9b"
+        },
+        {
+          "id": 6058821701,
+          "updated_at": "2026-10-08T11:26:12Z",
+          "body_sha256": "0dcec731096277d5797f24b42f7325f3701442cc19e302d014b09663d64e447f"
+        }
+      ],
+      "request_type": "qa_report",
+      "own_validation": "Node VM/code regression; browser/device/full boss not executed",
+      "claude_report_reference": {
+        "issue": 4,
+        "comment_ids": [
+          6055294504,
+          6058821701
+        ]
+      }
+    },
+    "5": {
+      "title": "[클로드 QA·심각] 끝판왕 등장 후 중단하면 엔딩 영구 도달 불가 — #3과 같은 구조",
+      "updated_at": "2026-10-08T11:46:10Z",
+      "github_state": "open",
+      "input_sha256": "cd6d32fac9a8e122d16d111658bd58d99c96f73164ead71803fe3fc98680d422",
+      "body_sha256": "fd9e57c0a16fed42a609e47284cbcf937f5ecff20b5adc9970e4b0f039f91cb6",
+      "comment_ids": [
+        6059157141
+      ],
+      "comment_versions": [
+        {
+          "id": 6059157141,
+          "updated_at": "2026-10-08T11:46:10Z",
+          "body_sha256": "222d9cf8c51d5f5fd9fc3ec5ba1fae578263eb3a25168a3adf513cbdbd03d875"
+        }
+      ],
+      "status": "implemented_code_verified",
+      "notes": "기존 finaleSpawned 세이브에서 보스 실체가 없으면 재소환. 활성 보스 중복 방지. 완료/시네마틱 중단 세이브는 부팅 때 엔딩 화면 복원. 원래 해금·시네마틱 규칙 유지. 자체 VM 재현 및 회귀 통과; 직접 브라우저/실기기/전체 보스 플레이 미실시.",
+      "continue_pending_work": false,
+      "request_type": "qa_report",
+      "own_validation": "Node VM/code regression; browser/device/full boss not executed",
+      "claude_report_reference": {
+        "issue": 5,
+        "comment_ids": [
+          6059157141
+        ]
+      },
+      "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
+      "pending_validation": [
+        "direct_browser_reproduction",
+        "physical_device",
+        "full_boss_playthrough"
+      ]
+    },
+    "6": {
+      "title": "[클로드 QA] 새로고침하면 울타리가 공짜로 완전 수리됨 — 전투 상태 미저장",
+      "updated_at": "2026-10-08T11:46:11Z",
+      "github_state": "open",
+      "input_sha256": "2822743903529941f4d43c4a42f1dd305eb24123ac29b8901b079fc8968efd7d",
+      "body_sha256": "add1203f9dddaba2e82882b93b308ea3fe73032f26602dbf91d4d409516a3707",
+      "comment_ids": [
+        6059157367
+      ],
+      "comment_versions": [
+        {
+          "id": 6059157367,
+          "updated_at": "2026-10-08T11:46:11Z",
+          "body_sha256": "acbb69ddb885541a0b3c18c5b2ca0bd4c49e4510b32ee7bf418cace03d0320e0"
+        }
+      ],
+      "status": "implemented_code_verified",
+      "notes": "선택 필드 defenseState로 울타리·망루·지역 성벽 HP/파손을 저장·복원. 구형 부분 수리 선결제에서 파손 증거 복구. 계절 전환 규칙 유지·불필요해진 수리 선결제 1회 환급. 자체 실제 save/복원/수리 구매/계절 전환 VM 검사 통과. 일반 곰 배열 전체는 저장하지 않음; 직접 브라우저/실기기 미실시.",
+      "continue_pending_work": false,
+      "request_type": "qa_report",
+      "own_validation": "Node VM/code regression; browser/device/full boss not executed",
+      "claude_report_reference": {
+        "issue": 6,
+        "comment_ids": [
+          6059157367
+        ]
+      },
+      "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
+      "pending_validation": [
+        "direct_browser_reproduction",
+        "physical_device",
+        "full_boss_playthrough"
+      ]
     }
-  }
+  },
+  "input_format": "sha256(UTF-8 JSON, sorted keys, compact separators: number,title,body,state,updated_at,comments[id,body,updated_at])",
+  "checked_at_kst": "2026-10-08T20:54:30+09:00",
+  "source_head": "e6b47a06d16c7ba8a07bbf6d0bb68409b6d8b47c"
 }
