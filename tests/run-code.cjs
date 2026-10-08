@@ -1,0 +1,4 @@
+const {spawnSync}=require('node:child_process'),path=require('node:path');
+const groups={all:['game-modules','static-assets','mobile-runtime','story-runtime','tutorial-recovery','shop-staff','pathfinding'],tutorial:['game-modules','static-assets','tutorial-recovery'],story:['game-modules','static-assets','story-runtime'],shop:['game-modules','static-assets','shop-staff'],movement:['game-modules','static-assets','mobile-runtime','pathfinding'],village:['game-modules','static-assets','mobile-runtime','story-runtime','pathfinding']};
+const group=process.argv[2]||'all';if(!groups[group])throw Error('Unknown group; choose '+Object.keys(groups).join(', '));
+for(const name of groups[group]){const r=spawnSync(process.execPath,[path.join(__dirname,name+'.cjs')],{stdio:'inherit'});if(r.status!==0)process.exit(r.status||1);}

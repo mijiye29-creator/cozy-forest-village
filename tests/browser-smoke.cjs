@@ -5,7 +5,7 @@ const path=require('node:path');
 const fs=require('node:fs'),http=require('node:http');
 (async()=>{
  const root=path.resolve(__dirname,'..');
- const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':'text/html');res.end(fs.readFileSync(file));}catch(e){res.writeHead(404);res.end();}});
+ const server=http.createServer(require('./static-server.cjs')(root));
  await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve)});
  const url='http://127.0.0.1:'+server.address().port+'/game/index.html?test=1';
  let browser;
@@ -60,3 +60,4 @@ const fs=require('node:fs'),http=require('node:http');
   console.log('PASS: Chromium 390x844, 844x390, 320x568; wordless start; old save reload; unfinished-close; chapter locks; replay/read persistence; story pause; no runtime errors; four-image viewer forward/back/start (test images only).');
  }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));}
 })().catch(e=>{console.error(e);process.exit(1)});
+

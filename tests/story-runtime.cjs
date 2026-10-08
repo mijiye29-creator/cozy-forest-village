@@ -1,7 +1,6 @@
 // Regression checks run the actual story functions, with a small DOM/timer adapter.
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');
-const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
+const script=require('./runtime-source.cjs').readRuntime('story-intro');
 const nodes=new Map(),timers=new Map();let serial=0,saves=0,cancels=0;
 function element(){return {hidden:true,textContent:'',children:[],listeners:{},setAttribute(){},appendChild(x){this.children.push(x)},addEventListener(k,f){this.listeners[k]=f},click(){this.listeners.click?.()},set innerHTML(v){this.children=[]},get innerHTML(){return ''}}}
 const document={getElementById(id){if(!nodes.has(id))nodes.set(id,element());return nodes.get(id)},createElement:element,addEventListener(){}};
@@ -25,3 +24,4 @@ env.storyStart(1,'book');env.storyFinish(true);assert.equal(env.storyBook.hidden
 const saved=JSON.parse(JSON.stringify(env.S));assert.equal(saved.storySeen[1],1);assert.equal(saved.storySeen[2],1);assert.equal(saved.stage,2);
 for(const malformed of [true,4,'read',[]]){env.S.storySeen=malformed;assert.equal(typeof env.storySeen(),'object');assert.equal(Array.isArray(env.storySeen()),false);env.storySeen()[1]=1;assert.equal(env.storySeen()[1],1);}
 console.log('PASS: legacy save compatibility; autoplay once per town; typing/advance; read persistence; replay; future-town locks; skip/close timer cleanup.');
+

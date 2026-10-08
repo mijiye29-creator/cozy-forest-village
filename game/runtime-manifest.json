@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "wrapper_prefix": "(function(){\n\"use strict\";\n",
+  "wrapper_suffix": "})();\n",
+  "boot": "src/boot-errors.js",
+  "modules": [
+    {
+      "id": "world",
+      "path": "src/world.js",
+      "topic": "좌표·캔버스·월드 기본값"
+    },
+    {
+      "id": "goods",
+      "path": "src/goods.js",
+      "topic": "나무·물고기·광물·제품 데이터"
+    },
+    {
+      "id": "sites",
+      "path": "src/sites.js",
+      "topic": "자원 구역·타일·자원 생성"
+    },
+    {
+      "id": "market-config",
+      "path": "src/market-config.js",
+      "topic": "상점 위치·판매 재고"
+    },
+    {
+      "id": "save-progression",
+      "path": "src/save-progression.js",
+      "topic": "저장 키·구형 저장 이관·마을 해금·성장 규칙"
+    },
+    {
+      "id": "gear-economy",
+      "path": "src/gear-economy.js",
+      "topic": "장비 능력·종류·가격·가게 일손 규칙"
+    },
+    {
+      "id": "audio",
+      "path": "src/audio.js",
+      "topic": "효과음·배경 음악"
+    },
+    {
+      "id": "effects",
+      "path": "src/effects.js",
+      "topic": "입자·알림·흔들림"
+    },
+    {
+      "id": "render-primitives",
+      "path": "src/render-primitives.js",
+      "topic": "공통 도형·아이템·자원 그리기"
+    },
+    {
+      "id": "agents",
+      "path": "src/agents.js",
+      "topic": "일꾼·BFS 경로·채집·납품·합성"
+    },
+    {
+      "id": "conveyors",
+      "path": "src/conveyors.js",
+      "topic": "물류 벨트·분배"
+    },
+    {
+      "id": "production",
+      "path": "src/production.js",
+      "topic": "공장·창고·트럭·생산"
+    },
+    {
+      "id": "customers",
+      "path": "src/customers.js",
+      "topic": "손님·대기열·계산·단골"
+    },
+    {
+      "id": "movement",
+      "path": "src/movement.js",
+      "topic": "자유 이동·지형 충돌·현금 수령·물품 전달"
+    },
+    {
+      "id": "pads",
+      "path": "src/pads.js",
+      "topic": "시설 발판·배치·충돌·울타리 조작"
+    },
+    {
+      "id": "tutorial",
+      "path": "src/tutorial.js",
+      "topic": "튜토리얼·저장 복구·목표 화살표"
+    },
+    {
+      "id": "raids",
+      "path": "src/raids.js",
+      "topic": "곰 생성·침입·시설 피해"
+    },
+    {
+      "id": "ending",
+      "path": "src/ending.js",
+      "topic": "최종 보스 시작·엔딩·시네마틱"
+    },
+    {
+      "id": "combat",
+      "path": "src/combat.js",
+      "topic": "영웅 공격·콤보·무기 표현"
+    },
+    {
+      "id": "defence",
+      "path": "src/defence.js",
+      "topic": "마을별 방어·사냥꾼·수리·울타리 그리기"
+    },
+    {
+      "id": "input",
+      "path": "src/input.js",
+      "topic": "터치·드래그·탭 경로·핀치·설정"
+    },
+    {
+      "id": "story-intro",
+      "path": "src/story-intro.js",
+      "topic": "무문자 인트로·마을별 대화·읽음 저장"
+    },
+    {
+      "id": "render-terrain",
+      "path": "src/render-terrain.js",
+      "topic": "자원 지형·부두·공장 부지"
+    },
+    {
+      "id": "render-world",
+      "path": "src/render-world.js",
+      "topic": "정적 배경 캐시·공장 애니메이션"
+    },
+    {
+      "id": "render-buildings",
+      "path": "src/render-buildings.js",
+      "topic": "건물·창고·제품 장식"
+    },
+    {
+      "id": "render-logistics",
+      "path": "src/render-logistics.js",
+      "topic": "벨트·운송·트럭 그리기"
+    },
+    {
+      "id": "render-market",
+      "path": "src/render-market.js",
+      "topic": "가게·점원·판매 효과·작업 도구"
+    },
+    {
+      "id": "render-actors",
+      "path": "src/render-actors.js",
+      "topic": "일꾼·영웅·손님 아트"
+    },
+    {
+      "id": "render-scene",
+      "path": "src/render-scene.js",
+      "topic": "납품 매트·장면 합성·화면 안내"
+    },
+    {
+      "id": "ambient",
+      "path": "src/ambient.js",
+      "topic": "낮밤·습격 시간·환경"
+    },
+    {
+      "id": "upgrades",
+      "path": "src/upgrades.js",
+      "topic": "구매 정의·가격·장비·직원·시설 강화"
+    },
+    {
+      "id": "panels",
+      "path": "src/panels.js",
+      "topic": "상점 메뉴·목표·도감·일일 과제·레이더"
+    },
+    {
+      "id": "viewport",
+      "path": "src/viewport.js",
+      "topic": "반응형 화면·확대·리사이즈"
+    },
+    {
+      "id": "loop",
+      "path": "src/loop.js",
+      "topic": "프레임·시뮬레이션·테스트 훅·시작 순서"
+    }
+  ],
+  "extraction_baseline_sha256": "9c19e16a5c5e892c499b91b2c308386d5b6ecf54219a56de10fbaed0980aaeee"
+}

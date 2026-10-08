@@ -3,8 +3,7 @@
 const fs = require('node:fs');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
-const source = fs.readFileSync(require('node:path').join(__dirname, '../game/index.html'), 'utf8');
-const script = source.match(/<script>([\s\S]*?)<\/script>/)[1];
+const script = require('./runtime-source.cjs').readRuntime();
 new vm.Script(script);
 function section(start, end) {
   const a = script.indexOf(start), b = script.indexOf(end, a + start.length);
@@ -241,3 +240,4 @@ for(const [width,height] of [[320,568],[390,844],[844,390],[1280,800]]){
   assert(main.every(v=>parseFloat(v.font.match(/([\d.]+)px/)[1])/unit>=18));
 }
 console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; horizontal expansion; 3 village layouts and repairs; left/right/bottom fence blocking and breach entry; 50-won costs; single-target martial strikes and area ultimate; separate facility signs; radar directions; bounded upgrade feedback; readable wrapping event alerts.');
+

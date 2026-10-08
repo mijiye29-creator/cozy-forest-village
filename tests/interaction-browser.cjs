@@ -2,7 +2,7 @@
 const {chromium}=require('playwright'),http=require('node:http'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 (async()=>{
  const root=path.resolve(__dirname,'..');
- const server=http.createServer((req,res)=>{const js=req.url.split('?')[0].endsWith('intro-scenes.js');res.setHeader('Content-Type',js?'text/javascript':'text/html');res.end(fs.readFileSync(path.join(root,js?'game/intro-scenes.js':'game/index.html')));});
+ const server=http.createServer(require('./static-server.cjs')(root));
  await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
  try{
   browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
@@ -37,3 +37,4 @@ const {chromium}=require('playwright'),http=require('node:http'),fs=require('nod
   }
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1});
+

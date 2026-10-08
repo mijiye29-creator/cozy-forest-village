@@ -1,0 +1,28 @@
+// Dependency-free, deterministic assembly. Never hand-edit game/runtime.js.
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),vm=require('node:vm');
+const root=path.resolve(__dirname,'..'),game=path.join(root,'game');
+const hash=s=>crypto.createHash('sha256').update(s).digest('hex');
+function assemble(){
+ const manifest=JSON.parse(fs.readFileSync(path.join(game,'runtime-manifest.json'),'utf8'));
+ const entries=[{id:'boot-errors',path:manifest.boot,topic:'시작 오류 진단'},...manifest.modules];
+ const seen=new Set(),parts=entries.map(e=>{if(seen.has(e.path)||!e.path.startsWith('src/')||e.path.includes('..'))throw Error('Invalid module '+e.path);seen.add(e.path);const text=fs.readFileSync(path.join(game,e.path),'utf8');new vm.Script(text,{filename:e.path});return {...e,text};});
+ const raw=parts[0].text+manifest.wrapper_prefix+parts.slice(1).map(p=>p.text).join('')+manifest.wrapper_suffix;
+ new vm.Script(raw,{filename:'runtime.js'});
+ // Map every generated line to the original module. No duplicated sourcesContent.
+ const sources=parts.map(p=>p.path),records=[];let line=0;
+ function advance(text,source){const lines=text.split('\n');for(let i=0;i<lines.length;i++){if(source!=null&&i<lines.length-1)records[line]={source,original:i};if(i<lines.length-1)line++;}}
+ advance(parts[0].text,0);advance(manifest.wrapper_prefix,null);parts.slice(1).forEach((p,i)=>advance(p.text,i+1));advance(manifest.wrapper_suffix,null);
+ const b64='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+ function vlq(n){let v=n<0?((-n)*2+1):n*2,out='';do{let d=v%32;v=Math.floor(v/32);if(v)d|=32;out+=b64[d];}while(v);return out;}
+ let prevSource=0,prevLine=0;const mappings=Array.from({length:line+1},(_,i)=>{const r=records[i];if(!r)return '';const seg='A'+vlq(r.source-prevSource)+vlq(r.original-prevLine)+'A';prevSource=r.source;prevLine=r.original;return seg;}).join(';');
+ const map=JSON.stringify({version:3,file:'runtime.js',sources,names:[],mappings})+'\n';
+ const bundle=raw+'\n//# sourceMappingURL=runtime.js.map\n';
+ const index={schema_version:1,runtime_sha256:hash(raw),modules:parts.map(p=>({id:p.id,path:p.path,topic:p.topic,bytes:Buffer.byteLength(p.text),lines:p.text.split('\n').length-1,symbols:p.text.split('\n').flatMap((l,i)=>{const m=l.match(/^(?:function|var)\s+([A-Za-z_$][\w$]*)/);return m?[{name:m[1],line:i+1}]:[]})}))};
+ let html=fs.readFileSync(path.join(game,'index.html'),'utf8');
+ html=html.replace(/href="styles\/game\.css(?:\?v=[a-f0-9]+)?"/,'href="styles/game.css?v='+hash(fs.readFileSync(path.join(game,'styles/game.css'))).slice(0,12)+'"');
+ html=html.replace(/src="runtime\.js(?:\?v=[a-f0-9]+)?"/,'src="runtime.js?v='+hash(bundle).slice(0,12)+'"');
+ return {raw,manifest,index,outputs:{'runtime.js':bundle,'runtime.js.map':map,'module-map.json':JSON.stringify(index,null,2)+'\n','index.html':html}};
+}
+function build(check=false){const result=assemble();for(const [name,content] of Object.entries(result.outputs)){const file=path.join(game,name);if(check){if(!fs.existsSync(file)||fs.readFileSync(file,'utf8')!==content)throw Error('Stale generated file: '+name+'; run node scripts/build-game.cjs');}else fs.writeFileSync(file,content);}return result;}
+module.exports={assemble,build};
+if(require.main===module){const r=build(process.argv.includes('--check'));console.log('PASS: '+r.index.modules.length+' source modules; deterministic bundle, syntax, source map and asset versions'+(process.argv.includes('--check')?' (up to date)':''));}

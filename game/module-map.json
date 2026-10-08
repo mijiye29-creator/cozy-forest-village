@@ -1,0 +1,3396 @@
+{
+  "schema_version": 1,
+  "runtime_sha256": "31a1c48088987c8d48e0f0b7885511233fdf1fd4ed4b7456277054fd745eecac",
+  "modules": [
+    {
+      "id": "boot-errors",
+      "path": "src/boot-errors.js",
+      "topic": "시작 오류 진단",
+      "bytes": 573,
+      "lines": 4,
+      "symbols": []
+    },
+    {
+      "id": "world",
+      "path": "src/world.js",
+      "topic": "좌표·캔버스·월드 기본값",
+      "bytes": 1191,
+      "lines": 17,
+      "symbols": [
+        {
+          "name": "GC",
+          "line": 4
+        },
+        {
+          "name": "worldX",
+          "line": 6
+        },
+        {
+          "name": "worldCol",
+          "line": 7
+        },
+        {
+          "name": "cv",
+          "line": 8
+        },
+        {
+          "name": "TOUCH_UI",
+          "line": 9
+        },
+        {
+          "name": "DPR",
+          "line": 10
+        },
+        {
+          "name": "screenUnit",
+          "line": 11
+        },
+        {
+          "name": "mulberry",
+          "line": 14
+        },
+        {
+          "name": "rand",
+          "line": 15
+        },
+        {
+          "name": "time",
+          "line": 16
+        }
+      ]
+    },
+    {
+      "id": "goods",
+      "path": "src/goods.js",
+      "topic": "나무·물고기·광물·제품 데이터",
+      "bytes": 3925,
+      "lines": 54,
+      "symbols": [
+        {
+          "name": "TREES",
+          "line": 2
+        },
+        {
+          "name": "FISH",
+          "line": 10
+        },
+        {
+          "name": "ORES",
+          "line": 18
+        },
+        {
+          "name": "GOODS",
+          "line": 24
+        },
+        {
+          "name": "ITEMS",
+          "line": 40
+        },
+        {
+          "name": "BEAR_ITEMS",
+          "line": 46
+        },
+        {
+          "name": "LINES",
+          "line": 48
+        },
+        {
+          "name": "GOOD_IDS",
+          "line": 49
+        },
+        {
+          "name": "SPAWN",
+          "line": 51
+        },
+        {
+          "name": "spArr",
+          "line": 52
+        },
+        {
+          "name": "spCount",
+          "line": 53
+        }
+      ]
+    },
+    {
+      "id": "sites",
+      "path": "src/sites.js",
+      "topic": "자원 구역·타일·자원 생성",
+      "bytes": 3553,
+      "lines": 39,
+      "symbols": [
+        {
+          "name": "SZ",
+          "line": 2
+        },
+        {
+          "name": "SITES",
+          "line": 3
+        },
+        {
+          "name": "WORLD_TOP",
+          "line": 8
+        },
+        {
+          "name": "SITE",
+          "line": 9
+        },
+        {
+          "name": "siteTileObj",
+          "line": 14
+        },
+        {
+          "name": "tileX",
+          "line": 16
+        },
+        {
+          "name": "tileY",
+          "line": 17
+        },
+        {
+          "name": "tileAt",
+          "line": 18
+        },
+        {
+          "name": "siteOfTile",
+          "line": 19
+        },
+        {
+          "name": "tileKind",
+          "line": 20
+        },
+        {
+          "name": "tileOk",
+          "line": 21
+        },
+        {
+          "name": "TREE_T",
+          "line": 23
+        },
+        {
+          "name": "BANKY",
+          "line": 25
+        },
+        {
+          "name": "isBank",
+          "line": 27
+        },
+        {
+          "name": "tileYw",
+          "line": 28
+        },
+        {
+          "name": "tileXw",
+          "line": 29
+        },
+        {
+          "name": "res",
+          "line": 30
+        },
+        {
+          "name": "RES_LAYOUT",
+          "line": 31
+        },
+        {
+          "name": "pilePos",
+          "line": 37
+        },
+        {
+          "name": "feedY",
+          "line": 38
+        }
+      ]
+    },
+    {
+      "id": "market-config",
+      "path": "src/market-config.js",
+      "topic": "상점 위치·판매 재고",
+      "bytes": 188,
+      "lines": 5,
+      "symbols": [
+        {
+          "name": "STALL",
+          "line": 2
+        },
+        {
+          "name": "dropPt",
+          "line": 3
+        },
+        {
+          "name": "LANE",
+          "line": 4
+        }
+      ]
+    },
+    {
+      "id": "save-progression",
+      "path": "src/save-progression.js",
+      "topic": "저장 키·구형 저장 이관·마을 해금·성장 규칙",
+      "bytes": 16614,
+      "lines": 158,
+      "symbols": [
+        {
+          "name": "KEY",
+          "line": 2
+        },
+        {
+          "name": "S",
+          "line": 3
+        },
+        {
+          "name": "SAVE_VER",
+          "line": 6
+        },
+        {
+          "name": "FRESH",
+          "line": 7
+        },
+        {
+          "name": "LOADV",
+          "line": 9
+        },
+        {
+          "name": "owned",
+          "line": 44
+        },
+        {
+          "name": "siteLv",
+          "line": 45
+        },
+        {
+          "name": "STAGE_W",
+          "line": 46
+        },
+        {
+          "name": "areaW",
+          "line": 47
+        },
+        {
+          "name": "fenceX",
+          "line": 48
+        },
+        {
+          "name": "lineOpen",
+          "line": 49
+        },
+        {
+          "name": "stageCostMult",
+          "line": 51
+        },
+        {
+          "name": "goalCrewLevel",
+          "line": 53
+        },
+        {
+          "name": "GOALS",
+          "line": 54
+        },
+        {
+          "name": "goalList",
+          "line": 61
+        },
+        {
+          "name": "goalDone",
+          "line": 62
+        },
+        {
+          "name": "goalPct",
+          "line": 63
+        },
+        {
+          "name": "stageReady",
+          "line": 64
+        },
+        {
+          "name": "expandStage",
+          "line": 65
+        },
+        {
+          "name": "updateStage",
+          "line": 72
+        },
+        {
+          "name": "siteScore",
+          "line": 74
+        },
+        {
+          "name": "stat",
+          "line": 76
+        },
+        {
+          "name": "RESETTING",
+          "line": 77
+        },
+        {
+          "name": "save",
+          "line": 78
+        },
+        {
+          "name": "startOver",
+          "line": 79
+        },
+        {
+          "name": "ss",
+          "line": 80
+        },
+        {
+          "name": "addSs",
+          "line": 81
+        },
+        {
+          "name": "lineStock",
+          "line": 82
+        },
+        {
+          "name": "pileOf",
+          "line": 83
+        },
+        {
+          "name": "pn",
+          "line": 84
+        },
+        {
+          "name": "pcap",
+          "line": 85
+        },
+        {
+          "name": "pileTotal",
+          "line": 86
+        },
+        {
+          "name": "speciesAvail",
+          "line": 87
+        },
+        {
+          "name": "count",
+          "line": 89
+        },
+        {
+          "name": "isHunter",
+          "line": 91
+        },
+        {
+          "name": "HV",
+          "line": 92
+        },
+        {
+          "name": "hunterDoor",
+          "line": 93
+        },
+        {
+          "name": "shopStaffLevel",
+          "line": 94
+        },
+        {
+          "name": "shopClerks",
+          "line": 95
+        },
+        {
+          "name": "shopShelves",
+          "line": 96
+        },
+        {
+          "name": "shopRegularChance",
+          "line": 97
+        },
+        {
+          "name": "shopCheckoutTime",
+          "line": 98
+        },
+        {
+          "name": "customerPayment",
+          "line": 99
+        },
+        {
+          "name": "stallCap",
+          "line": 100
+        },
+        {
+          "name": "SITE_MAX",
+          "line": 101
+        },
+        {
+          "name": "siteCost",
+          "line": 102
+        },
+        {
+          "name": "siteBase",
+          "line": 104
+        },
+        {
+          "name": "rollSpecies",
+          "line": 105
+        },
+        {
+          "name": "LEGT",
+          "line": 106
+        },
+        {
+          "name": "updateLegend",
+          "line": 107
+        },
+        {
+          "name": "growRes",
+          "line": 109
+        }
+      ]
+    },
+    {
+      "id": "gear-economy",
+      "path": "src/gear-economy.js",
+      "topic": "장비 능력·종류·가격·가게 일손 규칙",
+      "bytes": 3459,
+      "lines": 40,
+      "symbols": [
+        {
+          "name": "NAMES",
+          "line": 2
+        },
+        {
+          "name": "TH",
+          "line": 3
+        },
+        {
+          "name": "MAXLV",
+          "line": 4
+        },
+        {
+          "name": "UNIT",
+          "line": 5
+        },
+        {
+          "name": "WKN",
+          "line": 6
+        },
+        {
+          "name": "wpnLv",
+          "line": 9
+        },
+        {
+          "name": "wkind",
+          "line": 10
+        },
+        {
+          "name": "heroReach",
+          "line": 11
+        },
+        {
+          "name": "wtier",
+          "line": 12
+        },
+        {
+          "name": "heroDmgMul",
+          "line": 14
+        },
+        {
+          "name": "tierOf",
+          "line": 15
+        },
+        {
+          "name": "relevant",
+          "line": 16
+        },
+        {
+          "name": "syncPlayerGear",
+          "line": 18
+        },
+        {
+          "name": "teamTier",
+          "line": 19
+        },
+        {
+          "name": "ptier",
+          "line": 20
+        },
+        {
+          "name": "gcost",
+          "line": 21
+        },
+        {
+          "name": "WORKF",
+          "line": 22
+        },
+        {
+          "name": "spOf",
+          "line": 23
+        },
+        {
+          "name": "okFor",
+          "line": 24
+        },
+        {
+          "name": "teamOk",
+          "line": 25
+        },
+        {
+          "name": "baseTime",
+          "line": 26
+        },
+        {
+          "name": "cap",
+          "line": 27
+        },
+        {
+          "name": "courCap",
+          "line": 28
+        },
+        {
+          "name": "priceMult",
+          "line": 29
+        },
+        {
+          "name": "HOT",
+          "line": 30
+        },
+        {
+          "name": "hotMult",
+          "line": 31
+        },
+        {
+          "name": "ECON",
+          "line": 33
+        },
+        {
+          "name": "unitPrice",
+          "line": 34
+        }
+      ]
+    },
+    {
+      "id": "audio",
+      "path": "src/audio.js",
+      "topic": "효과음·배경 음악",
+      "bytes": 4135,
+      "lines": 59,
+      "symbols": [
+        {
+          "name": "AC",
+          "line": 2
+        },
+        {
+          "name": "audioInit",
+          "line": 3
+        },
+        {
+          "name": "applyVol",
+          "line": 10
+        },
+        {
+          "name": "tone",
+          "line": 11
+        },
+        {
+          "name": "NOISE",
+          "line": 17
+        },
+        {
+          "name": "noise",
+          "line": 18
+        },
+        {
+          "name": "SFX",
+          "line": 25
+        },
+        {
+          "name": "sfx",
+          "line": 39
+        },
+        {
+          "name": "MEL",
+          "line": 44
+        },
+        {
+          "name": "btone",
+          "line": 45
+        },
+        {
+          "name": "updateMusic",
+          "line": 47
+        }
+      ]
+    },
+    {
+      "id": "effects",
+      "path": "src/effects.js",
+      "topic": "입자·알림·흔들림",
+      "bytes": 615,
+      "lines": 12,
+      "symbols": [
+        {
+          "name": "floats",
+          "line": 2
+        },
+        {
+          "name": "SHAKE",
+          "line": 4
+        },
+        {
+          "name": "addFloat",
+          "line": 5
+        },
+        {
+          "name": "burst",
+          "line": 6
+        }
+      ]
+    },
+    {
+      "id": "render-primitives",
+      "path": "src/render-primitives.js",
+      "topic": "공통 도형·아이템·자원 그리기",
+      "bytes": 16316,
+      "lines": 173,
+      "symbols": [
+        {
+          "name": "rr",
+          "line": 2
+        },
+        {
+          "name": "hs",
+          "line": 3
+        },
+        {
+          "name": "eob",
+          "line": 4
+        },
+        {
+          "name": "blob",
+          "line": 5
+        },
+        {
+          "name": "curWalk",
+          "line": 6
+        },
+        {
+          "name": "fishShape",
+          "line": 7
+        },
+        {
+          "name": "drawItem",
+          "line": 25
+        },
+        {
+          "name": "TOOL_COL",
+          "line": 97
+        },
+        {
+          "name": "ROD_COL",
+          "line": 98
+        },
+        {
+          "name": "BOOT_COL",
+          "line": 99
+        },
+        {
+          "name": "drawAxe",
+          "line": 100
+        },
+        {
+          "name": "drawRod",
+          "line": 107
+        },
+        {
+          "name": "drawBoots",
+          "line": 115
+        },
+        {
+          "name": "SHIRT",
+          "line": 120
+        },
+        {
+          "name": "HAT",
+          "line": 129
+        },
+        {
+          "name": "SCARF",
+          "line": 138
+        },
+        {
+          "name": "PANTS",
+          "line": 139
+        },
+        {
+          "name": "drawPerson",
+          "line": 140
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "path": "src/agents.js",
+      "topic": "일꾼·BFS 경로·채집·납품·합성",
+      "bytes": 20434,
+      "lines": 257,
+      "symbols": [
+        {
+          "name": "agents",
+          "line": 2
+        },
+        {
+          "name": "HOME",
+          "line": 3
+        },
+        {
+          "name": "LODGEP",
+          "line": 4
+        },
+        {
+          "name": "WNAMES",
+          "line": 5
+        },
+        {
+          "name": "LOOK_HAIR",
+          "line": 6
+        },
+        {
+          "name": "LOOK_SKIN",
+          "line": 7
+        },
+        {
+          "name": "newLook",
+          "line": 8
+        },
+        {
+          "name": "mkAgent",
+          "line": 11
+        },
+        {
+          "name": "bagN",
+          "line": 22
+        },
+        {
+          "name": "bagLine",
+          "line": 23
+        },
+        {
+          "name": "spdOf",
+          "line": 24
+        },
+        {
+          "name": "release",
+          "line": 25
+        },
+        {
+          "name": "speedOf",
+          "line": 26
+        },
+        {
+          "name": "moveTo",
+          "line": 27
+        },
+        {
+          "name": "tileOf",
+          "line": 33
+        },
+        {
+          "name": "sameTile",
+          "line": 34
+        },
+        {
+          "name": "findPath",
+          "line": 36
+        },
+        {
+          "name": "goTile",
+          "line": 45
+        },
+        {
+          "name": "followPath",
+          "line": 52
+        },
+        {
+          "name": "stand",
+          "line": 54
+        },
+        {
+          "name": "near",
+          "line": 55
+        },
+        {
+          "name": "workersOnSite",
+          "line": 56
+        },
+        {
+          "name": "pileRoomW",
+          "line": 57
+        },
+        {
+          "name": "canTake",
+          "line": 58
+        },
+        {
+          "name": "resInTile",
+          "line": 65
+        },
+        {
+          "name": "harvestable",
+          "line": 66
+        },
+        {
+          "name": "needMsg",
+          "line": 67
+        },
+        {
+          "name": "harvest",
+          "line": 68
+        },
+        {
+          "name": "progress",
+          "line": 77
+        },
+        {
+          "name": "workTile",
+          "line": 92
+        },
+        {
+          "name": "collectStore",
+          "line": 108
+        },
+        {
+          "name": "idleInTile",
+          "line": 115
+        },
+        {
+          "name": "dropAt",
+          "line": 117
+        },
+        {
+          "name": "DROP_TILE",
+          "line": 127
+        },
+        {
+          "name": "tryDrops",
+          "line": 129
+        },
+        {
+          "name": "takeFromPile",
+          "line": 136
+        },
+        {
+          "name": "deliverLine",
+          "line": 142
+        },
+        {
+          "name": "autoDropTile",
+          "line": 143
+        },
+        {
+          "name": "bestGatherTile",
+          "line": 144
+        },
+        {
+          "name": "stepWorker",
+          "line": 160
+        },
+        {
+          "name": "waitForRes",
+          "line": 170
+        },
+        {
+          "name": "stepPlayerManual",
+          "line": 179
+        },
+        {
+          "name": "stepPlayerAuto",
+          "line": 186
+        },
+        {
+          "name": "SUPER_ROLES",
+          "line": 206
+        },
+        {
+          "name": "SUPERNAME",
+          "line": 208
+        },
+        {
+          "name": "superGather",
+          "line": 209
+        },
+        {
+          "name": "superPos",
+          "line": 210
+        },
+        {
+          "name": "canMerge",
+          "line": 211
+        },
+        {
+          "name": "mergeCrew",
+          "line": 212
+        },
+        {
+          "name": "superTopUp",
+          "line": 221
+        },
+        {
+          "name": "stepSuper",
+          "line": 223
+        },
+        {
+          "name": "step",
+          "line": 250
+        }
+      ]
+    },
+    {
+      "id": "conveyors",
+      "path": "src/conveyors.js",
+      "topic": "물류 벨트·분배",
+      "bytes": 6561,
+      "lines": 65,
+      "symbols": [
+        {
+          "name": "belt",
+          "line": 2
+        },
+        {
+          "name": "drawExport",
+          "line": 4
+        },
+        {
+          "name": "convRate",
+          "line": 12
+        },
+        {
+          "name": "convBatch",
+          "line": 13
+        },
+        {
+          "name": "convSpeed",
+          "line": 14
+        },
+        {
+          "name": "PROC_OF",
+          "line": 15
+        },
+        {
+          "name": "CVLINE",
+          "line": 16
+        },
+        {
+          "name": "cvLv",
+          "line": 17
+        },
+        {
+          "name": "BPATH",
+          "line": 18
+        },
+        {
+          "name": "beltOn",
+          "line": 19
+        },
+        {
+          "name": "ptsOf",
+          "line": 20
+        },
+        {
+          "name": "procCap",
+          "line": 21
+        },
+        {
+          "name": "CV_MAX",
+          "line": 22
+        },
+        {
+          "name": "cvCost",
+          "line": 23
+        },
+        {
+          "name": "beltPts",
+          "line": 24
+        },
+        {
+          "name": "convN",
+          "line": 27
+        },
+        {
+          "name": "splitNext",
+          "line": 29
+        },
+        {
+          "name": "updateConveyors",
+          "line": 31
+        }
+      ]
+    },
+    {
+      "id": "production",
+      "path": "src/production.js",
+      "topic": "공장·창고·트럭·생산",
+      "bytes": 11413,
+      "lines": 128,
+      "symbols": [
+        {
+          "name": "WH",
+          "line": 2
+        },
+        {
+          "name": "WHY",
+          "line": 3
+        },
+        {
+          "name": "whDrop",
+          "line": 4
+        },
+        {
+          "name": "whN",
+          "line": 5
+        },
+        {
+          "name": "whTotal",
+          "line": 6
+        },
+        {
+          "name": "whUnlocked",
+          "line": 7
+        },
+        {
+          "name": "palKey",
+          "line": 8
+        },
+        {
+          "name": "PROC",
+          "line": 9
+        },
+        {
+          "name": "PROCS",
+          "line": 10
+        },
+        {
+          "name": "smeltSellT",
+          "line": 12
+        },
+        {
+          "name": "procYield",
+          "line": 13
+        },
+        {
+          "name": "shedYield",
+          "line": 15
+        },
+        {
+          "name": "matOk",
+          "line": 16
+        },
+        {
+          "name": "matN",
+          "line": 17
+        },
+        {
+          "name": "plotOf",
+          "line": 18
+        },
+        {
+          "name": "procCur",
+          "line": 19
+        },
+        {
+          "name": "storeN",
+          "line": 20
+        },
+        {
+          "name": "storeCap",
+          "line": 21
+        },
+        {
+          "name": "shedBoost",
+          "line": 23
+        },
+        {
+          "name": "machPos",
+          "line": 24
+        },
+        {
+          "name": "shedPos",
+          "line": 25
+        },
+        {
+          "name": "dockX",
+          "line": 26
+        },
+        {
+          "name": "updateProcessing",
+          "line": 27
+        },
+        {
+          "name": "whCap",
+          "line": 44
+        },
+        {
+          "name": "addWh",
+          "line": 45
+        },
+        {
+          "name": "recipeOk",
+          "line": 46
+        },
+        {
+          "name": "CR",
+          "line": 47
+        },
+        {
+          "name": "reservedWh",
+          "line": 48
+        },
+        {
+          "name": "updateCrafting",
+          "line": 49
+        },
+        {
+          "name": "trucks",
+          "line": 70
+        },
+        {
+          "name": "truckCands",
+          "line": 71
+        },
+        {
+          "name": "pickW",
+          "line": 76
+        },
+        {
+          "name": "newTruck",
+          "line": 77
+        },
+        {
+          "name": "procPay",
+          "line": 86
+        },
+        {
+          "name": "truckPrice",
+          "line": 87
+        },
+        {
+          "name": "truckInterval",
+          "line": 89
+        },
+        {
+          "name": "rushCount",
+          "line": 90
+        },
+        {
+          "name": "updateHot",
+          "line": 91
+        },
+        {
+          "name": "truckDone",
+          "line": 92
+        },
+        {
+          "name": "truckLeave",
+          "line": 93
+        },
+        {
+          "name": "updateTrucks",
+          "line": 94
+        }
+      ]
+    },
+    {
+      "id": "customers",
+      "path": "src/customers.js",
+      "topic": "손님·대기열·계산·단골",
+      "bytes": 5572,
+      "lines": 82,
+      "symbols": [
+        {
+          "name": "customers",
+          "line": 2
+        },
+        {
+          "name": "CUST_COL",
+          "line": 3
+        },
+        {
+          "name": "HAIR",
+          "line": 4
+        },
+        {
+          "name": "serv",
+          "line": 5
+        },
+        {
+          "name": "qmax",
+          "line": 7
+        },
+        {
+          "name": "shopSide",
+          "line": 8
+        },
+        {
+          "name": "slotPos",
+          "line": 9
+        },
+        {
+          "name": "entryX",
+          "line": 10
+        },
+        {
+          "name": "lineOf",
+          "line": 11
+        },
+        {
+          "name": "spawnInterval",
+          "line": 12
+        },
+        {
+          "name": "chooseWant",
+          "line": 17
+        },
+        {
+          "name": "newCustomer",
+          "line": 29
+        },
+        {
+          "name": "moveC",
+          "line": 39
+        },
+        {
+          "name": "updateCustomers",
+          "line": 44
+        }
+      ]
+    },
+    {
+      "id": "movement",
+      "path": "src/movement.js",
+      "topic": "자유 이동·지형 충돌·현금 수령·물품 전달",
+      "bytes": 14581,
+      "lines": 156,
+      "symbols": [
+        {
+          "name": "joy",
+          "line": 2
+        },
+        {
+          "name": "idleT",
+          "line": 4
+        },
+        {
+          "name": "idleHint",
+          "line": 5
+        },
+        {
+          "name": "walkXY",
+          "line": 15
+        },
+        {
+          "name": "fly",
+          "line": 20
+        },
+        {
+          "name": "updateFly",
+          "line": 21
+        },
+        {
+          "name": "drawFly",
+          "line": 22
+        },
+        {
+          "name": "stackList",
+          "line": 29
+        },
+        {
+          "name": "stackTop",
+          "line": 30
+        },
+        {
+          "name": "drawStack",
+          "line": 31
+        },
+        {
+          "name": "allBelted",
+          "line": 43
+        },
+        {
+          "name": "MATS",
+          "line": 44
+        },
+        {
+          "name": "CFLY",
+          "line": 45
+        },
+        {
+          "name": "coinToHud",
+          "line": 46
+        },
+        {
+          "name": "bumpHud",
+          "line": 47
+        },
+        {
+          "name": "drawCoinFly",
+          "line": 48
+        },
+        {
+          "name": "cashPos",
+          "line": 54
+        },
+        {
+          "name": "tcashPos",
+          "line": 55
+        },
+        {
+          "name": "cashSpots",
+          "line": 56
+        },
+        {
+          "name": "autoT",
+          "line": 57
+        },
+        {
+          "name": "updateCash",
+          "line": 58
+        },
+        {
+          "name": "drawCash",
+          "line": 70
+        },
+        {
+          "name": "zoneActions",
+          "line": 84
+        },
+        {
+          "name": "takeFromPileTo",
+          "line": 106
+        },
+        {
+          "name": "unstick",
+          "line": 108
+        },
+        {
+          "name": "stepPlayerFree",
+          "line": 109
+        }
+      ]
+    },
+    {
+      "id": "pads",
+      "path": "src/pads.js",
+      "topic": "시설 발판·배치·충돌·울타리 조작",
+      "bytes": 23550,
+      "lines": 254,
+      "symbols": [
+        {
+          "name": "PADLIST",
+          "line": 2
+        },
+        {
+          "name": "PAD_W",
+          "line": 3
+        },
+        {
+          "name": "PAD_LAYOUT",
+          "line": 5
+        },
+        {
+          "name": "padBounds",
+          "line": 52
+        },
+        {
+          "name": "rectTouches",
+          "line": 53
+        },
+        {
+          "name": "padObstacles",
+          "line": 54
+        },
+        {
+          "name": "fencePadAnchor",
+          "line": 62
+        },
+        {
+          "name": "nearbyFenceSlot",
+          "line": 63
+        },
+        {
+          "name": "CONSTRUCTION_SLOTS",
+          "line": 76
+        },
+        {
+          "name": "constructionSlot",
+          "line": 77
+        },
+        {
+          "name": "plannedConstructionSlot",
+          "line": 78
+        },
+        {
+          "name": "isConstructionPad",
+          "line": 94
+        },
+        {
+          "name": "arrangePads",
+          "line": 102
+        },
+        {
+          "name": "padPos",
+          "line": 116
+        },
+        {
+          "name": "buildPads",
+          "line": 117
+        },
+        {
+          "name": "padHold",
+          "line": 170
+        },
+        {
+          "name": "updatePads",
+          "line": 171
+        },
+        {
+          "name": "padIcon",
+          "line": 201
+        },
+        {
+          "name": "drawTapMark",
+          "line": 202
+        },
+        {
+          "name": "padTitle",
+          "line": 203
+        },
+        {
+          "name": "padReady",
+          "line": 224
+        },
+        {
+          "name": "drawPads",
+          "line": 225
+        },
+        {
+          "name": "drawJoy",
+          "line": 249
+        }
+      ]
+    },
+    {
+      "id": "tutorial",
+      "path": "src/tutorial.js",
+      "topic": "튜토리얼·저장 복구·목표 화살표",
+      "bytes": 7545,
+      "lines": 57,
+      "symbols": [
+        {
+          "name": "TUT",
+          "line": 2
+        },
+        {
+          "name": "TUTPAD",
+          "line": 14
+        },
+        {
+          "name": "TUT_OK",
+          "line": 15
+        },
+        {
+          "name": "tutHasDelivery",
+          "line": 17
+        },
+        {
+          "name": "tutRecoverDelivery",
+          "line": 18
+        },
+        {
+          "name": "tutNoGather",
+          "line": 19
+        },
+        {
+          "name": "tutAllow",
+          "line": 20
+        },
+        {
+          "name": "tutOn",
+          "line": 21
+        },
+        {
+          "name": "tutNext",
+          "line": 22
+        },
+        {
+          "name": "updateTut",
+          "line": 28
+        },
+        {
+          "name": "tutHint",
+          "line": 34
+        },
+        {
+          "name": "guideTarget",
+          "line": 35
+        },
+        {
+          "name": "defenseDue",
+          "line": 39
+        },
+        {
+          "name": "defensePad",
+          "line": 40
+        },
+        {
+          "name": "drawGuide",
+          "line": 41
+        },
+        {
+          "name": "tutorialEdgePoint",
+          "line": 49
+        },
+        {
+          "name": "drawTutorialEdge",
+          "line": 50
+        },
+        {
+          "name": "drawTutArrow",
+          "line": 51
+        }
+      ]
+    },
+    {
+      "id": "raids",
+      "path": "src/raids.js",
+      "topic": "곰 생성·침입·시설 피해",
+      "bytes": 10711,
+      "lines": 113,
+      "symbols": [
+        {
+          "name": "BEARS",
+          "line": 4
+        },
+        {
+          "name": "hasWeapon",
+          "line": 5
+        },
+        {
+          "name": "huntReady",
+          "line": 6
+        },
+        {
+          "name": "bearsOn",
+          "line": 7
+        },
+        {
+          "name": "bearInterval",
+          "line": 8
+        },
+        {
+          "name": "liveBears",
+          "line": 9
+        },
+        {
+          "name": "bearNear",
+          "line": 10
+        },
+        {
+          "name": "spearDmg",
+          "line": 11
+        },
+        {
+          "name": "bowDmg",
+          "line": 12
+        },
+        {
+          "name": "BEAR_HIT",
+          "line": 13
+        },
+        {
+          "name": "bearTargets",
+          "line": 15
+        },
+        {
+          "name": "bearMult",
+          "line": 23
+        },
+        {
+          "name": "bearStrikeMult",
+          "line": 24
+        },
+        {
+          "name": "bearCap",
+          "line": 26
+        },
+        {
+          "name": "raidP",
+          "line": 28
+        },
+        {
+          "name": "bearCapNow",
+          "line": 30
+        },
+        {
+          "name": "raidGap",
+          "line": 32
+        },
+        {
+          "name": "RUSHMSG",
+          "line": 33
+        },
+        {
+          "name": "bearR",
+          "line": 35
+        },
+        {
+          "name": "tPos",
+          "line": 36
+        },
+        {
+          "name": "tValid",
+          "line": 46
+        },
+        {
+          "name": "tName",
+          "line": 47
+        },
+        {
+          "name": "pickTarget",
+          "line": 48
+        },
+        {
+          "name": "BEAR_HPX",
+          "line": 49
+        },
+        {
+          "name": "pickBearSide",
+          "line": 50
+        },
+        {
+          "name": "bearEntry",
+          "line": 51
+        },
+        {
+          "name": "bearClimb",
+          "line": 57
+        },
+        {
+          "name": "blockBearAtFence",
+          "line": 58
+        },
+        {
+          "name": "spawnBear",
+          "line": 70
+        },
+        {
+          "name": "degrade",
+          "line": 85
+        },
+        {
+          "name": "killBear",
+          "line": 97
+        }
+      ]
+    },
+    {
+      "id": "ending",
+      "path": "src/ending.js",
+      "topic": "최종 보스 시작·엔딩·시네마틱",
+      "bytes": 5618,
+      "lines": 68,
+      "symbols": [
+        {
+          "name": "allMaxed",
+          "line": 3
+        },
+        {
+          "name": "spawnFinaleBoss",
+          "line": 16
+        },
+        {
+          "name": "showEnding",
+          "line": 24
+        },
+        {
+          "name": "finaleT",
+          "line": 25
+        },
+        {
+          "name": "updateFinale",
+          "line": 26
+        },
+        {
+          "name": "ENDSEQ",
+          "line": 28
+        },
+        {
+          "name": "startEndingCinematic",
+          "line": 29
+        },
+        {
+          "name": "updateEndingCinematic",
+          "line": 30
+        },
+        {
+          "name": "drawEndingCinematic",
+          "line": 32
+        },
+        {
+          "name": "heroHitFx",
+          "line": 67
+        },
+        {
+          "name": "COMBO_N",
+          "line": 68
+        }
+      ]
+    },
+    {
+      "id": "combat",
+      "path": "src/combat.js",
+      "topic": "영웅 공격·콤보·무기 표현",
+      "bytes": 20387,
+      "lines": 165,
+      "symbols": [
+        {
+          "name": "heroUltFx",
+          "line": 2
+        },
+        {
+          "name": "heroAttackHit",
+          "line": 10
+        },
+        {
+          "name": "hitBear",
+          "line": 16
+        },
+        {
+          "name": "separateBear",
+          "line": 26
+        },
+        {
+          "name": "updateBears",
+          "line": 39
+        },
+        {
+          "name": "drawArrows",
+          "line": 119
+        },
+        {
+          "name": "drawBearTargets",
+          "line": 132
+        },
+        {
+          "name": "drawWpn",
+          "line": 136
+        },
+        {
+          "name": "drawWeapon",
+          "line": 151
+        },
+        {
+          "name": "drawWeaponBack",
+          "line": 159
+        },
+        {
+          "name": "drawHeroGear",
+          "line": 161
+        }
+      ]
+    },
+    {
+      "id": "defence",
+      "path": "src/defence.js",
+      "topic": "마을별 방어·사냥꾼·수리·울타리 그리기",
+      "bytes": 44543,
+      "lines": 382,
+      "symbols": [
+        {
+          "name": "TOWER",
+          "line": 2
+        },
+        {
+          "name": "towerDoor",
+          "line": 3
+        },
+        {
+          "name": "TWPN",
+          "line": 4
+        },
+        {
+          "name": "towerWpn",
+          "line": 5
+        },
+        {
+          "name": "towerRange",
+          "line": 6
+        },
+        {
+          "name": "TOWER_MAX",
+          "line": 7
+        },
+        {
+          "name": "towerDmgAt",
+          "line": 9
+        },
+        {
+          "name": "towerGapAt",
+          "line": 10
+        },
+        {
+          "name": "towerDmg",
+          "line": 11
+        },
+        {
+          "name": "towerGap",
+          "line": 12
+        },
+        {
+          "name": "TSPLASH",
+          "line": 13
+        },
+        {
+          "name": "towerT",
+          "line": 14
+        },
+        {
+          "name": "fenceHold",
+          "line": 15
+        },
+        {
+          "name": "fenceMax",
+          "line": 16
+        },
+        {
+          "name": "fenceHpAt",
+          "line": 17
+        },
+        {
+          "name": "towerMax",
+          "line": 18
+        },
+        {
+          "name": "FENCEHP",
+          "line": 19
+        },
+        {
+          "name": "villageAt",
+          "line": 21
+        },
+        {
+          "name": "fenceLvV",
+          "line": 22
+        },
+        {
+          "name": "fenceUp",
+          "line": 23
+        },
+        {
+          "name": "fMaxV",
+          "line": 24
+        },
+        {
+          "name": "fixDef",
+          "line": 25
+        },
+        {
+          "name": "FIXDEF",
+          "line": 27
+        },
+        {
+          "name": "fenceSlow",
+          "line": 28
+        },
+        {
+          "name": "fenceSoft",
+          "line": 29
+        },
+        {
+          "name": "XTOWERS",
+          "line": 33
+        },
+        {
+          "name": "xtLv",
+          "line": 34
+        },
+        {
+          "name": "xTowerOn",
+          "line": 35
+        },
+        {
+          "name": "towerCount",
+          "line": 36
+        },
+        {
+          "name": "updateXTowers",
+          "line": 37
+        },
+        {
+          "name": "drawXTowers",
+          "line": 42
+        },
+        {
+          "name": "updateDefense",
+          "line": 43
+        },
+        {
+          "name": "hunterDmg",
+          "line": 54
+        },
+        {
+          "name": "hunterSeparate",
+          "line": 56
+        },
+        {
+          "name": "stepLim",
+          "line": 58
+        },
+        {
+          "name": "stepHunter",
+          "line": 65
+        },
+        {
+          "name": "drawBow",
+          "line": 108
+        },
+        {
+          "name": "repTarget",
+          "line": 115
+        },
+        {
+          "name": "repairs",
+          "line": 122
+        },
+        {
+          "name": "repCost",
+          "line": 123
+        },
+        {
+          "name": "repDef",
+          "line": 124
+        },
+        {
+          "name": "doRepair",
+          "line": 125
+        },
+        {
+          "name": "addRepair",
+          "line": 128
+        },
+        {
+          "name": "drawTowerWpn",
+          "line": 136
+        },
+        {
+          "name": "wallGaps",
+          "line": 168
+        },
+        {
+          "name": "wallSegs",
+          "line": 170
+        },
+        {
+          "name": "inGap",
+          "line": 171
+        },
+        {
+          "name": "LOGC",
+          "line": 172
+        },
+        {
+          "name": "LOCKC",
+          "line": 181
+        },
+        {
+          "name": "SIGNP",
+          "line": 191
+        },
+        {
+          "name": "drawOutskirts",
+          "line": 192
+        },
+        {
+          "name": "drawLocked",
+          "line": 202
+        },
+        {
+          "name": "drawSideFence",
+          "line": 212
+        },
+        {
+          "name": "bannerLines",
+          "line": 221
+        },
+        {
+          "name": "drawStageBanner",
+          "line": 224
+        },
+        {
+          "name": "drawFence",
+          "line": 231
+        },
+        {
+          "name": "drawFenceV",
+          "line": 232
+        },
+        {
+          "name": "fenceCracks",
+          "line": 257
+        },
+        {
+          "name": "towerBase",
+          "line": 262
+        },
+        {
+          "name": "autoHunt",
+          "line": 268
+        },
+        {
+          "name": "drawBear",
+          "line": 277
+        },
+        {
+          "name": "drawLoot",
+          "line": 349
+        },
+        {
+          "name": "toScreen",
+          "line": 355
+        },
+        {
+          "name": "edgeMark",
+          "line": 356
+        },
+        {
+          "name": "drawTutEdge",
+          "line": 365
+        },
+        {
+          "name": "ZBTN",
+          "line": 366
+        },
+        {
+          "name": "drawZoomBtn",
+          "line": 367
+        },
+        {
+          "name": "drawBearChip",
+          "line": 370
+        }
+      ]
+    },
+    {
+      "id": "input",
+      "path": "src/input.js",
+      "topic": "터치·드래그·탭 경로·핀치·설정",
+      "bytes": 7985,
+      "lines": 91,
+      "symbols": [
+        {
+          "name": "PILLS",
+          "line": 2
+        },
+        {
+          "name": "TOUCHES",
+          "line": 3
+        },
+        {
+          "name": "zoomRange",
+          "line": 4
+        },
+        {
+          "name": "zoomTarget",
+          "line": 5
+        },
+        {
+          "name": "touchPair",
+          "line": 6
+        },
+        {
+          "name": "registerTouch",
+          "line": 7
+        },
+        {
+          "name": "moveTouch",
+          "line": 15
+        },
+        {
+          "name": "endTouch",
+          "line": 21
+        },
+        {
+          "name": "wpt",
+          "line": 27
+        },
+        {
+          "name": "siteAt",
+          "line": 28
+        },
+        {
+          "name": "lineClear",
+          "line": 64
+        },
+        {
+          "name": "setTap",
+          "line": 65
+        },
+        {
+          "name": "repairFenceAt",
+          "line": 70
+        },
+        {
+          "name": "endJoy",
+          "line": 71
+        },
+        {
+          "name": "endPointer",
+          "line": 72
+        },
+        {
+          "name": "cancelControl",
+          "line": 76
+        },
+        {
+          "name": "modeBtn",
+          "line": 86
+        },
+        {
+          "name": "SENS_D",
+          "line": 88
+        },
+        {
+          "name": "syncSens",
+          "line": 89
+        }
+      ]
+    },
+    {
+      "id": "story-intro",
+      "path": "src/story-intro.js",
+      "topic": "무문자 인트로·마을별 대화·읽음 저장",
+      "bytes": 10934,
+      "lines": 69,
+      "symbols": [
+        {
+          "name": "TITLE",
+          "line": 2
+        },
+        {
+          "name": "introFrames",
+          "line": 4
+        },
+        {
+          "name": "introImage",
+          "line": 5
+        },
+        {
+          "name": "introPaint",
+          "line": 6
+        },
+        {
+          "name": "introLoad",
+          "line": 7
+        },
+        {
+          "name": "STORY_SCENES",
+          "line": 13
+        },
+        {
+          "name": "storyBox",
+          "line": 33
+        },
+        {
+          "name": "storySeen",
+          "line": 34
+        },
+        {
+          "name": "storyTypingClear",
+          "line": 35
+        },
+        {
+          "name": "storyRenderList",
+          "line": 36
+        },
+        {
+          "name": "storyBookOpen",
+          "line": 38
+        },
+        {
+          "name": "storyFinish",
+          "line": 39
+        },
+        {
+          "name": "storyCloseNow",
+          "line": 40
+        },
+        {
+          "name": "storyPaintLine",
+          "line": 41
+        },
+        {
+          "name": "storyStart",
+          "line": 42
+        },
+        {
+          "name": "firstTownStory",
+          "line": 50
+        },
+        {
+          "name": "endingEl",
+          "line": 52
+        },
+        {
+          "name": "gearBtn",
+          "line": 54
+        },
+        {
+          "name": "ngBtn",
+          "line": 55
+        },
+        {
+          "name": "sfxBtn",
+          "line": 60
+        },
+        {
+          "name": "syncSnd",
+          "line": 61
+        },
+        {
+          "name": "zoomBtn",
+          "line": 67
+        }
+      ]
+    },
+    {
+      "id": "render-terrain",
+      "path": "src/render-terrain.js",
+      "topic": "자원 지형·부두·공장 부지",
+      "bytes": 24506,
+      "lines": 269,
+      "symbols": [
+        {
+          "name": "loadFx",
+          "line": 2
+        },
+        {
+          "name": "drawGear",
+          "line": 3
+        },
+        {
+          "name": "beltXOf",
+          "line": 6
+        },
+        {
+          "name": "drawLoader",
+          "line": 7
+        },
+        {
+          "name": "drawPile",
+          "line": 31
+        },
+        {
+          "name": "grassTufts",
+          "line": 69
+        },
+        {
+          "name": "TCACHE",
+          "line": 82
+        },
+        {
+          "name": "tileImg",
+          "line": 83
+        },
+        {
+          "name": "drawForestTile",
+          "line": 84
+        },
+        {
+          "name": "drawPondTile",
+          "line": 95
+        },
+        {
+          "name": "drawPondAnim",
+          "line": 115
+        },
+        {
+          "name": "drawStoreTile",
+          "line": 122
+        },
+        {
+          "name": "drawSite",
+          "line": 130
+        },
+        {
+          "name": "drawLockedSite",
+          "line": 136
+        },
+        {
+          "name": "lPath",
+          "line": 151
+        },
+        {
+          "name": "lPoint",
+          "line": 160
+        },
+        {
+          "name": "drawPadDeck",
+          "line": 166
+        },
+        {
+          "name": "drawSiteArt",
+          "line": 172
+        },
+        {
+          "name": "deck",
+          "line": 203
+        },
+        {
+          "name": "laneStrip",
+          "line": 205
+        },
+        {
+          "name": "lantern",
+          "line": 207
+        },
+        {
+          "name": "FOREST_LOOK",
+          "line": 208
+        },
+        {
+          "name": "drawForestArt",
+          "line": 215
+        },
+        {
+          "name": "drawRiverArt",
+          "line": 227
+        },
+        {
+          "name": "siteAnim",
+          "line": 238
+        },
+        {
+          "name": "mineDeco",
+          "line": 244
+        },
+        {
+          "name": "drawOwnedSite",
+          "line": 251
+        },
+        {
+          "name": "PLOTS",
+          "line": 260
+        },
+        {
+          "name": "shedX",
+          "line": 268
+        },
+        {
+          "name": "machOf",
+          "line": 269
+        }
+      ]
+    },
+    {
+      "id": "render-world",
+      "path": "src/render-world.js",
+      "topic": "정적 배경 캐시·공장 애니메이션",
+      "bytes": 17774,
+      "lines": 177,
+      "symbols": [
+        {
+          "name": "BG",
+          "line": 2
+        },
+        {
+          "name": "paintStatic",
+          "line": 3
+        },
+        {
+          "name": "bgWh",
+          "line": 31
+        },
+        {
+          "name": "PAL",
+          "line": 33
+        },
+        {
+          "name": "paintPalisade",
+          "line": 34
+        },
+        {
+          "name": "GLOW",
+          "line": 48
+        },
+        {
+          "name": "VIG",
+          "line": 50
+        },
+        {
+          "name": "drawCampfire",
+          "line": 52
+        },
+        {
+          "name": "drawPlaza",
+          "line": 64
+        },
+        {
+          "name": "facilityLabelSlot",
+          "line": 78
+        },
+        {
+          "name": "facilitySign",
+          "line": 81
+        },
+        {
+          "name": "drawFacilityLabels",
+          "line": 87
+        },
+        {
+          "name": "drawWatchtower",
+          "line": 92
+        },
+        {
+          "name": "PLOT_DRAW",
+          "line": 122
+        }
+      ]
+    },
+    {
+      "id": "render-buildings",
+      "path": "src/render-buildings.js",
+      "topic": "건물·창고·제품 장식",
+      "bytes": 14971,
+      "lines": 124,
+      "symbols": [
+        {
+          "name": "artPoly",
+          "line": 3
+        },
+        {
+          "name": "artShade",
+          "line": 4
+        },
+        {
+          "name": "isoBox",
+          "line": 5
+        },
+        {
+          "name": "isoRoof",
+          "line": 12
+        },
+        {
+          "name": "isoGlass",
+          "line": 21
+        },
+        {
+          "name": "isoTank",
+          "line": 25
+        },
+        {
+          "name": "artPosts",
+          "line": 30
+        },
+        {
+          "name": "artBricks",
+          "line": 31
+        },
+        {
+          "name": "drawIndustrialBuilding",
+          "line": 32
+        },
+        {
+          "name": "drawWorkshopStorage",
+          "line": 77
+        },
+        {
+          "name": "drawWorkshop",
+          "line": 86
+        },
+        {
+          "name": "BOARD",
+          "line": 103
+        },
+        {
+          "name": "drawBoard",
+          "line": 104
+        },
+        {
+          "name": "drawPills",
+          "line": 121
+        },
+        {
+          "name": "drawMarketGround",
+          "line": 123
+        }
+      ]
+    },
+    {
+      "id": "render-logistics",
+      "path": "src/render-logistics.js",
+      "topic": "벨트·운송·트럭 그리기",
+      "bytes": 24341,
+      "lines": 265,
+      "symbols": [
+        {
+          "name": "BTIER",
+          "line": 3
+        },
+        {
+          "name": "tierOfBelt",
+          "line": 13
+        },
+        {
+          "name": "BELTC",
+          "line": 16
+        },
+        {
+          "name": "beltGeo",
+          "line": 17
+        },
+        {
+          "name": "beltStatic",
+          "line": 19
+        },
+        {
+          "name": "beltRun",
+          "line": 42
+        },
+        {
+          "name": "beltCap",
+          "line": 59
+        },
+        {
+          "name": "beltJoint",
+          "line": 66
+        },
+        {
+          "name": "BELTCOL",
+          "line": 76
+        },
+        {
+          "name": "trunkTier",
+          "line": 77
+        },
+        {
+          "name": "installedTiles",
+          "line": 78
+        },
+        {
+          "name": "drawChute",
+          "line": 80
+        },
+        {
+          "name": "beltW",
+          "line": 89
+        },
+        {
+          "name": "PATHLINE",
+          "line": 92
+        },
+        {
+          "name": "pathLv",
+          "line": 93
+        },
+        {
+          "name": "drawPath",
+          "line": 94
+        },
+        {
+          "name": "pathLen",
+          "line": 98
+        },
+        {
+          "name": "pathAt",
+          "line": 99
+        },
+        {
+          "name": "pathClip",
+          "line": 100
+        },
+        {
+          "name": "drawBeltPath",
+          "line": 102
+        },
+        {
+          "name": "updateBeltFx",
+          "line": 110
+        },
+        {
+          "name": "beltCross",
+          "line": 114
+        },
+        {
+          "name": "drawBelts",
+          "line": 119
+        },
+        {
+          "name": "drawSplitters",
+          "line": 141
+        },
+        {
+          "name": "drawRoad",
+          "line": 157
+        },
+        {
+          "name": "drawWarehouse",
+          "line": 162
+        },
+        {
+          "name": "drawTruck",
+          "line": 217
+        },
+        {
+          "name": "drawTruckBubble",
+          "line": 249
+        }
+      ]
+    },
+    {
+      "id": "render-market",
+      "path": "src/render-market.js",
+      "topic": "가게·점원·판매 효과·작업 도구",
+      "bytes": 14885,
+      "lines": 171,
+      "symbols": [
+        {
+          "name": "SHOPDEF",
+          "line": 1
+        },
+        {
+          "name": "STALLFX",
+          "line": 2
+        },
+        {
+          "name": "checkPop",
+          "line": 4
+        },
+        {
+          "name": "updateChecks",
+          "line": 5
+        },
+        {
+          "name": "drawChecks",
+          "line": 6
+        },
+        {
+          "name": "celebrate",
+          "line": 15
+        },
+        {
+          "name": "drawCelebs",
+          "line": 19
+        },
+        {
+          "name": "drawStall",
+          "line": 24
+        },
+        {
+          "name": "drawShopStaff",
+          "line": 36
+        },
+        {
+          "name": "SHOP_STAGE",
+          "line": 42
+        },
+        {
+          "name": "shopStage",
+          "line": 43
+        },
+        {
+          "name": "stallW",
+          "line": 44
+        },
+        {
+          "name": "AWN",
+          "line": 45
+        },
+        {
+          "name": "shopLook",
+          "line": 46
+        },
+        {
+          "name": "BRICKC",
+          "line": 48
+        },
+        {
+          "name": "brickWall",
+          "line": 49
+        },
+        {
+          "name": "drawMarketShop",
+          "line": 54
+        },
+        {
+          "name": "drawStallBody",
+          "line": 75
+        },
+        {
+          "name": "drawBar",
+          "line": 81
+        },
+        {
+          "name": "lockBadge",
+          "line": 87
+        },
+        {
+          "name": "TREE_SPRITES",
+          "line": 91
+        },
+        {
+          "name": "treeSprite",
+          "line": 92
+        },
+        {
+          "name": "drawTree",
+          "line": 121
+        },
+        {
+          "name": "drawOre",
+          "line": 137
+        },
+        {
+          "name": "drawFish",
+          "line": 150
+        },
+        {
+          "name": "toolTr",
+          "line": 163
+        },
+        {
+          "name": "toolTierFor",
+          "line": 164
+        },
+        {
+          "name": "drawChainsaw",
+          "line": 165
+        },
+        {
+          "name": "drawDrill",
+          "line": 167
+        },
+        {
+          "name": "nameTag",
+          "line": 169
+        }
+      ]
+    },
+    {
+      "id": "render-actors",
+      "path": "src/render-actors.js",
+      "topic": "일꾼·영웅·손님 아트",
+      "bytes": 42870,
+      "lines": 341,
+      "symbols": [
+        {
+          "name": "drawVehicleUpgrade",
+          "line": 2
+        },
+        {
+          "name": "drawHarvester",
+          "line": 16
+        },
+        {
+          "name": "drawFishRig",
+          "line": 30
+        },
+        {
+          "name": "drawExcavator",
+          "line": 45
+        },
+        {
+          "name": "RAINBOW",
+          "line": 63
+        },
+        {
+          "name": "rbGrad",
+          "line": 64
+        },
+        {
+          "name": "drawRainbowAxe",
+          "line": 66
+        },
+        {
+          "name": "drawStarPick",
+          "line": 80
+        },
+        {
+          "name": "drawRainbowRod",
+          "line": 83
+        },
+        {
+          "name": "drawHeroHunter",
+          "line": 85
+        },
+        {
+          "name": "drawMasterLumber",
+          "line": 123
+        },
+        {
+          "name": "drawSuper",
+          "line": 133
+        },
+        {
+          "name": "superPlate",
+          "line": 160
+        },
+        {
+          "name": "drawSuperFx",
+          "line": 168
+        },
+        {
+          "name": "heroTier",
+          "line": 192
+        },
+        {
+          "name": "drawHero",
+          "line": 193
+        },
+        {
+          "name": "drawAgent",
+          "line": 260
+        },
+        {
+          "name": "drawCustomer",
+          "line": 311
+        }
+      ]
+    },
+    {
+      "id": "render-scene",
+      "path": "src/render-scene.js",
+      "topic": "납품 매트·장면 합성·화면 안내",
+      "bytes": 6101,
+      "lines": 75,
+      "symbols": [
+        {
+          "name": "drawMats",
+          "line": 2
+        },
+        {
+          "name": "drawTarget",
+          "line": 17
+        },
+        {
+          "name": "draw",
+          "line": 22
+        }
+      ]
+    },
+    {
+      "id": "ambient",
+      "path": "src/ambient.js",
+      "topic": "낮밤·습격 시간·환경",
+      "bytes": 2652,
+      "lines": 34,
+      "symbols": [
+        {
+          "name": "DAY",
+          "line": 2
+        },
+        {
+          "name": "dayL",
+          "line": 3
+        },
+        {
+          "name": "nightAmt",
+          "line": 4
+        },
+        {
+          "name": "SEASON_LEN",
+          "line": 6
+        },
+        {
+          "name": "seasonLen",
+          "line": 8
+        },
+        {
+          "name": "raidLen",
+          "line": 9
+        },
+        {
+          "name": "winterStart",
+          "line": 10
+        },
+        {
+          "name": "isWinter",
+          "line": 11
+        },
+        {
+          "name": "winterLeft",
+          "line": 12
+        },
+        {
+          "name": "toWinter",
+          "line": 13
+        },
+        {
+          "name": "LEAVES",
+          "line": 14
+        },
+        {
+          "name": "drawAmbient",
+          "line": 18
+        },
+        {
+          "name": "AMBC",
+          "line": 33
+        }
+      ]
+    },
+    {
+      "id": "upgrades",
+      "path": "src/upgrades.js",
+      "topic": "구매 정의·가격·장비·직원·시설 강화",
+      "bytes": 38255,
+      "lines": 348,
+      "symbols": [
+        {
+          "name": "fmt",
+          "line": 2
+        },
+        {
+          "name": "money50",
+          "line": 3
+        },
+        {
+          "name": "moneyShort",
+          "line": 4
+        },
+        {
+          "name": "mkUp",
+          "line": 5
+        },
+        {
+          "name": "gearDef",
+          "line": 12
+        },
+        {
+          "name": "weaponDef",
+          "line": 26
+        },
+        {
+          "name": "lowestWorker",
+          "line": 36
+        },
+        {
+          "name": "bulkDef",
+          "line": 37
+        },
+        {
+          "name": "PRIM",
+          "line": 46
+        },
+        {
+          "name": "wLv",
+          "line": 47
+        },
+        {
+          "name": "lowestOf",
+          "line": 48
+        },
+        {
+          "name": "WROLE",
+          "line": 49
+        },
+        {
+          "name": "wBehind",
+          "line": 50
+        },
+        {
+          "name": "wupCost",
+          "line": 51
+        },
+        {
+          "name": "wupCost0",
+          "line": 52
+        },
+        {
+          "name": "wupLock",
+          "line": 56
+        },
+        {
+          "name": "wupDef",
+          "line": 57
+        },
+        {
+          "name": "hireDef",
+          "line": 64
+        },
+        {
+          "name": "autocashDef",
+          "line": 71
+        },
+        {
+          "name": "wh2Def",
+          "line": 74
+        },
+        {
+          "name": "procDef",
+          "line": 77
+        },
+        {
+          "name": "pstDef",
+          "line": 79
+        },
+        {
+          "name": "procBeltDef",
+          "line": 81
+        },
+        {
+          "name": "beltUpCost",
+          "line": 82
+        },
+        {
+          "name": "beltUpHidden",
+          "line": 83
+        },
+        {
+          "name": "beltUpDef",
+          "line": 84
+        },
+        {
+          "name": "towerDef",
+          "line": 85
+        },
+        {
+          "name": "fenceDef",
+          "line": 88
+        },
+        {
+          "name": "vtowerDef",
+          "line": 92
+        },
+        {
+          "name": "vfenceDef",
+          "line": 94
+        },
+        {
+          "name": "vfenceRepairDef",
+          "line": 96
+        },
+        {
+          "name": "VFIXDEF",
+          "line": 97
+        },
+        {
+          "name": "hunterCost",
+          "line": 98
+        },
+        {
+          "name": "hvTower",
+          "line": 99
+        },
+        {
+          "name": "hunterDef",
+          "line": 100
+        },
+        {
+          "name": "lodgeDef",
+          "line": 105
+        },
+        {
+          "name": "millDef",
+          "line": 107
+        },
+        {
+          "name": "smokeDef",
+          "line": 110
+        },
+        {
+          "name": "trunkDef",
+          "line": 113
+        },
+        {
+          "name": "siteDef",
+          "line": 119
+        },
+        {
+          "name": "beltDef",
+          "line": 126
+        },
+        {
+          "name": "shopStaffDef",
+          "line": 134
+        },
+        {
+          "name": "shopDef",
+          "line": 135
+        },
+        {
+          "name": "TABS",
+          "line": 144
+        },
+        {
+          "name": "drawIcon",
+          "line": 169
+        },
+        {
+          "name": "tabsEl",
+          "line": 195
+        },
+        {
+          "name": "activeTab",
+          "line": 196
+        },
+        {
+          "name": "staffBoard",
+          "line": 226
+        },
+        {
+          "name": "wlist",
+          "line": 229
+        },
+        {
+          "name": "staffStatus",
+          "line": 230
+        },
+        {
+          "name": "refreshStaffBoard",
+          "line": 246
+        },
+        {
+          "name": "wKey",
+          "line": 255
+        },
+        {
+          "name": "wTracks",
+          "line": 256
+        },
+        {
+          "name": "renderWorkers",
+          "line": 257
+        },
+        {
+          "name": "management",
+          "line": 285
+        },
+        {
+          "name": "appEl",
+          "line": 286
+        },
+        {
+          "name": "setManagement",
+          "line": 287
+        },
+        {
+          "name": "applyTab",
+          "line": 292
+        },
+        {
+          "name": "buy",
+          "line": 298
+        }
+      ]
+    },
+    {
+      "id": "panels",
+      "path": "src/panels.js",
+      "topic": "상점 메뉴·목표·도감·일일 과제·레이더",
+      "bytes": 19919,
+      "lines": 181,
+      "symbols": [
+        {
+          "name": "invEl",
+          "line": 2
+        },
+        {
+          "name": "knownItems",
+          "line": 3
+        },
+        {
+          "name": "refreshInv",
+          "line": 11
+        },
+        {
+          "name": "elCoins",
+          "line": 31
+        },
+        {
+          "name": "anyPileFull",
+          "line": 32
+        },
+        {
+          "name": "goalBtn",
+          "line": 33
+        },
+        {
+          "name": "goalVal",
+          "line": 37
+        },
+        {
+          "name": "refreshGoal",
+          "line": 39
+        },
+        {
+          "name": "curVillage",
+          "line": 47
+        },
+        {
+          "name": "VNAME",
+          "line": 48
+        },
+        {
+          "name": "radarPoint",
+          "line": 50
+        },
+        {
+          "name": "refreshRaidRadar",
+          "line": 53
+        },
+        {
+          "name": "refreshBearChip",
+          "line": 63
+        },
+        {
+          "name": "DEXCAT",
+          "line": 68
+        },
+        {
+          "name": "DEXALL",
+          "line": 70
+        },
+        {
+          "name": "dexBox",
+          "line": 71
+        },
+        {
+          "name": "dexN",
+          "line": 72
+        },
+        {
+          "name": "dexHeld",
+          "line": 73
+        },
+        {
+          "name": "dexInit",
+          "line": 76
+        },
+        {
+          "name": "dexScan",
+          "line": 82
+        },
+        {
+          "name": "dexIcon",
+          "line": 90
+        },
+        {
+          "name": "renderDex",
+          "line": 94
+        },
+        {
+          "name": "DAYK",
+          "line": 110
+        },
+        {
+          "name": "dayBox",
+          "line": 111
+        },
+        {
+          "name": "dayStr",
+          "line": 112
+        },
+        {
+          "name": "dayPool",
+          "line": 113
+        },
+        {
+          "name": "dayNew",
+          "line": 116
+        },
+        {
+          "name": "dayPrev",
+          "line": 120
+        },
+        {
+          "name": "dayVal",
+          "line": 121
+        },
+        {
+          "name": "dayDoneN",
+          "line": 122
+        },
+        {
+          "name": "dayTick",
+          "line": 123
+        },
+        {
+          "name": "renderDay",
+          "line": 128
+        },
+        {
+          "name": "refreshUI",
+          "line": 136
+        },
+        {
+          "name": "stageEl",
+          "line": 181
+        }
+      ]
+    },
+    {
+      "id": "viewport",
+      "path": "src/viewport.js",
+      "topic": "반응형 화면·확대·리사이즈",
+      "bytes": 925,
+      "lines": 21,
+      "symbols": [
+        {
+          "name": "fit",
+          "line": 1
+        },
+        {
+          "name": "fitFrame",
+          "line": 16
+        },
+        {
+          "name": "scheduleFit",
+          "line": 17
+        }
+      ]
+    },
+    {
+      "id": "loop",
+      "path": "src/loop.js",
+      "topic": "프레임·시뮬레이션·테스트 훅·시작 순서",
+      "bytes": 13017,
+      "lines": 96,
+      "symbols": [
+        {
+          "name": "last",
+          "line": 2
+        },
+        {
+          "name": "camClampX",
+          "line": 3
+        },
+        {
+          "name": "CAMERA_TOP",
+          "line": 4
+        },
+        {
+          "name": "camClampY",
+          "line": 5
+        },
+        {
+          "name": "ERRN",
+          "line": 8
+        },
+        {
+          "name": "loop",
+          "line": 9
+        },
+        {
+          "name": "cornerUpgradeT",
+          "line": 27
+        },
+        {
+          "name": "upgradeOpenVillages",
+          "line": 28
+        },
+        {
+          "name": "updateCornerUpgrade",
+          "line": 37
+        },
+        {
+          "name": "update",
+          "line": 38
+        },
+        {
+          "name": "suspendMobile",
+          "line": 80
+        },
+        {
+          "name": "boot",
+          "line": 90
+        }
+      ]
+    }
+  ]
+}

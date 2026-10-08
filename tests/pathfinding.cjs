@@ -1,0 +1,8 @@
+const vm=require('node:vm'),assert=require('node:assert/strict'),{readRuntime}=require('./runtime-source.cjs');
+const s=readRuntime('agents'),start=s.indexOf('function sameTile('),end=s.indexOf('function goTile(');
+let cells,width,height;const e={tileOk:(c,r)=>c>=0&&r>=0&&c<width&&r<height&&cells[r*width+c]};vm.createContext(e);vm.runInContext(s.slice(start,end),e);
+// Frozen pre-optimization algorithm: compare exact shortest path and tie ordering.
+function reference(from,to){if(!e.tileOk(to.c,to.r))return null;const key=t=>t.c+','+t.r,prev={},q=[from],seen={[key(from)]:1};while(q.length){const cur=q.shift();if(e.sameTile(cur,to))break;for(const [dc,dr] of [[1,0],[-1,0],[0,1],[0,-1]]){const n={c:cur.c+dc,r:cur.r+dr},k=key(n);if(seen[k]||!e.tileOk(n.c,n.r))continue;seen[k]=1;prev[k]=cur;q.push(n);}}if(!seen[key(to)])return null;const path=[];let t=to;while(!e.sameTile(t,from)){path.unshift(t);t=prev[key(t)];}return path;}
+let seed=8127;function random(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;}
+for(let n=0;n<240;n++){width=n%3===0?60:18;height=n%3===0?40:10;cells=Array.from({length:width*height},()=>random()>.27);const from={c:Math.floor(random()*width),r:Math.floor(random()*height)},to=n%6===0?{...from}:{c:Math.floor(random()*width),r:Math.floor(random()*height)};cells[from.r*width+from.c]=true;const actual=e.findPath(from,to);assert.deepEqual(actual===null?null:JSON.parse(JSON.stringify(actual)),reference(from,to));}
+console.log('PASS: 240 deterministic normal/expanded grids; exact route/tie ordering; blocked/unreachable/same-tile destinations.');
