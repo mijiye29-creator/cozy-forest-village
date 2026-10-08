@@ -1,6 +1,6 @@
 # 게임 코드 지도
 
-index.html은 화면 구조, styles/game.css는 화면 디자인이다. 37개 기능 소스와
+index.html은 화면 구조, styles/game.css는 화면 디자인이다. 39개 기능 소스와
 시작 오류 처리 파일을 runtime-manifest.json 순서로 합쳐 runtime.js 하나를 제공한다.
 기존 IIFE·함수 호이스팅·초기화 순서를 유지하며 별도 npm 패키지가 필요 없다.
 브라우저에서 수십 개 스크립트를 차례로 요청하지 않는다. 빌드 단계의 기능 모듈화이며
@@ -73,3 +73,5 @@ rg로 찾는다. 브라우저 개발자 도구는 runtime.js.map으로 원본 �
 3D 모션은 render-motion3d.js의 정점/투영/광원/관절과 시설 회전 부품에서 조정한다. Canvas 출력의 소프트웨어 3D이며 WebGL 엔진은 아니다. 표현 함수는 저장/시뮬레이션 상태를 수정하지 않는다. 움직임 감소 설정은 장식 모션을 멈춘다.
 
 이미지 연출은 film-player.js 하나에서 관리한다. 확정 인트로 4장/엔딩 3장은 intro-scenes.js 데이터로 분리하며 엔딩은 필요할 때만 로드한다. 엔딩 완료 저장 부팅은 이미지 재생을 건너뛰고 트로피 화면을 복원한다.
+
+Claude 원천 에셋 표현은 sprite-atlas.js에서 관리한다. sprite-data.js는 build-game.cjs가 atlas.json/WebP 내용 해시에서 생성하며 직접 수정하지 않는다. sprites는 화면에서 필요할 때 2개 동시 로드, 실패 시 기존 렌더 fallback. 상위 특수 외형과 상품·가방·HP·강화 오버레이를 함께 보존한다.

@@ -334,18 +334,26 @@
           "body_sha256": "f74948be485c084d4c263a7c3c950e316484566bfcdd66faefd7847880886c71"
         }
       ],
-      "status": "reviewed_proposal_deferred",
+      "status": "assets_integrated_code_verified",
       "implementation_commit": null,
       "continue_pending_work": false,
-      "notes": "이번 #7 구현 중 새로 등록된 디자인/기능 제안. 원천 31종/atlas/영상 추가 커밋과 본문/댓글 확인. 기존 정점 기반 3D와 컬러 디자인 유지. 영상은 #7 이미지 플레이어의 대안이며 자동 재생/데이터 절약 검증 후 별도 통합 후보. 긴급 주문/피버/상자 보상은 기존 게임 규칙·경제 변경이므로 수퍼바이저 판단으로 보류: 수입 정의·처리량 단위·보상15% 상한/저장 복구의 별도 설계·검증 필요. QA 버그 수정으로 처리하지 않음. 전체 구현 완료나 실기기60fps 통과로 표시하지 않는다.",
+      "notes": "사용자의 원천 데이터 활용 지시로 Claude GLB에서 만든 atlas/WebP를 캐릭터·시설·곰·일반 나무/바위에 통합. 지연 로드·최대2병렬·이미지 오류 fallback·화면 밖 culling·해시 버전. 이름/가방/HP/자원 진행/상품/수리·레벨 표시 유지. 상위 차량/슈퍼·희귀 자원 고유 외형 유지. 직접14개 코드 검사·native Canvas 실제 렌더 오류0. 실기기FPS/브라우저/전체보스 미실시. 신규 보상·경제 규칙과 영상 대안은 별도 제안 보류.",
       "pending": [
-        "sprite_upgrade_and_overlay_compatibility_validation",
-        "video_autoplay_and_data_saver_validation",
-        "economy_and_persistence_design_for_optional_thrill_features"
+        "physical_device_fps",
+        "direct_browser_sprite_qa",
+        "full_boss_playthrough",
+        "optional_video_and_thrill_proposals"
+      ],
+      "history": [
+        {
+          "status": "reviewed_proposal_deferred",
+          "notes": "이번 #7 구현 중 새로 등록된 디자인/기능 제안. 원천 31종/atlas/영상 추가 커밋과 본문/댓글 확인. 기존 정점 기반 3D와 컬러 디자인 유지. 영상은 #7 이미지 플레이어의 대안이며 자동 재생/데이터 절약 검증 후 별도 통합 후보. 긴급 주문/피버/상자 보상은 기존 게임 규칙·경제 변경이므로 수퍼바이저 판단으로 보류: 수입 정의·처리량 단위·보상15% 상한/저장 복구의 별도 설계·검증 필요. QA 버그 수정으로 처리하지 않음. 전체 구현 완료나 실기기60fps 통과로 표시하지 않는다.",
+          "implementation_commit": null
+        }
       ]
     }
   },
   "input_format": "sha256(UTF-8 JSON, sorted keys, compact separators: number,title,body,state,updated_at,comments[id,body,updated_at])",
   "checked_at_kst": "2026-10-09T00:56:29+09:00",
-  "source_head": "2ea4bfc8f6e0cb0c14ce5f2ee096c7d124b91b48"
+  "source_head": "2b66b7651a69f4779cb7127b7797e41b55e7ec12"
 }

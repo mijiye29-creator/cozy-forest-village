@@ -171,6 +171,7 @@ function drawWarehouse(){
     return;
   }
   var nt=nightAmt();
+  if(!drawFacilitySprite(g,'storage',x0+w/2,H,w+6,H-WH.top,S.whLv,5,0)){
   g.fillStyle='rgba(40,30,20,.18)';g.fillRect(x0+4,WH.wall+4,w,H-WH.wall);
   /* plank walls */
   g.fillStyle='#d8b687';g.fillRect(x0,WH.wall,w,H-WH.wall);
@@ -182,6 +183,7 @@ function drawWarehouse(){
   g.fillStyle='#8e3b2a';g.fillRect(x0+10,WH.top-2,w-20,3);
   /* windows glow at night */
   [x0+12,x1-20].forEach(function(wx){g.fillStyle=nt>.05?'rgba(255,214,120,'+(.45+.5*nt)+')':'#a9d3e3';rr(g,wx,WH.wall+8,9,8,1.5);g.fill();g.strokeStyle='#8a6a44';g.lineWidth=1;g.strokeRect(wx+.5,WH.wall+8.5,8,7);});
+  }
   /* rolling door: lifts while a truck is loading */
   var loading=trucks.some(function(t){return t.state==='load'&&t.dock===0;}),dw=34,dh=H-(WH.wall+30);
   WH.open=(WH.open||0)+((loading?1:0)-(WH.open||0))*.08;
@@ -215,6 +217,8 @@ function drawWarehouse(){
   var dp=whDrop();g.strokeStyle='rgba(120,90,40,.45)';g.setLineDash([2,2]);g.beginPath();g.arc(dp.x,dp.y+4,8,0,7);g.stroke();g.setLineDash([]);
 }
 function drawTruck(t){
+  if(!spriteVisible(t.x,t.y,90))return;
+  if(drawSprite(ctx,'truck',t.state==='load'?'idle':'drive',time,t.x,t.y+10,SPRITE_PPU*1.7,true)){var countLoaded=0,totalOrder=0;t.order.forEach(function(o){countLoaded+=o.got;totalOrder+=o.qty;});ctx.save();ctx.font='600 6px sans-serif';ctx.textAlign='center';ctx.fillStyle='#214b56';ctx.fillText(countLoaded+' / '+totalOrder,t.x,t.y-29);t.order.slice(0,3).forEach(function(o,i){if(o.got)drawItem(ctx,o.id,t.x-10+i*10,t.y-13,.4);});ctx.restore();return;}
   var g=ctx,y=t.y-Math.sin(t.bump*Math.PI)*1.6+(t.state==='load'?0:Math.sin(time*24+t.x*.1)*.35),nt=nightAmt();
   g.save();g.translate(t.x,y);
   g.fillStyle='rgba(0,0,0,.22)';g.beginPath();g.ellipse(2,12,36,4.5,0,0,7);g.fill();

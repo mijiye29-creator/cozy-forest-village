@@ -20,6 +20,16 @@
       "topic": "3D 정점·광원·깊이 정렬·캐릭터 관절·시설 모션"
     },
     {
+      "id": "sprite-data",
+      "path": "src/sprite-data.js",
+      "topic": "생성된 Claude atlas·이미지 해시"
+    },
+    {
+      "id": "sprite-atlas",
+      "path": "src/sprite-atlas.js",
+      "topic": "지연 로드·2개 병렬 큐·스프라이트 프레임·시설 레벨"
+    },
+    {
       "id": "goods",
       "path": "src/goods.js",
       "topic": "나무·물고기·광물·제품 데이터"

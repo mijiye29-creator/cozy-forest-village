@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "817c580a9e11389ae35634407725c2d97db1481b56edd08ac2b85287d111823f",
+  "runtime_sha256": "204be1c19ea4b23d2823e4657b252baba59372669b38fcd1ac291b6d01d24352",
   "modules": [
     {
       "id": "boot-errors",
@@ -126,6 +126,72 @@
         {
           "name": "drawFacilitySolid3D",
           "line": 63
+        }
+      ]
+    },
+    {
+      "id": "sprite-data",
+      "path": "src/sprite-data.js",
+      "topic": "생성된 Claude atlas·이미지 해시",
+      "bytes": 9806,
+      "lines": 3,
+      "symbols": [
+        {
+          "name": "SPRITE_DATA",
+          "line": 2
+        },
+        {
+          "name": "SPRITE_VERSIONS",
+          "line": 3
+        }
+      ]
+    },
+    {
+      "id": "sprite-atlas",
+      "path": "src/sprite-atlas.js",
+      "topic": "지연 로드·2개 병렬 큐·스프라이트 프레임·시설 레벨",
+      "bytes": 2832,
+      "lines": 13,
+      "symbols": [
+        {
+          "name": "SPRITE_PPU",
+          "line": 4
+        },
+        {
+          "name": "SPRITE_ROLE",
+          "line": 5
+        },
+        {
+          "name": "spritePump",
+          "line": 6
+        },
+        {
+          "name": "spriteReady",
+          "line": 7
+        },
+        {
+          "name": "spriteAnim",
+          "line": 8
+        },
+        {
+          "name": "actorSpriteAnim",
+          "line": 9
+        },
+        {
+          "name": "spriteVisible",
+          "line": 10
+        },
+        {
+          "name": "drawSprite",
+          "line": 11
+        },
+        {
+          "name": "drawSpriteLevel",
+          "line": 12
+        },
+        {
+          "name": "drawFacilitySprite",
+          "line": 13
         }
       ]
     },
@@ -1871,8 +1937,8 @@
       "id": "defence",
       "path": "src/defence.js",
       "topic": "마을별 방어·사냥꾼·수리·울타리 그리기",
-      "bytes": 46250,
-      "lines": 407,
+      "bytes": 46670,
+      "lines": 411,
       "symbols": [
         {
           "name": "TOWER",
@@ -2140,31 +2206,31 @@
         },
         {
           "name": "drawLoot",
-          "line": 374
+          "line": 378
         },
         {
           "name": "toScreen",
-          "line": 380
+          "line": 384
         },
         {
           "name": "edgeMark",
-          "line": 381
+          "line": 385
         },
         {
           "name": "drawTutEdge",
-          "line": 390
+          "line": 394
         },
         {
           "name": "ZBTN",
-          "line": 391
+          "line": 395
         },
         {
           "name": "drawZoomBtn",
-          "line": 392
+          "line": 396
         },
         {
           "name": "drawBearChip",
-          "line": 395
+          "line": 399
         }
       ]
     },
@@ -2532,8 +2598,8 @@
       "id": "render-world",
       "path": "src/render-world.js",
       "topic": "정적 배경 캐시·공장 애니메이션",
-      "bytes": 17805,
-      "lines": 177,
+      "bytes": 18111,
+      "lines": 179,
       "symbols": [
         {
           "name": "BG",
@@ -2589,7 +2655,7 @@
         },
         {
           "name": "PLOT_DRAW",
-          "line": 122
+          "line": 123
         }
       ]
     },
@@ -2597,8 +2663,8 @@
       "id": "render-buildings",
       "path": "src/render-buildings.js",
       "topic": "건물·창고·제품 장식",
-      "bytes": 14692,
-      "lines": 123,
+      "bytes": 15191,
+      "lines": 128,
       "symbols": [
         {
           "name": "artPoly",
@@ -2642,23 +2708,23 @@
         },
         {
           "name": "drawWorkshop",
-          "line": 84
+          "line": 85
         },
         {
           "name": "BOARD",
-          "line": 102
+          "line": 107
         },
         {
           "name": "drawBoard",
-          "line": 103
+          "line": 108
         },
         {
           "name": "drawPills",
-          "line": 120
+          "line": 125
         },
         {
           "name": "drawMarketGround",
-          "line": 122
+          "line": 127
         }
       ]
     },
@@ -2666,8 +2732,8 @@
       "id": "render-logistics",
       "path": "src/render-logistics.js",
       "topic": "벨트·운송·트럭 그리기",
-      "bytes": 24341,
-      "lines": 265,
+      "bytes": 24914,
+      "lines": 269,
       "symbols": [
         {
           "name": "BTIER",
@@ -2775,11 +2841,11 @@
         },
         {
           "name": "drawTruck",
-          "line": 217
+          "line": 219
         },
         {
           "name": "drawTruckBubble",
-          "line": 249
+          "line": 253
         }
       ]
     },
@@ -2787,8 +2853,8 @@
       "id": "render-market",
       "path": "src/render-market.js",
       "topic": "가게·점원·판매 효과·작업 도구",
-      "bytes": 14782,
-      "lines": 172,
+      "bytes": 15424,
+      "lines": 178,
       "symbols": [
         {
           "name": "SHOPDEF",
@@ -2860,55 +2926,55 @@
         },
         {
           "name": "drawStallBody",
-          "line": 76
+          "line": 77
         },
         {
           "name": "drawBar",
-          "line": 82
+          "line": 83
         },
         {
           "name": "lockBadge",
-          "line": 88
+          "line": 89
         },
         {
           "name": "TREE_SPRITES",
-          "line": 92
-        },
-        {
-          "name": "treeSprite",
           "line": 93
         },
         {
+          "name": "treeSprite",
+          "line": 94
+        },
+        {
           "name": "drawTree",
-          "line": 122
+          "line": 123
         },
         {
           "name": "drawOre",
-          "line": 138
+          "line": 141
         },
         {
           "name": "drawFish",
-          "line": 151
+          "line": 157
         },
         {
           "name": "toolTr",
-          "line": 164
+          "line": 170
         },
         {
           "name": "toolTierFor",
-          "line": 165
+          "line": 171
         },
         {
           "name": "drawChainsaw",
-          "line": 166
+          "line": 172
         },
         {
           "name": "drawDrill",
-          "line": 168
+          "line": 174
         },
         {
           "name": "nameTag",
-          "line": 170
+          "line": 176
         }
       ]
     },
@@ -2916,8 +2982,8 @@
       "id": "render-actors",
       "path": "src/render-actors.js",
       "topic": "일꾼·영웅·손님 아트",
-      "bytes": 36153,
-      "lines": 281,
+      "bytes": 36523,
+      "lines": 282,
       "symbols": [
         {
           "name": "drawVehicleUpgrade",
@@ -3005,11 +3071,11 @@
         },
         {
           "name": "drawAgent",
-          "line": 215
+          "line": 216
         },
         {
           "name": "drawCustomer",
-          "line": 266
+          "line": 267
         }
       ]
     },
