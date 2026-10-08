@@ -1,12 +1,12 @@
 /* v53: title screen - the world is drawn behind it but nothing runs until the player taps start */
 var TITLE=true,titleEl=document.getElementById('title'),startBtn=document.getElementById('startBtn');
-/* Four supplied illustrations are optional until their source is confirmed. Never substitute unrelated art. */
-var introFrames=Array.isArray(window.INTRO_SCENES)?window.INTRO_SCENES:[],introIndex=0,introReady=false;
+var introFrames=Array.isArray(window.INTRO_SCENES)?window.INTRO_SCENES:[];
 var introImage=document.getElementById('introImage'),introBack=document.getElementById('introBack'),introSkip=document.getElementById('introSkip'),introDots=document.getElementById('introDots');
-function introPaint(){var frame=introFrames[introIndex];introImage.src=frame.src;introImage.alt=frame.alt;introBack.hidden=introIndex===0;introSkip.hidden=false;startBtn.textContent=introIndex===3?'▶':'›';startBtn.setAttribute('aria-label',introIndex===3?'책 속 세계에서 게임 시작':'다음 장면');introDots.textContent='';for(var i=0;i<4;i++){var dot=document.createElement('span');dot.className=i===introIndex?'current':'';introDots.appendChild(dot);}}
-function introLoad(){if(!FRESH||introFrames.length!==4)return;Promise.all(introFrames.map(function(frame){return new Promise(function(resolve,reject){var im=new Image();im.onload=resolve;im.onerror=reject;im.src=frame.src;});})).then(function(){if(!TITLE)return;introReady=true;introImage.hidden=false;titleEl.classList.add('illustrated');introPaint();}).catch(function(){introReady=false;introImage.hidden=true;introBack.hidden=true;introSkip.hidden=true;startBtn.setAttribute('aria-label','게임 시작');});}
-introBack.addEventListener('click',function(){if(introReady&&introIndex>0){introIndex--;introPaint();}});
-introSkip.addEventListener('click',function(){introIndex=3;startBtn.click();});
+function enterBookWorld(){TITLE=false;titleEl.hidden=true;document.getElementById('quickDock').hidden=false;last=performance.now();sfx('chime');firstTownStory();}
+function introLoad(){if(FRESH&&introFrames.length===4)filmStart(introFrames,{video:'intro',holdLast:true,done:enterBookWorld});}
+introBack.addEventListener('click',function(){filmStep(-1);});
+introSkip.addEventListener('click',filmFinish);
+filmImages.forEach(function(im){im.addEventListener('click',function(){filmStep(1);});});
 if(!FRESH)startBtn.setAttribute('aria-label','저장한 게임 이어하기');
 introLoad();
 /* Story scenes are short, replayable town prologues. Seen flags are save-local and optional for old saves. */
@@ -34,7 +34,8 @@ var storyBox=document.getElementById('storyBox'),storyBook=document.getElementBy
 function storySeen(){if(!S.storySeen||typeof S.storySeen!=='object'||Array.isArray(S.storySeen))S.storySeen={};return S.storySeen;}
 function storyTypingClear(){if(storyTyping){clearInterval(storyTyping);storyTyping=null;}}
 function storyRenderList(){storyList.innerHTML='';var max=Math.min(3,Math.max(1,S.stage||1));STORY_SCENES.forEach(function(sc){var b=document.createElement('button');b.type='button';b.className='storyChapterBtn';b.disabled=sc.id>max;
-  var title=document.createElement('b');title.textContent=(sc.id>max?'🔒 ':'📖 ')+sc.title;b.appendChild(title);var sm=document.createElement('small');sm.textContent=sc.id>max?'마을을 열면 이야기를 읽을 수 있어요':(storySeen()[sc.id]?'다시 읽기 · 이야기를 끝내면 읽음 표시':'이야기를 읽어보기');b.appendChild(sm);if(sc.id<=max)b.addEventListener('click',function(){storyStart(sc.id,'book');});storyList.appendChild(b);});}
+  var title=document.createElement('b');title.textContent=(sc.id>max?'🔒 ':'📖 ')+sc.title;b.appendChild(title);var sm=document.createElement('small');sm.textContent=sc.id>max?'마을을 열면 이야기를 읽을 수 있어요':(storySeen()[sc.id]?'다시 읽기 · 이야기를 끝내면 읽음 표시':'이야기를 읽어보기');b.appendChild(sm);if(sc.id<=max)b.addEventListener('click',function(){storyStart(sc.id,'book');});storyList.appendChild(b);});storyFilmButtons();}
+function storyFilmButtons(){if(S.finaleDone){var journey=document.createElement('button');journey.className='storyChapterBtn';journey.textContent='다음 여정 · 오로라 온천마을';journey.onclick=auroraOpen;storyList.appendChild(journey);}if(typeof filmStart!=='function')return;[['인트로 다시 보기',introFrames,true],['엔딩 다시 보기',Array.isArray(window.ENDING_SCENES)?window.ENDING_SCENES:[],!!S.finaleDone]].forEach(function(row){var b=document.createElement('button');b.type='button';b.className='storyChapterBtn';b.textContent=row[0];b.disabled=!row[2]||!row[1].length;if(!b.disabled)b.addEventListener('click',function(){storyTypingClear();storyBox.hidden=true;cancelControl();filmStart(row[1],{video:row[0].indexOf('인트로')===0?'intro':'ending',holdLast:row[0].indexOf('인트로')===0,done:function(){storyBox.hidden=false;storyBook.hidden=false;storyPlayer.hidden=true;}});});storyList.appendChild(b);});}
 function storyBookOpen(){cancelControl();storyMode='book';storyTypingClear();storyPlayer.hidden=true;storyBook.hidden=false;storyRenderList();storyBox.hidden=false;setP.hidden=true;gearBtn.setAttribute('aria-expanded','false');goalBox.hidden=true;dayBox.hidden=true;dexBox.hidden=true;sfx('tap');}
 function storyFinish(mark){storyTypingClear();if(mark&&storyScene)storySeen()[storyScene.id]=1;if(mark)save();if(storyMode==='book'){storyPlayer.hidden=true;storyBook.hidden=false;storyRenderList();}else{storyBox.hidden=true;}sfx('tap');}
 function storyCloseNow(){storyTypingClear();storyBox.hidden=true;sfx('tap');}
@@ -48,7 +49,7 @@ storyBox.addEventListener('pointerdown',function(e){e.stopPropagation();});
 document.addEventListener('keydown',function(e){if(storyBox.hidden)return;if(e.key==='Escape'){e.preventDefault();storyCloseNow();}else if(e.key==='Enter'||e.key===' '){if(!storyBook.hidden)return;e.preventDefault();document.getElementById('storyNext').click();}});
 document.getElementById('storyOpen').addEventListener('click',storyBookOpen);
 function firstTownStory(){var v=Math.min(3,Math.max(1,S.stage||1));if(v>1&&!storySeen()[v])storyStart(v,'auto');}
-startBtn.addEventListener('click',function(){audioInit();if(introReady&&introIndex<3){introIndex++;introPaint();return;}TITLE=false;titleEl.hidden=true;document.getElementById('quickDock').hidden=false;last=performance.now();sfx('chime');firstTownStory();});
+startBtn.addEventListener('click',function(){audioInit();if(FILM){filmStep(1);return;}enterBookWorld();});
 var endingEl=document.getElementById('ending'),endBtn=document.getElementById('endBtn');
 endBtn.addEventListener('click',function(){startOver();});
 var gearBtn=document.getElementById('gear'),setP=document.getElementById('setp');

@@ -94,6 +94,7 @@ function drawWatchtower(g,cx,base,w,h,L,down,aim,angle,nt){
   g.save();g.lineJoin='round';g.lineCap='round';
   g.fillStyle='rgba(24,41,34,.18)';g.beginPath();g.ellipse(cx+9,base+2,w*.7,7,0,0,7);g.fill();
   if(down){for(var r=0;r<9;r++)isoBox(g,x+(r%3)*10,base-Math.floor(r/3)*5,8,4,5,r%2?'#857d68':'#aab097');g.restore();return;}
+  if(drawFacilitySprite(g,'watchtower',cx,base,w+16,h,L,9,time)){if(L>=2){var pa=towerAim,pang=towerAng;towerAim=aim||0;towerAng=angle||0;drawTowerWpn(g,cx,deck-2,L);towerAim=pa;towerAng=pang;}g.restore();return;}
   isoBox(g,x-2,base,span+4,d+2,L>=3?27:10,stone);
   if(L<=3){artPosts(g,x+2,base-10,span-4,base-deck-11,timber);g.strokeStyle=L===3?'#82958b':'#806143';g.lineWidth=2.3;g.beginPath();g.moveTo(x+4,base-14);g.lineTo(x+span-4,deck+5);g.moveTo(x+span-4,base-14);g.lineTo(x+4,deck+5);g.stroke();}
   if(L===3)isoBox(g,x+3,base-26,span-6,8,20,'#98a88f');
@@ -157,6 +158,7 @@ var PLOT_DRAW={
     for(var cr2=0;cr2<Math.min(4,1+Math.floor(S.pile/2));cr2++){var cx=yd.x+60+(cr2%2)*12,cy=yd.y+26-Math.floor(cr2/2)*10;g.fillStyle='#c79a63';rr(g,cx,cy,11,10,1.5);g.fill();g.strokeStyle='rgba(90,60,30,.4)';g.strokeRect(cx+.5,cy+.5,10,9);}
   },
   lodge:function(g,ld,nt){
+    if(drawFacilitySprite(g,'cabin',ld.x+ld.w/2,ld.y+ld.h,ld.w+12,ld.h+20,1,1,time))return;
     g.fillStyle='rgba(40,30,20,.16)';g.fillRect(ld.x+4,ld.y+14,ld.w-6,ld.h-18);
     g.fillStyle='#ecd2a8';g.fillRect(ld.x+2,ld.y+12,ld.w-8,ld.h-18);
     g.fillStyle='#6f9a5a';g.beginPath();g.moveTo(ld.x-3,ld.y+14);g.lineTo(ld.x+14,ld.y+1);g.lineTo(ld.x+ld.w-20,ld.y+1);g.lineTo(ld.x+ld.w-1,ld.y+14);g.closePath();g.fill();

@@ -13,7 +13,7 @@ function heroAttackHit(pl,b,baseDmg,ranged){
   if(pl.combo>=COMBO_N){pl.combo=0;heroUltFx(pl,b);BEARS.slice().forEach(function(ob){if(ob.state==='dead'||ob.state==='out')return;if(ob===b||Math.hypot(ob.x-pl.x,ob.y-pl.y)<=135)hitBear(ob,pl,baseDmg*ULT_MUL,false);});}
   else{hitBear(b,pl,baseDmg,ranged);heroHitFx(pl,b);}
 }
-function hitBear(b,from,dmg,ranged){
+function hitBear(b,from,dmg,ranged){if(typeof actionHit==='function')actionHit();
   if(b.state==='dead')return;
   b.hp-=dmg;b.flash=.2;var d=Math.max(1,Math.hypot(b.x-from.x,b.y-from.y));b.kx=(b.x-from.x)/d*(ranged?1.8:4);b.hitT=.5;
   /* v89 (director 2026-10-06: hits need to feel like they hurt) - a pain face, a recoil and now and then a cry; big hits leave it dizzy */

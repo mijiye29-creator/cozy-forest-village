@@ -46,3 +46,9 @@ python3 art-source/tools/make_story_video.py    # 영상 (intro / ending 개별 
 ```
 브라우저에서 `http://localhost:8788/art-source/tools/studio.html?model=boss_bear&anim=attack` 로 3D 미리보기.
 색은 `models.js`의 `PAL`, 형태/포즈는 각 모델 함수에서 고칩니다.
+
+## 현재 게임 통합
+
+원본 48종과 미리보기/턴어라운드를 보존하고 세 마을에서 손님·점원·채집 차량·생산/창고·진열대·게시판을 연결했다. 슈퍼 일꾼의 파생 몸체 `master_lumber_body`, `master_fisher_body` 2종은 원본 모델과 작업 애니메이션을 재사용하며, 원본 팔/도구를 숨겨 게임의 두 팔이 큰 도끼와 전체 호수 그물을 정확히 잡는다. 원본 두 모델은 변경하지 않았다.
+
+파생 몸체 재생성: `cd art-source/tools && npm ci --cache /tmp/cozy-npm-cache --no-audit --no-fund` 후 저장소 루트의 HTTP 서버를 8788에서 실행하고 `CHROMIUM_PATH=/usr/bin/chromium python3 art-source/tools/build_3d.py master_lumber_body master_fisher_body`, 마지막으로 `node scripts/build-game.cjs`. 스프라이트는 필요할 때 최대 2개씩 로드하며 실패 시 기존 Canvas로 그린다. 영상은 필요한 인트로/엔딩만 로드하고 재생 거절·실패·데이터 절약·움직임 감소 시 원본 이미지로 이어진다. 4마을 자료는 미연결 디자인 자료다.

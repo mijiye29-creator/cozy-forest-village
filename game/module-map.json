@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "186a888be6dc0e2662709124a8b8f660b57c2450af8c79cb6450407f0471e7c4",
+  "runtime_sha256": "5497c60802311e5c5d61c46b5f9bf1c8c105d351045da9bd4a318334eaa1bb4d",
   "modules": [
     {
       "id": "boot-errors",
@@ -126,6 +126,72 @@
         {
           "name": "drawFacilitySolid3D",
           "line": 63
+        }
+      ]
+    },
+    {
+      "id": "sprite-data",
+      "path": "src/sprite-data.js",
+      "topic": "생성된 Claude atlas·이미지 해시",
+      "bytes": 16553,
+      "lines": 3,
+      "symbols": [
+        {
+          "name": "SPRITE_DATA",
+          "line": 2
+        },
+        {
+          "name": "SPRITE_VERSIONS",
+          "line": 3
+        }
+      ]
+    },
+    {
+      "id": "sprite-atlas",
+      "path": "src/sprite-atlas.js",
+      "topic": "지연 로드·2개 병렬 큐·스프라이트 프레임·시설 레벨",
+      "bytes": 2979,
+      "lines": 13,
+      "symbols": [
+        {
+          "name": "SPRITE_ART_CAPTURE",
+          "line": 4
+        },
+        {
+          "name": "SPRITE_ROLE",
+          "line": 5
+        },
+        {
+          "name": "spritePump",
+          "line": 6
+        },
+        {
+          "name": "spriteReady",
+          "line": 7
+        },
+        {
+          "name": "spriteAnim",
+          "line": 8
+        },
+        {
+          "name": "actorSpriteAnim",
+          "line": 9
+        },
+        {
+          "name": "spriteVisible",
+          "line": 10
+        },
+        {
+          "name": "drawSprite",
+          "line": 11
+        },
+        {
+          "name": "drawSpriteLevel",
+          "line": 12
+        },
+        {
+          "name": "drawFacilitySprite",
+          "line": 13
         }
       ]
     },
@@ -296,7 +362,7 @@
       "id": "save-progression",
       "path": "src/save-progression.js",
       "topic": "저장 키·구형 저장 이관·마을 해금·성장 규칙",
-      "bytes": 16631,
+      "bytes": 16686,
       "lines": 158,
       "symbols": [
         {
@@ -1087,7 +1153,7 @@
       "id": "production",
       "path": "src/production.js",
       "topic": "공장·창고·트럭·생산",
-      "bytes": 11413,
+      "bytes": 11565,
       "lines": 128,
       "symbols": [
         {
@@ -1260,7 +1326,7 @@
       "id": "customers",
       "path": "src/customers.js",
       "topic": "손님·대기열·계산·단골",
-      "bytes": 5572,
+      "bytes": 5733,
       "lines": 82,
       "symbols": [
         {
@@ -1753,8 +1819,8 @@
       "id": "ending",
       "path": "src/ending.js",
       "topic": "최종 보스 시작·엔딩·시네마틱",
-      "bytes": 5928,
-      "lines": 70,
+      "bytes": 6199,
+      "lines": 71,
       "symbols": [
         {
           "name": "allMaxed",
@@ -1769,44 +1835,48 @@
           "line": 24
         },
         {
-          "name": "hasFinaleBoss",
+          "name": "playEndingFilm",
           "line": 25
         },
         {
-          "name": "restoreFinale",
+          "name": "hasFinaleBoss",
           "line": 26
         },
         {
-          "name": "finaleT",
+          "name": "restoreFinale",
           "line": 27
         },
         {
-          "name": "updateFinale",
+          "name": "finaleT",
           "line": 28
         },
         {
-          "name": "ENDSEQ",
-          "line": 30
+          "name": "updateFinale",
+          "line": 29
         },
         {
-          "name": "startEndingCinematic",
+          "name": "ENDSEQ",
           "line": 31
         },
         {
-          "name": "updateEndingCinematic",
+          "name": "startEndingCinematic",
           "line": 32
         },
         {
+          "name": "updateEndingCinematic",
+          "line": 33
+        },
+        {
           "name": "drawEndingCinematic",
-          "line": 34
+          "line": 35
         },
         {
           "name": "heroHitFx",
-          "line": 69
+          "line": 70
         },
         {
           "name": "COMBO_N",
-          "line": 70
+          "line": 71
         }
       ]
     },
@@ -1814,7 +1884,7 @@
       "id": "combat",
       "path": "src/combat.js",
       "topic": "영웅 공격·콤보·무기 표현",
-      "bytes": 20448,
+      "bytes": 20493,
       "lines": 165,
       "symbols": [
         {
@@ -1867,8 +1937,8 @@
       "id": "defence",
       "path": "src/defence.js",
       "topic": "마을별 방어·사냥꾼·수리·울타리 그리기",
-      "bytes": 46250,
-      "lines": 407,
+      "bytes": 46704,
+      "lines": 411,
       "symbols": [
         {
           "name": "TOWER",
@@ -2136,31 +2206,31 @@
         },
         {
           "name": "drawLoot",
-          "line": 374
+          "line": 378
         },
         {
           "name": "toScreen",
-          "line": 380
+          "line": 384
         },
         {
           "name": "edgeMark",
-          "line": 381
+          "line": 385
         },
         {
           "name": "drawTutEdge",
-          "line": 390
+          "line": 394
         },
         {
           "name": "ZBTN",
-          "line": 391
+          "line": 395
         },
         {
           "name": "drawZoomBtn",
-          "line": 392
+          "line": 396
         },
         {
           "name": "drawBearChip",
-          "line": 395
+          "line": 399
         }
       ]
     },
@@ -2250,11 +2320,72 @@
       ]
     },
     {
+      "id": "film-player",
+      "path": "src/film-player.js",
+      "topic": "무문자 이미지 공통 재생·자동 진행·중단 정리",
+      "bytes": 6454,
+      "lines": 33,
+      "symbols": [
+        {
+          "name": "FILM",
+          "line": 3
+        },
+        {
+          "name": "filmLayer",
+          "line": 4
+        },
+        {
+          "name": "filmTimerClear",
+          "line": 5
+        },
+        {
+          "name": "filmSchedule",
+          "line": 6
+        },
+        {
+          "name": "filmShow",
+          "line": 7
+        },
+        {
+          "name": "filmFinish",
+          "line": 12
+        },
+        {
+          "name": "filmStep",
+          "line": 13
+        },
+        {
+          "name": "filmStart",
+          "line": 14
+        },
+        {
+          "name": "filmVisibility",
+          "line": 18
+        },
+        {
+          "name": "filmVideoStop",
+          "line": 24
+        },
+        {
+          "name": "filmVideoFallback",
+          "line": 25
+        },
+        {
+          "name": "filmVideoTry",
+          "line": 26
+        },
+        {
+          "name": "storyVideo",
+          "line": 33
+        }
+      ]
+    },
+    {
       "id": "story-intro",
       "path": "src/story-intro.js",
       "topic": "무문자 인트로·마을별 대화·읽음 저장",
-      "bytes": 10934,
-      "lines": 69,
+      "bytes": 10925,
+      "lines": 70,
       "symbols": [
         {
           "name": "TITLE",
@@ -2262,19 +2393,19 @@
         },
         {
           "name": "introFrames",
-          "line": 4
+          "line": 3
         },
         {
           "name": "introImage",
+          "line": 4
+        },
+        {
+          "name": "enterBookWorld",
           "line": 5
         },
         {
-          "name": "introPaint",
-          "line": 6
-        },
-        {
           "name": "introLoad",
-          "line": 7
+          "line": 6
         },
         {
           "name": "STORY_SCENES",
@@ -2297,52 +2428,56 @@
           "line": 36
         },
         {
-          "name": "storyBookOpen",
+          "name": "storyFilmButtons",
           "line": 38
         },
         {
-          "name": "storyFinish",
+          "name": "storyBookOpen",
           "line": 39
         },
         {
-          "name": "storyCloseNow",
+          "name": "storyFinish",
           "line": 40
         },
         {
-          "name": "storyPaintLine",
+          "name": "storyCloseNow",
           "line": 41
         },
         {
-          "name": "storyStart",
+          "name": "storyPaintLine",
           "line": 42
         },
         {
+          "name": "storyStart",
+          "line": 43
+        },
+        {
           "name": "firstTownStory",
-          "line": 50
+          "line": 51
         },
         {
           "name": "endingEl",
-          "line": 52
+          "line": 53
         },
         {
           "name": "gearBtn",
-          "line": 54
-        },
-        {
-          "name": "ngBtn",
           "line": 55
         },
         {
-          "name": "sfxBtn",
-          "line": 60
+          "name": "ngBtn",
+          "line": 56
         },
         {
-          "name": "syncSnd",
+          "name": "sfxBtn",
           "line": 61
         },
         {
+          "name": "syncSnd",
+          "line": 62
+        },
+        {
           "name": "zoomBtn",
-          "line": 67
+          "line": 68
         }
       ]
     },
@@ -2350,8 +2485,8 @@
       "id": "render-terrain",
       "path": "src/render-terrain.js",
       "topic": "자원 지형·부두·공장 부지",
-      "bytes": 24151,
-      "lines": 263,
+      "bytes": 24242,
+      "lines": 264,
       "symbols": [
         {
           "name": "loadFx",
@@ -2375,103 +2510,103 @@
         },
         {
           "name": "grassTufts",
-          "line": 69
+          "line": 70
         },
         {
           "name": "TCACHE",
-          "line": 82
-        },
-        {
-          "name": "tileImg",
           "line": 83
         },
         {
-          "name": "drawForestTile",
+          "name": "tileImg",
           "line": 84
         },
         {
+          "name": "drawForestTile",
+          "line": 85
+        },
+        {
           "name": "drawPondTile",
-          "line": 95
+          "line": 96
         },
         {
           "name": "drawPondAnim",
-          "line": 115
+          "line": 116
         },
         {
           "name": "drawStoreTile",
-          "line": 122
+          "line": 123
         },
         {
           "name": "drawSite",
-          "line": 130
+          "line": 131
         },
         {
           "name": "drawLockedSite",
-          "line": 136
+          "line": 137
         },
         {
           "name": "lPath",
-          "line": 151
+          "line": 152
         },
         {
           "name": "lPoint",
-          "line": 160
+          "line": 161
         },
         {
           "name": "drawPadDeck",
-          "line": 166
+          "line": 167
         },
         {
           "name": "drawSiteArt",
-          "line": 172
+          "line": 173
         },
         {
           "name": "deck",
-          "line": 203
+          "line": 204
         },
         {
           "name": "laneStrip",
-          "line": 205
+          "line": 206
         },
         {
           "name": "lantern",
-          "line": 207
-        },
-        {
-          "name": "FOREST_LOOK",
           "line": 208
         },
         {
-          "name": "drawForestArt",
+          "name": "FOREST_LOOK",
           "line": 209
         },
         {
+          "name": "drawForestArt",
+          "line": 210
+        },
+        {
           "name": "drawRiverArt",
-          "line": 221
+          "line": 222
         },
         {
           "name": "siteAnim",
-          "line": 232
+          "line": 233
         },
         {
           "name": "mineDeco",
-          "line": 238
+          "line": 239
         },
         {
           "name": "drawOwnedSite",
-          "line": 245
+          "line": 246
         },
         {
           "name": "PLOTS",
-          "line": 254
+          "line": 255
         },
         {
           "name": "shedX",
-          "line": 262
+          "line": 263
         },
         {
           "name": "machOf",
-          "line": 263
+          "line": 264
         }
       ]
     },
@@ -2479,8 +2614,8 @@
       "id": "render-world",
       "path": "src/render-world.js",
       "topic": "정적 배경 캐시·공장 애니메이션",
-      "bytes": 17805,
-      "lines": 177,
+      "bytes": 18111,
+      "lines": 179,
       "symbols": [
         {
           "name": "BG",
@@ -2536,7 +2671,7 @@
         },
         {
           "name": "PLOT_DRAW",
-          "line": 122
+          "line": 123
         }
       ]
     },
@@ -2544,8 +2679,8 @@
       "id": "render-buildings",
       "path": "src/render-buildings.js",
       "topic": "건물·창고·제품 장식",
-      "bytes": 14692,
-      "lines": 123,
+      "bytes": 15429,
+      "lines": 129,
       "symbols": [
         {
           "name": "artPoly",
@@ -2589,23 +2724,23 @@
         },
         {
           "name": "drawWorkshop",
-          "line": 84
+          "line": 85
         },
         {
           "name": "BOARD",
-          "line": 102
+          "line": 108
         },
         {
           "name": "drawBoard",
-          "line": 103
+          "line": 109
         },
         {
           "name": "drawPills",
-          "line": 120
+          "line": 126
         },
         {
           "name": "drawMarketGround",
-          "line": 122
+          "line": 128
         }
       ]
     },
@@ -2613,8 +2748,8 @@
       "id": "render-logistics",
       "path": "src/render-logistics.js",
       "topic": "벨트·운송·트럭 그리기",
-      "bytes": 24341,
-      "lines": 265,
+      "bytes": 24916,
+      "lines": 269,
       "symbols": [
         {
           "name": "BTIER",
@@ -2722,11 +2857,11 @@
         },
         {
           "name": "drawTruck",
-          "line": 217
+          "line": 219
         },
         {
           "name": "drawTruckBubble",
-          "line": 249
+          "line": 253
         }
       ]
     },
@@ -2734,8 +2869,8 @@
       "id": "render-market",
       "path": "src/render-market.js",
       "topic": "가게·점원·판매 효과·작업 도구",
-      "bytes": 14782,
-      "lines": 172,
+      "bytes": 16015,
+      "lines": 178,
       "symbols": [
         {
           "name": "SHOPDEF",
@@ -2807,55 +2942,55 @@
         },
         {
           "name": "drawStallBody",
-          "line": 76
+          "line": 77
         },
         {
           "name": "drawBar",
-          "line": 82
+          "line": 83
         },
         {
           "name": "lockBadge",
-          "line": 88
+          "line": 89
         },
         {
           "name": "TREE_SPRITES",
-          "line": 92
-        },
-        {
-          "name": "treeSprite",
           "line": 93
         },
         {
+          "name": "treeSprite",
+          "line": 94
+        },
+        {
           "name": "drawTree",
-          "line": 122
+          "line": 123
         },
         {
           "name": "drawOre",
-          "line": 138
+          "line": 141
         },
         {
           "name": "drawFish",
-          "line": 151
+          "line": 157
         },
         {
           "name": "toolTr",
-          "line": 164
+          "line": 170
         },
         {
           "name": "toolTierFor",
-          "line": 165
+          "line": 171
         },
         {
           "name": "drawChainsaw",
-          "line": 166
+          "line": 172
         },
         {
           "name": "drawDrill",
-          "line": 168
+          "line": 174
         },
         {
           "name": "nameTag",
-          "line": 170
+          "line": 176
         }
       ]
     },
@@ -2863,8 +2998,8 @@
       "id": "render-actors",
       "path": "src/render-actors.js",
       "topic": "일꾼·영웅·손님 아트",
-      "bytes": 36153,
-      "lines": 281,
+      "bytes": 38028,
+      "lines": 286,
       "symbols": [
         {
           "name": "drawVehicleUpgrade",
@@ -2872,91 +3007,91 @@
         },
         {
           "name": "drawHarvester",
-          "line": 16
+          "line": 17
         },
         {
           "name": "drawFishRig",
-          "line": 30
+          "line": 31
         },
         {
           "name": "drawExcavator",
-          "line": 45
+          "line": 46
         },
         {
           "name": "RAINBOW",
-          "line": 63
-        },
-        {
-          "name": "rbGrad",
           "line": 64
         },
         {
+          "name": "rbGrad",
+          "line": 65
+        },
+        {
           "name": "drawRainbowAxe",
-          "line": 66
+          "line": 67
         },
         {
           "name": "drawStarPick",
-          "line": 80
+          "line": 81
         },
         {
           "name": "drawRainbowRod",
-          "line": 83
+          "line": 84
         },
         {
           "name": "drawHeroHunter",
-          "line": 85
+          "line": 86
         },
         {
           "name": "superWorkPose",
-          "line": 123
+          "line": 124
         },
         {
           "name": "superHands",
-          "line": 127
-        },
-        {
-          "name": "superNetBounds",
           "line": 128
         },
         {
-          "name": "superNetFish",
+          "name": "superNetBounds",
           "line": 129
         },
         {
-          "name": "drawMasterFisher",
+          "name": "superNetFish",
           "line": 130
         },
         {
+          "name": "drawMasterFisher",
+          "line": 131
+        },
+        {
           "name": "drawMasterLumber",
-          "line": 138
+          "line": 140
         },
         {
           "name": "drawSuper",
-          "line": 150
+          "line": 153
         },
         {
           "name": "superPlate",
-          "line": 177
+          "line": 180
         },
         {
           "name": "drawSuperFx",
-          "line": 185
+          "line": 188
         },
         {
           "name": "heroTier",
-          "line": 207
+          "line": 210
         },
         {
           "name": "drawHero",
-          "line": 208
+          "line": 211
         },
         {
           "name": "drawAgent",
-          "line": 215
+          "line": 220
         },
         {
           "name": "drawCustomer",
-          "line": 266
+          "line": 271
         }
       ]
     },
@@ -2964,7 +3099,7 @@
       "id": "render-scene",
       "path": "src/render-scene.js",
       "topic": "납품 매트·장면 합성·화면 안내",
-      "bytes": 6101,
+      "bytes": 6166,
       "lines": 75,
       "symbols": [
         {
@@ -3454,11 +3589,120 @@
       ]
     },
     {
+      "id": "complete-actions",
+      "path": "src/complete-actions.js",
+      "topic": "전체 동작·동행·이벤트·엔딩 이후 온천마을 운영",
+      "bytes": 25561,
+      "lines": 946,
+      "symbols": [
+        {
+          "name": "ACTION_STAFF",
+          "line": 2
+        },
+        {
+          "name": "ACTION_DOG",
+          "line": 3
+        },
+        {
+          "name": "actionState",
+          "line": 11
+        },
+        {
+          "name": "actionFeverPay",
+          "line": 69
+        },
+        {
+          "name": "actionIncome",
+          "line": 78
+        },
+        {
+          "name": "actionRecent",
+          "line": 85
+        },
+        {
+          "name": "actionHit",
+          "line": 90
+        },
+        {
+          "name": "actionBoss",
+          "line": 93
+        },
+        {
+          "name": "actionReward",
+          "line": 96
+        },
+        {
+          "name": "actionEvent",
+          "line": 108
+        },
+        {
+          "name": "drawStaffAction",
+          "line": 143
+        },
+        {
+          "name": "updateCompleteActions",
+          "line": 166
+        },
+        {
+          "name": "drawCompleteActions",
+          "line": 296
+        },
+        {
+          "name": "auroraWalk",
+          "line": 371
+        },
+        {
+          "name": "AURORA_Z",
+          "line": 380
+        },
+        {
+          "name": "AURORA_OPEN",
+          "line": 384
+        },
+        {
+          "name": "AURORA_FAC",
+          "line": 390
+        },
+        {
+          "name": "auroraState",
+          "line": 432
+        },
+        {
+          "name": "auroraInventory",
+          "line": 455
+        },
+        {
+          "name": "auroraRepair",
+          "line": 478
+        },
+        {
+          "name": "auroraHire",
+          "line": 517
+        },
+        {
+          "name": "auroraOpen",
+          "line": 528
+        },
+        {
+          "name": "auroraControls",
+          "line": 625
+        },
+        {
+          "name": "updateAurora",
+          "line": 686
+        },
+        {
+          "name": "drawAurora",
+          "line": 758
+        }
+      ]
+    },
+    {
       "id": "loop",
       "path": "src/loop.js",
       "topic": "프레임·시뮬레이션·테스트 훅·시작 순서",
-      "bytes": 14217,
-      "lines": 99,
+      "bytes": 15241,
+      "lines": 104,
       "symbols": [
         {
           "name": "last",
@@ -3486,27 +3730,27 @@
         },
         {
           "name": "cornerUpgradeT",
-          "line": 27
+          "line": 29
         },
         {
           "name": "upgradeOpenVillages",
-          "line": 28
+          "line": 30
         },
         {
           "name": "updateCornerUpgrade",
-          "line": 37
+          "line": 40
         },
         {
           "name": "update",
-          "line": 38
+          "line": 41
         },
         {
           "name": "suspendMobile",
-          "line": 81
+          "line": 86
         },
         {
           "name": "boot",
-          "line": 91
+          "line": 96
         }
       ]
     }

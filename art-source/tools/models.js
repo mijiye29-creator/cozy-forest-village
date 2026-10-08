@@ -632,3 +632,9 @@ export const MODELS = {
   aurora_keeper: character('aurora_keeper', { coat: PAL.keeper, scarf: '#f58a3c', hatColor: '#f4e1b0', hat: hats.hood, hair: PAL.hairBrown, apron: '#e9e1cf', extra: keeperExtra, animKind: 'pick' }, 'ladle'),
   hot_spring: hotSpring, boiler, lodge, canal_segment: canalSegment, aurora_lookout: auroraLookout,
 };
+
+// Runtime body variants retain Claude's model/cape/leg motion; game arms grip
+// the enlarged axe or exact full-lake net. Originals remain unchanged.
+for (const name of ['master_lumber','master_fisher']) {
+ MODELS[name+'_body'] = () => { const m=MODELS[name]();m.nodes.armL.scale.setScalar(0.0001);m.nodes.armR.scale.setScalar(0.0001);return m; };
+}

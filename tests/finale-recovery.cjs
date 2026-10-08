@@ -1,6 +1,6 @@
 const vm=require('node:vm'),assert=require('node:assert/strict'),{readRuntime}=require('./runtime-source.cjs');
 const source=readRuntime('ending');
-function load(saved={}){const nodes={ending:{hidden:true},quickDock:{hidden:true}},e={S:JSON.parse(JSON.stringify(saved)),BEARS:[],TITLE:true,titleEl:{hidden:false},document:{getElementById:id=>nodes[id]},MX:1080,HT:664,bearEntry:()=>({x:400,y:0,ex:400,ey:-100}),bearMult:()=>1,fenceX:()=>1080,sfx(){},shake(){},addFloat(){},save(){e.saved=JSON.parse(JSON.stringify(e.S));},siteLv:()=>0,count:()=>0};vm.createContext(e);vm.runInContext(source,e);e.nodes=nodes;return e;}
+function load(saved={}){const nodes={ending:{hidden:true},quickDock:{hidden:true}},e={window:{},S:JSON.parse(JSON.stringify(saved)),BEARS:[],TITLE:true,titleEl:{hidden:false},document:{getElementById:id=>nodes[id]},MX:1080,HT:664,bearEntry:()=>({x:400,y:0,ex:400,ey:-100}),bearMult:()=>1,fenceX:()=>1080,sfx(){},shake(){},addFloat(){},save(){e.saved=JSON.parse(JSON.stringify(e.S));},siteLv:()=>0,count:()=>0};vm.createContext(e);vm.runInContext(source,e);e.nodes=nodes;return e;}
 let e=load({finaleSpawned:1});e.updateFinale(1);assert.equal(e.BEARS.length,1,'Legacy stuck save must respawn even after facilities lose maxed status');assert.equal(e.BEARS[0].finale,true);assert.equal(e.saved.finaleSpawned,1);
 for(let i=0;i<100;i++)e.updateFinale(1);e.spawnFinaleBoss();assert.equal(e.BEARS.length,1,'No duplicate active boss');
 e=load(e.saved);e.updateFinale(1);assert.equal(e.BEARS.length,1,'Repeated interruption remains recoverable');
@@ -11,3 +11,7 @@ for(const seconds of [1,4,8]){e=load({finaleDone:1,finaleSpawned:1});e.startEndi
 e=load({finaleDone:1});e.startEndingCinematic();for(let i=0;i<110;i++)e.updateEndingCinematic(.1);assert.equal(e.ENDSEQ,null);assert.equal(e.nodes.ending.hidden,false);
 const loop=readRuntime('loop');assert(loop.includes("boot('ending-resume',restoreFinale)"),'Recovery must be wired into actual boot');
 console.log('PASS: stuck/repeated-reload boss saves; no duplicate boss; normal unlock; completed/cinematic-interrupted ending restoration; boot wiring.');
+
+// Normal completion plays the new artwork once; resumed saves bypass it.
+e=load({finaleDone:1});e.window.ENDING_SCENES=[{},{},{}];e.filmStart=(frames,options)=>{e.filmFrames=frames;e.filmDone=options.done;};e.startEndingCinematic();for(let i=0;i<110;i++)e.updateEndingCinematic(.1);assert.equal(e.filmFrames.length,3);assert.equal(e.nodes.ending.hidden,true);e.filmDone();assert.equal(e.nodes.ending.hidden,false);
+e=load({finaleDone:1});e.window.ENDING_SCENES=[{},{},{}];e.filmStart=()=>{throw Error('Resume must not replay')};e.restoreFinale();assert.equal(e.nodes.ending.hidden,false);

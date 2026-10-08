@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "mijiye29-creator/cozy-forest-village",
-  "checked_date_kst": "2026-10-08",
-  "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
+  "checked_date_kst": "2026-10-09",
+  "implementation_commit": "47f2e6020a1dc9ef4fe0537f29a5d2a9aad4e487",
   "issues": {
     "1": {
       "title": "[클로드 제안] 가게 일손 — 점원 고용·진열대 추가·⭐단골손님",
@@ -280,24 +280,103 @@
         "method": "Playwright headless Chromium 390x844 DPR2; accelerated test run(); no physical device or manual full playthrough"
       }
     },
+    "7": {
+      "title": "[클로드 디자인] 인트로 4장 확정 + 엔딩 3장 신규 — 흐르는 연출과 엔딩 시퀀스",
+      "updated_at": "2026-10-08T15:19:02Z",
+      "github_state": "open",
+      "request_type": "design_proposal",
+      "identified_by": "Body Claude 수퍼바이저/Claude Code; GitHub performed_via_github_app.slug=claude",
+      "input_sha256": "cda717acb03b03724df2ec6c837e6d9116f32229c7ad0100d334d6b46317b66e",
+      "body_sha256": "52b14717d83e89adce952e2ab54428fa8e2ae4bd1b40384b41349767b3da474c",
+      "comment_ids": [
+        6063088021
+      ],
+      "comment_versions": [
+        {
+          "id": 6063088021,
+          "updated_at": "2026-10-08T15:19:02Z",
+          "body_sha256": "aeaa52d90afea5dc0da75ce68aaa133eae55fefcaac430b8731246395205e870"
+        }
+      ],
+      "status": "implemented_code_verified",
+      "implementation_commit": "a4d1770c6d847c97e96ed00b298faa0360a13762",
+      "asset_commit": "d242b08",
+      "continue_pending_work": false,
+      "notes": "확정 원본 7장·Claude의 기존 인트로 연결 유지. 공통 무문자 플레이어 자동 4.5초/페이드 .8초/줌1.06/탭/이전/건너뛰기/움직임 감소 구현. 엔딩 지연 로드·시네마틱 후 3장 재생·완료 저장 부팅 즉시 엔딩 복원·이야기책 다시 보기. 자체 VM 13개 검사 통과. Chromium 실행 setsockopt EPERM/SIGTRAP으로 직접 브라우저 검증 미실시.",
+      "own_validation": "13 Node VM/code regression checks passed; direct Chromium launch blocked; physical device/full boss not executed",
+      "claude_report_reference": {
+        "issue": 7,
+        "comment_ids": [
+          6063088021
+        ],
+        "method": "Claude reported intro image headless browser QA on d242b08; not verification of this new player"
+      },
+      "pending_validation": [
+        "direct_browser_reproduction",
+        "physical_device",
+        "full_boss_playthrough"
+      ]
+    },
+    "8": {
+      "title": "[Claude 디자인] 3D 캐릭터·시설 교체 + 색감 개편 + 긴박감 시스템 통합 사양 (에셋 931c17c)",
+      "updated_at": "2026-10-08T15:54:53Z",
+      "github_state": "open",
+      "request_type": "proposal",
+      "input_sha256": "adfb46765289f21f3f60296a83cb34547575cdb6e416d66cd0e525d8059397c1",
+      "body_sha256": "9e23976e9a647e022b7ecbf4fac4144de23d99cb7c29ff089c27ebf6e6b1eede",
+      "comment_ids": [
+        6063796159
+      ],
+      "comment_versions": [
+        {
+          "id": 6063796159,
+          "updated_at": "2026-10-08T15:54:53Z",
+          "body_sha256": "f74948be485c084d4c263a7c3c950e316484566bfcdd66faefd7847880886c71"
+        }
+      ],
+      "status": "complete_actions_and_post_ending_gameplay_verified",
+      "implementation_commit": "cbba4c1be8b2cf2f94c3162ab09baae4e304a2e0",
+      "continue_pending_work": false,
+      "notes": "User explicitly requested all actions and previously deferred elements. All original model roles connected, including work-body derivatives for exact axe/net grips, facility motion, fish swim/flop, NPC walk/work/cheer, bear idle/attack/hurt, corgi and chest idle/open. Combo/fever/orders/chests and capped saved bonus ledger implemented. Optional post-ending aurora restoration uses six original models with material repairs, keepers, guests, warmth, lodge revenue and mobile pinch. Existing three-village progress/bounds unchanged. No external comments or issue closure.",
+      "pending": [
+        "physical_device_fps",
+        "full_boss_playthrough"
+      ],
+      "history": [
+        {
+          "status": "reviewed_proposal_deferred",
+          "notes": "이번 #7 구현 중 새로 등록된 디자인/기능 제안. 원천 31종/atlas/영상 추가 커밋과 본문/댓글 확인. 기존 정점 기반 3D와 컬러 디자인 유지. 영상은 #7 이미지 플레이어의 대안이며 자동 재생/데이터 절약 검증 후 별도 통합 후보. 긴급 주문/피버/상자 보상은 기존 게임 규칙·경제 변경이므로 수퍼바이저 판단으로 보류: 수입 정의·처리량 단위·보상15% 상한/저장 복구의 별도 설계·검증 필요. QA 버그 수정으로 처리하지 않음. 전체 구현 완료나 실기기60fps 통과로 표시하지 않는다.",
+          "implementation_commit": null
+        },
+        {
+          "status": "assets_integrated_code_verified",
+          "implementation_commit": "47f2e6020a1dc9ef4fe0537f29a5d2a9aad4e487",
+          "notes": "사용자의 원천 데이터 활용 지시로 Claude GLB에서 만든 atlas/WebP를 캐릭터·시설·곰·일반 나무/바위에 통합. 지연 로드·최대2병렬·이미지 오류 fallback·화면 밖 culling·해시 버전. 이름/가방/HP/자원 진행/상품/수리·레벨 표시 유지. 상위 차량/슈퍼·희귀 자원 고유 외형 유지. 직접14개 코드 검사·native Canvas 실제 렌더 오류0. 실기기FPS/브라우저/전체보스 미실시. 신규 보상·경제 규칙과 영상 대안은 별도 제안 보류."
+        }
+      ],
+      "own_validation": "14 code checks; actual Chromium original movies/source sheets/fallback, four viewport design and level differences, nine-fish net, save/story smoke, new three-viewport restoration/atomic materials/level cap/reload/reward cap/pointer pinch tests. Physical-device FPS and full boss playthrough not run.; three cross-pool routes reach destinations without entering water in every simulated step"
+    },
     "9": {
       "title": "[클로드 제안] 3D 캐릭터·시설 스프라이트 런타임 연결 (새 17종 포함, 4마을은 모델만)",
+      "updated_at": "2026-10-08T16:14:44Z",
+      "body_sha256": "fcbb910e386927ca96529f1602cadade5c887e916bc707e28f49f9d0ae0162c7",
+      "input_sha256": "261cbb5d9bec493d1ce418377bf2ab5f4c2e3dfc670b7955f6d5bdf8f3cd737f",
+      "comment_ids": [],
+      "comment_versions": [],
       "github_state": "open",
-      "created_by": "claude_session_2026-10-09_kst",
-      "request_type": "art_handoff",
-      "status": "handoff_open_not_implemented",
-      "continue_pending_work": true,
-      "notes": "Claude가 art-source 3D 모델 17종 추가·GPT 인계 팩 작성 후 연결 사양 이슈를 생성. game/src 무변경. 4마을 모델은 런타임 미구현이므로 연결 대상 아님.",
-      "own_validation": "glb 재로드·클립 트랙 확인, 렌더 육안 확인, build-game --check, run-code all, static-assets 통과; 게임 내 연결/실기기/보스 미실시",
-      "pending_validation": [
-        "runtime_wiring",
-        "browser_visual",
-        "physical_device"
-      ],
-      "source_branch": "ccr-281628a2-a7y494"
+      "status": "complete_actions_and_post_ending_gameplay_verified",
+      "implementation_commit": "cbba4c1be8b2cf2f94c3162ab09baae4e304a2e0",
+      "request_type": "asset_integration",
+      "continue_pending_work": false,
+      "notes": "User explicitly requested all actions and previously deferred elements. All original model roles connected, including work-body derivatives for exact axe/net grips, facility motion, fish swim/flop, NPC walk/work/cheer, bear idle/attack/hurt, corgi and chest idle/open. Combo/fever/orders/chests and capped saved bonus ledger implemented. Optional post-ending aurora restoration uses six original models with material repairs, keepers, guests, warmth, lodge revenue and mobile pinch. Existing three-village progress/bounds unchanged. No external comments or issue closure.",
+      "own_validation": "14 code checks; actual Chromium original movies/source sheets/fallback, four viewport design and level differences, nine-fish net, save/story smoke, new three-viewport restoration/atomic materials/level cap/reload/reward cap/pointer pinch tests. Physical-device FPS and full boss playthrough not run.; three cross-pool routes reach destinations without entering water in every simulated step",
+      "pending": [
+        "physical_device_fps",
+        "full_boss_playthrough"
+      ]
     }
   },
   "input_format": "sha256(UTF-8 JSON, sorted keys, compact separators: number,title,body,state,updated_at,comments[id,body,updated_at])",
-  "checked_at_kst": "2026-10-08T23:25:47+09:00",
-  "source_head": "a1d91481682aacf0059e1060d27c3a6cc29cc3a9"
+  "checked_at_kst": "2026-10-09T00:56:29+09:00",
+  "source_head": "2b66b7651a69f4779cb7127b7797e41b55e7ec12"
 }

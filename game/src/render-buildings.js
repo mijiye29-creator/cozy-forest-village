@@ -74,6 +74,7 @@ function drawIndustrialBuilding(g,pl,L){
 }
 function drawWorkshopStorage(g,pl,L){
   var x=shedX(pl)+2,base=128,w=39,d=9,h=[30,40,48,59,69][L-1],col=['#a68a5f','#bfa175','#b9b8a1','#8bafb0','#c7d1be'][L-1];
+  if(drawFacilitySprite(g,L<=2?'storage':'warehouse',x+w/2,base+4,w+10,h+18,L,5,0))return;
   isoBox(g,x-2,base+4,w+3,d,5,'#adb39e');
   if(L===1){isoBox(g,x,base,w,d,5,col);artPosts(g,x,base,w,h,'#9e8052');}
   else{isoBox(g,x,base,w,d,h,col);if(L===3)artBricks(g,x,base-h,w,h);if(L>=4)isoGlass(g,x+3,base-h+5,w-6,12);}
@@ -82,18 +83,23 @@ function drawWorkshopStorage(g,pl,L){
   if(L>=3){isoBox(g,x+2,base-24,w-4,2,4,'#809086');}if(L===5){isoTank(g,x+19,base-h-3,12,12,'#859e99');}
 }
 function drawWorkshop(g,pl){
+  if(!spriteVisible(pl.x+pl.w/2,pl.y+pl.h/2,Math.max(pl.w,pl.h)))return;
   var b=pl.def,L=S[b]||1,SL=(S.pst&&S.pst[b])||0,key='industrial-3d-v2-'+b+'-'+L+'-'+SL+'-'+pl.w;
+  var kind={mill:'sawmill',smoke:'smokehouse',smelt:'smelter',elec:'power_plant'}[b],fromSprite=drawFacilitySprite(g,kind,pl.x+pl.w/2,pl.y+pl.h-6,pl.w-8,pl.h-6,L,8,procBusy[b]>0?time:0);
+  if(!fromSprite){
   var art=tileImg(key,pl.w,function(c){
     isoBox(c,2,pl.h-5,pl.w-15,11,6,'#c6cbb8');c.strokeStyle='rgba(79,103,82,.18)';c.lineWidth=.6;for(var tile=14;tile<pl.w-8;tile+=14){c.beginPath();c.moveTo(tile,pl.h-11);c.lineTo(tile+6,pl.h-18);c.stroke();}
     drawIndustrialBuilding(c,pl,L);if(SL)drawWorkshopStorage(c,{x:0,y:0,w:pl.w,def:b,shedLeft:pl.shedLeft},SL);
     else{var sx=pl.shedLeft?3:pl.w-39;c.strokeStyle='#93a38c';c.setLineDash([2,3]);c.strokeRect(sx,88,32,38);c.setLineDash([]);}
   },pl.h);g.drawImage(art,pl.x,pl.y,pl.w,pl.h);
+  }else if(SL){g.save();g.translate(pl.x,pl.y);drawWorkshopStorage(g,{x:0,y:0,w:pl.w,def:b,shedLeft:pl.shedLeft},SL);g.restore();}
+  if(fromSprite&&L>=4)drawFacilitySprite(g,'workshop',pl.x+pl.w-22,pl.y+pl.h-10,40,34,L,8,procBusy[b]>0?time:0);
   var busy=procBusy[b]>0,cur=procCur[b],pr=cur?Math.min(1,procT[b]/cur.t):0,mx=pl.x+(pl.shedLeft?46:4);
   if(b==='mill'){
     var blades=L>=4?2:1;for(var blade=0;blade<blades;blade++){g.save();g.translate(mx+26+blade*19,pl.y+105);g.rotate(time*(busy?6+L:1));g.fillStyle='#e3e8dc';g.strokeStyle='#708a87';g.lineWidth=.7;g.beginPath();for(var tooth=0;tooth<18;tooth++){var an=tooth*Math.PI/9;g.lineTo(Math.cos(an)*9,Math.sin(an)*9);g.lineTo(Math.cos(an+.1)*7,Math.sin(an+.1)*7);}g.closePath();g.fill();g.stroke();g.fillStyle='#6e8884';g.beginPath();g.arc(0,0,2,0,7);g.fill();g.restore();}
     isoBox(g,mx+7+(busy?(time*8)%8:2),pl.y+121,35,5,5,'#c19b66');
   }
-  drawFacilityMotion3D(g,mx+57,pl.y+87,b,L,busy);
+  if(!fromSprite)drawFacilityMotion3D(g,mx+57,pl.y+87,b,L,busy);
   if(busy){var puff=(time*.55)%1;g.fillStyle='rgba(250,246,229,'+(.35*(1-puff))+')';g.beginPath();g.ellipse(mx+61+puff*5,pl.y+22-puff*13,2+puff*3,2+puff*3,0,0,7);g.fill();g.fillStyle='#d1ad5d';rr(g,pl.x+8,pl.y+pl.h-4,(pl.w-16)*pr,2,1);g.fill();}
   if(cur)drawItem(g,cur.id,mx+40,pl.y+123,.55);
   if(SL){var sx=shedX(pl)+7,stocks=PROC[b].goods.filter(function(id){return whN(id)>0;}),units=[];stocks.forEach(function(id){for(var n=0;n<Math.min(12,whN(id));n++)units.push(id);});units.slice(0,12).forEach(function(id,i){drawItem(g,id,sx+(i%4)*8,pl.y+123-Math.floor(i/4)*7,.38);});g.fillStyle='#eaf1df';g.font='600 5px sans-serif';g.textAlign='center';g.fillText(storeN(b)+' / '+storeCap(b),shedX(pl)+21,pl.y+98);}
@@ -102,11 +108,11 @@ function drawWorkshop(g,pl){
 var BOARD={x:6,y:188,w:52,h:44};
 function drawBoard(){
   var g=ctx,b=BOARD;
-  g.fillStyle='#8a6a44';g.fillRect(b.x+6,b.y+b.h-8,3,12);g.fillRect(b.x+b.w-9,b.y+b.h-8,3,12);
+  var boardSprite=drawFacilitySprite(g,'notice_board',b.x+b.w/2,b.y+b.h+4,b.w+6,b.h+16,1,1,0);if(!boardSprite){g.fillStyle='#8a6a44';g.fillRect(b.x+6,b.y+b.h-8,3,12);g.fillRect(b.x+b.w-9,b.y+b.h-8,3,12);
   g.fillStyle='rgba(40,30,20,.18)';rr(g,b.x+2,b.y+2,b.w,b.h-4,4);g.fill();
   g.fillStyle='#b98b5e';rr(g,b.x,b.y,b.w,b.h-4,4);g.fill();
   g.fillStyle='#f6ecd2';rr(g,b.x+3,b.y+10,b.w-6,b.h-17,2);g.fill();
-  g.font='800 7px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#fff3d6';g.fillText('시장 게시판',b.x+b.w/2,b.y+5.5);
+  }g.font='800 7px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#5b4636';g.fillText('시장 게시판',b.x+b.w/2,b.y-8);
   if(HOT.id){
     var bob=Math.sin(time*3)*1;drawItem(g,HOT.id,b.x+13,b.y+21+bob,1);
     g.fillStyle='#e2463c';g.font='800 8px sans-serif';g.textAlign='left';g.fillText('+50%',b.x+22,b.y+21);

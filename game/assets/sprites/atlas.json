@@ -883,6 +883,50 @@
    "work"
   ]
  },
+ "master_fisher_body": {
+  "file": "master_fisher_body.webp",
+  "frameW": 80,
+  "frameH": 156,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   37,
+   141
+  ],
+  "glb": "art-source/models/master_fisher_body.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
  "master_lumber": {
   "file": "master_lumber.webp",
   "frameW": 112,
@@ -920,6 +964,50 @@
    141
   ],
   "glb": "art-source/models/master_lumber.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "master_lumber_body": {
+  "file": "master_lumber_body.webp",
+  "frameW": 84,
+  "frameH": 160,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   }
+  },
+  "anchor": [
+   41,
+   141
+  ],
+  "glb": "art-source/models/master_lumber_body.glb",
   "clips": [
    "idle",
    "walk",

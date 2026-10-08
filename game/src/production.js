@@ -9,7 +9,7 @@ function palKey(){return whUnlocked()+':'+(S.mill>0)+(S.smoke>0)+(S.smelt>0)+(S.
 var PROC={mill:{line:'wood',goods:['chair','table','sofa'],plot:'sawmill'},smoke:{line:'fish',goods:['can','smoked','gift'],plot:'smokehouse'},smelt:{line:'iron',goods:['ingot','glass','plastic'],plot:'smelter'},elec:{line:'elec',goods:['tv','pc','phone'],plot:'factory'}},procT={mill:0,smoke:0,smelt:0,elec:0},procN={mill:0,smoke:0,smelt:0,elec:0},procBusy={mill:0,smoke:0,smelt:0,elec:0},flushT=0;
 var PROCS=['mill','smoke','smelt','elec'],TPROCS=['mill','smoke','elec'],LINEPROC={wood:'mill',fish:'smoke',iron:'smelt',elec:'elec'};
 /* v63: a full smelter storage is never stuck - the material with the most stock is sold off a few at a time (it no longer waits forever when the factory can't keep up) */
-var smeltSellT=0,SMELTNEED=null;function smeltSell(dt){smeltSellT-=dt;if(smeltSellT>0)return;smeltSellT=.6;var junk=PROC.smelt.goods.filter(function(id){return SMELTNEED&&!SMELTNEED[id]&&whN(id)>0;});var ids=(junk.length?junk:PROC.smelt.goods.filter(function(id){return whN(id)>0;})).sort(function(x,y){return whN(y)-whN(x);});if(!ids.length)return;var id=ids[0],n=Math.min(3,whN(id));addWh(id,-n);var pay=money50(n*ITEMS[id].price*priceMult());S.coins+=pay;var sp0=shedPos('smelt');addFloat(sp0.x,sp0.y-22,'📦 남는 자재 판매 +'+fmt(pay),'#ffe27a',true);}
+var smeltSellT=0,SMELTNEED=null;function smeltSell(dt){smeltSellT-=dt;if(smeltSellT>0)return;smeltSellT=.6;var junk=PROC.smelt.goods.filter(function(id){return SMELTNEED&&!SMELTNEED[id]&&whN(id)>0;});var ids=(junk.length?junk:PROC.smelt.goods.filter(function(id){return whN(id)>0;})).sort(function(x,y){return whN(y)-whN(x);});if(!ids.length)return;var id=ids[0],n=Math.min(3,whN(id));addWh(id,-n);var pay=money50(n*ITEMS[id].price*priceMult());S.coins+=pay;if(typeof actionIncome==='function'){actionIncome(pay);actionFeverPay(pay);}var sp0=shedPos('smelt');addFloat(sp0.x,sp0.y-22,'📦 남는 자재 판매 +'+fmt(pay),'#ffe27a',true);}
 function procYield(L){return L>=6?4:(L>=5?3:(L>=3?2:1));}
 /* v60: a bigger storage shed also packs extra goods from the same batch - +1 at storage Lv3, +2 at Lv5 */
 function shedYield(b){var L=(S.pst&&S.pst[b])||0;return L>=5?2:(L>=3?1:0);}
@@ -109,7 +109,7 @@ function updateTrucks(dt){
         for(var k=0;k<t.order.length;k++){var o=t.order[k];if(o.got<o.qty&&whN(o.id)>0){ld=true;addWh(o.id,-1);o.got++;t.bump=.45;var sh=shedPos(t.b);fly(o.id,sh.x,sh.y-6,t.x+10,t.y-10,.35);break;}}}
       if(truckDone(t)||(!ld&&t.order.some(function(o){return o.got>0;}))){
         var pay=0;t.order.forEach(function(o){pay+=o.got*truckPrice(o.id);});pay=money50(pay*(t.rush?2:1));
-        var tk='t_'+t.b,tcp=tcashPos(t.b);S.cash[tk]=(S.cash[tk]||0)+pay;S.h3=1;stat('truck',1);sfx('cash');addFloat(tcp.x,tcp.y-24,(t.rush?'⚡+':'🚚+')+pay,'#ffd35a',true);burst(tcp.x,tcp.y,'#ffe27a',t.rush?20:12,true);
+        var tk='t_'+t.b,tcp=tcashPos(t.b);if(typeof actionIncome==='function'){actionIncome(pay);actionFeverPay(pay);}S.cash[tk]=(S.cash[tk]||0)+pay;S.h3=1;stat('truck',1);sfx('cash');addFloat(tcp.x,tcp.y-24,(t.rush?'⚡+':'🚚+')+pay,'#ffd35a',true);burst(tcp.x,tcp.y,'#ffe27a',t.rush?20:12,true);
         for(var ci=0;ci<Math.min(8,3+Math.floor(pay/40));ci++)fly('coin',t.x+(Math.random()-.5)*20,t.y-12,tcp.x+(Math.random()-.5)*16,tcp.y-4,.5+ci*.05);if(t.rush)flash=.3;truckLeave(t);
       }else if(t.pat<=0){
         var got=0,pay2=0;t.order.forEach(function(o){got+=o.got;pay2+=o.got*truckPrice(o.id)*.85;});

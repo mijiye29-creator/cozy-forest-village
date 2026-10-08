@@ -20,6 +20,16 @@
       "topic": "3D 정점·광원·깊이 정렬·캐릭터 관절·시설 모션"
     },
     {
+      "id": "sprite-data",
+      "path": "src/sprite-data.js",
+      "topic": "생성된 Claude atlas·이미지 해시"
+    },
+    {
+      "id": "sprite-atlas",
+      "path": "src/sprite-atlas.js",
+      "topic": "지연 로드·2개 병렬 큐·스프라이트 프레임·시설 레벨"
+    },
+    {
       "id": "goods",
       "path": "src/goods.js",
       "topic": "나무·물고기·광물·제품 데이터"
@@ -120,6 +130,11 @@
       "topic": "터치·드래그·탭 경로·핀치·설정"
     },
     {
+      "id": "film-player",
+      "path": "src/film-player.js",
+      "topic": "무문자 이미지 공통 재생·자동 진행·중단 정리"
+    },
+    {
       "id": "story-intro",
       "path": "src/story-intro.js",
       "topic": "무문자 인트로·마을별 대화·읽음 저장"
@@ -178,6 +193,11 @@
       "id": "viewport",
       "path": "src/viewport.js",
       "topic": "반응형 화면·확대·리사이즈"
+    },
+    {
+      "id": "complete-actions",
+      "path": "src/complete-actions.js",
+      "topic": "전체 동작·동행·이벤트·엔딩 이후 온천마을 운영"
     },
     {
       "id": "loop",
