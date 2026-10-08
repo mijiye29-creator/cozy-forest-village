@@ -62,7 +62,7 @@ function refreshRaidRadar(lb){
 }
 function refreshBearChip(){var el=document.getElementById('bearChip');if(tutOn()||TITLE){el.hidden=true;refreshRaidRadar(liveBears());return;}el.hidden=false;var lb=liveBears(),s,t=function(x){return Math.floor(x/60)+':'+('0'+x%60).slice(-2);};
   if(isWinter()){s=Math.ceil(winterLeft());el.textContent=(lb.length?'🐻‍❄️ ':'🛡️ ')+t(s);el.className=lb.length?'raid':'calm';}
-  else{s=Math.ceil(toWinter());el.textContent=(s<=30?'⚠️ 곰 ':'🐻‍❄️ ')+t(s);el.className=s<=30?'warn':'';}refreshRaidRadar(lb);}
+  else{s=Math.ceil(toWinter());el.textContent=(s<=30?'⚠️ ':'🐻‍❄️ ')+t(s);el.className=s<=30?'warn':'';}el.setAttribute('aria-label',(isWinter()?'습격 종료까지 ':'북극곰 습격까지 ')+t(s));refreshRaidRadar(lb);}
 /* v74 (staff 2): species book. S.dex[id]=1 once an item has ever been obtained (stall, loading deck, storage, materials, a carried stack or a belt).
    older saves are filled in once from what they hold and what their sites already grow, so nothing is announced on load */
 var DEXCAT=[['🌲 나무',TREES.map(function(s){return s.id;})],['🐟 물고기',FISH.map(function(s){return s.id;})],['⛏️ 광석',ORES.map(function(s){return s.id;})],

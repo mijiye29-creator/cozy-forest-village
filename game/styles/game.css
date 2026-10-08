@@ -368,3 +368,13 @@ header{align-items:center}
 #eventToast{position:absolute;z-index:6;left:50%;bottom:calc(88px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:calc(100% - 36px);padding:10px 16px;border:1px solid #c5bd9d;border-radius:10px;background:#f6ecd5ed;color:#62533c;font-size:15px;font-weight:600;line-height:1.4;pointer-events:none;box-shadow:0 3px 10px #324c3615;text-align:center}
 #eventToast[hidden]{display:none}
 @media(max-height:500px) and (orientation:landscape){#eventToast{bottom:calc(66px + env(safe-area-inset-bottom,0px));padding:8px 12px;font-size:14px}}
+
+/* Readable raid countdown above the radar; no overlap with the coin row. */
+#raidRadar #bearChip{position:static;display:flex;justify-content:center;align-items:center;transform:none;max-width:none;margin:0 0 6px;width:100%;min-height:42px;padding:7px 4px;font-size:26px;line-height:1.1;font-weight:900;letter-spacing:.015em;background:#263f32;color:#fff8dc;border:2px solid #8da875;border-radius:10px;box-shadow:0 2px 6px #182c2526;animation:none}
+#raidRadar #bearChip[hidden]{display:none}
+#raidRadar #bearChip.warn,#raidRadar #bearChip.raid{color:#fff;background:#a72f3e;border-color:#ffbf80}
+#raidRadar #bearChip.warn{animation:bcp .8s ease-in-out infinite alternate}
+#raidRadar #bearChip.calm{background:#365d60;color:#fff;border-color:#95bbb1}
+@media(max-width:360px){#raidRadar #bearChip{font-size:22px;min-height:38px}}
+@media(max-height:500px) and (orientation:landscape){#raidRadar #bearChip{font-size:24px;min-height:38px}}
+@media(prefers-reduced-motion:reduce){#raidRadar #bearChip.warn{animation:none}}

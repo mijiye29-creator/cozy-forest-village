@@ -1582,16 +1582,16 @@ function bearTargets(){
   return l;
 }
 /* More advanced chapters toughen bears slightly; player defenses never make bears stronger. */
-function bearMult(){return 1+.25*Math.max(0,(S.stage||1)-1);}
-function bearStrikeMult(){return 1+.12*Math.max(0,(S.stage||1)-1);}
+function bearMult(){return 1+.35*Math.max(0,(S.stage||1)-1);}
+function bearStrikeMult(){return 1.18+.18*Math.max(0,(S.stage||1)-1);}
 /* v63 (director 2026-10-04): once the mine village opens, bears come more often, more of them at once, and a fierce black King Bear shows up */
-function bearCap(){var s3=(S.stage||1)>=3;return Math.min(s3?9:6,2+Math.floor((S.winters||1)/2)+(s3?2:0));}
+function bearCap(){var s3=(S.stage||1)>=3;return Math.min(s3?10:7,3+Math.floor((S.winters||1)/2)+(s3?2:0));}
 /* v89 (director 2026-10-06: raids should start slow and end in a frantic rush) - 0 at the start of a raid, 1 at its end */
 function raidP(){if(!isWinter())return 0;return Math.max(0,Math.min(1,((S.season||0)-winterStart())/Math.max(1,raidLen())));}
 /* how many bears may be in at once right now: a few at first, the full cap by mid-raid, +2 extra in the closing rush */
-function bearCapNow(){var p=raidP(),c=bearCap();return Math.max(1,Math.round(c*(.35+.9*Math.min(1,p/.7))))+(p>=.7?2:0);}
-/* time to the next bear: about twice as slow as before at the start, about 3x as fast at the end */
-function raidGap(){var p=raidP(),base=(Math.max(3.5,8-.4*(S.winters||1))+Math.random()*3)*((S.stage||1)>=3?.55:1);return base*(2.1-1.8*Math.pow(p,.85));}
+function bearCapNow(){var p=raidP(),c=bearCap();return Math.max(1,Math.round(c*(.5+.7*Math.min(1,p/.7))))+(p>=.7?2:0);}
+/* Earlier pressure still ramps into a closing rush, with a bounded spawn rate. */
+function raidGap(){var p=raidP(),base=(Math.max(3,6.5-.3*(S.winters||1))+Math.random()*2)*((S.stage||1)>=3?.6:1);return Math.max(.8,base*(1.55-1.2*Math.pow(p,.85)));}
 var RUSHMSG=0;
 /* v89: a bear's on-body radius (boss/king are drawn bigger) - used to keep the hero, workers and other bears from standing inside it */
 function bearR(b){return 15*(b.king?1.6:(b.boss?1.35:1));}
@@ -1608,7 +1608,7 @@ function tPos(t){
 function tValid(t){if(t.kind==='none')return false;if(t.kind==='worker')return agents.indexOf(t.a)>=0;if(t.kind==='cash')return (S.cash[t.k]||0)>0;if(t.kind==='purse')return S.coins>1;if(t.kind==='tower')return S.tower>0&&!S.towerDown;if(t.kind==='plot')return t.pl.built();if(t.kind==='belt')return cvLv(t.sid)>0;return true;}
 function tName(t){if(t.kind==='worker')return t.a.gear.name||'일꾼';if(t.kind==='cash')return '돈 더미';if(t.kind==='purse')return '마을 금고';if(t.kind==='tower')return '망루';if(t.kind==='plot')return t.pl.name;if(t.kind==='shop')return SHOPDEF[t.line].name;return SITE[t.sid].name+' 벨트';}
 function pickTarget(b){if(S.tower>0&&!S.towerDown&&(!b||!b.didTower)&&Math.random()<.45){if(b)b.didTower=1;return {kind:'tower',w:1};}var l=bearTargets();if(!l.length)return null;var sum=0;l.forEach(function(t){sum+=t.w;});var r=Math.random()*sum;for(var i=0;i<l.length;i++){r-=l[i].w;if(r<=0)return l[i];}return l[l.length-1];}
-var BEAR_HPX=2.6,BEAR_SPX=1.15;
+var BEAR_HPX=3.25,BEAR_SPX=1.3;
 function pickBearSide(){var r=Math.random();return r<.4?'bottom':(r<.6?'left':(r<.82?'right':'top'));}
 function bearEntry(side,fx0){var yy=80+Math.random()*(H-140);
   if(side==='left')return {x:-24,y:yy,ex:-40,ey:yy};
@@ -1632,7 +1632,7 @@ function blockBearAtFence(b,nx,ny){
 function spawnBear(sideOverride){
   var t=pickTarget();if(!t)return;
   var n=S.bears||0,king=(S.stage||1)>=3&&((n+1)%4===0||Math.random()<.12),boss=!king&&(n+1)%5===0,hp=(18+7*Math.min(n,20))*(king?4.5:(boss?2.5:1))*bearMult(),tp=tPos(t.kind==='tower'?{kind:'purse'}:t);
-  /* v77 (director 2026-10-05: bears too weak, and they should come from everywhere, not only from below) - bears have 1.8x health and walk 15% faster,
+  /* v77 (director 2026-10-05: bears too weak, and they should come from everywhere, not only from below) - health and movement use BEAR_HPX/BEAR_SPX below,
      and enter from the bottom (through the wall), the left palisade, the right edge of the fog or the market road at the top */
   var side=['left','right','bottom','top'].indexOf(sideOverride)>=0?sideOverride:pickBearSide(),fx0=Math.min(MX,fenceX()),ent=bearEntry(side,fx0);
   var b={x:ent.x,y:ent.y,side:side,ex:ent.ex,ey:ent.ey,stole:0,tgt:t,state:'in',hp:hp*BEAR_HPX,max:hp*BEAR_HPX,boss:boss,t:0,flash:0,dir:side==='right'?-1:1,bob:0,kx:0,hitT:0,swipeT:1,dmg:0,swipe:0,king:king,climb:side==='left'||side==='right'?bearClimb(villageAt(ent.x)):0};
@@ -3902,10 +3902,10 @@ var DAY=300;
 function dayL(){return .5+.5*Math.cos(time/DAY*6.2832);}
 function nightAmt(){return 0;}
 /* raid cycle (names kept for save compatibility: S.season/S.winters): each chapter has a calm preparation window before bear raids */
-var SEASON_LEN=240,WINTER_LEN=70;
-/* v99: give all three villages enough quiet time to repair and prepare between attacks */
-function seasonLen(){var st=S.stage||1;return st>=3?180:(st>=2?210:SEASON_LEN);}
-function raidLen(){return (S.stage||1)>=3?65:WINTER_LEN;}
+var SEASON_LEN=200,WINTER_LEN=75;
+/* Shorter preparation and longer raids increase pressure as new villages open. */
+function seasonLen(){var st=S.stage||1;return st>=3?140:(st>=2?170:SEASON_LEN);}
+function raidLen(){var st=S.stage||1;return st>=3?85:(st>=2?80:WINTER_LEN);}
 function winterStart(){return seasonLen()-raidLen();}
 function isWinter(){return (S.season||0)>=winterStart();}
 function winterLeft(){return Math.max(0,seasonLen()-(S.season||0));}
@@ -4343,7 +4343,7 @@ function refreshRaidRadar(lb){
 }
 function refreshBearChip(){var el=document.getElementById('bearChip');if(tutOn()||TITLE){el.hidden=true;refreshRaidRadar(liveBears());return;}el.hidden=false;var lb=liveBears(),s,t=function(x){return Math.floor(x/60)+':'+('0'+x%60).slice(-2);};
   if(isWinter()){s=Math.ceil(winterLeft());el.textContent=(lb.length?'🐻‍❄️ ':'🛡️ ')+t(s);el.className=lb.length?'raid':'calm';}
-  else{s=Math.ceil(toWinter());el.textContent=(s<=30?'⚠️ 곰 ':'🐻‍❄️ ')+t(s);el.className=s<=30?'warn':'';}refreshRaidRadar(lb);}
+  else{s=Math.ceil(toWinter());el.textContent=(s<=30?'⚠️ ':'🐻‍❄️ ')+t(s);el.className=s<=30?'warn':'';}el.setAttribute('aria-label',(isWinter()?'습격 종료까지 ':'북극곰 습격까지 ')+t(s));refreshRaidRadar(lb);}
 /* v74 (staff 2): species book. S.dex[id]=1 once an item has ever been obtained (stall, loading deck, storage, materials, a carried stack or a belt).
    older saves are filled in once from what they hold and what their sites already grow, so nothing is announced on load */
 var DEXCAT=[['🌲 나무',TREES.map(function(s){return s.id;})],['🐟 물고기',FISH.map(function(s){return s.id;})],['⛏️ 광석',ORES.map(function(s){return s.id;})],

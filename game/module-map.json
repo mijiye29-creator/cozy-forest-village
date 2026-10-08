@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "aea227f2878831f567f38b89d15a6398e3e9f49f24a92777c828f9251dc8e3be",
+  "runtime_sha256": "ba9f3e76dd2b39a85b36b6c8a162d7cafa62a8365984318bb850140d482be232",
   "modules": [
     {
       "id": "boot-errors",
@@ -1550,7 +1550,7 @@
       "id": "raids",
       "path": "src/raids.js",
       "topic": "곰 생성·침입·시설 피해",
-      "bytes": 10711,
+      "bytes": 10714,
       "lines": 113,
       "symbols": [
         {
@@ -2895,7 +2895,7 @@
       "id": "ambient",
       "path": "src/ambient.js",
       "topic": "낮밤·습격 시간·환경",
-      "bytes": 2652,
+      "bytes": 2663,
       "lines": 34,
       "symbols": [
         {
@@ -3201,7 +3201,7 @@
       "id": "panels",
       "path": "src/panels.js",
       "topic": "상점 메뉴·목표·도감·일일 과제·레이더",
-      "bytes": 19919,
+      "bytes": 20012,
       "lines": 181,
       "symbols": [
         {
