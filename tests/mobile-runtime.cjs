@@ -105,6 +105,18 @@ vm.runInContext("var LINES=['wood','fish'];",layout);
 vm.runInContext(section('var BPATH=', 'function beltOn('),layout);
 vm.runInContext(section('var PLOTS=', '/* each factory:'),layout);
 vm.runInContext(section('var PADLIST=[];', 'function padPos('),layout);
+// Resource art must have a clear buffer from the outer fence, and upgrades stay nearby.
+assert(layout.SITE.f1.x>=40,'Forest must leave room between trees and the left fence');
+assert(layout.SITE.m1.x+layout.SITE.m1.w<=layout.W-40,'Mine must leave room by the right fence');
+for(const [id,site] of [['site_f1','f1'],['hire_lumber','f1'],['site_p1','p1'],['hire_fisher','p1'],['site_m1','m1'],['hire_miner','m1']]){
+  const pad=layout.PAD_LAYOUT[id],facility=layout.SITE[site];
+  const distance=Math.hypot(Math.max(facility.x-pad.x,0,pad.x-facility.x-facility.w),Math.max(facility.y-pad.y,0,pad.y-facility.y-facility.h));
+  assert(distance<=60,`${id} must stay beside its own facility`);
+}
+for(const [id,def] of [['mill','mill'],['smoke','smoke'],['smelt','smelt'],['elec','elec']]){
+  const facility=layout.PLOTS.find(p=>p.def===def),pad=layout.PAD_LAYOUT[id];
+  assert(pad.x>facility.x+facility.w && pad.x-facility.x-facility.w>=30 && pad.x-facility.x-facility.w<=60,'Workshop pads need an adjacent clear walkway');
+}
 const allIds=Object.keys(layout.PAD_LAYOUT).filter(id=>!id.includes('fix'));
 for(const stage of [1,2,3]){
   layout.S.stage=stage;
