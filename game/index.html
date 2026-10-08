@@ -504,8 +504,8 @@ function spCount(L){return L>=5?3:(L>=3?2:1);}
 var SZ=120,PLAZA={x:0,y:120,w:MX,h:180};
 var SITES=[
   {id:'f1',kind:'forest',x:60,y:180,w:90,h:180,resourceW:90,cost:0,name:'숲',gather:[[1,3],[1,4],[1,5],[2,3],[2,4],[2,5]],st:[4,3],pt:[1,6],xt:[4,5],padDx:0},
-  {id:'p1',kind:'pond',x:420,y:180,w:150,h:180,resourceW:90,cost:0,name:'호수',gather:[[8,3],[8,4],[8,5],[9,3],[9,4],[9,5]],st:[7,3],pt:[8,6],xt:[7,5],padDx:0},
-  {id:'m1',kind:'mine',x:780,y:120,w:180,h:120,cost:300,name:'광산',sd:[2,1],pd:[1,1],gather:[[13,2],[14,2],[15,2]],st:[15,3],pt:[14,3],padDx:0}
+  {id:'p1',kind:'pond',x:420,y:180,w:90,h:180,resourceW:90,cost:0,name:'호수',gather:[[7,3],[7,4],[7,5],[8,3],[8,4],[8,5]],st:[9,3],pt:[8,6],xt:[9,5],padDx:0},
+  {id:'m1',kind:'mine',x:780,y:60,w:180,h:120,cost:300,name:'광산',sd:[2,1],pd:[1,1],gather:[[13,1],[14,1],[15,1]],st:[15,2],pt:[14,2],padDx:0}
 ];
 var WORLD_TOP=0,TOPROW=0,camY=0,camX=0,ZOOM_IN=5.2,Z=5.2;
 var SITE={};
@@ -520,18 +520,17 @@ function tileY(r){return r*T+30;}
 function tileAt(x,y){if(y<0||y>=H||x<0||x>=MX)return null;return {c:Math.floor(x/T),r:Math.floor(y/T)};}
 function siteOfTile(c,r){for(var i=0;i<SITES.length;i++){var ts=SITES[i].tiles;for(var j=0;j<ts.length;j++)if(ts[j].c===c&&ts[j].r===r)return SITES[i];}return null;}
 function tileKind(c,r){var t=siteTileObj(c,r);if(!t)return 'plaza';return t.store?'store':(t.pad?'plaza':'gather');}
-function tileOk(c,r){if(r<0||r>=ROWS||c<0||c>=GC)return false;if(c*T+30>fenceX())return false;var st=siteOfTile(c,r);if(!st)return true;return owned(st.id)||siteTileObj(c,r).pad;}
-/* v64 (director 2026-10-04): denser sites - 6 trees, 5 fish and 6 ore rocks per tile (was 4 / 3 / 4) */
+function tileOk(c,r){if(r<0||r>=ROWS||c<0||c>=GC)return false;if(c*T+30>fenceX())return false;if(isBank(c,r)&&c*T+T<=SITE.p1.x+SITE.p1.w)return false;var st=siteOfTile(c,r);if(!st)return true;return owned(st.id)||siteTileObj(c,r).pad;}
+/* Sparse, large resources: nine trees and nine fish across each 1.5-tile-wide site. */
 var TREE_T=[[.2,.4],[.8,.4],[.2,.84],[.8,.84]],FISH_T=[[.2,.62],[.8,.72]],ORE_T=[[.18,.32],[.5,.26],[.82,.32],[.2,.8],[.5,.74],[.8,.8]];
-/* the river is only crossed on its bank: fishers stand on the boardwalk and cast */
+/* Fishing takes place on the eastern shore; no walkways cross the lake. */
 var BANKY=8;
-/* the river runs top to bottom: fishers stand on the left-bank boardwalk */
+/* Both water columns share the same accessible shore. */
 function isBank(c,r){var st=siteOfTile(c,r),t=siteTileObj(c,r);return !!(st&&st.kind==='pond'&&t&&!t.store&&!t.pad);}
 function tileYw(c,r){return tileY(r);}
-function tileXw(c,r){return isBank(c,r)?c*T+9:tileX(c);}
+function tileXw(c,r){return isBank(c,r)?SITE.p1.x+SITE.p1.w+8:tileX(c);}
 var res=[];
-var RES_LAYOUT={forest:[[[.22,.1],[.74,.24],[.24,.42],[.74,.58],[.22,.74],[.74,.92]],[[.74,.08],[.24,.26],[.74,.42],[.22,.58],[.74,.76],[.26,.92]],[[.24,.1],[.74,.26],[.22,.42],[.74,.6],[.26,.76],[.72,.92]]],
-  pond:[[[.58,.12],[.86,.3],[.58,.5],[.86,.7],[.6,.9]],[[.86,.12],[.58,.3],[.86,.5],[.58,.7],[.84,.9]],[[.58,.1],[.86,.3],[.6,.5],[.86,.7],[.58,.9]]]};
+var RES_LAYOUT={forest:[[[.30,.30],[.75,.85]],[[.70,.30],[.28,.85]],[[.30,.30],[.75,.85]]],pond:[[[.36,.27],[.70,.75]],[[.70,.25],[.36,.74]],[[.36,.26],[.70,.75]]]};
 SITES.forEach(function(st){var gi=0;st.tiles.forEach(function(t){if(t.store||t.pad)return;var lay=st.kind==='mine'?ORE_T:RES_LAYOUT[st.kind][(gi++)%RES_LAYOUT[st.kind].length];
   var width=Math.min(T,st.x+st.w-t.c*T);
   lay.forEach(function(o,i){if(width<T&&i%2)return;
@@ -541,9 +540,9 @@ function pilePos(sid){var t=SITE[sid].store;return {x:t.c*T+30,y:t.r*T+36};}
 function feedY(sid){return SITE[sid].store.r*T+8;}
 
 /* ---------- market ---------- */
-var STALL={wood:{x:270,y:50},fish:{x:480,y:50}};
-function dropPt(line){return line==='wood'?{x:334,y:186}:{x:414,y:158};}
-var LANE={wood:270,fish:450};
+var STALL={wood:{x:270,y:10},fish:{x:570,y:10}};
+function dropPt(line){return line==='wood'?{x:334,y:186}:{x:504,y:158};}
+var LANE={wood:270,fish:570};
 
 /* ---------- state ---------- */
 var KEY='cozy-village-v6';
@@ -637,7 +636,7 @@ function count(role){var n=0;S.w.forEach(function(g){if(g.role===role)n+=g.super
 /* v64 (director 2026-10-04): every village hires its own hunters - 'hunter' (forest), 'hunter2' (lake), 'hunter3' (mine); each looks different and the later villages' hunters are stronger and pricier */
 function isHunter(r){return r==='hunter'||r==='hunter2'||r==='hunter3';}
 var HV={hunter:1,hunter2:2,hunter3:3},HPOW={hunter:1,hunter2:2.4,hunter3:6},HNAME={hunter:'숲 사냥꾼',hunter2:'호수 사냥꾼',hunter3:'광산 사냥꾼'};
-function hunterDoor(role){var v=HV[role]||1;return v===1?{x:50,y:590}:{x:v===2?630:1042,y:592};}
+function hunterDoor(role){var v=HV[role]||1;return v===1?{x:50,y:590}:{x:v===2?410:770,y:592};}
 function shopStaffLevel(line){var n=S.shopStaff&&S.shopStaff[line];return Math.max(0,Math.min(6,Math.floor(Number(n)||0)));}
 function shopClerks(line){return Math.ceil(shopStaffLevel(line)/2);}
 function shopShelves(line){return Math.floor(shopStaffLevel(line)/2);}
@@ -1032,6 +1031,7 @@ function findPath(from,to){
   return path;
 }
 function goTile(a,t){
+  if(isBank(t.c,t.r))t={c:Math.floor((SITE.p1.x+SITE.p1.w+8)/T),r:t.r};
   var f=tileOf(a)||tileAt(HOME.x,HOME.y);
   if(sameTile(f,t)){a.path=[];a.goal=t;return true;}
   var p=findPath(f,t);if(!p)return false;
@@ -1039,7 +1039,7 @@ function goTile(a,t){
 }
 function followPath(a,dt){var t=a.path[0];if(moveTo(a,tileXw(t.c,t.r),tileYw(t.c,t.r),dt))a.path.shift();}
 /* everyone works from the tile centre (workers shuffle into small slots so they don't overlap) */
-function stand(q,a){var side=q.x<q.tc*T+30?-1:1;if(q.k==='fish')return {x:q.tc*T+9,y:Math.max(q.tr*T+6,Math.min(q.tr*T+56,q.y+2))};return {x:Math.max(6,Math.min(MX-6,q.x+side*10)),y:Math.min(q.tr*T+56,q.y+10)};}
+function stand(q,a){var side=q.x<q.tc*T+30?-1:1;if(q.k==='fish')return {x:SITE[q.s].x+SITE[q.s].w+8,y:Math.max(q.tr*T+6,Math.min(q.tr*T+56,q.y+2))};return {x:Math.max(6,Math.min(MX-6,q.x+side*10)),y:Math.min(q.tr*T+56,q.y+10)};}
 function near(a,p,d){return Math.hypot(a.x-p.x,a.y-p.y)<(d||26);}
 function workersOnSite(sid,except){var n=0;agents.forEach(function(a){if(a!==except&&a.res&&a.res.s===sid&&a.role!=='player')n++;});return n;}
 function pileRoomW(sid,a){return pn(sid)+workersOnSite(sid,a)<pcap();}
@@ -1050,7 +1050,7 @@ function canTake(a,q){
   if(a.role==='miner'&&q.k!=='ore')return false;
   return okFor(a.gear,q);
 }
-function resInTile(c,r){return res.filter(function(q){return q.tc===c&&q.tr===r;});}
+function resInTile(c,r){return res.filter(function(q){return q.tr===r&&(q.tc===c||(q.k==='fish'&&isBank(c,r)));});}
 function harvestable(a,c,r){return resInTile(c,r).filter(function(q){return canTake(a,q);});}
 function needMsg(q){var tr=q.k==='tree'?'axe':(q.k==='ore'?'pick':'rod');return NAMES[tr][spOf(q).tier]+(tr==='axe'?' 도끼':' 낚싯대')+'가 필요해요';}
 function harvest(a){
@@ -1195,7 +1195,7 @@ var SUPER_ROLES={lumber:'axe',fisher:'rod',hunter:'bow',hunter2:'bow',hunter3:'b
 /* v65 (director 2026-10-04): the three super hunters are the forest's 임꺽정, the lake's 거북선 (turtle ship) and the mine's 광개토대왕 on horseback */
 var SUPERNAME={lumber:'슈퍼 나무꾼',fisher:'슈퍼 낚시꾼',hunter:'임꺽정',hunter2:'이순신 장군',hunter3:'광개토대왕',miner:'슈퍼 광부'};
 function superGather(a){return !!(a.gear&&a.gear.super&&(a.role==='lumber'||a.role==='fisher'||a.role==='miner'));}
-function superPos(role){return role==='lumber'?{x:210,y:276}:(role==='miner'?{x:900,y:186}:{x:489,y:276});}
+function superPos(role){return role==='lumber'?{x:210,y:276}:(role==='miner'?{x:900,y:186}:{x:518,y:276});}
 function canMerge(role){var pr=SUPER_ROLES[role];if(!pr||!S.wlv||(S.wlv[role]||0)<MAXLV[pr])return false;var l=S.w.filter(function(g){return g.role===role;});return l.length>0&&!l.some(function(g){return g.super;})&&l.every(function(g){return (g[pr]||0)>=MAXLV[pr];});}
 function mergeCrew(role,show){var l=S.w.filter(function(g){return g.role===role;}),keep=l[0];keep.super=1;keep.name=SUPERNAME[role];
   /* v59: workers that leave in the merge must let go of the tree / fish they had reserved - before, those stayed reserved forever and the super worker could never take them */
@@ -1211,7 +1211,7 @@ function superTopUp(sid,k){var need=Math.ceil(.9*pcap())-pn(sid);if(need<=0)retu
 function stepSuper(a,dt){var role=a.role,k={lumber:'tree',fisher:'fish',miner:'ore'}[role],sid={lumber:'f1',fisher:'p1',miner:'m1'}[role],p=superPos(role);
   a.working=false;if(!owned(sid)){idleInTile(a,dt);return;}
   if(Math.hypot(a.x-p.x,a.y-p.y)>3){moveTo(a,p.x,p.y,dt);return;}
-  a.dir=role==='lumber'?-1:(role==='miner'?-1:1);
+  a.dir=-1;
   /* v65 (director 2026-10-04): the super fisher's net now really lands the fish - thrown out (0-0.45s), settles, the fish are lifted out of the water (0.55s)
      and hauled back inside the net, landing on the deck when the net is back (1.0s) */
   if(a.net){var N=a.net;N.t+=dt;a.working=true;
@@ -1260,7 +1260,7 @@ function convSpeed(L){return 80*(1+0.12*L)*(1+0.2*S.trunk);}
 var PROC_OF={f1:'mill',p1:'smoke',m1:'smelt',el:'elec'},SITE_OF={mill:'f1',smoke:'p1',smelt:'m1',elec:'el'};
 var CVLINE={f1:'wood',p1:'fish',m1:'iron',el:'iron'};function lineBeltLv(line){return Math.max(1,(S.cvLv&&S.cvLv[line])||1);}
 function cvLv(sid){return (S.cv[sid]||(S.pcv&&S.pcv[PROC_OF[sid]]))?lineBeltLv(CVLINE[sid]||sid):0;}
-var BPATH={sale_f1:[[150,216],[270,216],[270,182],[306,182],[306,132],[294,132]],sale_p1:[[450,182],[384,182],[384,140],[448,140]],proc_f1:[[150,216],[270,216],[270,346],[270,416]],proc_p1:[[450,346],[450,432]],proc_m1:[[930,238],[930,250],[790,250],[790,272]],proc_el:[[790,408],[790,422],[950,422],[950,440]]};
+var BPATH={sale_f1:[[150,216],[270,216],[270,136]],sale_p1:[[570,182],[570,136]],proc_f1:[[150,216],[270,216],[270,346],[270,416]],proc_p1:[[570,346],[570,432]],proc_m1:[[930,178],[930,245]],proc_el:[[930,381],[930,440]]};
 function beltOn(k){var sid=k.slice(-2);return k.indexOf('sale')===0?!!S.cv[sid]:!!(S.pcv&&S.pcv[PROC_OF[sid]]&&S[PROC_OF[sid]]);}
 function ptsOf(k){return BPATH[k].map(function(p){return {x:p[0],y:p[1]};});}
 function procCap(b){return 20+10*(S[b]||0)+15*((S.pst&&S.pst[b])||0);}
@@ -1535,7 +1535,7 @@ function idleHint(){
 function walkXY(x,y){
   if(x<4||y<WORLD_TOP+4||y>=H-4||x>fenceX()-7)return false;
   for(var i=0;i<PADLIST.length;i++){if(Math.hypot(x-PADLIST[i].x,y-PADLIST[i].y)<20)return true;}
-  if(x>MX-4)return false;var t=tileAt(x,y);if(t&&isBank(t.c,t.r)&&x<siteOfTile(t.c,t.r).x+siteOfTile(t.c,t.r).w&&x-t.c*T>16)return false;return !!t&&tileOk(t.c,t.r);
+  if(x>MX-4)return false;var t=tileAt(x,y);var lake=SITE.p1;if(x>lake.x+3&&x<lake.x+lake.w-3&&y>lake.y+3&&y<lake.y+lake.h-3)return false;return !!t&&tileOk(t.c,t.r);
 }
 function fly(id,x0,y0,x1,y1,dur){FLY.push({id:id,x0:x0,y0:y0,x1:x1,y1:y1,t:0,dur:dur||.32});}
 function updateFly(dt){for(var i=FLY.length-1;i>=0;i--){FLY[i].t+=dt;if(FLY[i].t>=FLY[i].dur)FLY.splice(i,1);}}
@@ -1571,7 +1571,7 @@ function drawCoinFly(){var g=ctx;for(var i=CFLY.length-1;i>=0;i--){var f=CFLY[i]
     g.save();g.translate(x,y);g.scale(Math.abs(Math.cos(time*9+f.sp))*.5+.5,1);g.fillStyle='#d99a20';g.beginPath();g.arc(0,.8,r,0,7);g.fill();g.fillStyle='#f0bb3f';g.beginPath();g.arc(0,0,r,0,7);g.fill();
     g.fillStyle='#fff3b0';g.beginPath();g.arc(-r*.35,-r*.35,r*.3,0,7);g.fill();g.restore();
     if(k>=1){CFLY.splice(i,1);bumpHud();sfx('coin',.04);}}}
-function cashPos(line){var s=STALL[line];return {x:line==='wood'?s.x-40:s.x+104,y:172};}
+function cashPos(line){var s=STALL[line];return {x:line==='wood'?s.x-40:s.x+52,y:172};}
 function tcashPos(b){var p=plotOf(b);return {x:shedX(p)+19,y:p.y-16};}
 function cashSpots(){var l=[{k:'wood',p:cashPos('wood'),r:40},{k:'fish',p:cashPos('fish'),r:40}];TPROCS.forEach(function(b){if(S[b])l.push({k:'t_'+b,p:tcashPos(b),r:34,b:b});});return l;}
 var autoT=0;
@@ -1680,7 +1680,7 @@ var PAD_W=34,PAD_H=30,PAD_RADIUS=14;
 /* Stable upgrade slots sit in the walkways beside their own facilities. */
 var PAD_LAYOUT={
   shop_wood:{x:338,y:94},
-  shopstaff_wood:{x:338,y:50},
+  shopstaff_wood:{x:338,y:40},
   autocash:{x:180,y:164},
   belt_f1:{x:330,y:220},
   beltup_wood:{x:330,y:280},
@@ -1694,33 +1694,33 @@ var PAD_LAYOUT={
   mill:{x:228,y:380},
   pst_mill:{x:192,y:380},
   fence:{x:140,y:584},
-  shop_fish:{x:414,y:94},
-  shopstaff_fish:{x:414,y:50},
-  belt_p1:{x:384,y:161},
-  beltup_fish:{x:620,y:110},
-  hire_fisher:{x:620,y:230},
-  wup_fisher:{x:620,y:290},
-  site_p1:{x:576,y:140},
-  hire_hunter2:{x:576,y:450},
-  wup_hunter2:{x:624,y:450},
-  vtower2:{x:630,y:488},
-  pbelt_smoke:{x:384,y:380},
-  smoke:{x:494,y:396},
-  pst_smoke:{x:532,y:396},
-  vfence2:{x:590,y:578},
+  shop_fish:{x:504,y:94},
+  shopstaff_fish:{x:504,y:50},
+  belt_p1:{x:570,y:159},
+  beltup_fish:{x:620,y:220},
+  hire_fisher:{x:378,y:230},
+  wup_fisher:{x:378,y:290},
+  site_p1:{x:480,y:140},
+  hire_hunter2:{x:378,y:390},
+  wup_hunter2:{x:426,y:390},
+  vtower2:{x:410,y:430},
+  pbelt_smoke:{x:467,y:396},
+  smoke:{x:604,y:396},
+  pst_smoke:{x:508,y:396},
+  vfence2:{x:460,y:578},
   site_m1:{x:984,y:146},
-  beltup_iron:{x:884,y:288},
-  hire_miner:{x:984,y:208},
-  wup_miner:{x:1038,y:208},
-  smelt:{x:740,y:234},
-  pbelt_smelt:{x:984,y:268},
-  pst_smelt:{x:694,y:234},
+  beltup_iron:{x:1038,y:160},
+  hire_miner:{x:720,y:110},
+  wup_miner:{x:720,y:170},
+  smelt:{x:974,y:210},
+  pbelt_smelt:{x:810,y:210},
+  pst_smelt:{x:867,y:210},
   hire_hunter3:{x:1038,y:340},
   wup_hunter3:{x:1038,y:400},
-  elec:{x:934,y:380},
-  pbelt_elec:{x:992,y:388},
-  pst_elec:{x:888,y:380},
-  vtower3:{x:1042,y:488},
+  elec:{x:974,y:407},
+  pbelt_elec:{x:810,y:407},
+  pst_elec:{x:867,y:407},
+  vtower3:{x:770,y:430},
   vfence3:{x:720,y:578}
 };
 PAD_LAYOUT.fence_fix=PAD_LAYOUT.fence;PAD_LAYOUT.tower_fix=PAD_LAYOUT.tower;
@@ -1729,11 +1729,11 @@ function padBounds(p){return {x:p.x-PAD_W/2,y:p.y-PAD_H/2,w:PAD_W,h:PAD_H};}
 function rectTouches(a,b,gap){gap=gap||0;return a.x<b.x+b.w+gap&&a.x+a.w+gap>b.x&&a.y<b.y+b.h+gap&&a.y+a.h+gap>b.y;}
 function padObstacles(){
   var out=PLOTS.map(function(p){return {x:p.x-6,y:p.y-12,w:p.w+12,h:p.h+20};});
-  if(typeof XTOWERS!=='undefined')XTOWERS.forEach(function(t){out.push({x:t.x-20,y:H-86,w:46,h:96});});
+  if(typeof XTOWERS!=='undefined')XTOWERS.forEach(function(t){out.push({x:t.x-28,y:470,w:56,h:136});});
   SITES.forEach(function(s){out.push({x:s.x,y:s.y,w:s.w,h:s.h});[s.store,s.xtT].forEach(function(t){if(t)out.push({x:t.c*T,y:t.r*T,w:T,h:T});});});
   LINES.forEach(function(line){var s=STALL[line];out.push({x:s.x-40,y:s.y-18,w:84,h:144});});
   Object.keys(BPATH).forEach(function(k){var pts=BPATH[k];for(var i=1;i<pts.length;i++){var a=pts[i-1],b=pts[i];out.push({x:Math.min(a[0],b[0])-14,y:Math.min(a[1],b[1])-14,w:Math.abs(a[0]-b[0])+28,h:Math.abs(a[1]-b[1])+28,belt:k});}});
-  out.push({x:426,y:356,w:48,h:54});return out;
+  out.push({x:666,y:356,w:48,h:54});return out;
 }
 var fencePadAnchor=null;
 function nearbyFenceSlot(){
@@ -1753,7 +1753,7 @@ function nearbyFenceSlot(){
 function arrangePads(pads){
   /* Repairs follow their target but stay clear of every facility and reserved upgrade slot. */
   var obstacles=null,placed=[];
-  pads.forEach(function(p){var slot=p.perimeter||PAD_LAYOUT[p.id];if(slot){p.x=slot.x;p.y=slot.y;if(p.construction){if(p.id==='belt_p1'){p.x=384;p.y=161;}else{var lot=plotOf(p.id);p.x=lot.x+lot.w/2;p.y=lot.y+lot.h/2;}}placed.push(p);}});
+  pads.forEach(function(p){var slot=p.perimeter||PAD_LAYOUT[p.id];if(slot){p.x=slot.x;p.y=slot.y;if(p.construction){if(p.id==='belt_p1'){p.x=570;p.y=159;}else{var lot=plotOf(p.id);p.x=lot.x+lot.w/2;p.y=lot.y+lot.h/2;}}placed.push(p);}});
   pads.forEach(function(p){if(p.perimeter||PAD_LAYOUT[p.id])return;if(!obstacles)obstacles=padObstacles();
     var best=null,score=Infinity,fx=fenceX();
     for(var y=24;y<H-20;y+=40)for(var x=24;x<fx-20;x+=40){var box=padBounds({x:x,y:y});
@@ -2333,16 +2333,16 @@ function fenceSoft(v){var L=fenceLvV(v||1);return Math.max(.55,1-.08*L);}
 /* v56 (director 2026-10-03): every village gets its own watchtower on the wall - the 2nd opens with the lake village, the 3rd with the mine.
    they share the main tower's level, weapon and repair state */
 /* v63 (director 2026-10-04): the lake / mine towers have their own level (built and upgraded on their own pads), starting from zero when the village opens */
-var XTOWERS=[{x:630,st:2,v:2,t:0,aim:0,ang:2.3},{x:1042,st:3,v:3,t:.5,aim:0,ang:2.3}];
+var XTOWERS=[{x:410,st:2,v:2,t:0,aim:0,ang:2.3},{x:770,st:3,v:3,t:.5,aim:0,ang:2.3}];
 function xtLv(o){return (S.vt&&S.vt[o.v])||0;}
 function xTowerOn(o){return xtLv(o)>0&&(S.stage||1)>=o.st&&o.x<fenceX()-10;}
 function towerCount(){return S.tower>0?1:0;}
-function updateXTowers(dt){XTOWERS.forEach(function(o){o.t-=dt;o.aim=Math.max(0,o.aim-dt);if(!xTowerOn(o)||o.t>0)return;var oy=H-26,best=null,XL=xtLv(o),bd=XL>=2?9999:220;
+function updateXTowers(dt){XTOWERS.forEach(function(o){o.t-=dt;o.aim=Math.max(0,o.aim-dt);if(!xTowerOn(o)||o.t>0)return;var oy=TOWER.y-30,best=null,XL=xtLv(o),bd=XL>=2?9999:220;
   BEARS.forEach(function(b){if(b.state==='dead'||b.state==='out')return;var d=Math.hypot(b.x-o.x,b.y-oy);if(d<bd){bd=d;best=b;}});if(!best)return;
   var wk=TWPN[Math.min(TOWER_MAX,XL)],nsh=wk==='cannon2'?2:(wk==='rocket'?3:1);o.t=towerGapAt(XL);o.aim=.35;o.ang=Math.atan2(best.y-oy,best.x-o.x);
   for(var si=0;si<nsh;si++)ARROWS.push({x:o.x+(nsh>1?(si-(nsh-1)/2)*6:0),y:oy,b:best,t:0,dmg:towerDmgAt(XL),tw:wk,delay:si*.14,d0:0});
   if(wk==='arrow')sfx('cast',.15);else sfx('chop',.35);});}
-function drawXTowers(){var g=ctx;XTOWERS.forEach(function(o){if(!xTowerOn(o))return;var L=xtLv(o);drawWatchtower(g,o.x,H+8,30,75,L,false,o.aim,o.ang,nightAmt());g.font='600 6px sans-serif';g.textAlign='center';g.fillStyle='#f3ecd7';g.fillText('망루 Lv'+L,o.x,H+23);});}
+function drawXTowers(){var g=ctx;XTOWERS.forEach(function(o){if(!xTowerOn(o))return;var L=xtLv(o);drawWatchtower(g,o.x,H-2,44,116,L,false,o.aim,o.ang,nightAmt());facilitySign(g,'망루 Lv'+L,o.x,460,76);});}
 function updateDefense(dt){
   updateXTowers(dt);
   towerT-=dt;towerAim=Math.max(0,towerAim-dt);
@@ -2468,7 +2468,7 @@ function drawTowerWpn(g,cx,top,L){var wk=TWPN[Math.min(TOWER_MAX,L)],fire=towerA
     if(fire&&towerAim>.2){g.fillStyle='rgba(255,200,90,.85)';g.beginPath();blob(g,18,0,3+Math.random()*2);g.fill();}g.restore();});
   if(L>=4){g.fillStyle='#e0b23c';g.fillRect(cx-9,y0-2,18,1.2);}
 }
-function wallGaps(){var l=[];TPROCS.forEach(function(b){if(S[b]){var x=dockX(b);l.push([x-21,x+21]);}});if(S.tower>0)l.push([TOWER.x-26,TOWER.x+26]);XTOWERS.forEach(function(o){if(xTowerOn(o))l.push([o.x-20,o.x+20]);});
+function wallGaps(){var l=[];TPROCS.forEach(function(b){if(S[b]){var x=dockX(b);l.push([x-21,x+21]);}});if(S.tower>0)l.push([TOWER.x-26,TOWER.x+26]);XTOWERS.forEach(function(o){if(xTowerOn(o))l.push([o.x-26,o.x+26]);});
   l.sort(function(a,b){return a[0]-b[0];});var m=[];l.forEach(function(r){if(m.length&&r[0]<=m[m.length-1][1])m[m.length-1][1]=Math.max(m[m.length-1][1],r[1]);else m.push([r[0],r[1]]);});return m;}
 function wallSegs(){var segs=[],x=0;wallGaps().forEach(function(gp){if(gp[0]>x)segs.push([x,gp[0]]);x=Math.max(x,gp[1]);});if(x<MX)segs.push([x,MX]);return segs;}
 function inGap(x){return wallGaps().some(function(gp){return x>gp[0]-2&&x<gp[1]+2;});}
@@ -2976,7 +2976,7 @@ function drawSite(st){
   var g=ctx,x=st.x,y=st.y,seed=x*.37+y*.11+1;
   if(!owned(st.id)){g.drawImage(tileImg('L-'+st.id+(S.smelt?1:0),st.w,function(c){drawLockedSite(c,st,0,0);},st.h),x,y,st.w,st.h);return;}
   drawOwnedSite(g,st,x,y,seed);
-  if(st.kind==='forest'){drawStoreTile(g,st,st.store.c*T,st.store.r*T);drawPadDeck(g,st.xtT.c*T,st.xtT.r*T);}
+  if(st.kind==='forest'||st.kind==='pond'){drawStoreTile(g,st,st.store.c*T,st.store.r*T);drawPadDeck(g,st.xtT.c*T,st.xtT.r*T);}
 }
 function drawLockedSite(g,st,x,y){
   {
@@ -3070,37 +3070,20 @@ function drawForestArt(g,st,seed,L){
 }
 
 function drawRiverArt(g,st,seed,L){
-  var W2=st.w,H2=st.h,gr=['#eff6f8','#e7f2f6','#deedf3','#d5e8f0','#cde4ee'][L-1];
-  g.fillStyle=gr;g.fillRect(0,0,W2,H2);grassTufts(g,0,0,60,H2,seed,8,L>=2?6:0);
-  for(var column=60;column<W2;column+=60){g.save();g.beginPath();g.rect(column,0,Math.min(60,W2-column),H2);g.clip();g.translate(column-60,0);
-  /* water column: murky stream at Lv1, clear river, then a bright crystal river */
-  var wc=[['#c2eaf5','#9bd4e6'],['#b4e5f2','#82cbe1'],['#a2e0f4','#70bfdd'],['#92dafa','#5aaed4'],['#a8f2ef','#56c4de']][L-1];
-  g.fillStyle='rgba(60,90,60,.25)';rr(g,68,0,52,H2,4);g.fill();
-  var wg=g.createLinearGradient(72,0,120,0);wg.addColorStop(0,wc[1]);wg.addColorStop(.5,wc[0]);wg.addColorStop(1,wc[1]);g.fillStyle=wg;g.fillRect(72,0,46,H2);
-  g.fillStyle='rgba(255,255,255,.18)';for(var i=0;i<9;i++){g.beginPath();g.ellipse(84+hs(i,5)*24,10+i*19,6,1.4,0,0,7);g.fill();}
-  if(L>=3){ /* stone embankment on the far bank */
-    for(var sy=2;sy<H2;sy+=8){g.fillStyle=(sy/8)%2?'#a39c8e':'#b9b2a4';g.beginPath();g.ellipse(118,sy+3,3.4,4,0,0,7);g.fill();}}
-  else{g.fillStyle='#8fbf6c';g.fillRect(117,0,3,H2);}
-  if(L>=2){[[104,40,4.6],[92,118,3.8],[108,150,4]].forEach(function(l,i){g.fillStyle=i%2?'#6db873':'#5fa86a';g.beginPath();g.moveTo(l[0],l[1]);g.arc(l[0],l[1],l[2],.35,6.0);g.closePath();g.fill();});
-    g.fillStyle='#ffb3c6';for(var pe=0;pe<5;pe++){var pa=pe/5*6.283;g.beginPath();g.ellipse(104+Math.cos(pa)*1.6,40+Math.sin(pa)*1.1,1.5,.9,pa,0,7);g.fill();}}
-  g.strokeStyle='#6a9a50';g.lineWidth=1;[[112,70],[112,98],[114,170]].forEach(function(p){for(var rd=0;rd<3;rd++){g.beginPath();g.moveTo(p[0]+rd*1.6,p[1]);g.lineTo(p[0]-1+rd*2.2,p[1]-9-rd*2);g.stroke();}});
-  if(L>=5){for(var sp=0;sp<12;sp++){g.fillStyle='rgba(255,255,255,.7)';var sx=78+hs(sp,3)*36,sy2=6+hs(sp,9)*(H2-12);g.fillRect(sx-1.6,sy2-.3,3.2,.6);g.fillRect(sx-.3,sy2-1.6,.6,3.2);}}
-  /* left-bank boardwalk where fishers stand */
-  g.fillStyle='rgba(60,40,20,.2)';g.fillRect(62,0,11,H2);g.fillStyle=L>=4?'#d4ad78':'#c9a26f';g.fillRect(60,0,11,H2);
-  g.strokeStyle='rgba(110,75,40,.35)';g.lineWidth=.8;for(var by=6;by<H2;by+=7){g.beginPath();g.moveTo(60,by);g.lineTo(71,by);g.stroke();}
-  for(var p=0;p<9;p++){g.fillStyle='#8a6440';rr(g,70,6+p*20,3,5,1);g.fill();}
-  if(L>=5){g.fillStyle='#e0b23c';g.fillRect(71,0,1.6,H2);}
-  if(L>=4){lantern(g,66,58,L>=5);lantern(g,66,120,L>=5);lantern(g,66,178,L>=5);}
-  g.restore();}
-  deck(g,2,2,56,56,['#dcbd8c','#caa472'],'#a8743f');g.strokeStyle='rgba(110,75,40,.25)';g.lineWidth=.8;for(var py=10;py<56;py+=7){g.beginPath();g.moveTo(4,py);g.lineTo(56,py);g.stroke();}
-  deck(g,4,64,52,52,['#efe6cf','#e2d6b8'],'rgba(160,130,90,.6)');deck(g,2,122,56,56,['#d6d0c4','#c4bcae'],'rgba(120,110,95,.6)');
-  if(!cvLv(st.id)){g.font='700 6.5px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='rgba(90,60,30,.7)';g.fillText('적재칸',30,52);}
+  var w=st.w,h=st.h,wc=[['#9bd4e6','#c2eaf5'],['#82cbe1','#b4e5f2'],['#70bfdd','#a2e0f4'],['#5aaed4','#92dafa'],['#56c4de','#a8f2ef']][L-1];
+  g.fillStyle='#dce8df';rr(g,0,0,w,h,12);g.fill();
+  var water=g.createLinearGradient(0,0,w,h);water.addColorStop(0,wc[0]);water.addColorStop(.5,wc[1]);water.addColorStop(1,wc[0]);g.fillStyle=water;rr(g,5,5,w-10,h-10,11);g.fill();
+  g.strokeStyle='rgba(255,255,255,.5)';g.lineWidth=2;rr(g,5,5,w-10,h-10,11);g.stroke();
+  for(var i=0;i<14;i++){var x=12+hs(i,5)*(w-24),y=12+hs(i,9)*(h-24);g.fillStyle='rgba(255,255,255,.23)';g.beginPath();g.ellipse(x,y,6,1.4,0,0,7);g.fill();}
+  for(var y=14;y<h-8;y+=18){g.fillStyle=L>=3?'#a1b3b4':'#b2c5b9';g.beginPath();g.ellipse(w-2,y,3,5,0,0,7);g.fill();}
+  if(L>=2){[[18,42],[w-22,118]].forEach(function(p){g.fillStyle='#6ab27c';g.beginPath();g.arc(p[0],p[1],5+L*.4,.3,6);g.lineTo(p[0],p[1]);g.fill();});}
+  if(L>=4){for(var i=0;i<L;i++){g.fillStyle='rgba(255,255,255,.7)';g.fillRect(15+hs(i,17)*(w-30),18+hs(i,23)*(h-36),3,1);}}
 }
 /* moving parts: the river flows downhill, fireflies over a grown forest */
 function siteAnim(g,st,L){
-  if(st.kind==='pond'){var x0=st.x+72;g.strokeStyle='rgba(255,255,255,.45)';g.lineWidth=1;
-    for(var i=0;i<10;i++){var yy=st.y+((time*(14+L*3)+i*23)%st.h),xx=x0+6+hs(i,17)*34;g.globalAlpha=.25+.35*Math.sin((yy-st.y)/st.h*Math.PI);g.beginPath();g.moveTo(xx,yy);g.lineTo(xx,yy+6);g.stroke();}g.globalAlpha=1;
-    if(L>=4){var wf=(time*2)%1;g.fillStyle='rgba(255,255,255,.35)';g.fillRect(x0+2,st.y,42,2);g.fillStyle='rgba(255,255,255,'+(.4*(1-wf))+')';g.beginPath();g.ellipse(x0+23,st.y+4+wf*6,18,2,0,0,7);g.fill();}}
+  if(st.kind==='pond'){var x0=st.x+8;g.strokeStyle='rgba(255,255,255,.45)';g.lineWidth=1;
+    for(var i=0;i<10;i++){var yy=st.y+((time*(14+L*3)+i*23)%st.h),xx=x0+6+hs(i,17)*(st.w-28);g.globalAlpha=.25+.35*Math.sin((yy-st.y)/st.h*Math.PI);g.beginPath();g.moveTo(xx,yy);g.lineTo(xx,yy+6);g.stroke();}g.globalAlpha=1;
+    if(L>=4){var wf=(time*2)%1;g.fillStyle='rgba(255,255,255,.35)';g.fillRect(x0+2,st.y+5,st.w-20,2);g.fillStyle='rgba(255,255,255,'+(.4*(1-wf))+')';g.beginPath();g.ellipse(x0+23,st.y+4+wf*6,18,2,0,0,7);g.fill();}}
   else if(L>=4){for(var f=0;f<(L>=5?7:4);f++){var fa=time*.6+f*1.9,fx=st.x+30+Math.cos(fa)*22+Math.sin(time*1.3+f)*4,fy=st.y+20+((f*37+time*6)%(st.h-30));g.fillStyle='rgba(255,240,150,'+(.4+.4*Math.sin(time*4+f))+')';g.beginPath();g.arc(fx,fy,1.3,0,7);g.fill();}}
 }
 function mineDeco(g,L){
@@ -3120,10 +3103,10 @@ function drawOwnedSite(g,st,x,y,seed){
 }
 /* central plaza: four empty lots; a building appears once it is bought */
 var PLOTS=[
-  {id:'sawmill',def:'mill',name:'제재소',x:180,y:414,w:136,h:144,shedLeft:1,built:function(){return S.mill>0;},show:function(){return S.shop.wood+S.shop.fish>=3||S.mill>0;}},
-  {id:'smokehouse',def:'smoke',name:'훈제소',x:412,y:430,w:136,h:144,shedLeft:0,built:function(){return S.smoke>0;},show:function(){return S.shop.wood+S.shop.fish>=3||S.smoke>0;}},
-  {id:'smelter',def:'smelt',name:'제련소',x:710,y:270,w:136,h:138,shedLeft:1,built:function(){return S.smelt>0;},show:function(){return S.mill>0||S.smoke>0||S.smelt>0;}},
-  {id:'factory',def:'elec',name:'전자 공장',x:870,y:438,w:136,h:138,shedLeft:1,built:function(){return S.elec>0;},show:function(){return S.smelt>0||S.elec>0;}},
+  {id:'sawmill',def:'mill',name:'제재소',x:186,y:414,w:136,h:144,shedLeft:1,built:function(){return S.mill>0;},show:function(){return S.shop.wood+S.shop.fish>=3||S.mill>0;}},
+  {id:'smokehouse',def:'smoke',name:'훈제소',x:486,y:430,w:136,h:144,shedLeft:1,built:function(){return S.smoke>0;},show:function(){return S.shop.wood+S.shop.fish>=3||S.smoke>0;}},
+  {id:'smelter',def:'smelt',name:'제련소',x:846,y:243,w:136,h:138,shedLeft:1,built:function(){return S.smelt>0;},show:function(){return S.mill>0||S.smoke>0||S.smelt>0;}},
+  {id:'factory',def:'elec',name:'전자 공장',x:846,y:438,w:136,h:138,shedLeft:1,built:function(){return S.elec>0;},show:function(){return S.smelt>0||S.elec>0;}},
   {id:'tower',def:'tower',name:'망루',x:28,y:482,w:44,h:116,built:function(){return S.tower>0;},show:function(){return huntReady();}}
 ];
 /* each factory: machine on the side the belt comes in, storage shed (truck bay) on the other */
@@ -3195,7 +3178,7 @@ function drawCampfire(g,x,y){
 function drawPlaza(){
   var g=ctx,nt=nightAmt();
   /* warm safe zone at the heart of the cold forest */
-  g.fillStyle='rgba(245,190,139,.25)';g.beginPath();g.ellipse(450,384,67,27,0,0,7);g.fill();drawCampfire(g,450,384);
+  g.fillStyle='rgba(245,190,139,.25)';g.beginPath();g.ellipse(690,384,67,27,0,0,7);g.fill();drawCampfire(g,690,384);
   PLOTS.forEach(function(pl){
     if(!pl.built()){
       if(pl.show&&!pl.show())return;
@@ -3822,7 +3805,7 @@ function drawTree(q,dtv){
   if(q.alive){
     var sway=Math.sin(time*.8+q.ph)*.022+(q.by&&q.prog>0?Math.sin(time*27)*.045:0);
     var scale=1;if(q.pop>0){q.pop=Math.max(0,q.pop-step*2.2);scale=1-.16*Math.sin(q.pop*Math.PI);}
-    g.save();g.translate(q.x,q.y+7);g.rotate(sway);g.scale(scale,scale);g.drawImage(treeSprite(L,q.sp),-24,-52,48,64);g.restore();
+    g.save();g.translate(q.x,q.y+7);g.rotate(sway);g.scale(scale*1.35,scale*1.35);g.drawImage(treeSprite(L,q.sp),-24,-52,48,64);g.restore();
     if(!teamOk(q))lockBadge(q.x+9,q.y-28);drawBar(q,-45);
   }else{
     g.fillStyle='#82614b';rr(g,q.x-3,q.y+3,6,5,1.5);g.fill();g.fillStyle='#d0b99a';g.beginPath();g.ellipse(q.x,q.y+3,3,1.5,0,0,7);g.fill();
@@ -3853,7 +3836,7 @@ function drawFish(q){
   /* fish drift in a slow lazy loop under the surface */
   var fx=Math.sin(time*.8+q.ph)*3,fy=Math.cos(time*.6+q.ph)*2.2,fa=Math.cos(time*.8+q.ph)*.35;
   ctx.save();ctx.translate(q.x+fx,q.y+fy);ctx.rotate(fa);ctx.globalAlpha=.92;
-  drawItem(ctx,FISH[q.sp].id,0,0,1.55);
+  drawItem(ctx,FISH[q.sp].id,0,0,2.2);
   ctx.globalAlpha=1;ctx.restore();
   if(!teamOk(q))lockBadge(q.x+9,q.y-9);
 }

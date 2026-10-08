@@ -135,6 +135,12 @@ assert.equal(layout.TUT[2].at().y,layout.dropPt('wood').y);
 assert.equal(layout.BPATH.sale_f1[0][0],layout.SITE.f1.x+layout.SITE.f1.w,'Wood belt must connect to the edge of the expanded forest');
 assert.deepEqual(Array.from(layout.BPATH.sale_f1[0]),Array.from(layout.BPATH.proc_f1[0]),'Both destinations share the woodland feeder');
 assert(layout.PAD_LAYOUT.site_f1.y-layout.PAD_H/2>layout.SITE.f1.y+layout.SITE.f1.h,'Forest upgrade must be outside the harvesting area');
+for(const [key,axis] of [['sale_p1',570],['proc_p1',570],['proc_m1',930],['proc_el',930]])assert(layout.BPATH[key].every(p=>p[0]===axis),key+' must run straight vertically');
+for(const [line,def,axis] of [['wood','mill',270],['fish','smoke',570]]){assert.equal(layout.STALL[line].x,axis);const pl=layout.PLOTS.find(p=>p.def===def);assert.equal(pl.x+(pl.shedLeft?84:42),axis);}
+assert.equal(layout.PLOTS.find(p=>p.def==='smelt').x,layout.PLOTS.find(p=>p.def==='elec').x);
+vm.runInContext(script.match(/var XTOWERS=.*?;/)[0],layout);
+assert.deepEqual(Array.from(layout.XTOWERS,t=>t.x),[410,770]);assert.equal(layout.XTOWERS[0].x-50,layout.XTOWERS[1].x-layout.XTOWERS[0].x);
+
 const allIds=Object.keys(layout.PAD_LAYOUT).filter(id=>!id.includes('fix'));
 for(const stage of [1,2,3]){
   layout.S.stage=stage;
