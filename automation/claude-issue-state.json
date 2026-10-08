@@ -2,7 +2,7 @@
   "schema_version": 1,
   "repository": "mijiye29-creator/cozy-forest-village",
   "checked_date_kst": "2026-10-09",
-  "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
+  "implementation_commit": "a4d1770c6d847c97e96ed00b298faa0360a13762",
   "issues": {
     "1": {
       "title": "[클로드 제안] 가게 일손 — 점원 고용·진열대 추가·⭐단골손님",
@@ -299,7 +299,7 @@
         }
       ],
       "status": "implemented_code_verified",
-      "implementation_commit": null,
+      "implementation_commit": "a4d1770c6d847c97e96ed00b298faa0360a13762",
       "asset_commit": "d242b08",
       "continue_pending_work": false,
       "notes": "확정 원본 7장·Claude의 기존 인트로 연결 유지. 공통 무문자 플레이어 자동 4.5초/페이드 .8초/줌1.06/탭/이전/건너뛰기/움직임 감소 구현. 엔딩 지연 로드·시네마틱 후 3장 재생·완료 저장 부팅 즉시 엔딩 복원·이야기책 다시 보기. 자체 VM 13개 검사 통과. Chromium 실행 setsockopt EPERM/SIGTRAP으로 직접 브라우저 검증 미실시.",
