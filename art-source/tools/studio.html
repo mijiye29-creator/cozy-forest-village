@@ -1,0 +1,123 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Cozy Village 3D Studio</title>
+<style>body{margin:0;background:#20262c;color:#ddd;font:12px sans-serif}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<script type="module">
+// Headless studio used by build_3d.py: exports glTF binaries and renders sprite sheets
+// from art-source/tools/models.js. Open it in a browser to preview a model:
+//   studio.html?model=hero&anim=walk
+import * as THREE from 'three';
+import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+import { MODELS } from './models.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const PPU = 64;                 // sprite pixels per model unit (1 unit ≈ 1 m)
+const ELEV = 30 * Math.PI / 180, YAW = 28 * Math.PI / 180; // game camera: front 3/4, looking down 30°
+const FPS_EXPORT = 30;
+const OUTLINE = '#2a1c14';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setPixelRatio(1);
+document.body.appendChild(renderer.domElement);
+
+function lights(scene) {
+  scene.add(new THREE.HemisphereLight('#dfeaff', '#f0cfa4', 1.6));
+  const key = new THREE.DirectionalLight('#fff0d8', 2.4); key.position.set(-4, 7, 5); key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024); Object.assign(key.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: 0.5, far: 30 }); key.shadow.bias = -0.0015; key.shadow.normalBias = 0.02;
+  scene.add(key);
+  const rim = new THREE.DirectionalLight('#9cc8ff', 1.0); rim.position.set(5, 3, -4); scene.add(rim);
+}
+function build(name) { const m = MODELS[name](); m.name = name; m.rest = new Map(); m.root.traverse(o => m.rest.set(o, [o.position.clone(), o.quaternion.clone(), o.scale.clone()])); return m; }
+function resetPose(m) { m.rest.forEach(([p, q, s], o) => { o.position.copy(p); o.quaternion.copy(q); o.scale.copy(s); }); }
+function pose(m, anim, u) { resetPose(m); if (anim) m.anims[anim].fn(u, m.nodes); m.root.updateMatrixWorld(true); }
+
+window.listModels = () => Object.keys(MODELS).map(k => { const m = build(k); return { name: k, kind: m.kind, anims: Object.fromEntries(Object.entries(m.anims).map(([a, v]) => [a, { frames: v.frames, dur: v.dur }])) }; });
+
+// ---------- glTF export with baked animation clips
+function bakeClips(m) {
+  const clips = [];
+  for (const [an, A] of Object.entries(m.anims)) {
+    const n = Math.max(2, Math.round(A.dur * FPS_EXPORT)), times = [], samples = new Map();
+    for (let i = 0; i <= n; i++) {
+      pose(m, an, (i / n) % 1 === 0 && i === n ? 0 : i / n); times.push(i / n * A.dur);
+      m.root.traverse(o => { if (!samples.has(o)) samples.set(o, { p: [], q: [], s: [] }); const S = samples.get(o); S.p.push(...o.position.toArray()); S.q.push(...o.quaternion.toArray()); S.s.push(...o.scale.toArray()); });
+    }
+    const tracks = [];
+    samples.forEach((S, o) => {
+      if (!o.name) o.name = 'n' + o.id;
+      // keep a track when the clip moves the node away from its rest pose (constant offsets count too,
+      // e.g. a held bow pose), so each clip fully defines the pose when played on its own
+      const [rp, rq, rs] = m.rest.get(o), differs = (arr, ref) => { const r = ref.toArray(), k = r.length; for (let i = 0; i < arr.length; i++) if (Math.abs(arr[i] - r[i % k]) > 1e-5) return true; return false; };
+      if (differs(S.p, rp)) tracks.push(new THREE.VectorKeyframeTrack(o.name + '.position', times, S.p));
+      if (differs(S.q, rq)) tracks.push(new THREE.QuaternionKeyframeTrack(o.name + '.quaternion', times, S.q));
+      if (differs(S.s, rs)) tracks.push(new THREE.VectorKeyframeTrack(o.name + '.scale', times, S.s));
+    });
+    if (tracks.length) clips.push(new THREE.AnimationClip(an, A.dur, tracks));
+  }
+  resetPose(m); return clips;
+}
+window.exportGLB = async (name) => {
+  const m = build(name), clips = bakeClips(m);
+  m.root.traverse(o => { if (!o.name) o.name = (o.isMesh ? 'mesh' : 'node') + o.id; });
+  const buf = await new GLTFExporter().parseAsync(m.root, { binary: true, animations: clips, onlyVisible: true });
+  return { b64: btoa(Array.from(new Uint8Array(buf), c => String.fromCharCode(c)).join('')), clips: clips.map(c => c.name), meshes: (() => { let k = 0; m.root.traverse(o => o.isMesh && k++); return k; })() };
+};
+
+// ---------- sprite sheets
+function camFor() { const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -100, 100); const d = new THREE.Vector3(Math.sin(YAW) * Math.cos(ELEV), Math.sin(ELEV), Math.cos(YAW) * Math.cos(ELEV)); cam.position.copy(d.multiplyScalar(20)); cam.lookAt(0, 0, 0); cam.updateMatrixWorld(); return cam; }
+function screenBounds(m, cam, list) {
+  // project every vertex of every frame to camera space -> tight 2D box (stable across all frames)
+  const box = { x0: 1e9, x1: -1e9, y0: 1e9, y1: -1e9 }, v = new THREE.Vector3(), inv = cam.matrixWorldInverse;
+  list.forEach(([an, u]) => { pose(m, an, u); m.root.traverse(o => { if (!o.isMesh) return; const p = o.geometry.attributes.position; for (let i = 0; i < p.count; i += 1) { v.fromBufferAttribute(p, i).applyMatrix4(o.matrixWorld).applyMatrix4(inv); box.x0 = Math.min(box.x0, v.x); box.x1 = Math.max(box.x1, v.x); box.y0 = Math.min(box.y0, v.y); box.y1 = Math.max(box.y1, v.y); } }); });
+  return box;
+}
+function outlineCanvas(src, px) {
+  const c = document.createElement('canvas'); c.width = src.width; c.height = src.height; const g = c.getContext('2d');
+  const sil = document.createElement('canvas'); sil.width = src.width; sil.height = src.height; const s = sil.getContext('2d');
+  s.drawImage(src, 0, 0); s.globalCompositeOperation = 'source-in'; s.fillStyle = OUTLINE; s.fillRect(0, 0, sil.width, sil.height);
+  g.globalAlpha = 0.9; for (let a = 0; a < 12; a++) g.drawImage(sil, Math.cos(a / 12 * Math.PI * 2) * px, Math.sin(a / 12 * Math.PI * 2) * px);
+  g.globalAlpha = 1; g.drawImage(src, 0, 0); return c;
+}
+window.renderSheet = (name, opt = {}) => {
+  const m = build(name), cam = camFor(), scene = new THREE.Scene(); lights(scene); scene.add(m.root);
+  const anims = Object.keys(m.anims).length ? Object.keys(m.anims) : [null];
+  const frameList = []; anims.forEach(an => { const n = an ? m.anims[an].frames : 1; for (let i = 0; i < n; i++) frameList.push([an, i / n]); });
+  const b = screenBounds(m, cam, frameList), pad = 0.12;
+  const ppu = opt.ppu || PPU, fw = Math.ceil((b.x1 - b.x0 + pad * 2) * ppu / 4) * 4, fh = Math.ceil((b.y1 - b.y0 + pad * 2) * ppu / 4) * 4;
+  cam.left = b.x0 - pad; cam.right = b.x0 - pad + fw / ppu; cam.top = b.y1 + pad; cam.bottom = b.y1 + pad - fh / ppu; cam.updateProjectionMatrix();
+  renderer.setSize(fw, fh, false);
+  const cols = Math.max(...anims.map(an => an ? m.anims[an].frames : 1));
+  const sheet = document.createElement('canvas'); sheet.width = fw * cols; sheet.height = fh * anims.length; const g = sheet.getContext('2d');
+  const meta = { file: name + '.webp', frameW: fw, frameH: fh, ppu, kind: m.kind, anims: {} };
+  // anchor = where the model origin (feet / ground centre) lands inside every frame
+  const o = new THREE.Vector3(0, 0, 0).applyMatrix4(cam.matrixWorldInverse); meta.anchor = [Math.round((o.x - cam.left) * ppu), Math.round((cam.top - o.y) * ppu)];
+  anims.forEach((an, row) => {
+    const n = an ? m.anims[an].frames : 1; meta.anims[an || 'static'] = { row, frames: n, fps: an ? +(n / m.anims[an].dur).toFixed(2) : 0, loop: an !== 'open' };
+    for (let i = 0; i < n; i++) { pose(m, an, i / n); renderer.render(scene, cam); g.drawImage(outlineCanvas(renderer.domElement, opt.outline ?? 1.6), i * fw, row * fh); }
+  });
+  return { png: sheet.toDataURL('image/png'), meta };
+};
+
+// ---------- interactive preview: studio.html?model=hero&anim=walk
+const q = new URLSearchParams(location.search);
+if (q.get('model')) {
+  const m = build(q.get('model')), cam = camFor(), scene = new THREE.Scene(); scene.background = new THREE.Color('#e9f1f6'); lights(scene); scene.add(m.root);
+  const an = q.get('anim') || Object.keys(m.anims)[0], s = 3.2; cam.left = -s * innerWidth / innerHeight / 2; cam.right = -cam.left; cam.top = s * 0.8; cam.bottom = -s * 0.2; cam.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.setAnimationLoop(t => { if (an && m.anims[an]) pose(m, an, (t / 1000 / m.anims[an].dur) % 1); renderer.render(scene, cam); });
+}
+// QA: load an exported .glb back and check its clips really move the model.
+window.checkGLB = async (url) => {
+  const g = await new GLTFLoader().loadAsync(url), mixer = new THREE.AnimationMixer(g.scene), out = { clips: {}, meshes: 0 };
+  g.scene.traverse(o => o.isMesh && out.meshes++);
+  for (const c of g.animations) { const a = mixer.clipAction(c); a.play(); mixer.setTime(0); g.scene.updateMatrixWorld(true); const b0 = new THREE.Box3().setFromObject(g.scene); let moved = 0;
+    for (let i = 1; i <= 4; i++) { mixer.setTime(c.duration * i / 5); g.scene.updateMatrixWorld(true); const b = new THREE.Box3().setFromObject(g.scene); moved = Math.max(moved, b.min.distanceTo(b0.min) + b.max.distanceTo(b0.max)); }
+    out.clips[c.name] = { dur: +c.duration.toFixed(2), tracks: c.tracks.length, moved: +moved.toFixed(3) }; a.stop(); }
+  return out;
+};
+window.studioReady = true;
+</script></body></html>

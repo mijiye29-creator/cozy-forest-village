@@ -1,0 +1,968 @@
+{
+ "boss_bear": {
+  "file": "boss_bear.webp",
+  "frameW": 212,
+  "frameH": 256,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   },
+   "attack": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   },
+   "hurt": {
+    "row": 3,
+    "frames": 5,
+    "fps": 10,
+    "loop": true
+   }
+  },
+  "anchor": [
+   118,
+   205
+  ],
+  "glb": "art-source/models/boss_bear.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "hurt"
+  ]
+ },
+ "cabin": {
+  "file": "cabin.webp",
+  "frameW": 216,
+  "frameH": 252,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 2,
+    "loop": true
+   }
+  },
+  "anchor": [
+   107,
+   197
+  ],
+  "glb": "art-source/models/cabin.glb",
+  "clips": [
+   "idle"
+  ]
+ },
+ "corgi": {
+  "file": "corgi.webp",
+  "frameW": 56,
+  "frameH": 60,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 17.78,
+    "loop": true
+   },
+   "happy": {
+    "row": 2,
+    "frames": 6,
+    "fps": 10,
+    "loop": true
+   }
+  },
+  "anchor": [
+   28,
+   41
+  ],
+  "glb": "art-source/models/corgi.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "happy"
+  ]
+ },
+ "fence_segment": {
+  "file": "fence_segment.webp",
+  "frameW": 100,
+  "frameH": 112,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "static": {
+    "row": 0,
+    "frames": 1,
+    "fps": 0,
+    "loop": true
+   }
+  },
+  "anchor": [
+   52,
+   90
+  ],
+  "glb": "art-source/models/fence_segment.glb",
+  "clips": []
+ },
+ "fish": {
+  "file": "fish.webp",
+  "frameW": 44,
+  "frameH": 48,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "swim": {
+    "row": 0,
+    "frames": 6,
+    "fps": 7.5,
+    "loop": true
+   },
+   "flop": {
+    "row": 1,
+    "frames": 5,
+    "fps": 10,
+    "loop": true
+   }
+  },
+  "anchor": [
+   18,
+   35
+  ],
+  "glb": "art-source/models/fish.glb",
+  "clips": [
+   "swim",
+   "flop"
+  ]
+ },
+ "fisher": {
+  "file": "fisher.webp",
+  "frameW": 104,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   127
+  ],
+  "glb": "art-source/models/fisher.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "golden_chest": {
+  "file": "golden_chest.webp",
+  "frameW": 92,
+  "frameH": 140,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 5,
+    "loop": true
+   },
+   "open": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": false
+   }
+  },
+  "anchor": [
+   44,
+   116
+  ],
+  "glb": "art-source/models/golden_chest.glb",
+  "clips": [
+   "idle",
+   "open"
+  ]
+ },
+ "hero": {
+  "file": "hero.webp",
+  "frameW": 88,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 11.43,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   127
+  ],
+  "glb": "art-source/models/hero.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "hunter": {
+  "file": "hunter.webp",
+  "frameW": 88,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   130
+  ],
+  "glb": "art-source/models/hunter.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "hunter_blue": {
+  "file": "hunter_blue.webp",
+  "frameW": 88,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   127
+  ],
+  "glb": "art-source/models/hunter_blue.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "hunter_violet": {
+  "file": "hunter_violet.webp",
+  "frameW": 88,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   130
+  ],
+  "glb": "art-source/models/hunter_violet.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "log_pile": {
+  "file": "log_pile.webp",
+  "frameW": 76,
+  "frameH": 68,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "static": {
+    "row": 0,
+    "frames": 1,
+    "fps": 0,
+    "loop": true
+   }
+  },
+  "anchor": [
+   37,
+   44
+  ],
+  "glb": "art-source/models/log_pile.glb",
+  "clips": []
+ },
+ "lumberjack": {
+  "file": "lumberjack.webp",
+  "frameW": 100,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   127
+  ],
+  "glb": "art-source/models/lumberjack.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "miner": {
+  "file": "miner.webp",
+  "frameW": 100,
+  "frameH": 140,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   124
+  ],
+  "glb": "art-source/models/miner.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "ore_rock": {
+  "file": "ore_rock.webp",
+  "frameW": 68,
+  "frameH": 60,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "static": {
+    "row": 0,
+    "frames": 1,
+    "fps": 0,
+    "loop": true
+   }
+  },
+  "anchor": [
+   33,
+   40
+  ],
+  "glb": "art-source/models/ore_rock.glb",
+  "clips": []
+ },
+ "pine": {
+  "file": "pine.webp",
+  "frameW": 112,
+  "frameH": 136,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 2,
+    "loop": true
+   },
+   "chop": {
+    "row": 1,
+    "frames": 5,
+    "fps": 12.5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   54,
+   107
+  ],
+  "glb": "art-source/models/pine.glb",
+  "clips": [
+   "idle",
+   "chop"
+  ]
+ },
+ "pine_small": {
+  "file": "pine_small.webp",
+  "frameW": 80,
+  "frameH": 96,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 2,
+    "loop": true
+   },
+   "chop": {
+    "row": 1,
+    "frames": 5,
+    "fps": 12.5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   37,
+   72
+  ],
+  "glb": "art-source/models/pine_small.glb",
+  "clips": [
+   "idle",
+   "chop"
+  ]
+ },
+ "polar_bear": {
+  "file": "polar_bear.webp",
+  "frameW": 108,
+  "frameH": 120,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   },
+   "attack": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   },
+   "hurt": {
+    "row": 3,
+    "frames": 5,
+    "fps": 10,
+    "loop": true
+   }
+  },
+  "anchor": [
+   60,
+   93
+  ],
+  "glb": "art-source/models/polar_bear.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "hurt"
+  ]
+ },
+ "power_plant": {
+  "file": "power_plant.webp",
+  "frameW": 188,
+  "frameH": 276,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   93,
+   228
+  ],
+  "glb": "art-source/models/power_plant.glb",
+  "clips": [
+   "idle"
+  ]
+ },
+ "rock": {
+  "file": "rock.webp",
+  "frameW": 68,
+  "frameH": 60,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "static": {
+    "row": 0,
+    "frames": 1,
+    "fps": 0,
+    "loop": true
+   }
+  },
+  "anchor": [
+   33,
+   40
+  ],
+  "glb": "art-source/models/rock.glb",
+  "clips": []
+ },
+ "sawmill": {
+  "file": "sawmill.webp",
+  "frameW": 224,
+  "frameH": 208,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 10,
+    "loop": true
+   }
+  },
+  "anchor": [
+   112,
+   153
+  ],
+  "glb": "art-source/models/sawmill.glb",
+  "clips": [
+   "idle"
+  ]
+ },
+ "shop_fish": {
+  "file": "shop_fish.webp",
+  "frameW": 204,
+  "frameH": 212,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 2.4,
+    "loop": true
+   }
+  },
+  "anchor": [
+   101,
+   162
+  ],
+  "glb": "art-source/models/shop_fish.glb",
+  "clips": [
+   "idle"
+  ]
+ },
+ "shop_wood": {
+  "file": "shop_wood.webp",
+  "frameW": 204,
+  "frameH": 212,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 2.4,
+    "loop": true
+   }
+  },
+  "anchor": [
+   101,
+   162
+  ],
+  "glb": "art-source/models/shop_wood.glb",
+  "clips": [
+   "idle"
+  ]
+ },
+ "shopkeeper": {
+  "file": "shopkeeper.webp",
+  "frameW": 88,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   127
+  ],
+  "glb": "art-source/models/shopkeeper.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer"
+  ]
+ },
+ "smelter": {
+  "file": "smelter.webp",
+  "frameW": 196,
+  "frameH": 324,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   }
+  },
+  "anchor": [
+   97,
+   274
+  ],
+  "glb": "art-source/models/smelter.glb",
+  "clips": [
+   "idle"
+  ]
+ },
+ "smokehouse": {
+  "file": "smokehouse.webp",
+  "frameW": 188,
+  "frameH": 284,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 2.5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   93,
+   236
+  ],
+  "glb": "art-source/models/smokehouse.glb",
+  "clips": [
+   "idle"
+  ]
+ },
+ "storage": {
+  "file": "storage.webp",
+  "frameW": 152,
+  "frameH": 136,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "static": {
+    "row": 0,
+    "frames": 1,
+    "fps": 0,
+    "loop": true
+   }
+  },
+  "anchor": [
+   75,
+   97
+  ],
+  "glb": "art-source/models/storage.glb",
+  "clips": []
+ },
+ "stump": {
+  "file": "stump.webp",
+  "frameW": 56,
+  "frameH": 44,
+  "ppu": 64,
+  "kind": "prop",
+  "anims": {
+   "static": {
+    "row": 0,
+    "frames": 1,
+    "fps": 0,
+    "loop": true
+   }
+  },
+  "anchor": [
+   28,
+   25
+  ],
+  "glb": "art-source/models/stump.glb",
+  "clips": []
+ },
+ "truck": {
+  "file": "truck.webp",
+  "frameW": 136,
+  "frameH": 152,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "drive": {
+    "row": 0,
+    "frames": 6,
+    "fps": 12,
+    "loop": true
+   },
+   "idle": {
+    "row": 1,
+    "frames": 2,
+    "fps": 2,
+    "loop": true
+   }
+  },
+  "anchor": [
+   68,
+   116
+  ],
+  "glb": "art-source/models/truck.glb",
+  "clips": [
+   "drive"
+  ]
+ },
+ "villager": {
+  "file": "villager.webp",
+  "frameW": 88,
+  "frameH": 144,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   }
+  },
+  "anchor": [
+   46,
+   127
+  ],
+  "glb": "art-source/models/villager.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer"
+  ]
+ },
+ "watchtower": {
+  "file": "watchtower.webp",
+  "frameW": 172,
+  "frameH": 332,
+  "ppu": 64,
+  "kind": "facility",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 5,
+    "loop": true
+   }
+  },
+  "anchor": [
+   84,
+   288
+  ],
+  "glb": "art-source/models/watchtower.glb",
+  "clips": [
+   "idle"
+  ]
+ }
+}
