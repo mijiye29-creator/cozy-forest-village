@@ -176,4 +176,30 @@ assert.equal(hits.length,7,'Regular strikes should hit one bear');hits.length=0;
 combat.time+=.4;combat.heroAttackHit(fighter,target,10,false);
 assert.deepEqual(hits,[['target',50],['near',50]],'Ultimate must damage living enemies within the hero radius');assert.equal(fighter.combo,0);
 hits.length=0;combat.time+=4;combat.heroAttackHit(fighter,target,10,false);assert.equal(fighter.combo,1,'Expired combo must restart');
-console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; horizontal expansion; 3 village layouts and repairs; left/right/bottom fence blocking and breach entry; 50-won costs; single-target martial strikes and area ultimate.');
+// Signs stay outside buildings; radar preserves all four approach directions.
+vm.runInContext(section('function facilityLabelSlot(', 'function facilitySign('),layout);
+vm.runInContext(section('function radarPoint(', 'function refreshRaidRadar('),layout);
+for(const pl of layout.PLOTS){
+  const sign=layout.facilityLabelSlot(pl),bounds={x:sign.x-sign.w/2,y:sign.y,w:sign.w,h:sign.h};
+  for(const other of layout.PLOTS)assert(!layout.rectTouches(bounds,other),`${pl.def} sign covers ${other.def}`);
+}
+for(const stage of [1,2,3]){
+  layout.S.stage=stage;
+  const left=layout.radarPoint(-100,200,224,128),right=layout.radarPoint(layout.fenceX()+100,200,224,128);
+  const wallLeft=layout.radarPoint(0,200,224,128),wallRight=layout.radarPoint(layout.fenceX(),200,224,128);
+  assert(left.x<wallLeft.x && right.x>wallRight.x,'Radar must distinguish bears outside side fences');
+  assert(layout.radarPoint(100,-70,224,128).y<layout.radarPoint(100,0,224,128).y);
+  assert(layout.radarPoint(100,layout.HT+70,224,128).y>layout.radarPoint(100,layout.HT,224,128).y);
+  for(const n of [-10000,10000]){const pt=layout.radarPoint(n,n,224,128);assert(pt.x>=6&&pt.x<=218&&pt.y>=6&&pt.y<=122);}
+}
+// Rebuilding pads every frame must not reset payment feedback throttles.
+let purchased=0,coinFlights=0,paymentLabels=0;
+const payment={agents:[{x:100,y:100}],S:{coins:10000,pads:{},tut:99},PAD_RADIUS:14,padMsgT:0,fmt:String,
+  buildPads:()=>[{id:'payment',x:100,y:100,d:{cost:()=>5000,isMax:()=>purchased>0}}],
+  fly(){coinFlights++;},addFloat(){paymentLabels++;},sfx(){},buy(){purchased++;payment.S.coins-=5000;}};
+vm.createContext(payment);vm.runInContext(section('var padHold=', 'function padIcon('),payment);payment.padInit=true;
+for(let frame=0;frame<120;frame++)payment.updatePads(1/60);
+assert.equal(purchased,1);assert.equal(payment.S.coins,5000);
+assert(paymentLabels<=4,'Upgrade payment labels must not accumulate every frame');
+assert(coinFlights<=12,'Coin feedback must stay bounded while pads are rebuilt');
+console.log('PASS: syntax; 6 viewport sizes; overview; touch cancel/multitouch; equal drag speed; 30/60/90/120Hz; background and story pause; horizontal expansion; 3 village layouts and repairs; left/right/bottom fence blocking and breach entry; 50-won costs; single-target martial strikes and area ultimate; separate facility signs; radar directions; bounded upgrade feedback.');
