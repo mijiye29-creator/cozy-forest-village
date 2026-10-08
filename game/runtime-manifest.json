@@ -120,6 +120,11 @@
       "topic": "터치·드래그·탭 경로·핀치·설정"
     },
     {
+      "id": "film-player",
+      "path": "src/film-player.js",
+      "topic": "무문자 이미지 공통 재생·자동 진행·중단 정리"
+    },
+    {
       "id": "story-intro",
       "path": "src/story-intro.js",
       "topic": "무문자 인트로·마을별 대화·읽음 저장"

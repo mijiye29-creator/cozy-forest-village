@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "repository": "mijiye29-creator/cozy-forest-village",
-  "checked_date_kst": "2026-10-08",
+  "checked_date_kst": "2026-10-09",
   "implementation_commit": "c522bfa1fd7407e79e9aa26d4a17b284ba2406ca",
   "issues": {
     "1": {
@@ -279,9 +279,73 @@
         "comment_id": 6061415147,
         "method": "Playwright headless Chromium 390x844 DPR2; accelerated test run(); no physical device or manual full playthrough"
       }
+    },
+    "7": {
+      "title": "[클로드 디자인] 인트로 4장 확정 + 엔딩 3장 신규 — 흐르는 연출과 엔딩 시퀀스",
+      "updated_at": "2026-10-08T15:19:02Z",
+      "github_state": "open",
+      "request_type": "design_proposal",
+      "identified_by": "Body Claude 수퍼바이저/Claude Code; GitHub performed_via_github_app.slug=claude",
+      "input_sha256": "cda717acb03b03724df2ec6c837e6d9116f32229c7ad0100d334d6b46317b66e",
+      "body_sha256": "52b14717d83e89adce952e2ab54428fa8e2ae4bd1b40384b41349767b3da474c",
+      "comment_ids": [
+        6063088021
+      ],
+      "comment_versions": [
+        {
+          "id": 6063088021,
+          "updated_at": "2026-10-08T15:19:02Z",
+          "body_sha256": "aeaa52d90afea5dc0da75ce68aaa133eae55fefcaac430b8731246395205e870"
+        }
+      ],
+      "status": "implemented_code_verified",
+      "implementation_commit": null,
+      "asset_commit": "d242b08",
+      "continue_pending_work": false,
+      "notes": "확정 원본 7장·Claude의 기존 인트로 연결 유지. 공통 무문자 플레이어 자동 4.5초/페이드 .8초/줌1.06/탭/이전/건너뛰기/움직임 감소 구현. 엔딩 지연 로드·시네마틱 후 3장 재생·완료 저장 부팅 즉시 엔딩 복원·이야기책 다시 보기. 자체 VM 13개 검사 통과. Chromium 실행 setsockopt EPERM/SIGTRAP으로 직접 브라우저 검증 미실시.",
+      "own_validation": "13 Node VM/code regression checks passed; direct Chromium launch blocked; physical device/full boss not executed",
+      "claude_report_reference": {
+        "issue": 7,
+        "comment_ids": [
+          6063088021
+        ],
+        "method": "Claude reported intro image headless browser QA on d242b08; not verification of this new player"
+      },
+      "pending_validation": [
+        "direct_browser_reproduction",
+        "physical_device",
+        "full_boss_playthrough"
+      ]
+    },
+    "8": {
+      "title": "[Claude 디자인] 3D 캐릭터·시설 교체 + 색감 개편 + 긴박감 시스템 통합 사양 (에셋 931c17c)",
+      "updated_at": "2026-10-08T15:54:53Z",
+      "github_state": "open",
+      "request_type": "proposal",
+      "input_sha256": "adfb46765289f21f3f60296a83cb34547575cdb6e416d66cd0e525d8059397c1",
+      "body_sha256": "9e23976e9a647e022b7ecbf4fac4144de23d99cb7c29ff089c27ebf6e6b1eede",
+      "comment_ids": [
+        6063796159
+      ],
+      "comment_versions": [
+        {
+          "id": 6063796159,
+          "updated_at": "2026-10-08T15:54:53Z",
+          "body_sha256": "f74948be485c084d4c263a7c3c950e316484566bfcdd66faefd7847880886c71"
+        }
+      ],
+      "status": "reviewed_proposal_deferred",
+      "implementation_commit": null,
+      "continue_pending_work": false,
+      "notes": "이번 #7 구현 중 새로 등록된 디자인/기능 제안. 원천 31종/atlas/영상 추가 커밋과 본문/댓글 확인. 기존 정점 기반 3D와 컬러 디자인 유지. 영상은 #7 이미지 플레이어의 대안이며 자동 재생/데이터 절약 검증 후 별도 통합 후보. 긴급 주문/피버/상자 보상은 기존 게임 규칙·경제 변경이므로 수퍼바이저 판단으로 보류: 수입 정의·처리량 단위·보상15% 상한/저장 복구의 별도 설계·검증 필요. QA 버그 수정으로 처리하지 않음. 전체 구현 완료나 실기기60fps 통과로 표시하지 않는다.",
+      "pending": [
+        "sprite_upgrade_and_overlay_compatibility_validation",
+        "video_autoplay_and_data_saver_validation",
+        "economy_and_persistence_design_for_optional_thrill_features"
+      ]
     }
   },
   "input_format": "sha256(UTF-8 JSON, sorted keys, compact separators: number,title,body,state,updated_at,comments[id,body,updated_at])",
-  "checked_at_kst": "2026-10-08T23:25:47+09:00",
-  "source_head": "a1d91481682aacf0059e1060d27c3a6cc29cc3a9"
+  "checked_at_kst": "2026-10-09T00:56:29+09:00",
+  "source_head": "2ea4bfc8f6e0cb0c14ce5f2ee096c7d124b91b48"
 }

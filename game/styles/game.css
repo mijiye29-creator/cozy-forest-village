@@ -412,3 +412,14 @@ header #bearChip.calm{background:#147c73;color:#fff;border-color:#69dac1}
 header #bearChip.warn,header #bearChip.raid{background:#b62f43;color:#fff;border-color:#ffc05d}
 @media(max-width:360px){header #bearChip{max-width:56px;font-size:14px;padding:6px 4px}}
 @media(min-width:640px){header #bearChip{max-width:112px;font-size:22px}}
+
+/* Shared wordless film; a small safety margin keeps every illustration detail
+ * inside the viewport even at the maximum 1.06 zoom. */
+#title.illustrated{background:#1a1512;overflow:hidden}
+#introImage,#introImageNext{position:absolute;left:3%;top:3%;inset:auto;width:94%;height:94%;object-fit:contain;background:transparent;opacity:0;transition:opacity .8s ease;transform-origin:center;cursor:pointer}
+#introImage[hidden],#introImageNext[hidden]{display:none}
+#title .drifting{animation:bookDrift 4.5s linear forwards}
+@keyframes bookDrift{from{transform:scale(1)}to{transform:scale(1.06)}}
+#title.film-paused .drifting{animation-play-state:paused}
+#title.still-film img{transition:none;animation:none;transform:none}
+@media(prefers-reduced-motion:reduce){#introImage,#introImageNext{transition:none;animation:none!important;transform:none}}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "186a888be6dc0e2662709124a8b8f660b57c2450af8c79cb6450407f0471e7c4",
+  "runtime_sha256": "817c580a9e11389ae35634407725c2d97db1481b56edd08ac2b85287d111823f",
   "modules": [
     {
       "id": "boot-errors",
@@ -1753,8 +1753,8 @@
       "id": "ending",
       "path": "src/ending.js",
       "topic": "최종 보스 시작·엔딩·시네마틱",
-      "bytes": 5928,
-      "lines": 70,
+      "bytes": 6137,
+      "lines": 71,
       "symbols": [
         {
           "name": "allMaxed",
@@ -1769,44 +1769,48 @@
           "line": 24
         },
         {
-          "name": "hasFinaleBoss",
+          "name": "playEndingFilm",
           "line": 25
         },
         {
-          "name": "restoreFinale",
+          "name": "hasFinaleBoss",
           "line": 26
         },
         {
-          "name": "finaleT",
+          "name": "restoreFinale",
           "line": 27
         },
         {
-          "name": "updateFinale",
+          "name": "finaleT",
           "line": 28
         },
         {
-          "name": "ENDSEQ",
-          "line": 30
+          "name": "updateFinale",
+          "line": 29
         },
         {
-          "name": "startEndingCinematic",
+          "name": "ENDSEQ",
           "line": 31
         },
         {
-          "name": "updateEndingCinematic",
+          "name": "startEndingCinematic",
           "line": 32
         },
         {
+          "name": "updateEndingCinematic",
+          "line": 33
+        },
+        {
           "name": "drawEndingCinematic",
-          "line": 34
+          "line": 35
         },
         {
           "name": "heroHitFx",
-          "line": 69
+          "line": 70
         },
         {
           "name": "COMBO_N",
-          "line": 70
+          "line": 71
         }
       ]
     },
@@ -2250,11 +2254,56 @@
       ]
     },
     {
+      "id": "film-player",
+      "path": "src/film-player.js",
+      "topic": "무문자 이미지 공통 재생·자동 진행·중단 정리",
+      "bytes": 3803,
+      "lines": 20,
+      "symbols": [
+        {
+          "name": "FILM",
+          "line": 3
+        },
+        {
+          "name": "filmLayer",
+          "line": 4
+        },
+        {
+          "name": "filmTimerClear",
+          "line": 5
+        },
+        {
+          "name": "filmSchedule",
+          "line": 6
+        },
+        {
+          "name": "filmShow",
+          "line": 7
+        },
+        {
+          "name": "filmFinish",
+          "line": 12
+        },
+        {
+          "name": "filmStep",
+          "line": 13
+        },
+        {
+          "name": "filmStart",
+          "line": 14
+        },
+        {
+          "name": "filmVisibility",
+          "line": 18
+        }
+      ]
+    },
+    {
       "id": "story-intro",
       "path": "src/story-intro.js",
       "topic": "무문자 인트로·마을별 대화·읽음 저장",
-      "bytes": 10934,
-      "lines": 69,
+      "bytes": 10637,
+      "lines": 70,
       "symbols": [
         {
           "name": "TITLE",
@@ -2262,19 +2311,19 @@
         },
         {
           "name": "introFrames",
-          "line": 4
+          "line": 3
         },
         {
           "name": "introImage",
+          "line": 4
+        },
+        {
+          "name": "enterBookWorld",
           "line": 5
         },
         {
-          "name": "introPaint",
-          "line": 6
-        },
-        {
           "name": "introLoad",
-          "line": 7
+          "line": 6
         },
         {
           "name": "STORY_SCENES",
@@ -2297,52 +2346,56 @@
           "line": 36
         },
         {
-          "name": "storyBookOpen",
+          "name": "storyFilmButtons",
           "line": 38
         },
         {
-          "name": "storyFinish",
+          "name": "storyBookOpen",
           "line": 39
         },
         {
-          "name": "storyCloseNow",
+          "name": "storyFinish",
           "line": 40
         },
         {
-          "name": "storyPaintLine",
+          "name": "storyCloseNow",
           "line": 41
         },
         {
-          "name": "storyStart",
+          "name": "storyPaintLine",
           "line": 42
         },
         {
+          "name": "storyStart",
+          "line": 43
+        },
+        {
           "name": "firstTownStory",
-          "line": 50
+          "line": 51
         },
         {
           "name": "endingEl",
-          "line": 52
+          "line": 53
         },
         {
           "name": "gearBtn",
-          "line": 54
-        },
-        {
-          "name": "ngBtn",
           "line": 55
         },
         {
-          "name": "sfxBtn",
-          "line": 60
+          "name": "ngBtn",
+          "line": 56
         },
         {
-          "name": "syncSnd",
+          "name": "sfxBtn",
           "line": 61
         },
         {
+          "name": "syncSnd",
+          "line": 62
+        },
+        {
           "name": "zoomBtn",
-          "line": 67
+          "line": 68
         }
       ]
     },
