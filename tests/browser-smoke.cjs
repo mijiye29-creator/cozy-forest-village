@@ -1,4 +1,4 @@
-// Browser QA harness; not verified in this environment. Requires Playwright and Chromium.
+// Real browser QA; requires Playwright and Chromium.
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
 const path=require('node:path');
@@ -15,7 +15,7 @@ const fs=require('node:fs'),http=require('node:http');
    await page.goto(url);
    await page.waitForFunction(()=>!!window.__cozyTest);
    assert.equal(await page.locator('#title h1, #title .tsub, #title .tlogo').count(),0);
-   await page.locator('#startBtn').click();
+   await page.locator('#introSkip').click();
    assert(await page.locator('#title').evaluate(n=>n.hidden));
    assert(await page.locator('#storyBox').evaluate(n=>n.hidden),'Chapter one must not add a text intro');
    await page.locator('#quickJournal').click();
