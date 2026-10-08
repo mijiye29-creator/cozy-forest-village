@@ -1,3192 +1,3422 @@
 {
-  "schema_version": 1,
-  "units": "1 unit = 1 m, +Y up, models face +Z, origin at feet / ground centre",
-  "sprite_camera": "front 3/4 (yaw 28deg), looking down 30deg, 64 px per unit, dark outline; characters face front-left, mirror for dir>0",
-  "runtime_connected": true,
-  "handoff": "art-source/gpt/GPT-HANDOFF.md",
-  "links": {
-    "canva_model_sheet": "https://www.canva.com/d/CCIvQGXodbIhNJD",
-    "figma_library": "https://www.figma.com/design/vU3EMGnGoRNJcm51kBenf2",
-    "dropbox_folder": "/cozy-forest-village/3d-assets (view link: owner only)",
-    "github_issue": "https://github.com/mijiye29-creator/cozy-forest-village/issues/9"
-  },
-  "models": {
-    "hero": {
-      "group": "character",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "player",
-      "replaces_game_draw": "drawHero",
-      "ko": "주인공 남자아이 (초록 털모자·빨간 목도리·가방). 부모님과 침대에서 책을 읽다 책 속 세계로 들어옴",
-      "en": "The boy hero: green beanie, red scarf, satchel. Fell into the storybook while reading in bed with his parents",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.96,
-        1.4
-      ],
-      "meshes": 34,
-      "main_colors": [
-        "#4f7a3a",
-        "#3a4a5c",
-        "#5a3b26",
-        "#5a3a26",
-        "#c8382c"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 0.7
-        }
-      },
-      "glb": "art-source/models/hero.glb",
-      "sprite_sheet": "game/assets/sprites/hero.webp",
-      "sprite": {
-        "frameW": 88,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          46,
-          127
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 11.43,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/hero.png",
-      "runtime_connected": true
+ "schema_version": 1,
+ "units": "1 unit = 1 m, +Y up, models face +Z, origin at feet / ground centre",
+ "sprite_camera": "front 3/4 (yaw 28deg), looking down 30deg, 64 px per unit, dark outline; characters face front-left, mirror for dir>0",
+ "runtime_connected": false,
+ "handoff": "art-source/gpt/GPT-HANDOFF.md",
+ "links": {
+  "canva_model_sheet": "https://www.canva.com/d/CCIvQGXodbIhNJD",
+  "figma_library": "https://www.figma.com/design/vU3EMGnGoRNJcm51kBenf2",
+  "dropbox_folder": "/cozy-forest-village/3d-assets (view link: owner only)",
+  "github_issue": "https://github.com/mijiye29-creator/cozy-forest-village/issues/9"
+ },
+ "models": {
+  "hero": {
+   "group": "character",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "player",
+   "replaces_game_draw": "drawHero",
+   "ko": "2026년 한국 남자아이 (남색 패딩·빨간 목도리·빨간 책가방, 목검). 한국사 책을 읽다 과거로 들어옴",
+   "en": "2026 Korean boy: navy puffer, red scarf, red school backpack, wooden sword. Fell into a Korean history book",
+   "kind": "actor",
+   "size_m": [
+    0.58,
+    1.66,
+    1.14
+   ],
+   "meshes": 49,
+   "main_colors": [
+    "#2b211c",
+    "#c8382c",
+    "#2b3e66",
+    "#d9a066",
+    "#e2583e"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
     },
-    "lumberjack": {
-      "group": "character",
-      "village": 1,
-      "new_in_2026_10": false,
-      "suggested_role_key": "lumber",
-      "replaces_game_draw": "drawAgent",
-      "ko": "벌목꾼 일꾼",
-      "en": "Lumberjack worker",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.96,
-        0.88
-      ],
-      "meshes": 32,
-      "main_colors": [
-        "#2f8f55",
-        "#3a4a5c",
-        "#5a3b26",
-        "#b8612e",
-        "#f2c14e"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 0.9
-        }
-      },
-      "glb": "art-source/models/lumberjack.glb",
-      "sprite_sheet": "game/assets/sprites/lumberjack.webp",
-      "sprite": {
-        "frameW": 100,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          46,
-          127
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 8.89,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/lumberjack.png",
-      "runtime_connected": true
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
     },
-    "fisher": {
-      "group": "character",
-      "village": 2,
-      "new_in_2026_10": false,
-      "suggested_role_key": "fisher",
-      "replaces_game_draw": "drawAgent",
-      "ko": "낚시꾼 일꾼",
-      "en": "Fisher worker",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.79,
-        1.34
-      ],
-      "meshes": 32,
-      "main_colors": [
-        "#2a86b8",
-        "#3a4a5c",
-        "#5a3b26",
-        "#2f2420",
-        "#f2c14e"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1.6
-        }
-      },
-      "glb": "art-source/models/fisher.glb",
-      "sprite_sheet": "game/assets/sprites/fisher.webp",
-      "sprite": {
-        "frameW": 104,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          46,
-          127
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 5,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/fisher.png",
-      "runtime_connected": true
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
     },
-    "miner": {
-      "group": "character",
-      "village": 3,
-      "new_in_2026_10": false,
-      "suggested_role_key": "miner",
-      "replaces_game_draw": "drawAgent",
-      "ko": "광부 일꾼",
-      "en": "Miner worker",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.86,
-        0.87
-      ],
-      "meshes": 32,
-      "main_colors": [
-        "#d39a2a",
-        "#3a4a5c",
-        "#5a3b26",
-        "#5a3a26",
-        "#3a7fb5"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 0.8
-        }
-      },
-      "glb": "art-source/models/miner.glb",
-      "sprite_sheet": "game/assets/sprites/miner.webp",
-      "sprite": {
-        "frameW": 100,
-        "frameH": 140,
-        "ppu": 64,
-        "anchor": [
-          46,
-          124
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/miner.png",
-      "runtime_connected": true
-    },
-    "hunter": {
-      "group": "character",
-      "village": 1,
-      "new_in_2026_10": false,
-      "suggested_role_key": "hunter",
-      "replaces_game_draw": "drawAgent",
-      "ko": "사냥꾼 (숲)",
-      "en": "Hunter (forest)",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.85,
-        0.6
-      ],
-      "meshes": 36,
-      "main_colors": [
-        "#3d7a4a",
-        "#6d4126",
-        "#3a4a5c",
-        "#5a3b26",
-        "#2f2420"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1
-        }
-      },
-      "glb": "art-source/models/hunter.glb",
-      "sprite_sheet": "game/assets/sprites/hunter.webp",
-      "sprite": {
-        "frameW": 88,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          46,
-          130
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/hunter.png",
-      "runtime_connected": true
-    },
-    "hunter_blue": {
-      "group": "character",
-      "village": 2,
-      "new_in_2026_10": false,
-      "suggested_role_key": "hunter2",
-      "replaces_game_draw": "drawAgent",
-      "ko": "사냥꾼 (호수)",
-      "en": "Hunter (lake)",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.87,
-        0.7
-      ],
-      "meshes": 34,
-      "main_colors": [
-        "#2c6fa5",
-        "#3a4a5c",
-        "#5a3b26",
-        "#5a3a26",
-        "#f58a3c"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1
-        }
-      },
-      "glb": "art-source/models/hunter_blue.glb",
-      "sprite_sheet": "game/assets/sprites/hunter_blue.webp",
-      "sprite": {
-        "frameW": 88,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          46,
-          127
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/hunter_blue.png",
-      "runtime_connected": true
-    },
-    "hunter_violet": {
-      "group": "character",
-      "village": 3,
-      "new_in_2026_10": false,
-      "suggested_role_key": "hunter3",
-      "replaces_game_draw": "drawAgent",
-      "ko": "사냥꾼 (광산)",
-      "en": "Hunter (mine)",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.85,
-        0.6
-      ],
-      "meshes": 36,
-      "main_colors": [
-        "#6a5bb5",
-        "#4b3b2d",
-        "#3a4a5c",
-        "#5a3b26",
-        "#b8612e"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1
-        }
-      },
-      "glb": "art-source/models/hunter_violet.glb",
-      "sprite_sheet": "game/assets/sprites/hunter_violet.webp",
-      "sprite": {
-        "frameW": 88,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          46,
-          130
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/hunter_violet.png",
-      "runtime_connected": true
-    },
-    "shopkeeper": {
-      "group": "character",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "imk",
-      "replaces_game_draw": "drawAgent",
-      "ko": "가게 주인",
-      "en": "Shopkeeper",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.96,
-        0.61
-      ],
-      "meshes": 31,
-      "main_colors": [
-        "#c86a3a",
-        "#f4e1b0",
-        "#3a4a5c",
-        "#5a3b26",
-        "#2f2420"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        }
-      },
-      "glb": "art-source/models/shopkeeper.glb",
-      "sprite_sheet": "game/assets/sprites/shopkeeper.webp",
-      "sprite": {
-        "frameW": 88,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          46,
-          127
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/shopkeeper.png",
-      "runtime_connected": true
-    },
-    "villager": {
-      "group": "character",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "courier",
-      "replaces_game_draw": "drawAgent",
-      "ko": "마을 주민·배달꾼",
-      "en": "Villager / courier",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.96,
-        0.61
-      ],
-      "meshes": 30,
-      "main_colors": [
-        "#7b6cc2",
-        "#3a4a5c",
-        "#5a3b26",
-        "#5a3a26",
-        "#f58a3c"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        }
-      },
-      "glb": "art-source/models/villager.glb",
-      "sprite_sheet": "game/assets/sprites/villager.webp",
-      "sprite": {
-        "frameW": 88,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          46,
-          127
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/villager.png",
-      "runtime_connected": true
-    },
-    "corgi": {
-      "group": "animal",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "pet",
-      "replaces_game_draw": null,
-      "ko": "인트로의 강아지 코기",
-      "en": "The corgi from the intro",
-      "kind": "actor",
-      "size_m": [
-        0.3,
-        0.53,
-        0.97
-      ],
-      "meshes": 22,
-      "main_colors": [
-        "#fbf3e6",
-        "#d9893b",
-        "#c8382c",
-        "#2b211c",
-        "#2a2a30"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.45
-        },
-        "happy": {
-          "frames": 6,
-          "seconds": 0.6
-        }
-      },
-      "glb": "art-source/models/corgi.glb",
-      "sprite_sheet": "game/assets/sprites/corgi.webp",
-      "sprite": {
-        "frameW": 56,
-        "frameH": 60,
-        "ppu": 64,
-        "anchor": [
-          28,
-          41
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 17.78,
-            "loop": true
-          },
-          "happy": {
-            "row": 2,
-            "frames": 6,
-            "fps": 10,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/corgi.png",
-      "runtime_connected": true,
-      "runtime_route": "drawCompleteActions: idle / follow-walk / reward-happy"
-    },
-    "polar_bear": {
-      "group": "animal",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "raid_bear",
-      "replaces_game_draw": "raids/combat",
-      "ko": "습격 북극곰",
-      "en": "Raiding polar bear",
-      "kind": "actor",
-      "size_m": [
-        0.72,
-        1.21,
-        1.81
-      ],
-      "meshes": 18,
-      "main_colors": [
-        "#eef3f6",
-        "#c9d6df",
-        "#f7f4ee",
-        "#2b211c",
-        "#2a2a30"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.9
-        },
-        "attack": {
-          "frames": 8,
-          "seconds": 0.9
-        },
-        "hurt": {
-          "frames": 5,
-          "seconds": 0.5
-        }
-      },
-      "glb": "art-source/models/polar_bear.glb",
-      "sprite_sheet": "game/assets/sprites/polar_bear.webp",
-      "sprite": {
-        "frameW": 108,
-        "frameH": 120,
-        "ppu": 64,
-        "anchor": [
-          60,
-          93
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 8.89,
-            "loop": true
-          },
-          "attack": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8.89,
-            "loop": true
-          },
-          "hurt": {
-            "row": 3,
-            "frames": 5,
-            "fps": 10,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/polar_bear.png",
-      "runtime_connected": true
-    },
-    "boss_bear": {
-      "group": "animal",
-      "village": 3,
-      "new_in_2026_10": false,
-      "suggested_role_key": "boss",
-      "replaces_game_draw": "raids/combat",
-      "ko": "끝판왕 곰 (얼음 가시·왕관, 2.1배)",
-      "en": "Boss bear with ice spikes and crown (x2.1)",
-      "kind": "actor",
-      "size_m": [
-        1.51,
-        3.01,
-        3.8
-      ],
-      "meshes": 30,
-      "main_colors": [
-        "#d7e6f2",
-        "#c4d8e8",
-        "#f7f4ee",
-        "#ffcf4a",
-        "#8fd6ff"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.9
-        },
-        "attack": {
-          "frames": 8,
-          "seconds": 0.9
-        },
-        "hurt": {
-          "frames": 5,
-          "seconds": 0.5
-        }
-      },
-      "glb": "art-source/models/boss_bear.glb",
-      "sprite_sheet": "game/assets/sprites/boss_bear.webp",
-      "sprite": {
-        "frameW": 212,
-        "frameH": 256,
-        "ppu": 64,
-        "anchor": [
-          118,
-          205
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 8.89,
-            "loop": true
-          },
-          "attack": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8.89,
-            "loop": true
-          },
-          "hurt": {
-            "row": 3,
-            "frames": 5,
-            "fps": 10,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/boss_bear.png",
-      "runtime_connected": true
-    },
-    "fish": {
-      "group": "prop",
-      "village": 2,
-      "new_in_2026_10": false,
-      "suggested_role_key": "item_fish",
-      "replaces_game_draw": "drawFish",
-      "ko": "물고기",
-      "en": "Fish",
-      "kind": "prop",
-      "size_m": [
-        0.2,
-        0.22,
-        0.6
-      ],
-      "meshes": 5,
-      "main_colors": [
-        "#8fa9b8",
-        "#2b211c",
-        "#e6eef2"
-      ],
-      "clips": {
-        "swim": {
-          "frames": 6,
-          "seconds": 0.8
-        },
-        "flop": {
-          "frames": 5,
-          "seconds": 0.5
-        }
-      },
-      "glb": "art-source/models/fish.glb",
-      "sprite_sheet": "game/assets/sprites/fish.webp",
-      "sprite": {
-        "frameW": 44,
-        "frameH": 48,
-        "ppu": 64,
-        "anchor": [
-          18,
-          35
-        ],
-        "anims": {
-          "swim": {
-            "row": 0,
-            "frames": 6,
-            "fps": 7.5,
-            "loop": true
-          },
-          "flop": {
-            "row": 1,
-            "frames": 5,
-            "fps": 10,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/fish.png",
-      "runtime_connected": true,
-      "runtime_route": "drawFish swim / drawSuperFx captured-flop"
-    },
-    "pine": {
-      "group": "nature",
-      "village": 1,
-      "new_in_2026_10": false,
-      "suggested_role_key": "tree",
-      "replaces_game_draw": "drawTree",
-      "ko": "눈 덮인 소나무",
-      "en": "Snowy pine",
-      "kind": "prop",
-      "size_m": [
-        1.48,
-        1.84,
-        1.45
-      ],
-      "meshes": 8,
-      "main_colors": [
-        "#f4f8fc",
-        "#1f6b4f",
-        "#6b4128",
-        "#2f8c63"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 3
-        },
-        "chop": {
-          "frames": 5,
-          "seconds": 0.4
-        }
-      },
-      "glb": "art-source/models/pine.glb",
-      "sprite_sheet": "game/assets/sprites/pine.webp",
-      "sprite": {
-        "frameW": 112,
-        "frameH": 136,
-        "ppu": 64,
-        "anchor": [
-          54,
-          107
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 2,
-            "loop": true
-          },
-          "chop": {
-            "row": 1,
-            "frames": 5,
-            "fps": 12.5,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/pine.png",
-      "runtime_connected": true
-    },
-    "pine_small": {
-      "group": "nature",
-      "village": 1,
-      "new_in_2026_10": false,
-      "suggested_role_key": "tree_small",
-      "replaces_game_draw": "drawTree",
-      "ko": "작은 소나무",
-      "en": "Small pine",
-      "kind": "prop",
-      "size_m": [
-        0.96,
-        1.2,
-        0.95
-      ],
-      "meshes": 8,
-      "main_colors": [
-        "#f4f8fc",
-        "#1f6b4f",
-        "#6b4128",
-        "#2f8c63"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 3
-        },
-        "chop": {
-          "frames": 5,
-          "seconds": 0.4
-        }
-      },
-      "glb": "art-source/models/pine_small.glb",
-      "sprite_sheet": "game/assets/sprites/pine_small.webp",
-      "sprite": {
-        "frameW": 80,
-        "frameH": 96,
-        "ppu": 64,
-        "anchor": [
-          37,
-          72
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 2,
-            "loop": true
-          },
-          "chop": {
-            "row": 1,
-            "frames": 5,
-            "fps": 12.5,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/pine_small.png",
-      "runtime_connected": true
-    },
-    "stump": {
-      "group": "nature",
-      "village": 1,
-      "new_in_2026_10": false,
-      "suggested_role_key": "stump",
-      "replaces_game_draw": "drawTree",
-      "ko": "그루터기",
-      "en": "Stump",
-      "kind": "prop",
-      "size_m": [
-        0.66,
-        0.26,
-        0.66
-      ],
-      "meshes": 3,
-      "main_colors": [
-        "#6b4128",
-        "#e7c08a",
-        "#f4f8fc"
-      ],
-      "clips": {},
-      "glb": "art-source/models/stump.glb",
-      "sprite_sheet": "game/assets/sprites/stump.webp",
-      "sprite": {
-        "frameW": 56,
-        "frameH": 44,
-        "ppu": 64,
-        "anchor": [
-          28,
-          25
-        ],
-        "anims": {
-          "static": {
-            "row": 0,
-            "frames": 1,
-            "fps": 0,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/stump.png",
-      "runtime_connected": true
-    },
-    "rock": {
-      "group": "nature",
-      "village": 3,
-      "new_in_2026_10": false,
-      "suggested_role_key": "rock",
-      "replaces_game_draw": null,
-      "ko": "바위",
-      "en": "Rock",
-      "kind": "prop",
-      "size_m": [
-        0.94,
-        0.69,
-        0.67
-      ],
-      "meshes": 4,
-      "main_colors": [
-        "#6d7680",
-        "#9aa4ad",
-        "#f4f8fc"
-      ],
-      "clips": {},
-      "glb": "art-source/models/rock.glb",
-      "sprite_sheet": "game/assets/sprites/rock.webp",
-      "sprite": {
-        "frameW": 68,
-        "frameH": 60,
-        "ppu": 64,
-        "anchor": [
-          33,
-          40
-        ],
-        "anims": {
-          "static": {
-            "row": 0,
-            "frames": 1,
-            "fps": 0,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/rock.png",
-      "runtime_connected": true,
-      "runtime_route": "drawOre common rock"
-    },
-    "ore_rock": {
-      "group": "nature",
-      "village": 3,
-      "new_in_2026_10": false,
-      "suggested_role_key": "ore",
-      "replaces_game_draw": "drawOre",
-      "ko": "광석 바위",
-      "en": "Ore rock",
-      "kind": "prop",
-      "size_m": [
-        0.94,
-        0.69,
-        0.67
-      ],
-      "meshes": 9,
-      "main_colors": [
-        "#6d7680",
-        "#7fd0ff",
-        "#9aa4ad",
-        "#f4f8fc"
-      ],
-      "clips": {},
-      "glb": "art-source/models/ore_rock.glb",
-      "sprite_sheet": "game/assets/sprites/ore_rock.webp",
-      "sprite": {
-        "frameW": 68,
-        "frameH": 60,
-        "ppu": 64,
-        "anchor": [
-          33,
-          40
-        ],
-        "anims": {
-          "static": {
-            "row": 0,
-            "frames": 1,
-            "fps": 0,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/ore_rock.png",
-      "runtime_connected": true
-    },
-    "log_pile": {
-      "group": "prop",
-      "village": 1,
-      "new_in_2026_10": false,
-      "suggested_role_key": "item_log",
-      "replaces_game_draw": null,
-      "ko": "통나무 더미",
-      "en": "Log pile",
-      "kind": "prop",
-      "size_m": [
-        0.63,
-        0.46,
-        0.81
-      ],
-      "meshes": 9,
-      "main_colors": [
-        "#e7c08a",
-        "#8b5a35"
-      ],
-      "clips": {},
-      "glb": "art-source/models/log_pile.glb",
-      "sprite_sheet": "game/assets/sprites/log_pile.webp",
-      "sprite": {
-        "frameW": 76,
-        "frameH": 68,
-        "ppu": 64,
-        "anchor": [
-          37,
-          44
-        ],
-        "anims": {
-          "static": {
-            "row": 0,
-            "frames": 1,
-            "fps": 0,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/log_pile.png",
-      "runtime_connected": true,
-      "runtime_route": "drawPile live forest stock"
-    },
-    "golden_chest": {
-      "group": "prop",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "chest",
-      "replaces_game_draw": null,
-      "ko": "황금 상자 (open 1회 재생)",
-      "en": "Golden chest (open plays once)",
-      "kind": "prop",
-      "size_m": [
-        0.8,
-        0.65,
-        0.65
-      ],
-      "meshes": 13,
-      "main_colors": [
-        "#a8683a",
-        "#ffcf4a"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 1.2
-        },
-        "open": {
-          "frames": 8,
-          "seconds": 0.8
-        }
-      },
-      "glb": "art-source/models/golden_chest.glb",
-      "sprite_sheet": "game/assets/sprites/golden_chest.webp",
-      "sprite": {
-        "frameW": 92,
-        "frameH": 140,
-        "ppu": 64,
-        "anchor": [
-          44,
-          116
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 5,
-            "loop": true
-          },
-          "open": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": false
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/golden_chest.png",
-      "runtime_connected": true,
-      "runtime_route": "drawCompleteActions timed idle / collected open"
-    },
-    "cabin": {
-      "group": "facility",
-      "village": 1,
-      "new_in_2026_10": false,
-      "suggested_role_key": "cabin",
-      "replaces_game_draw": "render-buildings",
-      "ko": "오두막",
-      "en": "Log cabin",
-      "kind": "facility",
-      "size_m": [
-        3.03,
-        3.19,
-        2.34
-      ],
-      "meshes": 62,
-      "main_colors": [
-        "#a63f34",
-        "#f4f8fc",
-        "#9aa4ad",
-        "#b8473a",
-        "#6d4126"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 3
-        }
-      },
-      "glb": "art-source/models/cabin.glb",
-      "sprite_sheet": "game/assets/sprites/cabin.webp",
-      "sprite": {
-        "frameW": 216,
-        "frameH": 252,
-        "ppu": 64,
-        "anchor": [
-          107,
-          197
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 2,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/cabin.png",
-      "runtime_connected": true
-    },
-    "shop_wood": {
-      "group": "facility",
-      "village": 1,
-      "new_in_2026_10": false,
-      "suggested_role_key": "shop_wood",
-      "replaces_game_draw": "drawMarketShop",
-      "ko": "목재 가게 (간판 비움)",
-      "en": "Wood shop (blank sign)",
-      "kind": "facility",
-      "size_m": [
-        3.03,
-        2.53,
-        1.79
-      ],
-      "meshes": 36,
-      "main_colors": [
-        "#d9483b",
-        "#fbf1e1",
-        "#d9a066",
-        "#6d4126",
-        "#f4f8fc"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2.5
-        }
-      },
-      "glb": "art-source/models/shop_wood.glb",
-      "sprite_sheet": "game/assets/sprites/shop_wood.webp",
-      "sprite": {
-        "frameW": 204,
-        "frameH": 212,
-        "ppu": 64,
-        "anchor": [
-          101,
-          162
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 2.4,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/shop_wood.png",
-      "runtime_connected": true
-    },
-    "shop_fish": {
-      "group": "facility",
-      "village": 2,
-      "new_in_2026_10": false,
-      "suggested_role_key": "shop_fish",
-      "replaces_game_draw": "drawMarketShop",
-      "ko": "생선 가게 (간판 비움)",
-      "en": "Fish shop (blank sign)",
-      "kind": "facility",
-      "size_m": [
-        3.03,
-        2.53,
-        1.79
-      ],
-      "meshes": 55,
-      "main_colors": [
-        "#2f7fb0",
-        "#fbf1e1",
-        "#d9a066",
-        "#6d4126",
-        "#f4f8fc"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2.5
-        }
-      },
-      "glb": "art-source/models/shop_fish.glb",
-      "sprite_sheet": "game/assets/sprites/shop_fish.webp",
-      "sprite": {
-        "frameW": 204,
-        "frameH": 212,
-        "ppu": 64,
-        "anchor": [
-          101,
-          162
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 2.4,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/shop_fish.png",
-      "runtime_connected": true
-    },
-    "watchtower": {
-      "group": "facility",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "tower",
-      "replaces_game_draw": "defence",
-      "ko": "망루",
-      "en": "Watchtower",
-      "kind": "facility",
-      "size_m": [
-        3.54,
-        5.1,
-        3.54
-      ],
-      "meshes": 33,
-      "main_colors": [
-        "#a8683a",
-        "#d9a066",
-        "#9aa4ad",
-        "#c8382c",
-        "#6d4126"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 1.2
-        }
-      },
-      "glb": "art-source/models/watchtower.glb",
-      "sprite_sheet": "game/assets/sprites/watchtower.webp",
-      "sprite": {
-        "frameW": 172,
-        "frameH": 332,
-        "ppu": 64,
-        "anchor": [
-          84,
-          288
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 5,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/watchtower.png",
-      "runtime_connected": true
-    },
-    "storage": {
-      "group": "facility",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "storage",
-      "replaces_game_draw": "drawWorkshopStorage",
-      "ko": "상자 보관소",
-      "en": "Crate storage",
-      "kind": "facility",
-      "size_m": [
-        1.7,
-        1.35,
-        1.31
-      ],
-      "meshes": 32,
-      "main_colors": [
-        "#a8683a",
-        "#6d4126",
-        "#f4f8fc"
-      ],
-      "clips": {},
-      "glb": "art-source/models/storage.glb",
-      "sprite_sheet": "game/assets/sprites/storage.webp",
-      "sprite": {
-        "frameW": 152,
-        "frameH": 136,
-        "ppu": 64,
-        "anchor": [
-          75,
-          97
-        ],
-        "anims": {
-          "static": {
-            "row": 0,
-            "frames": 1,
-            "fps": 0,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/storage.png",
-      "runtime_connected": true
-    },
-    "sawmill": {
-      "group": "facility",
-      "village": 1,
-      "new_in_2026_10": false,
-      "suggested_role_key": "sawmill",
-      "replaces_game_draw": "drawIndustrialBuilding",
-      "ko": "제재소 (톱날 회전)",
-      "en": "Sawmill (spinning blade)",
-      "kind": "facility",
-      "size_m": [
-        3.31,
-        2.29,
-        2.21
-      ],
-      "meshes": 47,
-      "main_colors": [
-        "#386483",
-        "#f4f8fc",
-        "#3f6f91",
-        "#9aa4ad",
-        "#6d4126"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 0.6
-        }
-      },
-      "glb": "art-source/models/sawmill.glb",
-      "sprite_sheet": "game/assets/sprites/sawmill.webp",
-      "sprite": {
-        "frameW": 224,
-        "frameH": 208,
-        "ppu": 64,
-        "anchor": [
-          112,
-          153
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 10,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/sawmill.png",
-      "runtime_connected": true
-    },
-    "smokehouse": {
-      "group": "facility",
-      "village": 2,
-      "new_in_2026_10": false,
-      "suggested_role_key": "smokehouse",
-      "replaces_game_draw": "drawIndustrialBuilding",
-      "ko": "훈제소",
-      "en": "Smokehouse",
-      "kind": "facility",
-      "size_m": [
-        2.48,
-        2.82,
-        2.07
-      ],
-      "meshes": 68,
-      "main_colors": [
-        "#a63f34",
-        "#f4f8fc",
-        "#9aa4ad",
-        "#b8473a",
-        "#6d7680"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2.4
-        }
-      },
-      "glb": "art-source/models/smokehouse.glb",
-      "sprite_sheet": "game/assets/sprites/smokehouse.webp",
-      "sprite": {
-        "frameW": 188,
-        "frameH": 284,
-        "ppu": 64,
-        "anchor": [
-          93,
-          236
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 2.5,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/smokehouse.png",
-      "runtime_connected": true
-    },
-    "smelter": {
-      "group": "facility",
-      "village": 3,
-      "new_in_2026_10": false,
-      "suggested_role_key": "smelter",
-      "replaces_game_draw": "drawIndustrialBuilding",
-      "ko": "제련소 (불빛)",
-      "en": "Smelter (fire glow)",
-      "kind": "facility",
-      "size_m": [
-        2.63,
-        3.74,
-        2.21
-      ],
-      "meshes": 16,
-      "main_colors": [
-        "#7fd0ff",
-        "#6d7680",
-        "#f4f8fc",
-        "#ff7a2a",
-        "#ffb54a"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        }
-      },
-      "glb": "art-source/models/smelter.glb",
-      "sprite_sheet": "game/assets/sprites/smelter.webp",
-      "sprite": {
-        "frameW": 196,
-        "frameH": 324,
-        "ppu": 64,
-        "anchor": [
-          97,
-          274
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/smelter.png",
-      "runtime_connected": true
-    },
-    "power_plant": {
-      "group": "facility",
-      "village": 3,
-      "new_in_2026_10": false,
-      "suggested_role_key": "power_plant",
-      "replaces_game_draw": "drawIndustrialBuilding",
-      "ko": "발전소 (풍차 회전)",
-      "en": "Power plant (turning windmill)",
-      "kind": "facility",
-      "size_m": [
-        2.58,
-        4.15,
-        2.07
-      ],
-      "meshes": 17,
-      "main_colors": [
-        "#f4f6f8",
-        "#f4f8fc",
-        "#6d4126",
-        "#e7ecef",
-        "#6d7680"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 1.2
-        }
-      },
-      "glb": "art-source/models/power_plant.glb",
-      "sprite_sheet": "game/assets/sprites/power_plant.webp",
-      "sprite": {
-        "frameW": 188,
-        "frameH": 276,
-        "ppu": 64,
-        "anchor": [
-          93,
-          228
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 5,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/power_plant.png",
-      "runtime_connected": true
-    },
-    "fence_segment": {
-      "group": "facility",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "fence",
-      "replaces_game_draw": "defence",
-      "ko": "울타리 한 칸",
-      "en": "Fence segment",
-      "kind": "facility",
-      "size_m": [
-        1.4,
-        1.4,
-        0.27
-      ],
-      "meshes": 20,
-      "main_colors": [
-        "#8b5a35",
-        "#f4f8fc",
-        "#a8683a"
-      ],
-      "clips": {},
-      "glb": "art-source/models/fence_segment.glb",
-      "sprite_sheet": "game/assets/sprites/fence_segment.webp",
-      "sprite": {
-        "frameW": 100,
-        "frameH": 112,
-        "ppu": 64,
-        "anchor": [
-          52,
-          90
-        ],
-        "anims": {
-          "static": {
-            "row": 0,
-            "frames": 1,
-            "fps": 0,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/fence_segment.png",
-      "runtime_connected": true
-    },
-    "truck": {
-      "group": "vehicle",
-      "village": 0,
-      "new_in_2026_10": false,
-      "suggested_role_key": "truck",
-      "replaces_game_draw": "drawTruck",
-      "ko": "배달 트럭",
-      "en": "Delivery truck",
-      "kind": "actor",
-      "size_m": [
-        1.23,
-        1.37,
-        2.07
-      ],
-      "meshes": 15,
-      "main_colors": [
-        "#d9573b",
-        "#a8683a",
-        "#f4f8fc",
-        "#2b2b30",
-        "#8d98a3"
-      ],
-      "clips": {
-        "drive": {
-          "frames": 6,
-          "seconds": 0.5
-        },
-        "idle": {
-          "frames": 2,
-          "seconds": 1
-        }
-      },
-      "glb": "art-source/models/truck.glb",
-      "sprite_sheet": "game/assets/sprites/truck.webp",
-      "sprite": {
-        "frameW": 136,
-        "frameH": 152,
-        "ppu": 64,
-        "anchor": [
-          68,
-          116
-        ],
-        "anims": {
-          "drive": {
-            "row": 0,
-            "frames": 6,
-            "fps": 12,
-            "loop": true
-          },
-          "idle": {
-            "row": 1,
-            "frames": 2,
-            "fps": 2,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/truck.png",
-      "runtime_connected": true
-    },
-    "customer": {
-      "group": "character",
-      "village": 0,
-      "new_in_2026_10": true,
-      "suggested_role_key": "customer",
-      "replaces_game_draw": "drawCustomer",
-      "ko": "가게 손님 (바구니). happy = 구매 만족",
-      "en": "Shop customer with basket; happy = satisfied purchase",
-      "kind": "actor",
-      "size_m": [
-        0.82,
-        1.96,
-        0.61
-      ],
-      "meshes": 34,
-      "main_colors": [
-        "#e07a9a",
-        "#3a4a5c",
-        "#5a3b26",
-        "#b8612e",
-        "#7bc4e0"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "happy": {
-          "frames": 8,
-          "seconds": 0.8
-        }
-      },
-      "glb": "art-source/models/customer.glb",
-      "sprite_sheet": "game/assets/sprites/customer.webp",
-      "sprite": {
-        "frameW": 88,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          48,
-          127
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "happy": {
-            "row": 3,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/customer.png",
-      "runtime_connected": true
-    },
-    "shop_staff": {
-      "group": "character",
-      "village": 0,
-      "new_in_2026_10": true,
-      "suggested_role_key": "shop_staff",
-      "replaces_game_draw": "drawShopStaff",
-      "ko": "가게 점원 (앞치마). work = 물건 건네기",
-      "en": "Shop clerk in apron; work = handing goods over",
-      "kind": "actor",
-      "size_m": [
-        0.79,
-        1.79,
-        0.69
-      ],
-      "meshes": 30,
-      "main_colors": [
-        "#e78537",
-        "#f4e1b0",
-        "#3a4a5c",
-        "#5a3b26",
-        "#2f2420"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1.2
-        }
-      },
-      "glb": "art-source/models/shop_staff.glb",
-      "sprite_sheet": "game/assets/sprites/shop_staff.webp",
-      "sprite": {
-        "frameW": 88,
-        "frameH": 144,
-        "ppu": 64,
-        "anchor": [
-          46,
-          127
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 6.67,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/shop_staff.png",
-      "runtime_connected": true
-    },
-    "master_lumber": {
-      "group": "character",
-      "village": 1,
-      "new_in_2026_10": true,
-      "suggested_role_key": "master_lumber",
-      "replaces_game_draw": "drawMasterLumber",
-      "ko": "명인 벌목꾼 (무지개 도끼·망토)",
-      "en": "Master lumberjack with rainbow axe and cape",
-      "kind": "actor",
-      "size_m": [
-        0.88,
-        2.19,
-        0.99
-      ],
-      "meshes": 40,
-      "main_colors": [
-        "#2f8f55",
-        "#ffcf4a",
-        "#3a4a5c",
-        "#5a3b26",
-        "#b8612e"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 0.9
-        }
-      },
-      "glb": "art-source/models/master_lumber.glb",
-      "sprite_sheet": "game/assets/sprites/master_lumber.webp",
-      "sprite": {
-        "frameW": 112,
-        "frameH": 160,
-        "ppu": 64,
-        "anchor": [
-          50,
-          141
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 8.89,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/master_lumber.png",
-      "runtime_connected": true,
-      "runtime_note": "Used through derived body variant; original GLB and sheet preserved.",
-      "runtime_route": "drawMasterLumber idle / walk / cheer; original work body clip via master_lumber_body plus exact axe grips"
-    },
-    "master_fisher": {
-      "group": "character",
-      "village": 2,
-      "new_in_2026_10": true,
-      "suggested_role_key": "master_fisher",
-      "replaces_game_draw": "drawMasterFisher",
-      "ko": "명인 낚시꾼 (무지개 낚싯대·망토)",
-      "en": "Master fisher with rainbow rod and cape",
-      "kind": "actor",
-      "size_m": [
-        0.98,
-        2.01,
-        1.73
-      ],
-      "meshes": 41,
-      "main_colors": [
-        "#2a86b8",
-        "#f2c14e",
-        "#3a4a5c",
-        "#5a3b26",
-        "#2f2420"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1.6
-        }
-      },
-      "glb": "art-source/models/master_fisher.glb",
-      "sprite_sheet": "game/assets/sprites/master_fisher.webp",
-      "sprite": {
-        "frameW": 132,
-        "frameH": 188,
-        "ppu": 64,
-        "anchor": [
-          50,
-          159
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 5,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/master_fisher.png",
-      "runtime_connected": true,
-      "runtime_note": "Used through derived body variant; original GLB and sheet preserved.",
-      "runtime_route": "drawMasterFisher idle / walk / cheer; original work body clip via master_fisher_body plus full-lake net grips"
-    },
-    "excavator": {
-      "group": "vehicle",
-      "village": 3,
-      "new_in_2026_10": true,
-      "suggested_role_key": "excavator",
-      "replaces_game_draw": "drawExcavator",
-      "ko": "굴착기 (광부 장비 강화). work = 파기·광석 담기",
-      "en": "Excavator (upgraded miner). work = dig and scoop ore",
-      "kind": "actor",
-      "size_m": [
-        1.12,
-        1.39,
-        2.61
-      ],
-      "meshes": 44,
-      "main_colors": [
-        "#f0bb3f",
-        "#4b545d",
-        "#2b2f36",
-        "#d3a436",
-        "#f4f8fc"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 4,
-          "seconds": 2
-        },
-        "drive": {
-          "frames": 6,
-          "seconds": 0.6
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1.4
-        }
-      },
-      "glb": "art-source/models/excavator.glb",
-      "sprite_sheet": "game/assets/sprites/excavator.webp",
-      "sprite": {
-        "frameW": 152,
-        "frameH": 168,
-        "ppu": 64,
-        "anchor": [
-          88,
-          100
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 4,
-            "fps": 2,
-            "loop": true
-          },
-          "drive": {
-            "row": 1,
-            "frames": 6,
-            "fps": 10,
-            "loop": true
-          },
-          "work": {
-            "row": 2,
-            "frames": 8,
-            "fps": 5.71,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/excavator.png",
-      "runtime_connected": true
-    },
-    "harvester": {
-      "group": "vehicle",
-      "village": 1,
-      "new_in_2026_10": true,
-      "suggested_role_key": "harvester",
-      "replaces_game_draw": "drawHarvester",
-      "ko": "벌목 수확기 (벌목꾼 장비 강화). work = 집게 톱 휘두르기",
-      "en": "Forest harvester (upgraded lumberjack). work = swing saw grapple",
-      "kind": "actor",
-      "size_m": [
-        1.21,
-        1.61,
-        2.41
-      ],
-      "meshes": 27,
-      "main_colors": [
-        "#4f9a6a",
-        "#e0a03a",
-        "#3e7f56",
-        "#f4f8fc",
-        "#4b545d"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 4,
-          "seconds": 2
-        },
-        "drive": {
-          "frames": 6,
-          "seconds": 0.5
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1
-        }
-      },
-      "glb": "art-source/models/harvester.glb",
-      "sprite_sheet": "game/assets/sprites/harvester.webp",
-      "sprite": {
-        "frameW": 136,
-        "frameH": 152,
-        "ppu": 64,
-        "anchor": [
-          67,
-          117
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 4,
-            "fps": 2,
-            "loop": true
-          },
-          "drive": {
-            "row": 1,
-            "frames": 6,
-            "fps": 12,
-            "loop": true
-          },
-          "work": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/harvester.png",
-      "runtime_connected": true
-    },
-    "fish_rig": {
-      "group": "vehicle",
-      "village": 2,
-      "new_in_2026_10": true,
-      "suggested_role_key": "fish_rig",
-      "replaces_game_draw": "drawFishRig",
-      "ko": "바퀴 달린 낚시배 (낚시꾼 장비 강화). work = 그물 감기",
-      "en": "Wheeled fishing boat (upgraded fisher). work = reel net",
-      "kind": "actor",
-      "size_m": [
-        1,
-        1.96,
-        1.63
-      ],
-      "meshes": 27,
-      "main_colors": [
-        "#3f7fb8",
-        "#f4f8fc",
-        "#f4e1b0",
-        "#f58a3c",
-        "#a8683a"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 4,
-          "seconds": 2
-        },
-        "drive": {
-          "frames": 6,
-          "seconds": 0.5
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1.6
-        }
-      },
-      "glb": "art-source/models/fish_rig.glb",
-      "sprite_sheet": "game/assets/sprites/fish_rig.webp",
-      "sprite": {
-        "frameW": 108,
-        "frameH": 132,
-        "ppu": 64,
-        "anchor": [
-          53,
-          105
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 4,
-            "fps": 2,
-            "loop": true
-          },
-          "drive": {
-            "row": 1,
-            "frames": 6,
-            "fps": 12,
-            "loop": true
-          },
-          "work": {
-            "row": 2,
-            "frames": 8,
-            "fps": 5,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/fish_rig.png",
-      "runtime_connected": true
-    },
-    "workshop": {
-      "group": "facility",
-      "village": 0,
-      "new_in_2026_10": true,
-      "suggested_role_key": "workshop",
-      "replaces_game_draw": "drawWorkshop",
-      "ko": "작업장 (모루 망치질 불꽃)",
-      "en": "Workshop (anvil hammer sparks)",
-      "kind": "facility",
-      "size_m": [
-        2.76,
-        2.1,
-        1.93
-      ],
-      "meshes": 47,
-      "main_colors": [
-        "#647e6b",
-        "#d9a066",
-        "#a8683a",
-        "#f4f8fc",
-        "#6f8c77"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 0.9
-        }
-      },
-      "glb": "art-source/models/workshop.glb",
-      "sprite_sheet": "game/assets/sprites/workshop.webp",
-      "sprite": {
-        "frameW": 196,
-        "frameH": 184,
-        "ppu": 64,
-        "anchor": [
-          97,
-          136
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 6.67,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/workshop.png",
-      "runtime_connected": true
-    },
-    "warehouse": {
-      "group": "facility",
-      "village": 0,
-      "new_in_2026_10": true,
-      "suggested_role_key": "warehouse",
-      "replaces_game_draw": "drawWarehouse",
-      "ko": "큰 창고",
-      "en": "Warehouse",
-      "kind": "facility",
-      "size_m": [
-        4.29,
-        2.75,
-        2.76
-      ],
-      "meshes": 85,
-      "main_colors": [
-        "#a8683a",
-        "#386483",
-        "#6d4126",
-        "#f4f8fc",
-        "#9aa4ad"
-      ],
-      "clips": {},
-      "glb": "art-source/models/warehouse.glb",
-      "sprite_sheet": "game/assets/sprites/warehouse.webp",
-      "sprite": {
-        "frameW": 296,
-        "frameH": 244,
-        "ppu": 64,
-        "anchor": [
-          161,
-          177
-        ],
-        "anims": {
-          "static": {
-            "row": 0,
-            "frames": 1,
-            "fps": 0,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/warehouse.png",
-      "runtime_connected": true
-    },
-    "market_stall": {
-      "group": "facility",
-      "village": 0,
-      "new_in_2026_10": true,
-      "suggested_role_key": "shop_shelf",
-      "replaces_game_draw": "drawShopStaff (shelves)",
-      "ko": "가게 진열대 (통나무·생선·광석)",
-      "en": "Shop display shelf (logs, fish, ore)",
-      "kind": "facility",
-      "size_m": [
-        1.06,
-        0.78,
-        0.36
-      ],
-      "meshes": 26,
-      "main_colors": [
-        "#d9a066",
-        "#f4f8fc",
-        "#8fa9b8",
-        "#2b211c",
-        "#e6eef2"
-      ],
-      "clips": {},
-      "glb": "art-source/models/market_stall.glb",
-      "sprite_sheet": "game/assets/sprites/market_stall.webp",
-      "sprite": {
-        "frameW": 84,
-        "frameH": 80,
-        "ppu": 64,
-        "anchor": [
-          41,
-          60
-        ],
-        "anims": {
-          "static": {
-            "row": 0,
-            "frames": 1,
-            "fps": 0,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/market_stall.png",
-      "runtime_connected": true
-    },
-    "notice_board": {
-      "group": "facility",
-      "village": 0,
-      "new_in_2026_10": true,
-      "suggested_role_key": "board",
-      "replaces_game_draw": "drawBoard",
-      "ko": "시장 게시판 (종이에 글자 없음)",
-      "en": "Market notice board (papers are blank)",
-      "kind": "facility",
-      "size_m": [
-        1.38,
-        1.53,
-        0.4
-      ],
-      "meshes": 16,
-      "main_colors": [
-        "#b98b5e",
-        "#8a6a44",
-        "#b8473a",
-        "#f4f8fc",
-        "#c8382c"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2.4
-        }
-      },
-      "glb": "art-source/models/notice_board.glb",
-      "sprite_sheet": "game/assets/sprites/notice_board.webp",
-      "sprite": {
-        "frameW": 104,
-        "frameH": 128,
-        "ppu": 64,
-        "anchor": [
-          53,
-          107
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 2.5,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/notice_board.png",
-      "runtime_connected": true
-    },
-    "aurora_keeper": {
-      "group": "character",
-      "village": 4,
-      "new_in_2026_10": true,
-      "suggested_role_key": "aurora_keeper",
-      "replaces_game_draw": null,
-      "ko": "온천 관리인 (청록 코트·수건·등불·물바가지). 4마을 설계 전용",
-      "en": "Hot-spring keeper: teal coat, towel, lantern, ladle. Village 4 design only",
-      "kind": "actor",
-      "size_m": [
-        0.8,
-        1.87,
-        1.26
-      ],
-      "meshes": 36,
-      "main_colors": [
-        "#2f9e9a",
-        "#3a4a5c",
-        "#5a3b26",
-        "#5a3a26",
-        "#f58a3c"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 0.8
-        }
-      },
-      "glb": "art-source/models/aurora_keeper.glb",
-      "sprite_sheet": "game/assets/sprites/aurora_keeper.webp",
-      "sprite": {
-        "frameW": 116,
-        "frameH": 148,
-        "ppu": 64,
-        "anchor": [
-          52,
-          129
-        ],
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/aurora_keeper.png",
-      "runtime_connected": true,
-      "runtime_route": "drawAurora hired keeper idle / walking / operating / success cheer"
-    },
-    "hot_spring": {
-      "group": "facility",
-      "village": 4,
-      "new_in_2026_10": true,
-      "suggested_role_key": "aurora_spring",
-      "replaces_game_draw": null,
-      "ko": "온천 (broken = 얼어붙음, repaired = 청록 물·김)",
-      "en": "Hot spring (broken = frozen, repaired = teal water and steam)",
-      "kind": "facility",
-      "size_m": [
-        3.2,
-        1.2,
-        2.5
-      ],
-      "meshes": 42,
-      "main_colors": [
-        "#6d4126",
-        "#6d7680",
-        "#9aa4ad",
-        "#f4f8fc",
-        "#bff3ee"
-      ],
-      "clips": {
-        "repaired": {
-          "frames": 6,
-          "seconds": 2.4
-        },
-        "broken": {
-          "frames": 2,
-          "seconds": 2
-        }
-      },
-      "glb": "art-source/models/hot_spring.glb",
-      "sprite_sheet": "game/assets/sprites/hot_spring.webp",
-      "sprite": {
-        "frameW": 212,
-        "frameH": 160,
-        "ppu": 64,
-        "anchor": [
-          106,
-          107
-        ],
-        "anims": {
-          "repaired": {
-            "row": 0,
-            "frames": 6,
-            "fps": 2.5,
-            "loop": true
-          },
-          "broken": {
-            "row": 1,
-            "frames": 2,
-            "fps": 1,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/hot_spring.png",
-      "runtime_connected": true,
-      "runtime_route": "drawAurora broken / repaired by actual material purchase"
-    },
-    "boiler": {
-      "group": "facility",
-      "village": 4,
-      "new_in_2026_10": true,
-      "suggested_role_key": "aurora_boiler",
-      "replaces_game_draw": null,
-      "ko": "보일러 (broken = 녹슬고 불 꺼짐, repaired = 불·압력계·김)",
-      "en": "Boiler (broken = rusty and cold, repaired = fire, gauge, steam)",
-      "kind": "facility",
-      "size_m": [
-        2.5,
-        2.94,
-        1.93
-      ],
-      "meshes": 30,
-      "main_colors": [
-        "#f4f8fc",
-        "#6d7680",
-        "#b86a4a",
-        "#ff7a2a",
-        "#2b2b30"
-      ],
-      "clips": {
-        "repaired": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "broken": {
-          "frames": 2,
-          "seconds": 2
-        }
-      },
-      "glb": "art-source/models/boiler.glb",
-      "sprite_sheet": "game/assets/sprites/boiler.webp",
-      "sprite": {
-        "frameW": 184,
-        "frameH": 292,
-        "ppu": 64,
-        "anchor": [
-          92,
-          243
-        ],
-        "anims": {
-          "repaired": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "broken": {
-            "row": 1,
-            "frames": 2,
-            "fps": 1,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/boiler.png",
-      "runtime_connected": true,
-      "runtime_route": "drawAurora broken / repaired by actual material purchase"
-    },
-    "lodge": {
-      "group": "facility",
-      "village": 4,
-      "new_in_2026_10": true,
-      "suggested_role_key": "aurora_lodge",
-      "replaces_game_draw": null,
-      "ko": "숙소 (broken = 판자·지붕 구멍·불 꺼짐, repaired = 불빛·연기·수건)",
-      "en": "Lodge (broken = boarded, roof hole, dark; repaired = lit, smoke, towels)",
-      "kind": "facility",
-      "size_m": [
-        3.86,
-        3.3,
-        2.7
-      ],
-      "meshes": 99,
-      "main_colors": [
-        "#2a817d",
-        "#f4f8fc",
-        "#9aa4ad",
-        "#2f8f8a",
-        "#6d4126"
-      ],
-      "clips": {
-        "repaired": {
-          "frames": 6,
-          "seconds": 3
-        },
-        "broken": {
-          "frames": 2,
-          "seconds": 2
-        }
-      },
-      "glb": "art-source/models/lodge.glb",
-      "sprite_sheet": "game/assets/sprites/lodge.webp",
-      "sprite": {
-        "frameW": 264,
-        "frameH": 320,
-        "ppu": 64,
-        "anchor": [
-          135,
-          259
-        ],
-        "anims": {
-          "repaired": {
-            "row": 0,
-            "frames": 6,
-            "fps": 2,
-            "loop": true
-          },
-          "broken": {
-            "row": 1,
-            "frames": 2,
-            "fps": 1,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/lodge.png",
-      "runtime_connected": true,
-      "runtime_route": "drawAurora broken / repaired; guests and actual service income"
-    },
-    "canal_segment": {
-      "group": "facility",
-      "village": 4,
-      "new_in_2026_10": true,
-      "suggested_role_key": "aurora_canal",
-      "replaces_game_draw": null,
-      "ko": "온천 수로 한 칸 (broken = 얼음·돌무더기, repaired = 흐르는 물)",
-      "en": "Canal segment (broken = ice and rubble, repaired = flowing water)",
-      "kind": "facility",
-      "size_m": [
-        2.13,
-        0.41,
-        2.6
-      ],
-      "meshes": 28,
-      "main_colors": [
-        "#6d7680",
-        "#9aa4ad",
-        "#f4f8fc",
-        "#d4fbf6",
-        "#5b6670"
-      ],
-      "clips": {
-        "repaired": {
-          "frames": 6,
-          "seconds": 1.2
-        },
-        "broken": {
-          "frames": 2,
-          "seconds": 2
-        }
-      },
-      "glb": "art-source/models/canal_segment.glb",
-      "sprite_sheet": "game/assets/sprites/canal_segment.webp",
-      "sprite": {
-        "frameW": 160,
-        "frameH": 112,
-        "ppu": 64,
-        "anchor": [
-          79,
-          63
-        ],
-        "anims": {
-          "repaired": {
-            "row": 0,
-            "frames": 6,
-            "fps": 5,
-            "loop": true
-          },
-          "broken": {
-            "row": 1,
-            "frames": 2,
-            "fps": 1,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/canal_segment.png",
-      "runtime_connected": true,
-      "runtime_route": "drawAurora broken / repaired; enables warmth recovery"
-    },
-    "aurora_lookout": {
-      "group": "facility",
-      "village": 4,
-      "new_in_2026_10": true,
-      "suggested_role_key": "aurora_lookout",
-      "replaces_game_draw": null,
-      "ko": "오로라 관측지 (broken = 밧줄로 막힘, repaired = 오로라·망원경)",
-      "en": "Aurora lookout (broken = roped off, repaired = aurora and telescope)",
-      "kind": "facility",
-      "size_m": [
-        2.21,
-        3.28,
-        1.99
-      ],
-      "meshes": 57,
-      "main_colors": [
-        "#6d7680",
-        "#9aa4ad",
-        "#d9a066",
-        "#fffbe6",
-        "#f4f8fc"
-      ],
-      "clips": {
-        "repaired": {
-          "frames": 8,
-          "seconds": 4
-        },
-        "broken": {
-          "frames": 2,
-          "seconds": 2
-        }
-      },
-      "glb": "art-source/models/aurora_lookout.glb",
-      "sprite_sheet": "game/assets/sprites/aurora_lookout.webp",
-      "sprite": {
-        "frameW": 176,
-        "frameH": 264,
-        "ppu": 64,
-        "anchor": [
-          86,
-          217
-        ],
-        "anims": {
-          "repaired": {
-            "row": 0,
-            "frames": 8,
-            "fps": 2,
-            "loop": true
-          },
-          "broken": {
-            "row": 1,
-            "frames": 2,
-            "fps": 1,
-            "loop": true
-          }
-        }
-      },
-      "turnaround_png": "art-source/previews/turnarounds/aurora_lookout.png",
-      "runtime_connected": true,
-      "runtime_route": "drawAurora broken / repaired; requires village restoration milestone"
-    },
-    "master_lumber_body": {
-      "group": "character",
-      "village": 1,
-      "new_in_2026_10": true,
-      "suggested_role_key": "master_lumber",
-      "replaces_game_draw": "drawMasterLumber",
-      "ko": "명인 벌목꾼 (무지개 도끼·망토)",
-      "en": "Master lumberjack with rainbow axe and cape",
-      "kind": "actor",
-      "size_m": [
-        0.88,
-        2.19,
-        0.99
-      ],
-      "meshes": 40,
-      "main_colors": [
-        "#2f8f55",
-        "#ffcf4a",
-        "#3a4a5c",
-        "#5a3b26",
-        "#b8612e"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 0.9
-        }
-      },
-      "glb": "art-source/models/master_lumber_body.glb",
-      "sprite_sheet": "game/assets/sprites/master_lumber_body.webp",
-      "sprite": {
-        "file": "master_lumber_body.webp",
-        "frameW": 84,
-        "frameH": 160,
-        "ppu": 64,
-        "kind": "actor",
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 8.89,
-            "loop": true
-          }
-        },
-        "anchor": [
-          41,
-          141
-        ],
-        "glb": "art-source/models/master_lumber_body.glb",
-        "clips": [
-          "idle",
-          "walk",
-          "cheer",
-          "work"
-        ]
-      },
-      "runtime_connected": true,
-      "derived_from": "master_lumber",
-      "notes": "Original retained. Body variant suppresses source arms/tool; runtime draws both arms gripping enlarged axe/full-lake net."
-    },
-    "master_fisher_body": {
-      "group": "character",
-      "village": 2,
-      "new_in_2026_10": true,
-      "suggested_role_key": "master_fisher",
-      "replaces_game_draw": "drawMasterFisher",
-      "ko": "명인 낚시꾼 (무지개 낚싯대·망토)",
-      "en": "Master fisher with rainbow rod and cape",
-      "kind": "actor",
-      "size_m": [
-        0.98,
-        2.01,
-        1.73
-      ],
-      "meshes": 41,
-      "main_colors": [
-        "#2a86b8",
-        "#f2c14e",
-        "#3a4a5c",
-        "#5a3b26",
-        "#2f2420"
-      ],
-      "clips": {
-        "idle": {
-          "frames": 6,
-          "seconds": 2
-        },
-        "walk": {
-          "frames": 8,
-          "seconds": 0.8
-        },
-        "cheer": {
-          "frames": 8,
-          "seconds": 1
-        },
-        "work": {
-          "frames": 8,
-          "seconds": 1.6
-        }
-      },
-      "glb": "art-source/models/master_fisher_body.glb",
-      "sprite_sheet": "game/assets/sprites/master_fisher_body.webp",
-      "sprite": {
-        "file": "master_fisher_body.webp",
-        "frameW": 80,
-        "frameH": 156,
-        "ppu": 64,
-        "kind": "actor",
-        "anims": {
-          "idle": {
-            "row": 0,
-            "frames": 6,
-            "fps": 3,
-            "loop": true
-          },
-          "walk": {
-            "row": 1,
-            "frames": 8,
-            "fps": 10,
-            "loop": true
-          },
-          "cheer": {
-            "row": 2,
-            "frames": 8,
-            "fps": 8,
-            "loop": true
-          },
-          "work": {
-            "row": 3,
-            "frames": 8,
-            "fps": 5,
-            "loop": true
-          }
-        },
-        "anchor": [
-          37,
-          141
-        ],
-        "glb": "art-source/models/master_fisher_body.glb",
-        "clips": [
-          "idle",
-          "walk",
-          "cheer",
-          "work"
-        ]
-      },
-      "runtime_connected": true,
-      "derived_from": "master_fisher",
-      "notes": "Original retained. Body variant suppresses source arms/tool; runtime draws both arms gripping enlarged axe/full-lake net."
+    "work": {
+     "frames": 8,
+     "seconds": 0.7
     }
+   },
+   "glb": "art-source/models/hero.glb",
+   "sprite_sheet": "game/assets/sprites/hero.webp",
+   "sprite": {
+    "frameW": 68,
+    "frameH": 128,
+    "ppu": 64,
+    "anchor": [
+     37,
+     113
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 11.43,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/hero.png"
   },
-  "runtime_note": "Three-village source render integration; aurora/village-four models are design assets only. Master body variants preserve exact Canvas axe/net grips."
+  "lumberjack": {
+   "group": "character",
+   "village": 1,
+   "new_in_2026_10": false,
+   "suggested_role_key": "lumber",
+   "replaces_game_draw": "drawAgent",
+   "ko": "나무꾼 돌쇠 (저고리·바지·대님·짚신, 머리띠·상투, 지게)",
+   "en": "Joseon woodcutter: jeogori, baji, straw shoes, headband, topknot, A-frame jige",
+   "kind": "actor",
+   "size_m": [
+    0.61,
+    1.7,
+    0.89
+   ],
+   "meshes": 51,
+   "main_colors": [
+    "#6d4126",
+    "#f2efe6",
+    "#8d98a3",
+    "#f6cfae",
+    "#8a7a5a"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 0.9
+    }
+   },
+   "glb": "art-source/models/lumberjack.glb",
+   "sprite_sheet": "game/assets/sprites/lumberjack.webp",
+   "sprite": {
+    "frameW": 88,
+    "frameH": 136,
+    "ppu": 64,
+    "anchor": [
+     37,
+     120
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/lumberjack.png"
+  },
+  "fisher": {
+   "group": "character",
+   "village": 2,
+   "new_in_2026_10": false,
+   "suggested_role_key": "fisher",
+   "replaces_game_draw": "drawAgent",
+   "ko": "낚시꾼 (삿갓·저고리)",
+   "en": "Joseon fisher in a satgat straw hat",
+   "kind": "actor",
+   "size_m": [
+    0.67,
+    1.75,
+    1.41
+   ],
+   "meshes": 42,
+   "main_colors": [
+    "#2f5f7a",
+    "#f6cfae",
+    "#5d7e8f",
+    "#1d1a18",
+    "#e9e4d6"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1.6
+    }
+   },
+   "glb": "art-source/models/fisher.glb",
+   "sprite_sheet": "game/assets/sprites/fisher.webp",
+   "sprite": {
+    "frameW": 92,
+    "frameH": 144,
+    "ppu": 64,
+    "anchor": [
+     37,
+     130
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/fisher.png"
+  },
+  "miner": {
+   "group": "character",
+   "village": 3,
+   "new_in_2026_10": false,
+   "suggested_role_key": "miner",
+   "replaces_game_draw": "drawAgent",
+   "ko": "광부 (두건·앞치마)",
+   "en": "Joseon miner with headcloth and apron",
+   "kind": "actor",
+   "size_m": [
+    0.61,
+    1.7,
+    0.77
+   ],
+   "meshes": 46,
+   "main_colors": [
+    "#6d4126",
+    "#4b3b2d",
+    "#d39a2a",
+    "#8d98a3",
+    "#f6cfae"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 0.8
+    }
+   },
+   "glb": "art-source/models/miner.glb",
+   "sprite_sheet": "game/assets/sprites/miner.webp",
+   "sprite": {
+    "frameW": 84,
+    "frameH": 132,
+    "ppu": 64,
+    "anchor": [
+     37,
+     118
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/miner.png"
+  },
+  "hunter": {
+   "group": "character",
+   "village": 1,
+   "new_in_2026_10": false,
+   "suggested_role_key": "hunter",
+   "replaces_game_draw": "drawAgent",
+   "ko": "숲 사냥꾼 (전립·철릭)",
+   "en": "Forest hunter: jeollip hat, cheollik robe",
+   "kind": "actor",
+   "size_m": [
+    0.61,
+    1.79,
+    0.53
+   ],
+   "meshes": 45,
+   "main_colors": [
+    "#c8382c",
+    "#3d6a4a",
+    "#f6cfae",
+    "#1d1a18",
+    "#e2dccb"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1
+    }
+   },
+   "glb": "art-source/models/hunter.glb",
+   "sprite_sheet": "game/assets/sprites/hunter.webp",
+   "sprite": {
+    "frameW": 84,
+    "frameH": 132,
+    "ppu": 64,
+    "anchor": [
+     48,
+     118
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/hunter.png"
+  },
+  "hunter_blue": {
+   "group": "character",
+   "village": 2,
+   "new_in_2026_10": false,
+   "suggested_role_key": "hunter2",
+   "replaces_game_draw": "drawAgent",
+   "ko": "호수 사냥꾼 (조선 수군 전립·철릭)",
+   "en": "Lake hunter: Joseon navy jeollip and robe",
+   "kind": "actor",
+   "size_m": [
+    0.61,
+    1.79,
+    0.53
+   ],
+   "meshes": 45,
+   "main_colors": [
+    "#f2c14e",
+    "#2c4f7c",
+    "#f6cfae",
+    "#1d1a18",
+    "#e2dccb"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1
+    }
+   },
+   "glb": "art-source/models/hunter_blue.glb",
+   "sprite_sheet": "game/assets/sprites/hunter_blue.webp",
+   "sprite": {
+    "frameW": 84,
+    "frameH": 132,
+    "ppu": 64,
+    "anchor": [
+     48,
+     118
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/hunter_blue.png"
+  },
+  "hunter_violet": {
+   "group": "character",
+   "village": 3,
+   "new_in_2026_10": false,
+   "suggested_role_key": "hunter3",
+   "replaces_game_draw": "drawAgent",
+   "ko": "광산 사냥꾼 (고구려 종장판주·찰갑)",
+   "en": "Mine hunter: Goguryeo plated helmet and lamellar",
+   "kind": "actor",
+   "size_m": [
+    0.58,
+    1.99,
+    0.5
+   ],
+   "meshes": 160,
+   "main_colors": [
+    "#6d7680",
+    "#3a2a20",
+    "#8a2f2a",
+    "#f6cfae",
+    "#636c75"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1
+    }
+   },
+   "glb": "art-source/models/hunter_violet.glb",
+   "sprite_sheet": "game/assets/sprites/hunter_violet.webp",
+   "sprite": {
+    "frameW": 84,
+    "frameH": 144,
+    "ppu": 64,
+    "anchor": [
+     48,
+     129
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/hunter_violet.png"
+  },
+  "shopkeeper": {
+   "group": "character",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "imk",
+   "replaces_game_draw": "drawAgent",
+   "ko": "주모 (저고리·치마·쪽머리·비녀)",
+   "en": "Innkeeper woman: jeogori, chima, bun with binyeo",
+   "kind": "actor",
+   "size_m": [
+    0.66,
+    1.64,
+    0.56
+   ],
+   "meshes": 41,
+   "main_colors": [
+    "#c8382c",
+    "#f7f4ec",
+    "#f6cfae",
+    "#f2c14e",
+    "#1d1a18"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    }
+   },
+   "glb": "art-source/models/shopkeeper.glb",
+   "sprite_sheet": "game/assets/sprites/shopkeeper.webp",
+   "sprite": {
+    "frameW": 72,
+    "frameH": 128,
+    "ppu": 64,
+    "anchor": [
+     37,
+     110
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/shopkeeper.png"
+  },
+  "villager": {
+   "group": "character",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "courier",
+   "replaces_game_draw": "drawAgent",
+   "ko": "보부상 (패랭이·등짐)",
+   "en": "Peddler (bobusang) with paeraengi hat and back pack",
+   "kind": "actor",
+   "size_m": [
+    0.61,
+    1.71,
+    0.67
+   ],
+   "meshes": 42,
+   "main_colors": [
+    "#6d4126",
+    "#a8683a",
+    "#f6cfae",
+    "#a89474",
+    "#1d1a18"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    }
+   },
+   "glb": "art-source/models/villager.glb",
+   "sprite_sheet": "game/assets/sprites/villager.webp",
+   "sprite": {
+    "frameW": 72,
+    "frameH": 128,
+    "ppu": 64,
+    "anchor": [
+     37,
+     116
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/villager.png"
+  },
+  "corgi": {
+   "group": "animal",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "pet",
+   "replaces_game_draw": null,
+   "ko": "진돗개 (흰색·말린 꼬리·빨간 목줄). 런타임 이름은 corgi 유지",
+   "en": "White Jindo dog (runtime name kept as corgi)",
+   "kind": "actor",
+   "size_m": [
+    0.3,
+    0.68,
+    1.07
+   ],
+   "meshes": 22,
+   "main_colors": [
+    "#f1e6d2",
+    "#fbf6ec",
+    "#c8382c",
+    "#2b211c",
+    "#ef9a8a"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.45
+    },
+    "happy": {
+     "frames": 6,
+     "seconds": 0.6
+    }
+   },
+   "glb": "art-source/models/corgi.glb",
+   "sprite_sheet": "game/assets/sprites/corgi.webp",
+   "sprite": {
+    "frameW": 60,
+    "frameH": 72,
+    "ppu": 64,
+    "anchor": [
+     29,
+     54
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 17.78,
+      "loop": true
+     },
+     "happy": {
+      "row": 2,
+      "frames": 6,
+      "fps": 10,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/corgi.png"
+  },
+  "polar_bear": {
+   "group": "animal",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "raid_bear",
+   "replaces_game_draw": "raids/combat",
+   "ko": "습격 반달가슴곰 (가슴 흰 반달). 런타임 이름 polar_bear 유지",
+   "en": "Raiding Asiatic black bear (runtime name kept)",
+   "kind": "actor",
+   "size_m": [
+    0.72,
+    1.24,
+    1.81
+   ],
+   "meshes": 22,
+   "main_colors": [
+    "#3a3640",
+    "#f4f1ea",
+    "#46414c",
+    "#c9a27a",
+    "#2b211c"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.9
+    },
+    "attack": {
+     "frames": 8,
+     "seconds": 0.9
+    },
+    "hurt": {
+     "frames": 5,
+     "seconds": 0.5
+    }
+   },
+   "glb": "art-source/models/polar_bear.glb",
+   "sprite_sheet": "game/assets/sprites/polar_bear.webp",
+   "sprite": {
+    "frameW": 112,
+    "frameH": 124,
+    "ppu": 64,
+    "anchor": [
+     61,
+     95
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     },
+     "attack": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     },
+     "hurt": {
+      "row": 3,
+      "frames": 5,
+      "fps": 10,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/polar_bear.png"
+  },
+  "boss_bear": {
+   "group": "animal",
+   "village": 3,
+   "new_in_2026_10": false,
+   "suggested_role_key": "boss",
+   "replaces_game_draw": "raids/combat",
+   "ko": "끝판왕 대왕 반달곰 (금관·붉은 천, 2.1배)",
+   "en": "Boss Asiatic black bear with gold crown (x2.1)",
+   "kind": "actor",
+   "size_m": [
+    1.51,
+    2.74,
+    3.8
+   ],
+   "meshes": 33,
+   "main_colors": [
+    "#2a262c",
+    "#8e2a22",
+    "#f4f1ea",
+    "#332e36",
+    "#c9a27a"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.9
+    },
+    "attack": {
+     "frames": 8,
+     "seconds": 0.9
+    },
+    "hurt": {
+     "frames": 5,
+     "seconds": 0.5
+    }
+   },
+   "glb": "art-source/models/boss_bear.glb",
+   "sprite_sheet": "game/assets/sprites/boss_bear.webp",
+   "sprite": {
+    "frameW": 212,
+    "frameH": 240,
+    "ppu": 64,
+    "anchor": [
+     120,
+     192
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     },
+     "attack": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     },
+     "hurt": {
+      "row": 3,
+      "frames": 5,
+      "fps": 10,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/boss_bear.png"
+  },
+  "fish": {
+   "group": "prop",
+   "village": 2,
+   "new_in_2026_10": false,
+   "suggested_role_key": "item_fish",
+   "replaces_game_draw": "drawFish",
+   "ko": "물고기",
+   "en": "Fish",
+   "kind": "prop",
+   "size_m": [
+    0.2,
+    0.22,
+    0.6
+   ],
+   "meshes": 5,
+   "main_colors": [
+    "#8fa9b8",
+    "#2b211c",
+    "#e6eef2"
+   ],
+   "clips": {
+    "swim": {
+     "frames": 6,
+     "seconds": 0.8
+    },
+    "flop": {
+     "frames": 5,
+     "seconds": 0.5
+    }
+   },
+   "glb": "art-source/models/fish.glb",
+   "sprite_sheet": "game/assets/sprites/fish.webp",
+   "sprite": {
+    "frameW": 44,
+    "frameH": 48,
+    "ppu": 64,
+    "anchor": [
+     18,
+     35
+    ],
+    "anims": {
+     "swim": {
+      "row": 0,
+      "frames": 6,
+      "fps": 7.5,
+      "loop": true
+     },
+     "flop": {
+      "row": 1,
+      "frames": 5,
+      "fps": 10,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/fish.png"
+  },
+  "pine": {
+   "group": "nature",
+   "village": 1,
+   "new_in_2026_10": false,
+   "suggested_role_key": "tree",
+   "replaces_game_draw": "drawTree",
+   "ko": "눈 덮인 소나무",
+   "en": "Snowy pine",
+   "kind": "prop",
+   "size_m": [
+    1.48,
+    1.84,
+    1.45
+   ],
+   "meshes": 8,
+   "main_colors": [
+    "#f4f8fc",
+    "#1f6b4f",
+    "#6b4128",
+    "#2f8c63"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 3
+    },
+    "chop": {
+     "frames": 5,
+     "seconds": 0.4
+    }
+   },
+   "glb": "art-source/models/pine.glb",
+   "sprite_sheet": "game/assets/sprites/pine.webp",
+   "sprite": {
+    "frameW": 112,
+    "frameH": 136,
+    "ppu": 64,
+    "anchor": [
+     54,
+     107
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2,
+      "loop": true
+     },
+     "chop": {
+      "row": 1,
+      "frames": 5,
+      "fps": 12.5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/pine.png"
+  },
+  "pine_small": {
+   "group": "nature",
+   "village": 1,
+   "new_in_2026_10": false,
+   "suggested_role_key": "tree_small",
+   "replaces_game_draw": "drawTree",
+   "ko": "작은 소나무",
+   "en": "Small pine",
+   "kind": "prop",
+   "size_m": [
+    0.96,
+    1.2,
+    0.95
+   ],
+   "meshes": 8,
+   "main_colors": [
+    "#f4f8fc",
+    "#1f6b4f",
+    "#6b4128",
+    "#2f8c63"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 3
+    },
+    "chop": {
+     "frames": 5,
+     "seconds": 0.4
+    }
+   },
+   "glb": "art-source/models/pine_small.glb",
+   "sprite_sheet": "game/assets/sprites/pine_small.webp",
+   "sprite": {
+    "frameW": 80,
+    "frameH": 96,
+    "ppu": 64,
+    "anchor": [
+     37,
+     72
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2,
+      "loop": true
+     },
+     "chop": {
+      "row": 1,
+      "frames": 5,
+      "fps": 12.5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/pine_small.png"
+  },
+  "stump": {
+   "group": "nature",
+   "village": 1,
+   "new_in_2026_10": false,
+   "suggested_role_key": "stump",
+   "replaces_game_draw": "drawTree",
+   "ko": "그루터기",
+   "en": "Stump",
+   "kind": "prop",
+   "size_m": [
+    0.66,
+    0.26,
+    0.66
+   ],
+   "meshes": 3,
+   "main_colors": [
+    "#6b4128",
+    "#e7c08a",
+    "#f4f8fc"
+   ],
+   "clips": {},
+   "glb": "art-source/models/stump.glb",
+   "sprite_sheet": "game/assets/sprites/stump.webp",
+   "sprite": {
+    "frameW": 56,
+    "frameH": 44,
+    "ppu": 64,
+    "anchor": [
+     28,
+     25
+    ],
+    "anims": {
+     "static": {
+      "row": 0,
+      "frames": 1,
+      "fps": 0,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/stump.png"
+  },
+  "rock": {
+   "group": "nature",
+   "village": 3,
+   "new_in_2026_10": false,
+   "suggested_role_key": "rock",
+   "replaces_game_draw": null,
+   "ko": "바위",
+   "en": "Rock",
+   "kind": "prop",
+   "size_m": [
+    0.94,
+    0.69,
+    0.67
+   ],
+   "meshes": 4,
+   "main_colors": [
+    "#6d7680",
+    "#9aa4ad",
+    "#f4f8fc"
+   ],
+   "clips": {},
+   "glb": "art-source/models/rock.glb",
+   "sprite_sheet": "game/assets/sprites/rock.webp",
+   "sprite": {
+    "frameW": 68,
+    "frameH": 60,
+    "ppu": 64,
+    "anchor": [
+     33,
+     40
+    ],
+    "anims": {
+     "static": {
+      "row": 0,
+      "frames": 1,
+      "fps": 0,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/rock.png"
+  },
+  "ore_rock": {
+   "group": "nature",
+   "village": 3,
+   "new_in_2026_10": false,
+   "suggested_role_key": "ore",
+   "replaces_game_draw": "drawOre",
+   "ko": "광석 바위",
+   "en": "Ore rock",
+   "kind": "prop",
+   "size_m": [
+    0.94,
+    0.69,
+    0.67
+   ],
+   "meshes": 9,
+   "main_colors": [
+    "#6d7680",
+    "#7fd0ff",
+    "#9aa4ad",
+    "#f4f8fc"
+   ],
+   "clips": {},
+   "glb": "art-source/models/ore_rock.glb",
+   "sprite_sheet": "game/assets/sprites/ore_rock.webp",
+   "sprite": {
+    "frameW": 68,
+    "frameH": 60,
+    "ppu": 64,
+    "anchor": [
+     33,
+     40
+    ],
+    "anims": {
+     "static": {
+      "row": 0,
+      "frames": 1,
+      "fps": 0,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/ore_rock.png"
+  },
+  "log_pile": {
+   "group": "prop",
+   "village": 1,
+   "new_in_2026_10": false,
+   "suggested_role_key": "item_log",
+   "replaces_game_draw": null,
+   "ko": "통나무 더미",
+   "en": "Log pile",
+   "kind": "prop",
+   "size_m": [
+    0.63,
+    0.46,
+    0.81
+   ],
+   "meshes": 9,
+   "main_colors": [
+    "#e7c08a",
+    "#8b5a35"
+   ],
+   "clips": {},
+   "glb": "art-source/models/log_pile.glb",
+   "sprite_sheet": "game/assets/sprites/log_pile.webp",
+   "sprite": {
+    "frameW": 76,
+    "frameH": 68,
+    "ppu": 64,
+    "anchor": [
+     37,
+     44
+    ],
+    "anims": {
+     "static": {
+      "row": 0,
+      "frames": 1,
+      "fps": 0,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/log_pile.png"
+  },
+  "golden_chest": {
+   "group": "prop",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "chest",
+   "replaces_game_draw": null,
+   "ko": "황금 상자 (open 1회 재생)",
+   "en": "Golden chest (open plays once)",
+   "kind": "prop",
+   "size_m": [
+    0.8,
+    0.65,
+    0.65
+   ],
+   "meshes": 13,
+   "main_colors": [
+    "#a8683a",
+    "#ffcf4a"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 1.2
+    },
+    "open": {
+     "frames": 8,
+     "seconds": 0.8
+    }
+   },
+   "glb": "art-source/models/golden_chest.glb",
+   "sprite_sheet": "game/assets/sprites/golden_chest.webp",
+   "sprite": {
+    "frameW": 92,
+    "frameH": 140,
+    "ppu": 64,
+    "anchor": [
+     44,
+     116
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 5,
+      "loop": true
+     },
+     "open": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": false
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/golden_chest.png"
+  },
+  "cabin": {
+   "group": "facility",
+   "village": 1,
+   "new_in_2026_10": false,
+   "suggested_role_key": "cabin",
+   "replaces_game_draw": "render-buildings",
+   "ko": "오두막",
+   "en": "Log cabin",
+   "kind": "facility",
+   "size_m": [
+    3.03,
+    3.19,
+    2.34
+   ],
+   "meshes": 62,
+   "main_colors": [
+    "#a63f34",
+    "#f4f8fc",
+    "#9aa4ad",
+    "#b8473a",
+    "#6d4126"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 3
+    }
+   },
+   "glb": "art-source/models/cabin.glb",
+   "sprite_sheet": "game/assets/sprites/cabin.webp",
+   "sprite": {
+    "frameW": 216,
+    "frameH": 252,
+    "ppu": 64,
+    "anchor": [
+     107,
+     197
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/cabin.png"
+  },
+  "shop_wood": {
+   "group": "facility",
+   "village": 1,
+   "new_in_2026_10": false,
+   "suggested_role_key": "shop_wood",
+   "replaces_game_draw": "drawMarketShop",
+   "ko": "목재 가게 (간판 비움)",
+   "en": "Wood shop (blank sign)",
+   "kind": "facility",
+   "size_m": [
+    3.03,
+    2.53,
+    1.79
+   ],
+   "meshes": 36,
+   "main_colors": [
+    "#d9483b",
+    "#fbf1e1",
+    "#d9a066",
+    "#6d4126",
+    "#f4f8fc"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2.5
+    }
+   },
+   "glb": "art-source/models/shop_wood.glb",
+   "sprite_sheet": "game/assets/sprites/shop_wood.webp",
+   "sprite": {
+    "frameW": 204,
+    "frameH": 212,
+    "ppu": 64,
+    "anchor": [
+     101,
+     162
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2.4,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/shop_wood.png"
+  },
+  "shop_fish": {
+   "group": "facility",
+   "village": 2,
+   "new_in_2026_10": false,
+   "suggested_role_key": "shop_fish",
+   "replaces_game_draw": "drawMarketShop",
+   "ko": "생선 가게 (간판 비움)",
+   "en": "Fish shop (blank sign)",
+   "kind": "facility",
+   "size_m": [
+    3.03,
+    2.53,
+    1.79
+   ],
+   "meshes": 55,
+   "main_colors": [
+    "#2f7fb0",
+    "#fbf1e1",
+    "#d9a066",
+    "#6d4126",
+    "#f4f8fc"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2.5
+    }
+   },
+   "glb": "art-source/models/shop_fish.glb",
+   "sprite_sheet": "game/assets/sprites/shop_fish.webp",
+   "sprite": {
+    "frameW": 204,
+    "frameH": 212,
+    "ppu": 64,
+    "anchor": [
+     101,
+     162
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2.4,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/shop_fish.png"
+  },
+  "watchtower": {
+   "group": "facility",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "tower",
+   "replaces_game_draw": "defence",
+   "ko": "망루",
+   "en": "Watchtower",
+   "kind": "facility",
+   "size_m": [
+    3.54,
+    5.1,
+    3.54
+   ],
+   "meshes": 33,
+   "main_colors": [
+    "#a8683a",
+    "#d9a066",
+    "#9aa4ad",
+    "#c8382c",
+    "#6d4126"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 1.2
+    }
+   },
+   "glb": "art-source/models/watchtower.glb",
+   "sprite_sheet": "game/assets/sprites/watchtower.webp",
+   "sprite": {
+    "frameW": 172,
+    "frameH": 332,
+    "ppu": 64,
+    "anchor": [
+     84,
+     288
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/watchtower.png"
+  },
+  "storage": {
+   "group": "facility",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "storage",
+   "replaces_game_draw": "drawWorkshopStorage",
+   "ko": "상자 보관소",
+   "en": "Crate storage",
+   "kind": "facility",
+   "size_m": [
+    1.7,
+    1.35,
+    1.31
+   ],
+   "meshes": 32,
+   "main_colors": [
+    "#a8683a",
+    "#6d4126",
+    "#f4f8fc"
+   ],
+   "clips": {},
+   "glb": "art-source/models/storage.glb",
+   "sprite_sheet": "game/assets/sprites/storage.webp",
+   "sprite": {
+    "frameW": 152,
+    "frameH": 136,
+    "ppu": 64,
+    "anchor": [
+     75,
+     97
+    ],
+    "anims": {
+     "static": {
+      "row": 0,
+      "frames": 1,
+      "fps": 0,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/storage.png"
+  },
+  "sawmill": {
+   "group": "facility",
+   "village": 1,
+   "new_in_2026_10": false,
+   "suggested_role_key": "sawmill",
+   "replaces_game_draw": "drawIndustrialBuilding",
+   "ko": "제재소 (톱날 회전)",
+   "en": "Sawmill (spinning blade)",
+   "kind": "facility",
+   "size_m": [
+    3.31,
+    2.29,
+    2.21
+   ],
+   "meshes": 47,
+   "main_colors": [
+    "#386483",
+    "#f4f8fc",
+    "#3f6f91",
+    "#9aa4ad",
+    "#6d4126"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 0.6
+    }
+   },
+   "glb": "art-source/models/sawmill.glb",
+   "sprite_sheet": "game/assets/sprites/sawmill.webp",
+   "sprite": {
+    "frameW": 224,
+    "frameH": 208,
+    "ppu": 64,
+    "anchor": [
+     112,
+     153
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 10,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/sawmill.png"
+  },
+  "smokehouse": {
+   "group": "facility",
+   "village": 2,
+   "new_in_2026_10": false,
+   "suggested_role_key": "smokehouse",
+   "replaces_game_draw": "drawIndustrialBuilding",
+   "ko": "훈제소",
+   "en": "Smokehouse",
+   "kind": "facility",
+   "size_m": [
+    2.48,
+    2.82,
+    2.07
+   ],
+   "meshes": 68,
+   "main_colors": [
+    "#a63f34",
+    "#f4f8fc",
+    "#9aa4ad",
+    "#b8473a",
+    "#6d7680"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2.4
+    }
+   },
+   "glb": "art-source/models/smokehouse.glb",
+   "sprite_sheet": "game/assets/sprites/smokehouse.webp",
+   "sprite": {
+    "frameW": 188,
+    "frameH": 284,
+    "ppu": 64,
+    "anchor": [
+     93,
+     236
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2.5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/smokehouse.png"
+  },
+  "smelter": {
+   "group": "facility",
+   "village": 3,
+   "new_in_2026_10": false,
+   "suggested_role_key": "smelter",
+   "replaces_game_draw": "drawIndustrialBuilding",
+   "ko": "제련소 (불빛)",
+   "en": "Smelter (fire glow)",
+   "kind": "facility",
+   "size_m": [
+    2.63,
+    3.74,
+    2.21
+   ],
+   "meshes": 16,
+   "main_colors": [
+    "#7fd0ff",
+    "#6d7680",
+    "#f4f8fc",
+    "#ff7a2a",
+    "#ffb54a"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    }
+   },
+   "glb": "art-source/models/smelter.glb",
+   "sprite_sheet": "game/assets/sprites/smelter.webp",
+   "sprite": {
+    "frameW": 196,
+    "frameH": 324,
+    "ppu": 64,
+    "anchor": [
+     97,
+     274
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/smelter.png"
+  },
+  "power_plant": {
+   "group": "facility",
+   "village": 3,
+   "new_in_2026_10": false,
+   "suggested_role_key": "power_plant",
+   "replaces_game_draw": "drawIndustrialBuilding",
+   "ko": "발전소 (풍차 회전)",
+   "en": "Power plant (turning windmill)",
+   "kind": "facility",
+   "size_m": [
+    2.58,
+    4.15,
+    2.07
+   ],
+   "meshes": 17,
+   "main_colors": [
+    "#f4f6f8",
+    "#f4f8fc",
+    "#6d4126",
+    "#e7ecef",
+    "#6d7680"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 1.2
+    }
+   },
+   "glb": "art-source/models/power_plant.glb",
+   "sprite_sheet": "game/assets/sprites/power_plant.webp",
+   "sprite": {
+    "frameW": 188,
+    "frameH": 276,
+    "ppu": 64,
+    "anchor": [
+     93,
+     228
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/power_plant.png"
+  },
+  "fence_segment": {
+   "group": "facility",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "fence",
+   "replaces_game_draw": "defence",
+   "ko": "울타리 한 칸",
+   "en": "Fence segment",
+   "kind": "facility",
+   "size_m": [
+    1.4,
+    1.4,
+    0.27
+   ],
+   "meshes": 20,
+   "main_colors": [
+    "#8b5a35",
+    "#f4f8fc",
+    "#a8683a"
+   ],
+   "clips": {},
+   "glb": "art-source/models/fence_segment.glb",
+   "sprite_sheet": "game/assets/sprites/fence_segment.webp",
+   "sprite": {
+    "frameW": 100,
+    "frameH": 112,
+    "ppu": 64,
+    "anchor": [
+     52,
+     90
+    ],
+    "anims": {
+     "static": {
+      "row": 0,
+      "frames": 1,
+      "fps": 0,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/fence_segment.png"
+  },
+  "truck": {
+   "group": "vehicle",
+   "village": 0,
+   "new_in_2026_10": false,
+   "suggested_role_key": "truck",
+   "replaces_game_draw": "drawTruck",
+   "ko": "배달 트럭",
+   "en": "Delivery truck",
+   "kind": "actor",
+   "size_m": [
+    1.23,
+    1.37,
+    2.07
+   ],
+   "meshes": 15,
+   "main_colors": [
+    "#d9573b",
+    "#a8683a",
+    "#f4f8fc",
+    "#2b2b30",
+    "#8d98a3"
+   ],
+   "clips": {
+    "drive": {
+     "frames": 6,
+     "seconds": 0.5
+    },
+    "idle": {
+     "frames": 2,
+     "seconds": 1
+    }
+   },
+   "glb": "art-source/models/truck.glb",
+   "sprite_sheet": "game/assets/sprites/truck.webp",
+   "sprite": {
+    "frameW": 136,
+    "frameH": 152,
+    "ppu": 64,
+    "anchor": [
+     68,
+     116
+    ],
+    "anims": {
+     "drive": {
+      "row": 0,
+      "frames": 6,
+      "fps": 12,
+      "loop": true
+     },
+     "idle": {
+      "row": 1,
+      "frames": 2,
+      "fps": 2,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/truck.png"
+  },
+  "customer": {
+   "group": "character",
+   "village": 0,
+   "new_in_2026_10": true,
+   "suggested_role_key": "customer",
+   "replaces_game_draw": "drawCustomer",
+   "ko": "양반 손님 (갓·도포·보자기). happy = 구매 만족",
+   "en": "Yangban customer: gat, dopo robe, bojagi bundle",
+   "kind": "actor",
+   "size_m": [
+    0.65,
+    1.79,
+    0.64
+   ],
+   "meshes": 47,
+   "main_colors": [
+    "#4f9a6a",
+    "#e8efe9",
+    "#f6cfae",
+    "#1d1a18",
+    "#f4f1ea"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "happy": {
+     "frames": 8,
+     "seconds": 0.8
+    }
+   },
+   "glb": "art-source/models/customer.glb",
+   "sprite_sheet": "game/assets/sprites/customer.webp",
+   "sprite": {
+    "frameW": 76,
+    "frameH": 132,
+    "ppu": 64,
+    "anchor": [
+     42,
+     121
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "happy": {
+      "row": 3,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/customer.png"
+  },
+  "shop_staff": {
+   "group": "character",
+   "village": 0,
+   "new_in_2026_10": true,
+   "suggested_role_key": "shop_staff",
+   "replaces_game_draw": "drawShopStaff",
+   "ko": "가게 점원 (댕기머리·앞치마)",
+   "en": "Shop boy with braided hair and apron",
+   "kind": "actor",
+   "size_m": [
+    0.61,
+    1.61,
+    0.42
+   ],
+   "meshes": 40,
+   "main_colors": [
+    "#c8382c",
+    "#f4e1b0",
+    "#f6cfae",
+    "#e78537",
+    "#1d1a18"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1.2
+    }
+   },
+   "glb": "art-source/models/shop_staff.glb",
+   "sprite_sheet": "game/assets/sprites/shop_staff.webp",
+   "sprite": {
+    "frameW": 72,
+    "frameH": 124,
+    "ppu": 64,
+    "anchor": [
+     37,
+     110
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 6.67,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/shop_staff.png"
+  },
+  "master_lumber": {
+   "group": "character",
+   "village": 1,
+   "new_in_2026_10": true,
+   "suggested_role_key": "master_lumber",
+   "replaces_game_draw": "drawMasterLumber",
+   "ko": "명인 벌목꾼 (무지개 도끼·망토)",
+   "en": "Master lumberjack with rainbow axe and cape",
+   "kind": "actor",
+   "size_m": [
+    0.68,
+    1.9,
+    0.87
+   ],
+   "meshes": 55,
+   "main_colors": [
+    "#ffcf4a",
+    "#8e2a22",
+    "#c8382c",
+    "#f6cfae",
+    "#5a4a3a"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 0.9
+    }
+   },
+   "glb": "art-source/models/master_lumber.glb",
+   "sprite_sheet": "game/assets/sprites/master_lumber.webp",
+   "sprite": {
+    "frameW": 96,
+    "frameH": 148,
+    "ppu": 64,
+    "anchor": [
+     41,
+     135
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/master_lumber.png"
+  },
+  "master_fisher": {
+   "group": "character",
+   "village": 2,
+   "new_in_2026_10": true,
+   "suggested_role_key": "master_fisher",
+   "replaces_game_draw": "drawMasterFisher",
+   "ko": "명인 낚시꾼 (무지개 낚싯대·망토)",
+   "en": "Master fisher with rainbow rod and cape",
+   "kind": "actor",
+   "size_m": [
+    0.81,
+    1.96,
+    1.81
+   ],
+   "meshes": 55,
+   "main_colors": [
+    "#ffcf4a",
+    "#f6cfae",
+    "#2f5f7a",
+    "#1d1a18",
+    "#c9a45c"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1.6
+    }
+   },
+   "glb": "art-source/models/master_fisher.glb",
+   "sprite_sheet": "game/assets/sprites/master_fisher.webp",
+   "sprite": {
+    "frameW": 120,
+    "frameH": 184,
+    "ppu": 64,
+    "anchor": [
+     47,
+     163
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/master_fisher.png"
+  },
+  "excavator": {
+   "group": "vehicle",
+   "village": 3,
+   "new_in_2026_10": true,
+   "suggested_role_key": "excavator",
+   "replaces_game_draw": "drawExcavator",
+   "ko": "굴착기 (광부 장비 강화). work = 파기·광석 담기",
+   "en": "Excavator (upgraded miner). work = dig and scoop ore",
+   "kind": "actor",
+   "size_m": [
+    1.12,
+    1.39,
+    2.61
+   ],
+   "meshes": 44,
+   "main_colors": [
+    "#f0bb3f",
+    "#4b545d",
+    "#2b2f36",
+    "#d3a436",
+    "#f4f8fc"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 4,
+     "seconds": 2
+    },
+    "drive": {
+     "frames": 6,
+     "seconds": 0.6
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1.4
+    }
+   },
+   "glb": "art-source/models/excavator.glb",
+   "sprite_sheet": "game/assets/sprites/excavator.webp",
+   "sprite": {
+    "frameW": 152,
+    "frameH": 168,
+    "ppu": 64,
+    "anchor": [
+     88,
+     100
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 4,
+      "fps": 2,
+      "loop": true
+     },
+     "drive": {
+      "row": 1,
+      "frames": 6,
+      "fps": 10,
+      "loop": true
+     },
+     "work": {
+      "row": 2,
+      "frames": 8,
+      "fps": 5.71,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/excavator.png"
+  },
+  "harvester": {
+   "group": "vehicle",
+   "village": 1,
+   "new_in_2026_10": true,
+   "suggested_role_key": "harvester",
+   "replaces_game_draw": "drawHarvester",
+   "ko": "벌목 수확기 (벌목꾼 장비 강화). work = 집게 톱 휘두르기",
+   "en": "Forest harvester (upgraded lumberjack). work = swing saw grapple",
+   "kind": "actor",
+   "size_m": [
+    1.21,
+    1.61,
+    2.41
+   ],
+   "meshes": 27,
+   "main_colors": [
+    "#4f9a6a",
+    "#e0a03a",
+    "#3e7f56",
+    "#f4f8fc",
+    "#4b545d"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 4,
+     "seconds": 2
+    },
+    "drive": {
+     "frames": 6,
+     "seconds": 0.5
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1
+    }
+   },
+   "glb": "art-source/models/harvester.glb",
+   "sprite_sheet": "game/assets/sprites/harvester.webp",
+   "sprite": {
+    "frameW": 136,
+    "frameH": 152,
+    "ppu": 64,
+    "anchor": [
+     67,
+     117
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 4,
+      "fps": 2,
+      "loop": true
+     },
+     "drive": {
+      "row": 1,
+      "frames": 6,
+      "fps": 12,
+      "loop": true
+     },
+     "work": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/harvester.png"
+  },
+  "fish_rig": {
+   "group": "vehicle",
+   "village": 2,
+   "new_in_2026_10": true,
+   "suggested_role_key": "fish_rig",
+   "replaces_game_draw": "drawFishRig",
+   "ko": "바퀴 달린 낚시배 (낚시꾼 장비 강화). work = 그물 감기",
+   "en": "Wheeled fishing boat (upgraded fisher). work = reel net",
+   "kind": "actor",
+   "size_m": [
+    1,
+    1.96,
+    1.63
+   ],
+   "meshes": 27,
+   "main_colors": [
+    "#3f7fb8",
+    "#f4f8fc",
+    "#f4e1b0",
+    "#f58a3c",
+    "#a8683a"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 4,
+     "seconds": 2
+    },
+    "drive": {
+     "frames": 6,
+     "seconds": 0.5
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1.6
+    }
+   },
+   "glb": "art-source/models/fish_rig.glb",
+   "sprite_sheet": "game/assets/sprites/fish_rig.webp",
+   "sprite": {
+    "frameW": 108,
+    "frameH": 132,
+    "ppu": 64,
+    "anchor": [
+     53,
+     105
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 4,
+      "fps": 2,
+      "loop": true
+     },
+     "drive": {
+      "row": 1,
+      "frames": 6,
+      "fps": 12,
+      "loop": true
+     },
+     "work": {
+      "row": 2,
+      "frames": 8,
+      "fps": 5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/fish_rig.png"
+  },
+  "workshop": {
+   "group": "facility",
+   "village": 0,
+   "new_in_2026_10": true,
+   "suggested_role_key": "workshop",
+   "replaces_game_draw": "drawWorkshop",
+   "ko": "작업장 (모루 망치질 불꽃)",
+   "en": "Workshop (anvil hammer sparks)",
+   "kind": "facility",
+   "size_m": [
+    2.76,
+    2.1,
+    1.93
+   ],
+   "meshes": 47,
+   "main_colors": [
+    "#647e6b",
+    "#d9a066",
+    "#a8683a",
+    "#f4f8fc",
+    "#6f8c77"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 0.9
+    }
+   },
+   "glb": "art-source/models/workshop.glb",
+   "sprite_sheet": "game/assets/sprites/workshop.webp",
+   "sprite": {
+    "frameW": 196,
+    "frameH": 184,
+    "ppu": 64,
+    "anchor": [
+     97,
+     136
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 6.67,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/workshop.png"
+  },
+  "warehouse": {
+   "group": "facility",
+   "village": 0,
+   "new_in_2026_10": true,
+   "suggested_role_key": "warehouse",
+   "replaces_game_draw": "drawWarehouse",
+   "ko": "큰 창고",
+   "en": "Warehouse",
+   "kind": "facility",
+   "size_m": [
+    4.29,
+    2.75,
+    2.76
+   ],
+   "meshes": 85,
+   "main_colors": [
+    "#a8683a",
+    "#386483",
+    "#6d4126",
+    "#f4f8fc",
+    "#9aa4ad"
+   ],
+   "clips": {},
+   "glb": "art-source/models/warehouse.glb",
+   "sprite_sheet": "game/assets/sprites/warehouse.webp",
+   "sprite": {
+    "frameW": 296,
+    "frameH": 244,
+    "ppu": 64,
+    "anchor": [
+     161,
+     177
+    ],
+    "anims": {
+     "static": {
+      "row": 0,
+      "frames": 1,
+      "fps": 0,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/warehouse.png"
+  },
+  "market_stall": {
+   "group": "facility",
+   "village": 0,
+   "new_in_2026_10": true,
+   "suggested_role_key": "shop_shelf",
+   "replaces_game_draw": "drawShopStaff (shelves)",
+   "ko": "가게 진열대 (통나무·생선·광석)",
+   "en": "Shop display shelf (logs, fish, ore)",
+   "kind": "facility",
+   "size_m": [
+    1.06,
+    0.78,
+    0.36
+   ],
+   "meshes": 26,
+   "main_colors": [
+    "#d9a066",
+    "#f4f8fc",
+    "#8fa9b8",
+    "#2b211c",
+    "#e6eef2"
+   ],
+   "clips": {},
+   "glb": "art-source/models/market_stall.glb",
+   "sprite_sheet": "game/assets/sprites/market_stall.webp",
+   "sprite": {
+    "frameW": 84,
+    "frameH": 80,
+    "ppu": 64,
+    "anchor": [
+     41,
+     60
+    ],
+    "anims": {
+     "static": {
+      "row": 0,
+      "frames": 1,
+      "fps": 0,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/market_stall.png"
+  },
+  "notice_board": {
+   "group": "facility",
+   "village": 0,
+   "new_in_2026_10": true,
+   "suggested_role_key": "board",
+   "replaces_game_draw": "drawBoard",
+   "ko": "시장 게시판 (종이에 글자 없음)",
+   "en": "Market notice board (papers are blank)",
+   "kind": "facility",
+   "size_m": [
+    1.38,
+    1.53,
+    0.4
+   ],
+   "meshes": 16,
+   "main_colors": [
+    "#b98b5e",
+    "#8a6a44",
+    "#b8473a",
+    "#f4f8fc",
+    "#c8382c"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2.4
+    }
+   },
+   "glb": "art-source/models/notice_board.glb",
+   "sprite_sheet": "game/assets/sprites/notice_board.webp",
+   "sprite": {
+    "frameW": 104,
+    "frameH": 128,
+    "ppu": 64,
+    "anchor": [
+     53,
+     107
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2.5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/notice_board.png"
+  },
+  "aurora_keeper": {
+   "group": "character",
+   "village": 4,
+   "new_in_2026_10": true,
+   "suggested_role_key": "aurora_keeper",
+   "replaces_game_draw": null,
+   "ko": "온천 관리인 (청록 코트·수건·등불·물바가지). 4마을 설계 전용",
+   "en": "Hot-spring keeper: teal coat, towel, lantern, ladle. Village 4 design only",
+   "kind": "actor",
+   "size_m": [
+    0.64,
+    1.7,
+    1.06
+   ],
+   "meshes": 48,
+   "main_colors": [
+    "#f2efe6",
+    "#f58a3c",
+    "#4b545d",
+    "#e9e1cf",
+    "#f4f8fc"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 0.8
+    }
+   },
+   "glb": "art-source/models/aurora_keeper.glb",
+   "sprite_sheet": "game/assets/sprites/aurora_keeper.webp",
+   "sprite": {
+    "frameW": 104,
+    "frameH": 144,
+    "ppu": 64,
+    "anchor": [
+     46,
+     133
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/aurora_keeper.png"
+  },
+  "hot_spring": {
+   "group": "facility",
+   "village": 4,
+   "new_in_2026_10": true,
+   "suggested_role_key": "aurora_spring",
+   "replaces_game_draw": null,
+   "ko": "온천 (broken = 얼어붙음, repaired = 청록 물·김)",
+   "en": "Hot spring (broken = frozen, repaired = teal water and steam)",
+   "kind": "facility",
+   "size_m": [
+    3.2,
+    1.2,
+    2.5
+   ],
+   "meshes": 42,
+   "main_colors": [
+    "#6d4126",
+    "#6d7680",
+    "#9aa4ad",
+    "#f4f8fc",
+    "#bff3ee"
+   ],
+   "clips": {
+    "repaired": {
+     "frames": 6,
+     "seconds": 2.4
+    },
+    "broken": {
+     "frames": 2,
+     "seconds": 2
+    }
+   },
+   "glb": "art-source/models/hot_spring.glb",
+   "sprite_sheet": "game/assets/sprites/hot_spring.webp",
+   "sprite": {
+    "frameW": 212,
+    "frameH": 160,
+    "ppu": 64,
+    "anchor": [
+     106,
+     107
+    ],
+    "anims": {
+     "repaired": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2.5,
+      "loop": true
+     },
+     "broken": {
+      "row": 1,
+      "frames": 2,
+      "fps": 1,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/hot_spring.png"
+  },
+  "boiler": {
+   "group": "facility",
+   "village": 4,
+   "new_in_2026_10": true,
+   "suggested_role_key": "aurora_boiler",
+   "replaces_game_draw": null,
+   "ko": "보일러 (broken = 녹슬고 불 꺼짐, repaired = 불·압력계·김)",
+   "en": "Boiler (broken = rusty and cold, repaired = fire, gauge, steam)",
+   "kind": "facility",
+   "size_m": [
+    2.5,
+    2.94,
+    1.93
+   ],
+   "meshes": 30,
+   "main_colors": [
+    "#f4f8fc",
+    "#6d7680",
+    "#b86a4a",
+    "#ff7a2a",
+    "#2b2b30"
+   ],
+   "clips": {
+    "repaired": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "broken": {
+     "frames": 2,
+     "seconds": 2
+    }
+   },
+   "glb": "art-source/models/boiler.glb",
+   "sprite_sheet": "game/assets/sprites/boiler.webp",
+   "sprite": {
+    "frameW": 184,
+    "frameH": 292,
+    "ppu": 64,
+    "anchor": [
+     92,
+     243
+    ],
+    "anims": {
+     "repaired": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "broken": {
+      "row": 1,
+      "frames": 2,
+      "fps": 1,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/boiler.png"
+  },
+  "lodge": {
+   "group": "facility",
+   "village": 4,
+   "new_in_2026_10": true,
+   "suggested_role_key": "aurora_lodge",
+   "replaces_game_draw": null,
+   "ko": "숙소 (broken = 판자·지붕 구멍·불 꺼짐, repaired = 불빛·연기·수건)",
+   "en": "Lodge (broken = boarded, roof hole, dark; repaired = lit, smoke, towels)",
+   "kind": "facility",
+   "size_m": [
+    3.86,
+    3.3,
+    2.7
+   ],
+   "meshes": 99,
+   "main_colors": [
+    "#2a817d",
+    "#f4f8fc",
+    "#9aa4ad",
+    "#2f8f8a",
+    "#6d4126"
+   ],
+   "clips": {
+    "repaired": {
+     "frames": 6,
+     "seconds": 3
+    },
+    "broken": {
+     "frames": 2,
+     "seconds": 2
+    }
+   },
+   "glb": "art-source/models/lodge.glb",
+   "sprite_sheet": "game/assets/sprites/lodge.webp",
+   "sprite": {
+    "frameW": 264,
+    "frameH": 320,
+    "ppu": 64,
+    "anchor": [
+     135,
+     259
+    ],
+    "anims": {
+     "repaired": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2,
+      "loop": true
+     },
+     "broken": {
+      "row": 1,
+      "frames": 2,
+      "fps": 1,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/lodge.png"
+  },
+  "canal_segment": {
+   "group": "facility",
+   "village": 4,
+   "new_in_2026_10": true,
+   "suggested_role_key": "aurora_canal",
+   "replaces_game_draw": null,
+   "ko": "온천 수로 한 칸 (broken = 얼음·돌무더기, repaired = 흐르는 물)",
+   "en": "Canal segment (broken = ice and rubble, repaired = flowing water)",
+   "kind": "facility",
+   "size_m": [
+    2.13,
+    0.41,
+    2.6
+   ],
+   "meshes": 28,
+   "main_colors": [
+    "#6d7680",
+    "#9aa4ad",
+    "#f4f8fc",
+    "#d4fbf6",
+    "#5b6670"
+   ],
+   "clips": {
+    "repaired": {
+     "frames": 6,
+     "seconds": 1.2
+    },
+    "broken": {
+     "frames": 2,
+     "seconds": 2
+    }
+   },
+   "glb": "art-source/models/canal_segment.glb",
+   "sprite_sheet": "game/assets/sprites/canal_segment.webp",
+   "sprite": {
+    "frameW": 160,
+    "frameH": 112,
+    "ppu": 64,
+    "anchor": [
+     79,
+     63
+    ],
+    "anims": {
+     "repaired": {
+      "row": 0,
+      "frames": 6,
+      "fps": 5,
+      "loop": true
+     },
+     "broken": {
+      "row": 1,
+      "frames": 2,
+      "fps": 1,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/canal_segment.png"
+  },
+  "aurora_lookout": {
+   "group": "facility",
+   "village": 4,
+   "new_in_2026_10": true,
+   "suggested_role_key": "aurora_lookout",
+   "replaces_game_draw": null,
+   "ko": "오로라 관측지 (broken = 밧줄로 막힘, repaired = 오로라·망원경)",
+   "en": "Aurora lookout (broken = roped off, repaired = aurora and telescope)",
+   "kind": "facility",
+   "size_m": [
+    2.21,
+    3.28,
+    1.99
+   ],
+   "meshes": 57,
+   "main_colors": [
+    "#6d7680",
+    "#9aa4ad",
+    "#d9a066",
+    "#fffbe6",
+    "#f4f8fc"
+   ],
+   "clips": {
+    "repaired": {
+     "frames": 8,
+     "seconds": 4
+    },
+    "broken": {
+     "frames": 2,
+     "seconds": 2
+    }
+   },
+   "glb": "art-source/models/aurora_lookout.glb",
+   "sprite_sheet": "game/assets/sprites/aurora_lookout.webp",
+   "sprite": {
+    "frameW": 176,
+    "frameH": 264,
+    "ppu": 64,
+    "anchor": [
+     86,
+     217
+    ],
+    "anims": {
+     "repaired": {
+      "row": 0,
+      "frames": 8,
+      "fps": 2,
+      "loop": true
+     },
+     "broken": {
+      "row": 1,
+      "frames": 2,
+      "fps": 1,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/aurora_lookout.png"
+  },
+  "imkkeokjeong": {
+   "group": "character",
+   "village": 1,
+   "new_in_2026_10": true,
+   "suggested_role_key": "hunter (super)",
+   "replaces_game_draw": "drawHeroHunter",
+   "ko": "임꺽정 (16세기 조선 백정 출신 의적: 삼베 저고리·바지·행전·짚신, 상투·망건, 털배자, 몽둥이)",
+   "en": "Im Kkeok-jeong: 16th-c. commoner hero, hemp clothes, fur vest, club",
+   "kind": "actor",
+   "size_m": [
+    0.68,
+    1.9,
+    1.07
+   ],
+   "meshes": 51,
+   "main_colors": [
+    "#6d4126",
+    "#1d1a18",
+    "#f6cfae",
+    "#a49a84",
+    "#b9ae96"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 0.9
+    }
+   },
+   "glb": "art-source/models/imkkeokjeong.glb",
+   "sprite_sheet": "game/assets/sprites/imkkeokjeong.webp",
+   "sprite": {
+    "frameW": 100,
+    "frameH": 152,
+    "ppu": 64,
+    "anchor": [
+     41,
+     139
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/imkkeokjeong.png"
+  },
+  "yi_sunsin": {
+   "group": "character",
+   "village": 2,
+   "new_in_2026_10": true,
+   "suggested_role_key": "(standalone)",
+   "replaces_game_draw": null,
+   "ko": "이순신 장군 (붉은 두정갑·간주형 투구·상모·드림, 환도)",
+   "en": "Admiral Yi Sun-sin: red studded dujeonggap, Joseon helmet with tassel and drim, sword",
+   "kind": "actor",
+   "size_m": [
+    0.63,
+    1.91,
+    1.19
+   ],
+   "meshes": 164,
+   "main_colors": [
+    "#d9b25a",
+    "#a8322a",
+    "#d9dee4",
+    "#f6cfae",
+    "#1d1a18"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 0.9
+    }
+   },
+   "glb": "art-source/models/yi_sunsin.glb",
+   "sprite_sheet": "game/assets/sprites/yi_sunsin.webp",
+   "sprite": {
+    "frameW": 96,
+    "frameH": 148,
+    "ppu": 64,
+    "anchor": [
+     37,
+     134
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/yi_sunsin.png"
+  },
+  "turtle_ship": {
+   "group": "vehicle",
+   "village": 2,
+   "new_in_2026_10": true,
+   "suggested_role_key": "hunter2 (super)",
+   "replaces_game_draw": "drawHeroHunter",
+   "ko": "거북선 + 이순신 장군 (work = 용머리 연기)",
+   "en": "Turtle ship with Admiral Yi on deck (work = dragon-head smoke)",
+   "kind": "actor",
+   "size_m": [
+    2.49,
+    2.08,
+    3.16
+   ],
+   "meshes": 222,
+   "main_colors": [
+    "#d9b25a",
+    "#a8322a",
+    "#c8382c",
+    "#d9dee4",
+    "#3f5a3a"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2.4
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    }
+   },
+   "glb": "art-source/models/turtle_ship.glb",
+   "sprite_sheet": "game/assets/sprites/turtle_ship.webp",
+   "sprite": {
+    "frameW": 220,
+    "frameH": 284,
+    "ppu": 64,
+    "anchor": [
+     109,
+     231
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 2.5,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 2,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/turtle_ship.png"
+  },
+  "gwanggaeto": {
+   "group": "character",
+   "village": 3,
+   "new_in_2026_10": true,
+   "suggested_role_key": "hunter3 (super)",
+   "replaces_game_draw": "drawHeroHunter",
+   "ko": "광개토대왕 기마 (종장판주·찰갑, 마면갑·마갑 말, 긴 창 삭)",
+   "en": "King Gwanggaeto on an armoured horse: plated helmet, lamellar, long lance",
+   "kind": "actor",
+   "size_m": [
+    0.67,
+    2.69,
+    2.7
+   ],
+   "meshes": 273,
+   "main_colors": [
+    "#2b211c",
+    "#4b4f56",
+    "#4a2c1c",
+    "#3a2a20",
+    "#c8382c"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.6
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 0.9
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    }
+   },
+   "glb": "art-source/models/gwanggaeto.glb",
+   "sprite_sheet": "game/assets/sprites/gwanggaeto.webp",
+   "sprite": {
+    "frameW": 156,
+    "frameH": 264,
+    "ppu": 64,
+    "anchor": [
+     58,
+     231
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 13.33,
+      "loop": true
+     },
+     "work": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     },
+     "cheer": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/gwanggaeto.png"
+  },
+  "master_lumber_body": {
+   "group": "actor",
+   "village": null,
+   "new_in_2026_10": false,
+   "suggested_role_key": null,
+   "replaces_game_draw": null,
+   "ko": null,
+   "en": null,
+   "kind": "actor",
+   "size_m": [
+    0.63,
+    1.9,
+    0.49
+   ],
+   "meshes": 55,
+   "main_colors": [
+    "#ffcf4a",
+    "#8e2a22",
+    "#c8382c",
+    "#f6cfae",
+    "#5a4a3a"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 0.9
+    }
+   },
+   "glb": "art-source/models/master_lumber_body.glb",
+   "sprite_sheet": "game/assets/sprites/master_lumber_body.webp",
+   "sprite": {
+    "frameW": 76,
+    "frameH": 140,
+    "ppu": 64,
+    "anchor": [
+     32,
+     126
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 8.89,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/master_lumber_body.png"
+  },
+  "master_fisher_body": {
+   "group": "actor",
+   "village": null,
+   "new_in_2026_10": false,
+   "suggested_role_key": null,
+   "replaces_game_draw": null,
+   "ko": null,
+   "en": null,
+   "kind": "actor",
+   "size_m": [
+    0.75,
+    1.96,
+    0.75
+   ],
+   "meshes": 55,
+   "main_colors": [
+    "#ffcf4a",
+    "#f6cfae",
+    "#2f5f7a",
+    "#1d1a18",
+    "#c9a45c"
+   ],
+   "clips": {
+    "idle": {
+     "frames": 6,
+     "seconds": 2
+    },
+    "walk": {
+     "frames": 8,
+     "seconds": 0.8
+    },
+    "cheer": {
+     "frames": 8,
+     "seconds": 1
+    },
+    "work": {
+     "frames": 8,
+     "seconds": 1.6
+    }
+   },
+   "glb": "art-source/models/master_fisher_body.glb",
+   "sprite_sheet": "game/assets/sprites/master_fisher_body.webp",
+   "sprite": {
+    "frameW": 76,
+    "frameH": 144,
+    "ppu": 64,
+    "anchor": [
+     34,
+     131
+    ],
+    "anims": {
+     "idle": {
+      "row": 0,
+      "frames": 6,
+      "fps": 3,
+      "loop": true
+     },
+     "walk": {
+      "row": 1,
+      "frames": 8,
+      "fps": 10,
+      "loop": true
+     },
+     "cheer": {
+      "row": 2,
+      "frames": 8,
+      "fps": 8,
+      "loop": true
+     },
+     "work": {
+      "row": 3,
+      "frames": 8,
+      "fps": 5,
+      "loop": true
+     }
+    }
+   },
+   "turnaround_png": "art-source/previews/turnarounds/master_fisher_body.png"
+  }
+ }
 }

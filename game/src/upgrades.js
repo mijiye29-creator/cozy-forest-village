@@ -29,7 +29,7 @@ function weaponDef(){
     isMax:function(){return (S.p.wpn||0)>=MAXLV.wpn;},
     lv:function(){var l=S.p.wpn||0;return l?'Lv.'+l+' '+WKN[wkind()]:'없음';},
     name:function(){return '권법·발차기';},
-    label:function(){var l=S.p.wpn||0,nk=wkind(l+1);return !l?'권법·발차기 수련 · 북극곰과 싸워요':(nk!==wkind(l)?'✨ '+WKN[nk]+'으로 진화!':WKN[wkind()]+' 강화 · 곰에게 더 세게');},
+    label:function(){var l=S.p.wpn||0,nk=wkind(l+1);return !l?'권법·발차기 수련 · 반달곰과 싸워요':(nk!==wkind(l)?'✨ '+WKN[nk]+'으로 진화!':WKN[wkind()]+' 강화 · 곰에게 더 세게');},
     cap:function(){var l=S.p.wpn||0;return l?WKN[wkind()]+' Lv'+l:'무기';},
     desc:function(){return '주먹·발차기 · 8연타 뒤 광역 궁극기';}});
 }

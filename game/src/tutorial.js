@@ -8,7 +8,7 @@ var TUT=[
   {t:'🌲 [숲 키우기]에 서요 · 좋은 나무 등장',at:function(){return padPos(TUTPAD[S.tut]);},done:function(){return siteLv('f1')>=2;}},
   {t:'💪 [나무꾼 강화]에 서요 · 더 빨리 베요',at:function(){return padPos(TUTPAD[S.tut]);},done:function(){return (S.wlv&&S.wlv.lumber||0)>0;}},
   {t:'⚙️ [숲 벨트]에 서요 · 자동 운반',at:function(){return padPos(TUTPAD[S.tut]);},done:function(){return !!S.cv.f1;}},
-  {t:'🐻‍❄️ 울타리에 다가가 발판 위에 서요',at:function(){return padPos(TUTPAD[S.tut])||{x:26,y:Math.max(30,Math.min(H-30,agents[0].y))};},done:function(){return S.fence>0;}},
+  {t:'🐻 울타리에 다가가 발판 위에 서요',at:function(){return padPos(TUTPAD[S.tut])||{x:26,y:Math.max(30,Math.min(H-30,agents[0].y))};},done:function(){return S.fence>0;}},
   {t:'🗼 [망루]도 지어요 · 화살 방어',at:function(){return padPos(TUTPAD[S.tut]);},done:function(){return S.tower>0;}}
 ];
 var TUTPAD={4:'hire_lumber',5:'site_f1',6:'wup_lumber',7:'belt_f1',8:'fence',9:'tower'},TUT_A={x:40,y:392};

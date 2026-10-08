@@ -13,7 +13,7 @@ function loop(now){
   var frameMS=1000/60,elapsed=now-frameGate;
   if(elapsed<frameMS-.1)return;
   frameGate=now-(Math.max(0,elapsed-frameMS)%frameMS);
-  var dt=Math.max(0,Math.min(.05,(now-last)/1000));last=now; /* v58: never negative - a frame stamp can be a little older than the moment start was tapped */FDT=dt;
+  var dt=Math.max(0,Math.min(.05,(now-last)/1000));last=now; /* v58: never negative - a frame stamp can be a little older than the moment start was tapped */if(typeof HITSTOP==='number'&&HITSTOP>0){HITSTOP-=dt;dt*=.06;}FDT=dt;
   /* v59: the title card covers the world - repaint it a few times a second instead of every frame (it ran full speed under a blur, which made phones stutter on start) */
   if(TITLE){titleT-=dt;if(titleT<=0){titleT=.4;ctx.setTransform(DPR,0,0,DPR,0,0);safe('draw',draw);}return;}
   /* Story scenes pause the village safely while the player reads. */
@@ -53,7 +53,7 @@ function update(dt){
   var pa=agents[0],fx=pa.x,ck=Math.min(1,dt*5);if(CAMF){CAMF.t-=dt;fx=CAMF.x;ck=Math.min(1,dt*2.2);if(CAMF.t<=0)CAMF=null;}
   var cxT=camClampX(fx-W/Z/2),cyT=camClampY(pa.y-SH/Z*.5);
   if(joy.on&&joy.moved||pa.mv)CAMERA_HELD=false;if(!PINCH&&!CAMERA_HELD){camX+=(cxT-camX)*ck;camY+=(cyT-camY)*ck;}camX=camClampX(camX);camY=camClampY(camY);
-  for(var f=floats.length-1;f>=0;f--){floats[f].t+=dt;if(floats[f].t>2)floats.splice(f,1);}
+  for(var f=floats.length-1;f>=0;f--){floats[f].t+=dt;if(floats[f].t>(floats[f].dmg?.85:2))floats.splice(f,1);}
   for(var p=parts.length-1;p>=0;p--){var pt=parts[p];pt.life-=dt;pt.x+=pt.vx*dt;pt.y+=pt.vy*dt;pt.vy+=pt.g*dt;if(pt.life<=0)parts.splice(p,1);}
   if(flash>0)flash=Math.max(0,flash-dt*1.6);SHAKE=Math.max(0,SHAKE-dt*2.5);TOWERHIT=Math.max(0,TOWERHIT-dt);
   safe('idle',function(){var pa=agents[0];if(tutOn()||S.auto||pa.mv||pa.moving||joy.on)idleT=0;else idleT+=dt;});

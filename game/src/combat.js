@@ -15,12 +15,14 @@ function heroAttackHit(pl,b,baseDmg,ranged){
 }
 function hitBear(b,from,dmg,ranged){if(typeof actionHit==='function')actionHit();
   if(b.state==='dead')return;
-  b.hp-=dmg;b.flash=.2;var d=Math.max(1,Math.hypot(b.x-from.x,b.y-from.y));b.kx=(b.x-from.x)/d*(ranged?1.8:4);b.hitT=.5;
+  b.hp-=dmg;b.flash=.2;var d=Math.max(1,Math.hypot(b.x-from.x,b.y-from.y));b.kx=(b.x-from.x)/d*(ranged?3:9);b.hitT=.5;b.squashT=.18;
   /* v89 (director 2026-10-06: hits need to feel like they hurt) - a pain face, a recoil and now and then a cry; big hits leave it dizzy */
   var bigH=dmg>=b.max*.1;b.hurtT=Math.max(b.hurtT||0,bigH?.6:.42);if(bigH)b.dizzyT=Math.max(b.dizzyT||0,.9);
   if(!b.ouchAt||time-b.ouchAt>1.3){if(bigH||Math.random()<.5){b.ouchAt=time;var OUCH=['아야!','끄앙!','으앙!','아파!'];b.ouchTxt=b.king?'크헉!':OUCH[Math.floor(Math.random()*OUCH.length)];}}
-  burst(b.x-(b.x-from.x)/d*8,b.y-12,'#ffffff',4,true);sfx('chop',.08);
-  addFloat(b.x,b.y-30-Math.random()*6,'-'+Math.round(dmg),dmg>=15?'#ffe27a':'#ffffff',true);
+  /* 2026-10-09 impact: hitstop, shake, ring and sparks scale with the blow; damage numbers pop and fly away from the hitter */
+  var hx=b.x-(b.x-from.x)/d*8,hy=b.y-12,big=bigH||dmg>=15;if(!ranged){hitStop(big?.075:.045);shake(big?.32:.16);}else shake(.06);
+  burst(hx,hy,'#ffffff',big?9:6,true);burst(hx,hy,'#ffd36a',big?6:3,true);parts.push({x:hx,y:hy,vx:0,vy:0,g:0,life:.22,max:.22,col:'#ffffff',r:big?9:6,ring:1});sfx('chop',big?.14:.1);
+  var fl=addFloat(b.x,b.y-30-Math.random()*6,'-'+Math.round(dmg),big?'#ffe27a':'#ffffff',true);fl.dmg=true;fl.big=big;fl.dx=(b.x-from.x)/d*18;
   if(b.hp<=0)killBear(b);
 }
 function separateBear(b,pl){
@@ -40,10 +42,10 @@ function updateBears(dt){
   if(!huntShown&&huntReady()&&!hasWeapon()){huntShown=true;var a0=agents[0];addFloat(a0.x,a0.y-44,'⚔️ 광장에 무기 발판이 생겼어요!','#ffe27a');sfx('chime');}
   /* seasons */
   var w0=winterStart(),prev=S.season||0;S.season=prev+(tutOn()?0:dt);
-  if(prev<w0-20&&S.season>=w0-20){var aw=agents[0];addFloat(aw.x,aw.y-46,'⚠️ 곧 북극곰이 습격해요!','#dff4ff');sfx('chime');}
+  if(prev<w0-20&&S.season>=w0-20){var aw=agents[0];addFloat(aw.x,aw.y-46,'⚠️ 곧 반달곰이 습격해요!','#dff4ff');sfx('chime');}
   if(prev<w0&&S.season>=w0){S.winters=(S.winters||0)+1;var nb=bearCap();bearHintT=time+3.5;raidQ=0;raidT=1;FENCEHP=S.fence&&!S.fenceDown?fenceMax():0;VFBREACH={};VFHP={2:fMaxV(2),3:fMaxV(3)};TOWERHP=S.tower&&!S.towerDown?towerMax():0;
-    refundClearedDefensePads();flash=.4;sfx('horn');shake(.7);var aw2=agents[0];addFloat(aw2.x,aw2.y-46,'🐻‍❄️ 곰 습격! 북극곰이 아래에서 몰려와요','#dff4ff');
-    if(!STAGEBAN)STAGEBAN={t:1.8,max:1.8,text:'🐻‍❄️ 북극곰 습격!',sub:'망루·사냥꾼이 막아요'};}
+    refundClearedDefensePads();flash=.4;sfx('horn');shake(.7);var aw2=agents[0];addFloat(aw2.x,aw2.y-46,'🐻 곰 습격! 반달곰이 아래에서 몰려와요','#dff4ff');
+    if(!STAGEBAN)STAGEBAN={t:1.8,max:1.8,text:'🐻 반달곰 습격!',sub:'망루·사냥꾼이 막아요'};}
   if(S.season>=seasonLen()){S.season=S.season%seasonLen();raidQ=0;VFBREACH={};refundClearedDefensePads();var aw3=agents[0];addFloat(aw3.x,aw3.y-46,liveBears().length?'🛡️ 새로운 곰은 안 와요 · 남은 곰을 무찔러요':'🛡️ 곰 습격이 끝났어요','#c9f5c0');}
   if(isWinter()){raidT-=dt;var rp=raidP();
     if(rp>=.7&&RUSHMSG!==S.winters){RUSHMSG=S.winters;STAGEBAN={t:2.2,max:2.2,text:'🔥 곰 떼가 몰려와요!',sub:'습격 막바지 · 끝까지 버텨요'};bearBanT=time;shake(.6);flash=Math.max(flash,.3);sfx('horn');}
@@ -57,7 +59,7 @@ function updateBears(dt){
     if(hBear){var hpd=Math.hypot(pl.x-hBear.x,pl.y-hBear.y),hwk=wkind(),hrng=heroReach(hBear);
       pl.chaseBear=hBear;
       if(hwk&&hpd<hrng+45&&(!pl.tapAtkT||time-pl.tapAtkT>=.12)){pl.tapAtkT=time;pl.stabT=0;pl.bowT=0;}}}
-  for(var k=BEARS.length-1;k>=0;k--){var b=BEARS[k];b.t+=dt;b.flash=Math.max(0,b.flash-dt);b.hurtT=Math.max(0,(b.hurtT||0)-dt);b.dizzyT=Math.max(0,(b.dizzyT||0)-dt);b.kx*=Math.max(0,1-dt*10);b.hitT-=dt;b.swipe=Math.max(0,b.swipe-dt*3);b.roar=Math.max(0,(b.roar||0)-dt);
+  for(var k=BEARS.length-1;k>=0;k--){var b=BEARS[k];b.t+=dt;b.flash=Math.max(0,b.flash-dt);b.squashT=Math.max(0,(b.squashT||0)-dt);b.hurtT=Math.max(0,(b.hurtT||0)-dt);b.dizzyT=Math.max(0,(b.dizzyT||0)-dt);b.kx*=Math.max(0,1-dt*10);b.hitT-=dt;b.swipe=Math.max(0,b.swipe-dt*3);b.roar=Math.max(0,(b.roar||0)-dt);
     if(b.state==='dead'){if(b.t>1)BEARS.splice(k,1);continue;}
     var sp=(b.king?36:(b.boss?22:28))*BEAR_SPX*(b.spm||1)*dt;
     if(b.climb>0){b.climb-=dt;b.bob+=dt*3;b.swipe=Math.max(b.swipe,.3);}

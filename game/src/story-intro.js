@@ -11,23 +11,23 @@ if(!FRESH)startBtn.setAttribute('aria-label','저장한 게임 이어하기');
 introLoad();
 /* Story scenes are short, replayable town prologues. Seen flags are save-local and optional for old saves. */
 var STORY_SCENES=[
- {id:1,title:'1장 · 숲속마을 — 불씨를 지키는 숲',headline:'마지막 불씨와 파란 뿌리',land:'🌲',cloud:'❄️',lines:[
-  {who:'이야기꾼',face:'📜',text:'부모님과 침대에서 책을 읽던 남자아이가 반짝이는 책장 속으로 들어왔어요. 눈앞에는 책에서 보던 겨울 숲이 펼쳐졌지요.'},
-  {who:'나무꾼 모모',face:'🪓',text:'장작은 필요하지만 나무를 베기만 하면 숲이 더 아파져요. 묘목도 함께 심어야 해요.'},
-  {who:'남자아이',face:'🧒',text:'책 속에서 본 파란 뿌리가 여기에도 있어요! 저는 이 숲에 온 아이예요. 부모님께 돌아갈 길을 찾는 동안 마을을 도울게요.'},
-  {who:'나무꾼 모모',face:'🪓',text:'숲을 다시 숨 쉬게 해줘요. 그러면 눈 녹은 물길도 어딘가로 이어질 거예요.'}
+ {id:1,title:'1장 · 조선 · 숲속마을 — 산골의 첫 장',headline:'역사책 속으로 떨어진 아이',land:'🌲',cloud:'❄️',lines:[
+  {who:'이야기꾼',face:'📜',text:'2026년 겨울밤, 한국사 책을 읽던 남자아이가 반짝이는 책장 속으로 빨려 들어갔어요. 눈을 떠 보니 초가집 굴뚝에서 연기가 오르는 조선의 산골 마을이었지요.'},
+  {who:'나무꾼 돌쇠',face:'🪓',text:'처음 보는 옷차림이구려! 땔감은 필요하지만 나무를 베기만 하면 산이 아프다오. 묘목도 함께 심어야 하오.'},
+  {who:'남자아이',face:'🧒',text:'여기가 책에서 본 옛날 우리나라예요! 집으로 돌아갈 길을 찾는 동안 마을 일을 도울게요.'},
+  {who:'사냥꾼 임꺽정',face:'🏹',text:'겨울이면 산에서 반달곰이 내려온다오. 마을을 키우고 망루를 세우면 나도 힘을 보태겠소.'}
  ]},
- {id:2,title:'2장 · 호수마을 — 얼음 아래의 물길',headline:'얼음 밑에서 들려온 물소리',land:'🌊',cloud:'❄️',lines:[
+ {id:2,title:'2장 · 조선 수군 · 호수마을 — 거북선의 물길',headline:'얼음 밑에서 들려온 물소리',land:'🌊',cloud:'❄️',lines:[
   {who:'낚시꾼 여울',face:'🎣',text:'호수는 꽁꽁 얼었는데, 얼음 아래에서 물 흐르는 소리가 들려요.'},
-  {who:'나무꾼 모모',face:'🪵',text:'숲에서 가져온 목재로 수문과 다리를 고칠게요. 물길을 다시 열어봐요.'},
-  {who:'낚시꾼 여울',face:'🐟',text:'따뜻한 물이 돌아오자 물고기들이 나타났어요! 물은 산 아래에서 흘러오고 있어요.'},
-  {who:'남자아이',face:'🧒',text:'책에서 본 별빛 길이 북쪽 산으로 이어져요. 마을을 도우며 따라가면 집으로 돌아갈 단서도 찾을 수 있겠죠?'}
+  {who:'나무꾼 돌쇠',face:'🪵',text:'숲에서 가져온 목재로 나루터와 다리를 고칩시다. 물길을 다시 열어 봐요.'},
+  {who:'이순신 장군',face:'⚓',text:'물길이 열리면 거북선도 다시 띄울 수 있소. 백성을 지키는 데에는 작은 힘도 귀하다오.'},
+  {who:'남자아이',face:'🧒',text:'책에서 본 이순신 장군님이에요! 책장이 넘어가듯 북쪽 산으로 길이 이어져요.'}
  ]},
- {id:3,title:'3장 · 광산마을 — 산속에서 깨어난 빛',headline:'돌 속에 잠든 별빛',land:'⛏️',cloud:'✨',lines:[
+ {id:3,title:'3장 · 고구려 · 광산마을 — 산성에 잠든 빛',headline:'돌 속에 잠든 별빛',land:'⛏️',cloud:'✨',lines:[
   {who:'광부 단풍',face:'⛏️',text:'이 광맥을 보세요. 호수 얼음 아래에서 본 것과 똑같은 푸른빛이에요.'},
-  {who:'제련공 보리',face:'🔥',text:'제련소의 불을 다시 붙이면, 갱도 깊은 곳의 오래된 보일러도 깨울 수 있을 거예요.'},
-  {who:'사냥꾼 임꺽정',face:'🥋',text:'세 마을의 등불이 산 너머까지 이어졌어요. 하지만 저 눈보라 속에서 큰 그림자가 다가와요.'},
-  {who:'남자아이',face:'🧒',text:'부모님이 읽어주신 이야기처럼 우리도 함께하면 돼요. 이 불빛을 지키고, 산 너머 다음 책장을 찾아가요!'}
+  {who:'대장장이 보리',face:'🔥',text:'대장간 불을 다시 지피면 산성의 연장과 무기도 고칠 수 있어요.'},
+  {who:'광개토대왕',face:'👑',text:'세 마을의 등불이 산성까지 이어졌구나. 저 눈보라 속 대왕곰만 물리치면 이 땅이 평안해질 것이다.'},
+  {who:'남자아이',face:'🧒',text:'역사책 마지막 장까지 함께 지켜요. 그러면 집으로 돌아가는 책장도 열릴 거예요!'}
  ]}
 ];
 var storyBox=document.getElementById('storyBox'),storyBook=document.getElementById('storyBook'),storyPlayer=document.getElementById('storyPlayer'),storyList=document.getElementById('storyList'),storyMode='auto',storyScene=null,storyLine=0,storyTyping=null,storyTypingText='';
@@ -52,6 +52,8 @@ function firstTownStory(){var v=Math.min(3,Math.max(1,S.stage||1));if(v>1&&!stor
 startBtn.addEventListener('click',function(){audioInit();if(FILM){filmStep(1);return;}enterBookWorld();});
 var endingEl=document.getElementById('ending'),endBtn=document.getElementById('endBtn');
 endBtn.addEventListener('click',function(){startOver();});
+/* 2026-10-09: after the ending the player chooses - start a new game, or keep playing this save (optional field endingContinue) */
+document.getElementById('endContinue').addEventListener('click',function(){S.endingContinue=1;endingEl.hidden=true;save();sfx('tap');});
 var gearBtn=document.getElementById('gear'),setP=document.getElementById('setp');
 var ngBtn=document.getElementById('newGame'),ngArm=false;
 ngBtn.addEventListener('click',function(){

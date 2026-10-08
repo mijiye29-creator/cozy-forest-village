@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Cozy Village Story Scenes</title>
+<style>body{margin:0;background:#111}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<script type="module">
+// Renders the wordless Korean-history storybook scenes from scenes.js (used by build_story_scenes.py).
+// Preview one in a browser: scene.html?scene=intro-01
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { SCENES } from './scenes.js';
+const W = 944, H = 1680;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H, false); renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+window.listScenes = () => Object.keys(SCENES);
+window.renderScene = (name) => {
+  const { scene, camera, bloom = 0.5 } = SCENES[name]();
+  const comp = new EffectComposer(renderer); comp.setSize(W, H);
+  comp.addPass(new RenderPass(scene, camera)); comp.addPass(new UnrealBloomPass(new THREE.Vector2(W, H), bloom, 0.55, 0.82)); comp.addPass(new OutputPass());
+  comp.render(); const url = renderer.domElement.toDataURL('image/jpeg', 0.92); comp.dispose(); return url;
+};
+const q = new URLSearchParams(location.search); if (q.get('scene')) window.renderScene(q.get('scene'));
+window.sceneReady = true;
+</script></body></html>

@@ -1,11 +1,12 @@
-"""Build the storybook intro/ending videos from art-source/storybook/*.jpg.
+"""Build the storybook intro/ending videos from art-source/storybook-korea/*.jpg (fallback: art-source/storybook/*.jpg).
 Usage: python3 art-source/tools/make_story_video.py  (needs Pillow, numpy, ffmpeg)
 Each scene holds HOLD s, crossfades XF s, slow Ken Burns zoom 1.00->1.06 with alternating drift.
 Outdoor scenes get a soft procedural snowfall. No text, no captions (AGENTS.md: wordless intro)."""
 import subprocess, numpy as np, os, sys
 from PIL import Image, ImageFilter
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC=os.path.join(ROOT,'storybook'); OUT=os.path.join(ROOT,'..','game','assets','video')
+SRC=os.path.join(ROOT,'storybook-korea') if os.path.isdir(os.path.join(ROOT,'storybook-korea')) else os.path.join(ROOT,'storybook')  # 2026-10-09: Korean-history scenes; originals stay in storybook/
+OUT=os.path.join(ROOT,'..','game','assets','video')
 W,H,FPS,HOLD,XF=720,1280,30,4.5,0.8
 SETS={'intro':[('intro-01',0),('intro-02',0),('intro-03',0),('intro-04',1)],
       'ending':[('ending-01',1),('ending-02',0),('ending-03',0)]}

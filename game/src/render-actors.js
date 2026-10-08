@@ -83,7 +83,10 @@ function drawStarPick(g,ang,sc){g.save();g.rotate(ang);g.scale(sc,sc);g.strokeSt
   g.translate(0,-11);g.rotate(time*2);g.fillStyle='#fff6a8';g.beginPath();for(var i=0;i<10;i++){var a2=i*Math.PI/5-Math.PI/2,r2=i%2?2.2:5;g.lineTo(Math.cos(a2)*r2,Math.sin(a2)*r2);}g.closePath();g.fill();g.strokeStyle='#ff8ad0';g.lineWidth=.7;g.stroke();g.restore();}
 function drawRainbowRod(g,ang,sc){g.save();g.rotate(ang);g.scale(sc,sc);g.strokeStyle=rbGrad(g,0,7,12,-12,(time*.5)%1);g.lineWidth=2.4;g.lineCap='round';g.beginPath();g.moveTo(0,7);g.quadraticCurveTo(6,-4,12,-12);g.stroke();
   g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=.6;g.beginPath();g.moveTo(12,-12);g.lineTo(14,-4);g.stroke();g.fillStyle=rbGrad(g,10,-6,18,0,0);g.beginPath();g.ellipse(14,-2,4,2.4,0,0,7);g.fill();g.restore();}
-function drawHeroHunter(g,a){var d=a.dir||1,bob=a.mv?Math.sin(a.bob*1.6)*1.2:0,aim=(a.aim||0)>.1;g.save();g.translate(a.x,a.y);
+/* 2026-10-09 Korean history heroes: 임꺽정, 이순신 on the 거북선, 광개토대왕 on horseback (3D renders; Canvas art below stays as the fallback) */
+var HERO_SPRITE={hunter:['imkkeokjeong',1.15],hunter2:['turtle_ship',.78],hunter3:['gwanggaeto',.9]};
+function drawHeroHunter(g,a){var hs=HERO_SPRITE[a.role];if(hs&&drawActorSprite(g,hs[0],a,a.stab>0||(a.aim||0)>.1?'work':(a.cheerUntil>time?'cheer':(a.mv?'walk':'idle')),a.x,a.y+9,SPRITE_PPU*hs[1]))return;
+  var d=a.dir||1,bob=a.mv?Math.sin(a.bob*1.6)*1.2:0,aim=(a.aim||0)>.1;g.save();g.translate(a.x,a.y);
   if(a.role==='hunter'){
     drawHero(g,{x:0,y:0,role:'player',appearanceTier:4,martialLevel:13,dir:d,mv:a.mv,bob:a.bob,stab:a.stab,strikeType:a.strikeType,ultFxT:a.ultFxT},0);
     if(a.stab>0){var phase=Math.sin(Math.min(1,a.stab/.36)*Math.PI),kick=a.strikeType==='kick';g.save();g.scale(d,1);g.strokeStyle='rgba(247,216,144,'+(.7*phase)+')';g.lineWidth=2.5;g.beginPath();g.arc(4,kick?2:-15,kick?24:18,kick?-.6:-1.4,kick?.55:.2);g.stroke();g.restore();}}
@@ -210,7 +213,7 @@ function drawSuperFx(){var g=ctx;for(var i=SUPERFX.length-1;i>=0;i--){var f=SUPE
 function heroTier(){var st=S.stage||1,w=S.wlv||{};if(st>=3)return (w.hunter3||0)>=5?4:3;if(st>=2)return (w.hunter2||0)>=8?3:2;return (w.hunter||0)>=8?1:0;}
 function drawHero(g,a,by){
  var master=a.role==='lumber',level=master?12:(a.martialLevel||wpnLv());
- var fromSprite=!master&&!a.customArms&&drawSprite(g,'hero',actorSpriteAnim(a),time+(a.x%7)*.1,a.x,a.y+9,SPRITE_PPU,a.dir>0);
+ var fromSprite=!master&&!a.customArms&&drawActorSprite(g,'hero',a,actorSpriteAnim(a),a.x,a.y+9,SPRITE_PPU);
  if(fromSprite)drawSpriteLevel(g,a.x,a.y+16,level,13);
  if(!fromSprite)drawActor3D(g,a,{coat:master?'#e6872a':ART.coats[Math.min(12,level-1)],scarf:master?'#ffe06b':ART.scarves[Math.min(12,level-1)],customArms:!!a.customArms,level:level});
  if((a.stab||0)>0){var force=Math.sin(Math.min(1,a.stab/.32)*Math.PI);g.save();g.translate(a.x,a.y);g.scale(a.dir||1,1);g.strokeStyle='rgba(255,216,102,'+force*.75+')';g.lineWidth=1.4;g.beginPath();g.arc(3,a.strikeType==='kick'?0:-14,12+force*8,-.8,.8);g.stroke();g.restore();}
@@ -231,7 +234,7 @@ function drawAgent(a){
   ctx.save();ctx.translate(a.x,a.y);ctx.scale(a.sc,a.sc);ctx.translate(-a.x,-a.y);
   curWalk=a.mv;curPh=a.bob;
   if(a.role==='player'){drawHero(ctx,a,by);}
-  else if(!drawSprite(ctx,SPRITE_ROLE[a.role],actorSpriteAnim(a),time+(a.x%7)*.1,a.x,a.y+9,SPRITE_PPU,a.dir>0))drawPerson(ctx,a.x,a.y,a.role,a.dir,by,tierOf('boots',a.gear.boots),t,t2,a.role==='player'?null:a.gear,a);
+  else if(!drawActorSprite(ctx,SPRITE_ROLE[a.role],a,actorSpriteAnim(a),a.x,a.y+9,SPRITE_PPU))drawPerson(ctx,a.x,a.y,a.role,a.dir,by,tierOf('boots',a.gear.boots),t,t2,a.role==='player'?null:a.gear,a);
   curWalk=null;if(a.role!=='player'&&!isHunter(a.role)&&SPRITE_ROLE[a.role]&&spriteReady(SPRITE_ROLE[a.role]))drawSpriteLevel(ctx,a.x,a.y+14,a.gear[PRIM[a.role]]||0,12);
   var fishing=a.working&&a.res&&a.res.k==='fish';
   if(a.role==='player'&&(!a.working||bearNear(a,150)||a.stab>0)){}
@@ -270,7 +273,7 @@ function drawAgent(a){
 }
 function drawCustomer(c){
  var g=ctx;
- if(!drawSprite(g,'customer',c.cheerUntil>time?'cheer':c.happyUntil>time?'happy':actorSpriteAnim(c),time+(c.x%7)*.1,c.x,c.y+6,SPRITE_PPU*.65,c.dir>0))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
+ if(!drawActorSprite(g,'customer',c,c.cheerUntil>time?'cheer':c.happyUntil>time?'happy':actorSpriteAnim(c),c.x,c.y+6,SPRITE_PPU*.65))drawActor3D(g,c,{coat:c.col,pants:c.pants,hair:c.hair,scale:.65});
   if(c.regular){g.font='11px sans-serif';g.textAlign='center';g.fillStyle='#e0b54c';g.fillText('⭐',c.x,c.y-40);}
   if(c.state==='out'){g.font='11px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#000';g.fillText(c.mood==='angry'?'💢':'💖',c.x,c.y-15);return;}
   if(c.slot>=serv(c.seller)&&c.state==='line')return;

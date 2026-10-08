@@ -428,3 +428,6 @@ header #bearChip.warn,header #bearChip.raid{background:#b62f43;color:#fff;border
 #storyVideo[hidden]{display:none}
 
 #auroraJourney{position:fixed;inset:0;z-index:1000;background:#e3edf4;overflow:auto;padding:12px;color:#29463f;display:flex;flex-direction:column;align-items:center}#auroraJourney[hidden]{display:none}.aurora-head{display:flex;gap:12px;align-items:center;flex-wrap:wrap;width:100%;justify-content:space-between}#auroraCanvas{width:100%;max-width:1080px;height:58vh;max-height:600px;touch-action:none}#auroraControls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}#auroraJourney button{min-height:44px;padding:10px 14px;border:1px solid #708f7a;border-radius:10px;background:#fff8df;color:#29463f}#auroraJourney button:disabled{opacity:.45}#auroraJourney p{font-size:14px;max-width:850px}
+/* 2026-10-09 ending choice */
+.endChoice{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+#endContinue{min-height:44px;min-width:44px;padding:10px 18px;border-radius:14px;border:0;background:#3f9a5e;color:#fff;font-weight:800;font-size:15px}

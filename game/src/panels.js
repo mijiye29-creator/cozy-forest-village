@@ -61,12 +61,12 @@ function refreshRaidRadar(lb){
   document.getElementById('radarLabel').textContent='마을 지도 · 곰 '+lb.length+'마리';box.setAttribute('aria-label','곰 '+lb.length+'마리 위치 지도 · 초록 점은 주인공');
 }
 function refreshBearChip(){var el=document.getElementById('bearChip');if(tutOn()||TITLE){el.hidden=true;refreshRaidRadar(liveBears());return;}el.hidden=false;var lb=liveBears(),s,t=function(x){return Math.floor(x/60)+':'+('0'+x%60).slice(-2);};
-  if(isWinter()){s=Math.ceil(winterLeft());el.textContent=(lb.length?'🐻‍❄️ ':'🛡️ ')+t(s);el.className=lb.length?'raid':'calm';}
-  else{s=Math.ceil(toWinter());el.textContent=(s<=30?'⚠️ ':'🐻‍❄️ ')+t(s);el.className=s<=30?'warn':'';}el.setAttribute('aria-label',(isWinter()?'습격 종료까지 ':'북극곰 습격까지 ')+t(s));refreshRaidRadar(lb);}
+  if(isWinter()){s=Math.ceil(winterLeft());el.textContent=(lb.length?'🐻 ':'🛡️ ')+t(s);el.className=lb.length?'raid':'calm';}
+  else{s=Math.ceil(toWinter());el.textContent=(s<=30?'⚠️ ':'🐻 ')+t(s);el.className=s<=30?'warn':'';}el.setAttribute('aria-label',(isWinter()?'습격 종료까지 ':'반달곰 습격까지 ')+t(s));refreshRaidRadar(lb);}
 /* v74 (staff 2): species book. S.dex[id]=1 once an item has ever been obtained (stall, loading deck, storage, materials, a carried stack or a belt).
    older saves are filled in once from what they hold and what their sites already grow, so nothing is announced on load */
 var DEXCAT=[['🌲 나무',TREES.map(function(s){return s.id;})],['🐟 물고기',FISH.map(function(s){return s.id;})],['⛏️ 광석',ORES.map(function(s){return s.id;})],
-  ['🏭 가공품',GOODS.map(function(g){return g.id;})],['🐻‍❄️ 곰 전리품',BEAR_ITEMS.map(function(b){return b.id;})]];
+  ['🏭 가공품',GOODS.map(function(g){return g.id;})],['🐻 곰 전리품',BEAR_ITEMS.map(function(b){return b.id;})]];
 var DEXALL=[];DEXCAT.forEach(function(c){DEXALL=DEXALL.concat(c[1]);});
 var dexBox=document.getElementById('dexBox'),dexBtn=document.getElementById('dexOpen'),DEXREADY=false,dexKey='',dexNewQ=[];
 function dexN(){var n=0;DEXALL.forEach(function(id){if(S.dex&&S.dex[id])n++;});return n;}
@@ -107,7 +107,7 @@ dexBtn.addEventListener('click',function(e){e.stopPropagation();setP.hidden=true
 /* v75 (staff 2 + 6): today's goals. Every calendar day the village gets three small goals picked from what this save can already do
    (gather, serve customers, buy upgrades, load trucks, drive off bears). Progress = running totals (S.stat) minus the totals when the day began.
    No coin reward yet - the reward size waits for the director's decision; finishing all three keeps a streak (⭐ days in a row). New save field S.daily only. */
-var DAYK={gather:['🪓 자원 모으기','개'],serve:['🧑‍🤝‍🧑 손님에게 팔기','명'],buy:['🏗️ 시설·일꾼 강화','번'],truck:['🚚 트럭에 싣기','대'],bear:['🐻‍❄️ 곰 물리치기','마리']};
+var DAYK={gather:['🪓 자원 모으기','개'],serve:['🧑‍🤝‍🧑 손님에게 팔기','명'],buy:['🏗️ 시설·일꾼 강화','번'],truck:['🚚 트럭에 싣기','대'],bear:['🐻 곰 물리치기','마리']};
 var dayBox=document.getElementById('dayBox'),dayBtn=document.getElementById('dayOpen'),dayKey='';
 function dayStr(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
 function dayPool(){var st=Math.max(1,S.stage||1),p=[['gather',[150,500,2000][st-1]],['serve',[30,100,400][st-1]],['buy',[4,6,8][st-1]]];
@@ -166,7 +166,7 @@ function refreshUI(){
   h=tutHint();
   if(h){}
   else if(defenseDue())h='⚠️ 곰이 와요! '+(!S.tower?'🗼 망루':'🪵 울타리')+'를 지어요';
-  else if(liveBears().length&&time<bearHintT)h='🐻‍❄️ 곰이 돈을 노려요! 잡으면 되찾아요';
+  else if(liveBears().length&&time<bearHintT)h='🐻 곰이 돈을 노려요! 잡으면 되찾아요';
   else if(liveBears().length)h='';
   else if(S.fenceDown||S.towerDown)h='🔧 부서진 '+(S.fenceDown?'울타리':'망루')+'를 수리해요';
   else if((S.rep||[]).length)h='곰에게 부서진 곳은 🔧 수리 버튼으로 싸게 되살릴 수 있어요';

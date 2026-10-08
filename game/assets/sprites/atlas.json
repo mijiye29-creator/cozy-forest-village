@@ -1,8 +1,8 @@
 {
  "aurora_keeper": {
   "file": "aurora_keeper.webp",
-  "frameW": 116,
-  "frameH": 148,
+  "frameW": 104,
+  "frameH": 144,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -32,8 +32,8 @@
    }
   },
   "anchor": [
-   52,
-   129
+   46,
+   133
   ],
   "glb": "art-source/models/aurora_keeper.glb",
   "clips": [
@@ -106,7 +106,7 @@
  "boss_bear": {
   "file": "boss_bear.webp",
   "frameW": 212,
-  "frameH": 256,
+  "frameH": 240,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -136,8 +136,8 @@
    }
   },
   "anchor": [
-   118,
-   205
+   120,
+   192
   ],
   "glb": "art-source/models/boss_bear.glb",
   "clips": [
@@ -202,8 +202,8 @@
  },
  "corgi": {
   "file": "corgi.webp",
-  "frameW": 56,
-  "frameH": 60,
+  "frameW": 60,
+  "frameH": 72,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -227,8 +227,8 @@
    }
   },
   "anchor": [
-   28,
-   41
+   29,
+   54
   ],
   "glb": "art-source/models/corgi.glb",
   "clips": [
@@ -239,8 +239,8 @@
  },
  "customer": {
   "file": "customer.webp",
-  "frameW": 88,
-  "frameH": 144,
+  "frameW": 76,
+  "frameH": 132,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -270,8 +270,8 @@
    }
   },
   "anchor": [
-   48,
-   127
+   42,
+   121
   ],
   "glb": "art-source/models/customer.glb",
   "clips": [
@@ -408,7 +408,7 @@
  },
  "fisher": {
   "file": "fisher.webp",
-  "frameW": 104,
+  "frameW": 92,
   "frameH": 144,
   "ppu": 64,
   "kind": "actor",
@@ -439,8 +439,8 @@
    }
   },
   "anchor": [
-   46,
-   127
+   37,
+   130
   ],
   "glb": "art-source/models/fisher.glb",
   "clips": [
@@ -478,6 +478,50 @@
   "clips": [
    "idle",
    "open"
+  ]
+ },
+ "gwanggaeto": {
+  "file": "gwanggaeto.webp",
+  "frameW": 156,
+  "frameH": 264,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 13.33,
+    "loop": true
+   },
+   "work": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   },
+   "cheer": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   }
+  },
+  "anchor": [
+   58,
+   231
+  ],
+  "glb": "art-source/models/gwanggaeto.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "work",
+   "cheer"
   ]
  },
  "harvester": {
@@ -519,8 +563,8 @@
  },
  "hero": {
   "file": "hero.webp",
-  "frameW": 88,
-  "frameH": 144,
+  "frameW": 68,
+  "frameH": 128,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -550,8 +594,8 @@
    }
   },
   "anchor": [
-   46,
-   127
+   37,
+   113
   ],
   "glb": "art-source/models/hero.glb",
   "clips": [
@@ -593,8 +637,8 @@
  },
  "hunter": {
   "file": "hunter.webp",
-  "frameW": 88,
-  "frameH": 144,
+  "frameW": 84,
+  "frameH": 132,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -624,8 +668,8 @@
    }
   },
   "anchor": [
-   46,
-   130
+   48,
+   118
   ],
   "glb": "art-source/models/hunter.glb",
   "clips": [
@@ -637,8 +681,8 @@
  },
  "hunter_blue": {
   "file": "hunter_blue.webp",
-  "frameW": 88,
-  "frameH": 144,
+  "frameW": 84,
+  "frameH": 132,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -668,8 +712,8 @@
    }
   },
   "anchor": [
-   46,
-   127
+   48,
+   118
   ],
   "glb": "art-source/models/hunter_blue.glb",
   "clips": [
@@ -681,7 +725,7 @@
  },
  "hunter_violet": {
   "file": "hunter_violet.webp",
-  "frameW": 88,
+  "frameW": 84,
   "frameH": 144,
   "ppu": 64,
   "kind": "actor",
@@ -712,10 +756,54 @@
    }
   },
   "anchor": [
-   46,
-   130
+   48,
+   129
   ],
   "glb": "art-source/models/hunter_violet.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "imkkeokjeong": {
+  "file": "imkkeokjeong.webp",
+  "frameW": 100,
+  "frameH": 152,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   }
+  },
+  "anchor": [
+   41,
+   139
+  ],
+  "glb": "art-source/models/imkkeokjeong.glb",
   "clips": [
    "idle",
    "walk",
@@ -776,8 +864,8 @@
  },
  "lumberjack": {
   "file": "lumberjack.webp",
-  "frameW": 100,
-  "frameH": 144,
+  "frameW": 88,
+  "frameH": 136,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -807,8 +895,8 @@
    }
   },
   "anchor": [
-   46,
-   127
+   37,
+   120
   ],
   "glb": "art-source/models/lumberjack.glb",
   "clips": [
@@ -841,8 +929,8 @@
  },
  "master_fisher": {
   "file": "master_fisher.webp",
-  "frameW": 132,
-  "frameH": 188,
+  "frameW": 120,
+  "frameH": 184,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -872,8 +960,8 @@
    }
   },
   "anchor": [
-   50,
-   159
+   47,
+   163
   ],
   "glb": "art-source/models/master_fisher.glb",
   "clips": [
@@ -885,8 +973,8 @@
  },
  "master_fisher_body": {
   "file": "master_fisher_body.webp",
-  "frameW": 80,
-  "frameH": 156,
+  "frameW": 76,
+  "frameH": 144,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -916,8 +1004,8 @@
    }
   },
   "anchor": [
-   37,
-   141
+   34,
+   131
   ],
   "glb": "art-source/models/master_fisher_body.glb",
   "clips": [
@@ -929,52 +1017,8 @@
  },
  "master_lumber": {
   "file": "master_lumber.webp",
-  "frameW": 112,
-  "frameH": 160,
-  "ppu": 64,
-  "kind": "actor",
-  "anims": {
-   "idle": {
-    "row": 0,
-    "frames": 6,
-    "fps": 3,
-    "loop": true
-   },
-   "walk": {
-    "row": 1,
-    "frames": 8,
-    "fps": 10,
-    "loop": true
-   },
-   "cheer": {
-    "row": 2,
-    "frames": 8,
-    "fps": 8,
-    "loop": true
-   },
-   "work": {
-    "row": 3,
-    "frames": 8,
-    "fps": 8.89,
-    "loop": true
-   }
-  },
-  "anchor": [
-   50,
-   141
-  ],
-  "glb": "art-source/models/master_lumber.glb",
-  "clips": [
-   "idle",
-   "walk",
-   "cheer",
-   "work"
-  ]
- },
- "master_lumber_body": {
-  "file": "master_lumber_body.webp",
-  "frameW": 84,
-  "frameH": 160,
+  "frameW": 96,
+  "frameH": 148,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -1005,7 +1049,51 @@
   },
   "anchor": [
    41,
-   141
+   135
+  ],
+  "glb": "art-source/models/master_lumber.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
+  ]
+ },
+ "master_lumber_body": {
+  "file": "master_lumber_body.webp",
+  "frameW": 76,
+  "frameH": 140,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   }
+  },
+  "anchor": [
+   32,
+   126
   ],
   "glb": "art-source/models/master_lumber_body.glb",
   "clips": [
@@ -1017,8 +1105,8 @@
  },
  "miner": {
   "file": "miner.webp",
-  "frameW": 100,
-  "frameH": 140,
+  "frameW": 84,
+  "frameH": 132,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -1048,8 +1136,8 @@
    }
   },
   "anchor": [
-   46,
-   124
+   37,
+   118
   ],
   "glb": "art-source/models/miner.glb",
   "clips": [
@@ -1165,8 +1253,8 @@
  },
  "polar_bear": {
   "file": "polar_bear.webp",
-  "frameW": 108,
-  "frameH": 120,
+  "frameW": 112,
+  "frameH": 124,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -1196,8 +1284,8 @@
    }
   },
   "anchor": [
-   60,
-   93
+   61,
+   95
   ],
   "glb": "art-source/models/polar_bear.glb",
   "clips": [
@@ -1299,8 +1387,8 @@
  },
  "shop_staff": {
   "file": "shop_staff.webp",
-  "frameW": 88,
-  "frameH": 144,
+  "frameW": 72,
+  "frameH": 124,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -1330,8 +1418,8 @@
    }
   },
   "anchor": [
-   46,
-   127
+   37,
+   110
   ],
   "glb": "art-source/models/shop_staff.glb",
   "clips": [
@@ -1366,8 +1454,8 @@
  },
  "shopkeeper": {
   "file": "shopkeeper.webp",
-  "frameW": 88,
-  "frameH": 144,
+  "frameW": 72,
+  "frameH": 128,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -1391,8 +1479,8 @@
    }
   },
   "anchor": [
-   46,
-   127
+   37,
+   110
   ],
   "glb": "art-source/models/shopkeeper.glb",
   "clips": [
@@ -1518,10 +1606,54 @@
    "drive"
   ]
  },
+ "turtle_ship": {
+  "file": "turtle_ship.webp",
+  "frameW": 220,
+  "frameH": 284,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 2.5,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 2,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   }
+  },
+  "anchor": [
+   109,
+   231
+  ],
+  "glb": "art-source/models/turtle_ship.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "work",
+   "cheer"
+  ]
+ },
  "villager": {
   "file": "villager.webp",
-  "frameW": 88,
-  "frameH": 144,
+  "frameW": 72,
+  "frameH": 128,
   "ppu": 64,
   "kind": "actor",
   "anims": {
@@ -1545,8 +1677,8 @@
    }
   },
   "anchor": [
-   46,
-   127
+   37,
+   116
   ],
   "glb": "art-source/models/villager.glb",
   "clips": [
@@ -1620,6 +1752,50 @@
   "glb": "art-source/models/workshop.glb",
   "clips": [
    "idle"
+  ]
+ },
+ "yi_sunsin": {
+  "file": "yi_sunsin.webp",
+  "frameW": 96,
+  "frameH": 148,
+  "ppu": 64,
+  "kind": "actor",
+  "anims": {
+   "idle": {
+    "row": 0,
+    "frames": 6,
+    "fps": 3,
+    "loop": true
+   },
+   "walk": {
+    "row": 1,
+    "frames": 8,
+    "fps": 10,
+    "loop": true
+   },
+   "cheer": {
+    "row": 2,
+    "frames": 8,
+    "fps": 8,
+    "loop": true
+   },
+   "work": {
+    "row": 3,
+    "frames": 8,
+    "fps": 8.89,
+    "loop": true
+   }
+  },
+  "anchor": [
+   37,
+   134
+  ],
+  "glb": "art-source/models/yi_sunsin.glb",
+  "clips": [
+   "idle",
+   "walk",
+   "cheer",
+   "work"
   ]
  }
 }

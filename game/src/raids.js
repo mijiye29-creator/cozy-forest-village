@@ -78,8 +78,8 @@ function spawnBear(sideOverride){
   var SIDEN={bottom:'아래',left:'왼쪽',right:'오른쪽',top:'위쪽'};
   /* v83 (director 2026-10-05: bears were still hard to spot) - a screen-fixed banner (not world-space) fires every time a bear appears, throttled so a raid wave doesn't spam it */
   if(king){sfx('horn');STAGEBAN={t:2.4,max:2.4,text:'🖤 난폭한 검은 대왕곰!',sub:'체력이 아주 높고 빨라요 · 망루와 사냥꾼을 모아요'};bearBanT=time;}
-  else if(time-bearBanT>4.5){bearBanT=time;STAGEBAN={t:2,max:2,text:(boss?'👑 대장 북극곰이 나타났어요!':'🐻‍❄️ 곰이 나타났어요!'),sub:SIDEN[side]+'에서 침입 · 가장자리 화살표를 따라가요'};}
-  addFloat(Math.max(60,Math.min(MX-60,b.x)),Math.max(40,Math.min(H-50,b.y-30)),(king?'🖤 검은 대왕곰 침입!':(boss?'👑 대장 북극곰 침입!':'🐻‍❄️ 북극곰 '+SIDEN[side]+'에서 침입!')),king?'#ffb3b3':'#dff4ff');
+  else if(time-bearBanT>4.5){bearBanT=time;STAGEBAN={t:2,max:2,text:(boss?'👑 대장 반달곰이 나타났어요!':'🐻 곰이 나타났어요!'),sub:SIDEN[side]+'에서 침입 · 가장자리 화살표를 따라가요'};}
+  addFloat(Math.max(60,Math.min(MX-60,b.x)),Math.max(40,Math.min(H-50,b.y-30)),(king?'🖤 검은 대왕곰 침입!':(boss?'👑 대장 반달곰 침입!':'🐻 반달곰 '+SIDEN[side]+'에서 침입!')),king?'#ffb3b3':'#dff4ff');
 }
 /* the damage lands: one level goes down (never below 1; level-1 things just hold on) */
 function degrade(t,b){

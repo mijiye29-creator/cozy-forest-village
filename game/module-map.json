@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "5497c60802311e5c5d61c46b5f9bf1c8c105d351045da9bd4a318334eaa1bb4d",
+  "runtime_sha256": "f279f39c4e7f1419dd9f44ce267a46e3eb171be857f90d569d11240c21bfe556",
   "modules": [
     {
       "id": "boot-errors",
@@ -133,7 +133,7 @@
       "id": "sprite-data",
       "path": "src/sprite-data.js",
       "topic": "생성된 Claude atlas·이미지 해시",
-      "bytes": 16553,
+      "bytes": 18251,
       "lines": 3,
       "symbols": [
         {
@@ -150,8 +150,8 @@
       "id": "sprite-atlas",
       "path": "src/sprite-atlas.js",
       "topic": "지연 로드·2개 병렬 큐·스프라이트 프레임·시설 레벨",
-      "bytes": 2979,
-      "lines": 13,
+      "bytes": 4049,
+      "lines": 20,
       "symbols": [
         {
           "name": "SPRITE_ART_CAPTURE",
@@ -192,6 +192,18 @@
         {
           "name": "drawFacilitySprite",
           "line": 13
+        },
+        {
+          "name": "STRIDE",
+          "line": 16
+        },
+        {
+          "name": "strideOf",
+          "line": 17
+        },
+        {
+          "name": "drawActorSprite",
+          "line": 18
         }
       ]
     },
@@ -749,8 +761,8 @@
       "id": "effects",
       "path": "src/effects.js",
       "topic": "입자·알림·흔들림",
-      "bytes": 615,
-      "lines": 12,
+      "bytes": 813,
+      "lines": 14,
       "symbols": [
         {
           "name": "floats",
@@ -761,12 +773,16 @@
           "line": 4
         },
         {
+          "name": "hitStop",
+          "line": 6
+        },
+        {
           "name": "addFloat",
-          "line": 5
+          "line": 7
         },
         {
           "name": "burst",
-          "line": 6
+          "line": 8
         }
       ]
     },
@@ -1391,7 +1407,7 @@
       "id": "movement",
       "path": "src/movement.js",
       "topic": "자유 이동·지형 충돌·현금 수령·물품 전달",
-      "bytes": 14846,
+      "bytes": 15093,
       "lines": 156,
       "symbols": [
         {
@@ -1504,8 +1520,8 @@
       "id": "pads",
       "path": "src/pads.js",
       "topic": "시설 발판·배치·충돌·울타리 조작",
-      "bytes": 23809,
-      "lines": 255,
+      "bytes": 24567,
+      "lines": 261,
       "symbols": [
         {
           "name": "PADLIST",
@@ -1517,87 +1533,87 @@
         },
         {
           "name": "PAD_LAYOUT",
-          "line": 5
+          "line": 6
         },
         {
           "name": "padBounds",
-          "line": 52
-        },
-        {
-          "name": "rectTouches",
           "line": 53
         },
         {
-          "name": "padObstacles",
+          "name": "rectTouches",
           "line": 54
         },
         {
-          "name": "fencePadAnchor",
-          "line": 62
+          "name": "padObstacles",
+          "line": 55
         },
         {
-          "name": "nearbyFenceSlot",
+          "name": "fencePadAnchor",
           "line": 63
         },
         {
-          "name": "CONSTRUCTION_SLOTS",
-          "line": 76
+          "name": "nearbyFenceSlot",
+          "line": 64
         },
         {
-          "name": "constructionSlot",
+          "name": "CONSTRUCTION_SLOTS",
           "line": 77
         },
         {
-          "name": "plannedConstructionSlot",
+          "name": "constructionSlot",
           "line": 78
         },
         {
+          "name": "plannedConstructionSlot",
+          "line": 79
+        },
+        {
           "name": "isConstructionPad",
-          "line": 94
+          "line": 95
         },
         {
           "name": "arrangePads",
-          "line": 102
+          "line": 103
         },
         {
           "name": "padPos",
-          "line": 116
-        },
-        {
-          "name": "buildPads",
           "line": 117
         },
         {
-          "name": "padHold",
-          "line": 170
+          "name": "buildPads",
+          "line": 118
         },
         {
-          "name": "updatePads",
+          "name": "padHold",
           "line": 171
         },
         {
-          "name": "padIcon",
-          "line": 202
+          "name": "updatePads",
+          "line": 172
         },
         {
-          "name": "drawTapMark",
+          "name": "padIcon",
           "line": 203
         },
         {
-          "name": "padTitle",
+          "name": "drawTapMark",
           "line": 204
         },
         {
-          "name": "padReady",
-          "line": 225
+          "name": "padTitle",
+          "line": 205
         },
         {
-          "name": "drawPads",
+          "name": "padReady",
           "line": 226
         },
         {
+          "name": "drawPads",
+          "line": 227
+        },
+        {
           "name": "drawJoy",
-          "line": 250
+          "line": 256
         }
       ]
     },
@@ -1605,7 +1621,7 @@
       "id": "tutorial",
       "path": "src/tutorial.js",
       "topic": "튜토리얼·저장 복구·목표 화살표",
-      "bytes": 7545,
+      "bytes": 7536,
       "lines": 57,
       "symbols": [
         {
@@ -1686,7 +1702,7 @@
       "id": "raids",
       "path": "src/raids.js",
       "topic": "곰 생성·침입·시설 피해",
-      "bytes": 10718,
+      "bytes": 10700,
       "lines": 113,
       "symbols": [
         {
@@ -1819,7 +1835,7 @@
       "id": "ending",
       "path": "src/ending.js",
       "topic": "최종 보스 시작·엔딩·시네마틱",
-      "bytes": 6199,
+      "bytes": 6200,
       "lines": 71,
       "symbols": [
         {
@@ -1884,8 +1900,8 @@
       "id": "combat",
       "path": "src/combat.js",
       "topic": "영웅 공격·콤보·무기 표현",
-      "bytes": 20493,
-      "lines": 165,
+      "bytes": 20948,
+      "lines": 167,
       "symbols": [
         {
           "name": "heroUltFx",
@@ -1901,35 +1917,35 @@
         },
         {
           "name": "separateBear",
-          "line": 26
+          "line": 28
         },
         {
           "name": "updateBears",
-          "line": 39
+          "line": 41
         },
         {
           "name": "drawArrows",
-          "line": 119
+          "line": 121
         },
         {
           "name": "drawBearTargets",
-          "line": 132
+          "line": 134
         },
         {
           "name": "drawWpn",
-          "line": 136
+          "line": 138
         },
         {
           "name": "drawWeapon",
-          "line": 151
+          "line": 153
         },
         {
           "name": "drawWeaponBack",
-          "line": 159
+          "line": 161
         },
         {
           "name": "drawHeroGear",
-          "line": 161
+          "line": 163
         }
       ]
     },
@@ -1937,8 +1953,8 @@
       "id": "defence",
       "path": "src/defence.js",
       "topic": "마을별 방어·사냥꾼·수리·울타리 그리기",
-      "bytes": 46704,
-      "lines": 411,
+      "bytes": 47233,
+      "lines": 415,
       "symbols": [
         {
           "name": "TOWER",
@@ -2206,31 +2222,31 @@
         },
         {
           "name": "drawLoot",
-          "line": 378
+          "line": 382
         },
         {
           "name": "toScreen",
-          "line": 384
+          "line": 388
         },
         {
           "name": "edgeMark",
-          "line": 385
+          "line": 389
         },
         {
           "name": "drawTutEdge",
-          "line": 394
+          "line": 398
         },
         {
           "name": "ZBTN",
-          "line": 395
+          "line": 399
         },
         {
           "name": "drawZoomBtn",
-          "line": 396
+          "line": 400
         },
         {
           "name": "drawBearChip",
-          "line": 399
+          "line": 403
         }
       ]
     },
@@ -2384,8 +2400,8 @@
       "id": "story-intro",
       "path": "src/story-intro.js",
       "topic": "무문자 인트로·마을별 대화·읽음 저장",
-      "bytes": 10925,
-      "lines": 70,
+      "bytes": 11201,
+      "lines": 72,
       "symbols": [
         {
           "name": "TITLE",
@@ -2461,23 +2477,23 @@
         },
         {
           "name": "gearBtn",
-          "line": 55
+          "line": 57
         },
         {
           "name": "ngBtn",
-          "line": 56
+          "line": 58
         },
         {
           "name": "sfxBtn",
-          "line": 61
+          "line": 63
         },
         {
           "name": "syncSnd",
-          "line": 62
+          "line": 64
         },
         {
           "name": "zoomBtn",
-          "line": 68
+          "line": 70
         }
       ]
     },
@@ -2998,8 +3014,8 @@
       "id": "render-actors",
       "path": "src/render-actors.js",
       "topic": "일꾼·영웅·손님 아트",
-      "bytes": 38028,
-      "lines": 286,
+      "bytes": 38418,
+      "lines": 289,
       "symbols": [
         {
           "name": "drawVehicleUpgrade",
@@ -3038,60 +3054,64 @@
           "line": 84
         },
         {
+          "name": "HERO_SPRITE",
+          "line": 87
+        },
+        {
           "name": "drawHeroHunter",
-          "line": 86
+          "line": 88
         },
         {
           "name": "superWorkPose",
-          "line": 124
+          "line": 127
         },
         {
           "name": "superHands",
-          "line": 128
-        },
-        {
-          "name": "superNetBounds",
-          "line": 129
-        },
-        {
-          "name": "superNetFish",
-          "line": 130
-        },
-        {
-          "name": "drawMasterFisher",
           "line": 131
         },
         {
+          "name": "superNetBounds",
+          "line": 132
+        },
+        {
+          "name": "superNetFish",
+          "line": 133
+        },
+        {
+          "name": "drawMasterFisher",
+          "line": 134
+        },
+        {
           "name": "drawMasterLumber",
-          "line": 140
+          "line": 143
         },
         {
           "name": "drawSuper",
-          "line": 153
+          "line": 156
         },
         {
           "name": "superPlate",
-          "line": 180
+          "line": 183
         },
         {
           "name": "drawSuperFx",
-          "line": 188
+          "line": 191
         },
         {
           "name": "heroTier",
-          "line": 210
+          "line": 213
         },
         {
           "name": "drawHero",
-          "line": 211
+          "line": 214
         },
         {
           "name": "drawAgent",
-          "line": 220
+          "line": 223
         },
         {
           "name": "drawCustomer",
-          "line": 271
+          "line": 274
         }
       ]
     },
@@ -3099,8 +3119,8 @@
       "id": "render-scene",
       "path": "src/render-scene.js",
       "topic": "납품 매트·장면 합성·화면 안내",
-      "bytes": 6166,
-      "lines": 75,
+      "bytes": 6661,
+      "lines": 76,
       "symbols": [
         {
           "name": "drawMats",
@@ -3426,7 +3446,7 @@
       "id": "panels",
       "path": "src/panels.js",
       "topic": "상점 메뉴·목표·도감·일일 과제·레이더",
-      "bytes": 20012,
+      "bytes": 19967,
       "lines": 181,
       "symbols": [
         {
@@ -3701,7 +3721,7 @@
       "id": "loop",
       "path": "src/loop.js",
       "topic": "프레임·시뮬레이션·테스트 훅·시작 순서",
-      "bytes": 15241,
+      "bytes": 15323,
       "lines": 104,
       "symbols": [
         {

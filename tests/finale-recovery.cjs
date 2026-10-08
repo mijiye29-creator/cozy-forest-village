@@ -6,6 +6,8 @@ for(let i=0;i<100;i++)e.updateFinale(1);e.spawnFinaleBoss();assert.equal(e.BEARS
 e=load(e.saved);e.updateFinale(1);assert.equal(e.BEARS.length,1,'Repeated interruption remains recoverable');
 e=load();e.updateFinale(1);assert.equal(e.BEARS.length,0,'New games retain existing unlock rules');e.allMaxed=()=>true;e.updateFinale(1);assert.equal(e.BEARS.length,1,'Normal unlock still spawns once');
 for(const completed of [{finaleDone:1},{finaleDone:1,finaleSpawned:1}]){e=load(completed);e.restoreFinale();assert.equal(e.nodes.ending.hidden,false);assert.equal(e.TITLE,false);assert.equal(e.titleEl.hidden,true);assert.equal(e.nodes.quickDock.hidden,false);e.updateFinale(1);e.spawnFinaleBoss();assert.equal(e.BEARS.length,0,'Completed saves never spawn again');}
+// 2026-10-09: a player who chose 계속하기 resumes the same save without the ending dialog, and no boss returns.
+e=load({finaleDone:1,endingContinue:1});e.restoreFinale();assert.equal(e.nodes.ending.hidden,true,'Continue choice must not reopen the ending');e.updateFinale(1);e.spawnFinaleBoss();assert.equal(e.BEARS.length,0,'Continued saves never respawn the finale boss');
 // Existing cinematic timings remain intact; reload during any scene restores the trophy.
 for(const seconds of [1,4,8]){e=load({finaleDone:1,finaleSpawned:1});e.startEndingCinematic();for(let i=0;i<seconds*10;i++)e.updateEndingCinematic(.1);const resumed=load(e.S);resumed.restoreFinale();assert.equal(resumed.nodes.ending.hidden,false);}
 e=load({finaleDone:1});e.startEndingCinematic();for(let i=0;i<110;i++)e.updateEndingCinematic(.1);assert.equal(e.ENDSEQ,null);assert.equal(e.nodes.ending.hidden,false);

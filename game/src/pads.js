@@ -1,7 +1,8 @@
 /* ---------- pads: stand on one and your coins pour in until it is built ---------- */
 var PADLIST=[];
 var PAD_W=34,PAD_H=30,PAD_RADIUS=14;
-/* Stable upgrade slots sit in the walkways beside their own facilities. */
+/* Stable upgrade slots sit in the walkways beside their own facilities.
+   2026-10-09: each village's defence controls (watchtower, hire hunter, train hunter) share one row along the road. */
 var PAD_LAYOUT={
   shop_wood:{x:338,y:94},
   shopstaff_wood:{x:338,y:40},
@@ -11,9 +12,9 @@ var PAD_LAYOUT={
   hire_lumber:{x:210,y:260},
   wup_lumber:{x:210,y:320},
   site_f1:{x:150,y:390},
-  hire_hunter:{x:110,y:488},
-  wup_hunter:{x:110,y:540},
-  tower:{x:50,y:430},
+  hire_hunter:{x:94,y:446},
+  wup_hunter:{x:138,y:446},
+  tower:{x:50,y:446},
   pbelt_mill:{x:330,y:380},
   mill:{x:228,y:380},
   pst_mill:{x:192,y:380},
@@ -25,9 +26,9 @@ var PAD_LAYOUT={
   hire_fisher:{x:378,y:230},
   wup_fisher:{x:378,y:290},
   site_p1:{x:480,y:140},
-  hire_hunter2:{x:378,y:390},
-  wup_hunter2:{x:426,y:390},
-  vtower2:{x:410,y:430},
+  hire_hunter2:{x:418,y:446},
+  wup_hunter2:{x:458,y:446},
+  vtower2:{x:378,y:446},
   pbelt_smoke:{x:467,y:396},
   smoke:{x:604,y:396},
   pst_smoke:{x:508,y:396},
@@ -39,12 +40,12 @@ var PAD_LAYOUT={
   smelt:{x:974,y:210},
   pbelt_smelt:{x:810,y:210},
   pst_smelt:{x:867,y:210},
-  hire_hunter3:{x:1038,y:340},
-  wup_hunter3:{x:1038,y:400},
+  hire_hunter3:{x:730,y:446},
+  wup_hunter3:{x:770,y:446},
   elec:{x:974,y:407},
   pbelt_elec:{x:810,y:407},
   pst_elec:{x:867,y:407},
-  vtower3:{x:770,y:430},
+  vtower3:{x:690,y:446},
   vfence3:{x:720,y:578}
 };
 PAD_LAYOUT.fence_fix=PAD_LAYOUT.fence;PAD_LAYOUT.tower_fix=PAD_LAYOUT.tower;
@@ -229,20 +230,25 @@ function drawPads(floatingOnly){
     if(!!(p.perimeter&&p.perimeter.floating)!==!!floatingOnly)return;
     var dist=Math.hypot(a.x-p.x,a.y-p.y),active=!!p.active;if(!active&&dist>132&&!S.zoomOut&&!p.perimeter)return;
     var cost=p.d.cost(),paid=(S.pads&&S.pads[p.id])||0,ready=padReady(p),t=padTitle(p);if(p.perimeter&&p.perimeter.floating)t[1]=(p.d.fix==='fence'||p.d.vfRepair)?'눌러서 수리':'눌러서 강화';
-    var accent=p.id.indexOf('belt')>=0?'#78848d':p.id.indexOf('site_')===0?'#52745c':'#a08760';
-    g.save();g.translate(p.x,p.y);g.globalAlpha=active?1:.94;
-    g.fillStyle='rgba(41,54,45,.08)';rr(g,-16,-13,PAD_W,PAD_H,4);g.fill();
-    var pulse=ready ? .5+.5*Math.sin(time*7+p.x*.03) : 0;
-    if(ready){g.shadowColor=active?'#ffe568':'#57f59a';g.shadowBlur=active?10:3+pulse*4;}
-    g.fillStyle=ready?(active?'#ffe878':'#65ed9a'):'#f29285';rr(g,-17,-15,PAD_W,PAD_H,4);g.fill();
-    g.shadowBlur=0;g.strokeStyle=ready?(active?'#bf7d13':'#187340'):'#a42e31';g.lineWidth=active?2:1.3;rr(g,-17,-15,PAD_W,PAD_H,4);g.stroke();
-    g.fillStyle=ready?'#ffdf5e':accent;rr(g,-10,-12,20,2.2,1);g.fill();
-    g.textAlign='center';g.textBaseline='middle';g.font='800 6px sans-serif';g.fillStyle='#344b40';g.fillText(t[0],0,-6,30);
-    g.font='700 5.3px sans-serif';g.fillStyle='#285340';g.fillText(t[1],0,1,30);
-    g.font='900 6.3px sans-serif';g.fillStyle=ready?'#16502c':'#792c2c';g.fillText('₩ '+fmt(Math.ceil(Math.max(0,cost-paid))),0,9,30);
-    if(paid>0){var progress=Math.min(1,paid/Math.max(1,cost));g.fillStyle='#72562c';rr(g,-14,12,28,3,1.5);g.fill();g.fillStyle='#ffe76c';rr(g,-14,12,28*progress,3,1.5);g.fill();g.strokeStyle='rgba(255,243,169,'+(.65+.3*Math.sin(time*20))+')';g.lineWidth=2;rr(g,-18,-16,36,32,5);g.stroke();}
-    if(ready&&!p.held){g.fillStyle='#fff6bd';g.beginPath();g.moveTo(11,-11);g.lineTo(15,-15);g.lineTo(19,-11);g.lineTo(16,-11);g.lineTo(16,-7);g.lineTo(14,-7);g.lineTo(14,-11);g.fill();}
-    if(p.held){g.fillStyle='#52745c';g.beginPath();g.arc(14,-12,3.5,0,7);g.fill();g.fillStyle='#fff';g.font='5px sans-serif';g.fillText('✓',14,-12);}
+    /* 2026-10-09 one consistent tile: cream base, category band with icon, one-line title, price chip.
+       Not-yet-affordable pads are muted (no alarm red); affordable ones glow and show a bouncing arrow. */
+    var cat=p.id.indexOf('belt')>=0?'#6f7f8c':(/fish|p1|hunter2|smoke|vtower2|vfence2/.test(p.id)?'#3f7fb8':(/m1|miner|iron|smelt|elec|hunter3|vtower3|vfence3/.test(p.id)?'#8a6a4a':(/fence|tower/.test(p.id)?'#b0563f':'#4f9a6a')));
+    var price=Math.ceil(Math.max(0,cost-paid)),bob=Math.sin(time*5+p.x*.05);
+    g.save();g.translate(p.x,p.y);g.globalAlpha=(active?1:.96)*(ready||paid>0?1:.82);
+    g.fillStyle='rgba(41,54,45,.14)';g.beginPath();g.ellipse(0,14,17,3.4,0,0,7);g.fill();
+    if(ready){g.shadowColor=active?'#ffd84a':'#8ff0b0';g.shadowBlur=active?12:5+2*bob;}
+    g.fillStyle=ready?'#fff8e2':'#f1eadc';rr(g,-17,-15,PAD_W,PAD_H,7);g.fill();g.shadowBlur=0;
+    g.save();rr(g,-17,-15,PAD_W,PAD_H,7);g.clip();g.fillStyle=cat;g.fillRect(-17,-15,PAD_W,9.5);g.fillStyle='rgba(255,255,255,.18)';g.fillRect(-17,-15,PAD_W,2.2);g.restore();
+    g.strokeStyle=ready?(active?'#d99a1c':'#3f9a5e'):'#bfae92';g.lineWidth=active?1.8:1.1;rr(g,-17,-15,PAD_W,PAD_H,7);g.stroke();
+    g.textAlign='center';g.textBaseline='middle';
+    g.font='7px sans-serif';g.fillText(padIcon(p),-11,-10.2);
+    g.font='800 5.4px sans-serif';g.fillStyle='#ffffff';g.fillText(t[0],3,-10.2,24);
+    g.font='700 5.2px sans-serif';g.fillStyle='#3a4a3f';g.fillText(t[1],0,-0.8,31);
+    g.fillStyle=ready?'#3f9a5e':'#a3947c';rr(g,-13.5,4.2,27,8.2,4.1);g.fill();
+    if(paid>0){var progress=Math.min(1,paid/Math.max(1,cost));g.save();rr(g,-13.5,4.2,27,8.2,4.1);g.clip();g.fillStyle='#f2c14e';g.fillRect(-13.5,4.2,27*progress,8.2);g.restore();g.strokeStyle='rgba(255,236,150,'+(.6+.35*Math.sin(time*20))+')';g.lineWidth=1.6;rr(g,-18.5,-16.5,37,33,8);g.stroke();}
+    g.font='900 5.8px sans-serif';g.fillStyle='#ffffff';g.fillText('₩ '+fmt(price),0,8.4,26);
+    if(ready&&!p.held){var ay=-20-Math.abs(bob)*2.4;g.fillStyle='#ffd84a';g.strokeStyle='#a8741a';g.lineWidth=.8;g.beginPath();g.moveTo(-3.4,ay);g.lineTo(3.4,ay);g.lineTo(0,ay+4.2);g.closePath();g.fill();g.stroke();}
+    if(p.held){g.fillStyle='#3f9a5e';g.beginPath();g.arc(14,-13,3.6,0,7);g.fill();g.fillStyle='#fff';g.font='800 5px sans-serif';g.fillText('✓',14,-13);}
     g.restore();
   });
 }

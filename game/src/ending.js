@@ -19,12 +19,12 @@ function spawnFinaleBoss(){
   var fb={x:ent.x,y:ent.y,side:'top',ex:ent.ex,ey:ent.ey,stole:0,tgt:{kind:'purse'},state:'in',hp:hp,max:hp,boss:true,king:true,finale:true,t:0,flash:0,dir:1,bob:0,kx:0,hitT:0,swipeT:1,dmg:0,swipe:0,climb:0,homeY:HT+16,roar:3,roarMax:3};
   BEARS.push(fb);if(typeof actionBoss==='function')actionBoss();S.finaleSpawned=1;save();sfx('horn');flash=.6;shake(1);
   STAGEBAN={t:4,max:4,text:'👑 세 마을의 불빛을 본 대왕곰!',sub:'숲·호수·광산의 사냥꾼이 함께 막아내요'};
-  addFloat(MX/2,120,'🐻‍❄️👑 끝판왕 북극곰이 나타났어요!','#ffe27a');
+  addFloat(MX/2,120,'🐻👑 끝판왕 반달곰이 나타났어요!','#ffe27a');
 }
 function showEnding(){var el=document.getElementById('ending');if(el)el.hidden=false;sfx('chime');flash=.5;shake(.6);}
 function playEndingFilm(){var frames=Array.isArray(window.ENDING_SCENES)?window.ENDING_SCENES:[];if(frames.length===3&&typeof filmStart==='function')filmStart(frames,{video:'ending',done:showEnding});else showEnding();}
 function hasFinaleBoss(){return BEARS.some(function(b){return b.finale&&b.state!=='dead'&&b.state!=='out';});}
-function restoreFinale(){if(S.finaleDone){TITLE=false;titleEl.hidden=true;document.getElementById('quickDock').hidden=false;showEnding();}}
+function restoreFinale(){if(S.finaleDone&&!S.endingContinue){TITLE=false;titleEl.hidden=true;document.getElementById('quickDock').hidden=false;showEnding();}}
 var finaleT=1;
 function updateFinale(dt){finaleT-=dt;if(finaleT>0)return;finaleT=1;if(!S.finaleDone&&!hasFinaleBoss()&&(S.finaleSpawned||allMaxed()))spawnFinaleBoss();}
 /* v87 (director): a short cinematic slideshow - blizzard, bear invasion, village saved - plays before the trophy screen */
@@ -53,7 +53,7 @@ function drawEndingCinematic(){
     g.fillStyle='#ff3b4a';g.beginPath();g.arc(104,-58,3,0,7);g.arc(112,-60,3,0,7);g.fill();
     g.restore();
     g.strokeStyle='rgba(255,180,180,.4)';g.lineWidth=2;for(var r=0;r<3;r++){g.beginPath();g.arc(bx+70,by0-60,30+r*18+(time*60)%18,0,7);g.stroke();}
-    capt='🐻‍❄️ 거대한 대장곰이 쳐들어와요!';
+    capt='🐻 거대한 대장곰이 쳐들어와요!';
   }else{
     var gr3=g.createLinearGradient(0,0,0,SH);gr3.addColorStop(0,'#ffd98a');gr3.addColorStop(.55,'#ffb25e');gr3.addColorStop(1,'#6fae55');g.fillStyle=gr3;g.fillRect(0,0,W,SH);
     var vy=SH*.72;g.fillStyle='rgba(60,40,20,.85)';

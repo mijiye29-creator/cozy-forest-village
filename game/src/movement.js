@@ -120,18 +120,18 @@ function stepPlayerFree(a,dt){
   if(!joy.on&&a.tap&&a.path.length){followPath(a,dt);a.moving=true;a.mv=true;return;}
   if(!joy.on&&a.tap){var tdx=a.tap.x-a.x,tdy=a.tap.y-a.y,td=Math.hypot(tdx,tdy);
     if(td<2.5){a.tap=null;a.moving=false;}
-    else{release(a);var tsp=Math.min(td,speedOf(a)*1.2*dt),tvx=tdx/td*tsp,tvy=tdy/td*tsp,ok=false;
+    else{release(a);var tsp=Math.min(td,speedOf(a)*1.2*(a.rampK=Math.min(1,(a.rampK||0)+dt*5),.45+.55*(1-(1-a.rampK)*(1-a.rampK)))*dt),tvx=tdx/td*tsp,tvy=tdy/td*tsp,ok=false;
       if(walkXY(a.x+tvx,a.y)){a.x+=tvx;ok=true;}if(walkXY(a.x,a.y+tvy)){a.y+=tvy;ok=true;}
       if(!ok||(Math.abs(tvx)<.01&&Math.abs(tvy)<.01)){a.tapStuck+=dt;if(a.tapStuck>.35)a.tap=null;}else a.tapStuck=0;
       if(Math.abs(tvx)>.05)a.dir=tvx>0?1:-1;a.mv=true;a.bob+=dt*13;a.moving=true;return;}}
   if(joy.on&&Math.hypot(joy.dx,joy.dy)>2*screenUnit){
     release(a);
-    var d=Math.hypot(joy.dx,joy.dy),k=Math.min(1,Math.sqrt(d/(SENS_D[S.sens==null?1:S.sens]*screenUnit))),sp=speedOf(a)*1.2*k*dt,vx=joy.dx/d*sp,vy=joy.dy/d*sp;
+    var d=Math.hypot(joy.dx,joy.dy),k=Math.min(1,Math.sqrt(d/(SENS_D[S.sens==null?1:S.sens]*screenUnit))),sp=speedOf(a)*1.2*k*(a.rampK=Math.min(1,(a.rampK||0)+dt*5),.45+.55*(1-(1-a.rampK)*(1-a.rampK)))*dt,vx=joy.dx/d*sp,vy=joy.dy/d*sp;
     var mvd=false;if(walkXY(a.x+vx,a.y)){a.x+=vx;mvd=true;}if(walkXY(a.x,a.y+vy)){a.y+=vy;mvd=true;}
     /* v57: if the hero stands on a spot it may not walk on (e.g. resumed onto a pad edge or a closed tile) it could never move again - hop to the nearest free spot */
     if(!mvd&&!walkXY(a.x,a.y)){a.stuckT=(a.stuckT||0)+dt;if(a.stuckT>.25){a.stuckT=0;unstick(a);}}else a.stuckT=0;
     if(Math.abs(vx)>.05)a.dir=vx>0?1:-1;a.mv=true;a.bob+=dt*13*Math.max(.5,k);a.moving=true;return;}
-  a.moving=false;
+  a.moving=false;a.rampK=0; /* 2026-10-09: hero eases into a walk over ~0.2 s (rampK); stopping stays instant */
   if(tutNoGather()){release(a);return;}
   /* standing still: chop / fish the nearest thing within reach */
   var mt=tileOf(a),mst=mt?siteOfTile(mt.c,mt.r):null,mto=mt?siteTileObj(mt.c,mt.r):null,inSite=mst&&owned(mst.id)&&mto&&!mto.store&&!mto.pad;

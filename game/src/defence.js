@@ -307,7 +307,11 @@ function drawBear(b){
   if(b.state!=='dead'){var pr=(time*1.6)%1,pc=b.king?'214,52,70':'232,38,48';
     g.strokeStyle='rgba('+pc+',.95)';g.lineWidth=3;g.beginPath();g.arc(0,-14*s,13*s+Math.sin(time*5)*1.6*s,0,7);g.stroke();
     g.strokeStyle='rgba('+pc+','+(0.7*(1-pr))+')';g.lineWidth=2.2;g.beginPath();g.arc(0,-14*s,10*s+pr*22*s,0,7);g.stroke();}
+  /* 2026-10-09 impact on the 3D bear: squash and lean back on a hit, then a white flash on top of the sprite */
+  var sq=b.state!=='dead'&&b.squashT>0?b.squashT/.18:0;if(sq>0){g.rotate(-b.dir*.12*sq);g.scale(1+.14*sq,1-.12*sq);}
+  if(b.state==='dead'&&spriteReady(b.king?'boss_bear':'polar_bear'))g.rotate(-b.dir*.6*Math.min(1,b.t*3));
   var rendered=drawSprite(g,b.king?'boss_bear':'polar_bear',b.state==='dead'||b.hurtT>0?'hurt':(b.state==='attack'?'attack':b.roar>0||b.state==='wait'?'idle':'walk'),time+b.bob*.1,0,0,SPRITE_PPU*(b.king?s/2.1:s),b.dir>0);
+  if(rendered&&b.flash>0){g.globalCompositeOperation='lighter';drawSprite(g,b.king?'boss_bear':'polar_bear','hurt',0,0,0,SPRITE_PPU*(b.king?s/2.1:s),b.dir>0,Math.min(1,b.flash/.2)*.85);g.globalCompositeOperation='source-over';}
   if(!rendered){
   g.scale(b.dir*s,s);
   if(b.state==='dead'){g.rotate(-.5*Math.min(1,b.t*3));}
@@ -398,14 +402,14 @@ function drawZoomBtn(){var g=ctx,b=ZBTN;g.fillStyle='rgba(0,0,0,.18)';rr(g,b.x+1
   g.font='700 14px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(S.zoomOut?'🔍':'🗺️',b.x+b.w/2,b.y+b.h/2+1);}
 function drawBearChip(){
   if(tutOn())return;var g=ctx,lb=liveBears(),lab,s,warn=false,col;
-  if(isWinter()){s=Math.ceil(winterLeft());lab=(lb.length?'🐻‍❄️ 곰 습격 중! ':'🐻‍❄️ 습격 시간 ')+'끝까지 '+Math.floor(s/60)+':'+('0'+s%60).slice(-2);col=lb.length?'rgba(214,52,70,.95)':'rgba(47,104,160,.93)';warn=lb.length>0;}
-  else{s=Math.ceil(toWinter());warn=s<=30;lab=warn?'⚠️ 곧 곰 습격! '+Math.floor(s/60)+':'+('0'+s%60).slice(-2):'🐻‍❄️ 곰 습격까지 '+Math.floor(s/60)+':'+('0'+s%60).slice(-2);col=warn?'rgba(214,52,70,.96)':'rgba(34,53,43,.82)';}
+  if(isWinter()){s=Math.ceil(winterLeft());lab=(lb.length?'🐻 곰 습격 중! ':'🐻 습격 시간 ')+'끝까지 '+Math.floor(s/60)+':'+('0'+s%60).slice(-2);col=lb.length?'rgba(214,52,70,.95)':'rgba(47,104,160,.93)';warn=lb.length>0;}
+  else{s=Math.ceil(toWinter());warn=s<=30;lab=warn?'⚠️ 곧 곰 습격! '+Math.floor(s/60)+':'+('0'+s%60).slice(-2):'🐻 곰 습격까지 '+Math.floor(s/60)+':'+('0'+s%60).slice(-2);col=warn?'rgba(214,52,70,.96)':'rgba(34,53,43,.82)';}
   var fs=warn?20:16,pul=warn?1+.07*Math.abs(Math.sin(time*6)):1,shk=warn&&!isWinter()&&s<=10?Math.sin(time*42)*2.2:(warn?Math.sin(time*20)*.8:0);
   if(warn&&!isWinter()&&s<=10&&s!==drawBearChip.last){drawBearChip.last=s;sfx('tap');}
   /* v64: the countdown text now lives in the header (#bearChip, filled by refreshUI); only the warning glow and off-screen arrows stay on the map */
   if(warn&&!isWinter()){var va=.12+.1*Math.sin(time*6);var vg=g.createRadialGradient(W/2,SH/2,Math.min(W,SH)*.42,W/2,SH/2,Math.max(W,SH)*.72);vg.addColorStop(0,'rgba(214,52,70,0)');vg.addColorStop(1,'rgba(214,52,70,'+va+')');g.fillStyle=vg;g.fillRect(0,0,W,SH);}
   /* off-screen pointer */
   var groups={};lb.forEach(function(b){var p=toScreen(b.x,b.y),unit=screenUnit||1;if(p.x>=24*unit&&p.x<=W-24*unit&&p.y>=80*unit&&p.y<=SH-88*unit)return;var dx=p.x-W/2,dy=p.y-SH/2,key=Math.abs(dx/W)>Math.abs(dy/SH)?(dx<0?'left':'right'):(dy<0?'top':'bottom');var q=groups[key]||(groups[key]={x:0,y:0,n:0});q.x+=b.x;q.y+=b.y;q.n++;});
-  Object.keys(groups).forEach(function(k){var q=groups[k];edgeMark(q.x/q.n,q.y/q.n,'🐻‍❄️','#b75e4a',true,q.n);});
+  Object.keys(groups).forEach(function(k){var q=groups[k];edgeMark(q.x/q.n,q.y/q.n,'🐻','#b75e4a',true,q.n);});
 }
 
