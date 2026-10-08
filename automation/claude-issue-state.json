@@ -334,23 +334,43 @@
           "body_sha256": "f74948be485c084d4c263a7c3c950e316484566bfcdd66faefd7847880886c71"
         }
       ],
-      "status": "assets_integrated_code_verified",
-      "implementation_commit": "47f2e6020a1dc9ef4fe0537f29a5d2a9aad4e487",
+      "status": "expanded_source_assets_and_videos_integrated",
+      "implementation_commit": "2e800eebfca6fcf2ab1282cef29e0efa830557ae",
       "continue_pending_work": false,
-      "notes": "사용자의 원천 데이터 활용 지시로 Claude GLB에서 만든 atlas/WebP를 캐릭터·시설·곰·일반 나무/바위에 통합. 지연 로드·최대2병렬·이미지 오류 fallback·화면 밖 culling·해시 버전. 이름/가방/HP/자원 진행/상품/수리·레벨 표시 유지. 상위 차량/슈퍼·희귀 자원 고유 외형 유지. 직접14개 코드 검사·native Canvas 실제 렌더 오류0. 실기기FPS/브라우저/전체보스 미실시. 신규 보상·경제 규칙과 영상 대안은 별도 제안 보류.",
+      "notes": "New user material-upgrade request: expanded Claude source-render integration plus intro/ending movies, image fallback for blocked playback/save-data/reduced-motion, snow/amber palette. Direct Chromium validates supplied source renders and movies, natural ending completion, cleanup, source-sheet failures, save/story and all-town render. Latest gameplay/economy unchanged. Optional thrill rewards remain separate proposals.",
       "pending": [
         "physical_device_fps",
-        "direct_browser_sprite_qa",
         "full_boss_playthrough",
-        "optional_video_and_thrill_proposals"
+        "optional_thrill_reward_design"
       ],
       "history": [
         {
           "status": "reviewed_proposal_deferred",
           "notes": "이번 #7 구현 중 새로 등록된 디자인/기능 제안. 원천 31종/atlas/영상 추가 커밋과 본문/댓글 확인. 기존 정점 기반 3D와 컬러 디자인 유지. 영상은 #7 이미지 플레이어의 대안이며 자동 재생/데이터 절약 검증 후 별도 통합 후보. 긴급 주문/피버/상자 보상은 기존 게임 규칙·경제 변경이므로 수퍼바이저 판단으로 보류: 수입 정의·처리량 단위·보상15% 상한/저장 복구의 별도 설계·검증 필요. QA 버그 수정으로 처리하지 않음. 전체 구현 완료나 실기기60fps 통과로 표시하지 않는다.",
           "implementation_commit": null
+        },
+        {
+          "status": "assets_integrated_code_verified",
+          "implementation_commit": "47f2e6020a1dc9ef4fe0537f29a5d2a9aad4e487",
+          "notes": "사용자의 원천 데이터 활용 지시로 Claude GLB에서 만든 atlas/WebP를 캐릭터·시설·곰·일반 나무/바위에 통합. 지연 로드·최대2병렬·이미지 오류 fallback·화면 밖 culling·해시 버전. 이름/가방/HP/자원 진행/상품/수리·레벨 표시 유지. 상위 차량/슈퍼·희귀 자원 고유 외형 유지. 직접14개 코드 검사·native Canvas 실제 렌더 오류0. 실기기FPS/브라우저/전체보스 미실시. 신규 보상·경제 규칙과 영상 대안은 별도 제안 보류."
         }
-      ]
+      ],
+      "own_validation": "14 code checks; actual Chromium source video playback/seek-to-natural-end/skip, blocked-media fallback, four-viewport sprite/level design, nine-fish net, save/story smoke; device FPS/full boss unrun"
+    },
+    "9": {
+      "title": "[클로드 제안] 3D 캐릭터·시설 스프라이트 런타임 연결 (새 17종 포함, 4마을은 모델만)",
+      "updated_at": "2026-10-08T16:14:44Z",
+      "body_sha256": "fcbb910e386927ca96529f1602cadade5c887e916bc707e28f49f9d0ae0162c7",
+      "input_sha256": "261cbb5d9bec493d1ce418377bf2ab5f4c2e3dfc670b7955f6d5bdf8f3cd737f",
+      "comment_ids": [],
+      "comment_versions": [],
+      "github_state": "open",
+      "status": "implemented_code_and_browser_verified",
+      "implementation_commit": "2e800eebfca6fcf2ab1282cef29e0efa830557ae",
+      "request_type": "asset_integration",
+      "continue_pending_work": false,
+      "notes": "Imported Claude PR #10 asset/handoff changes from 80d1565 without replacing newer main game code. Connected customer/staff/vehicles/workshop/warehouse/stalls/board, derived master body variants for exact two-hand axe/net grips. Original 48 models retained, 6 village-four models dormant. Existing state/overlays/fallback retained. Actual Chromium movies/source sprites/failure fallback verified. No external issue comment/close or device FPS/full boss claim.",
+      "own_validation": "14 code checks; actual Chromium source video playback/seek-to-natural-end/skip, blocked-media fallback, four-viewport sprite/level design, nine-fish net, save/story smoke; device FPS/full boss unrun"
     }
   },
   "input_format": "sha256(UTF-8 JSON, sorted keys, compact separators: number,title,body,state,updated_at,comments[id,body,updated_at])",
