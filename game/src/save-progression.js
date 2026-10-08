@@ -75,7 +75,7 @@ function siteScore(){var n=0;SITES.forEach(function(st){n+=siteLv(st.id);});retu
 /* v75: running totals for today's goals (new save field S.stat - older saves start from zero) */
 function stat(k,n){if(!S.stat)S.stat={};S.stat[k]=(S.stat[k]||0)+(n||0);}
 var RESETTING=false;
-function save(){if(RESETTING)return;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function save(){if(RESETTING)return;try{saveDefenseState();localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function startOver(){try{localStorage.setItem(KEY+'-bak-reset',JSON.stringify(S));localStorage.removeItem(KEY);}catch(e){}RESETTING=true;location.reload();}
 function ss(line,id){return S.ss[line][id]||0;}
 function addSs(line,id,n){S.ss[line][id]=ss(line,id)+n;}

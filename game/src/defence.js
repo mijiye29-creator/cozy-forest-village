@@ -17,6 +17,31 @@ function fenceMax(){return fenceHpAt(S.fence||0);}
 function fenceHpAt(L){return 80+90*L+(L>=3?70*(L-2):0);}
 function towerMax(){var L=S.tower||0;return 50+40*L+(L>=3?40*(L-2):0);}
 var FENCEHP=0,TOWERHP=0,VFHP={},VFBREACH={};
+var DEFENSE_READY=false;
+/* Optional snapshots preserve damage across saves without changing seasonal repair rules. */
+function defenseHP(value,max,broken){return broken?0:(typeof value==='number'&&isFinite(value)&&value>0?Math.min(max,value):max);}
+function refundClearedDefensePads(){
+  if(!S.pads)return;
+  ['fence_fix','tower_fix','vfence_fix2','vfence_fix3'].forEach(function(id){var broken=id==='fence_fix'?S.fenceDown:(id==='tower_fix'?S.towerDown:VFBREACH[id.slice(-1)]),paid=S.pads[id];
+    if(!broken&&typeof paid==='number'&&isFinite(paid)&&paid>0){S.coins+=paid;delete S.pads[id];}});
+}
+function restoreDefenseState(){
+  var d=S.defenseState;if(!d||typeof d!=='object'||Array.isArray(d)||d.version!==1)d={};
+  FENCEHP=S.fence?defenseHP(d.fenceHP,fenceMax(),S.fenceDown):0;
+  TOWERHP=S.tower?defenseHP(d.towerHP,towerMax(),S.towerDown):0;
+  VFHP={};VFBREACH={};
+  [2,3].forEach(function(v){var n=d.breaches&&d.breaches[v],paid=S.pads&&S.pads['vfence_fix'+v];
+    /* A legacy paid repair proves a breach even when the old runtime flag was lost. */
+    var broken=fenceLvV(v)>0&&(n===1||n===true||(n===undefined&&typeof paid==='number'&&isFinite(paid)&&paid>0));
+    VFBREACH[v]=broken?1:0;VFHP[v]=fenceLvV(v)?defenseHP(d.villageHP&&d.villageHP[v],fMaxV(v),broken):0;});
+  refundClearedDefensePads();DEFENSE_READY=true;
+}
+function saveDefenseState(){
+  if(!DEFENSE_READY)return;
+  var d={version:1,fenceHP:S.fence?defenseHP(FENCEHP,fenceMax(),S.fenceDown):0,towerHP:S.tower?defenseHP(TOWERHP,towerMax(),S.towerDown):0,villageHP:{},breaches:{}};
+  [2,3].forEach(function(v){d.breaches[v]=VFBREACH[v]?1:0;d.villageHP[v]=fenceLvV(v)?defenseHP(VFHP[v],fMaxV(v),VFBREACH[v]):0;});
+  S.defenseState=d;
+}
 /* v63: village of a map x (1 forest, 2 lake, 3 mine) and its own wall */
 function villageAt(x){return x<STAGE_W[0]?1:(x<STAGE_W[1]?2:3);}
 function fenceLvV(v){return v===1?(S.fence||0):((S.vf&&S.vf[v])||0);}

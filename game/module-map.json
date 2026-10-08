@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "31a1c48088987c8d48e0f0b7885511233fdf1fd4ed4b7456277054fd745eecac",
+  "runtime_sha256": "aea227f2878831f567f38b89d15a6398e3e9f49f24a92777c828f9251dc8e3be",
   "modules": [
     {
       "id": "boot-errors",
@@ -226,7 +226,7 @@
       "id": "save-progression",
       "path": "src/save-progression.js",
       "topic": "저장 키·구형 저장 이관·마을 해금·성장 규칙",
-      "bytes": 16614,
+      "bytes": 16633,
       "lines": 158,
       "symbols": [
         {
@@ -1683,8 +1683,8 @@
       "id": "ending",
       "path": "src/ending.js",
       "topic": "최종 보스 시작·엔딩·시네마틱",
-      "bytes": 5618,
-      "lines": 68,
+      "bytes": 5928,
+      "lines": 70,
       "symbols": [
         {
           "name": "allMaxed",
@@ -1699,36 +1699,44 @@
           "line": 24
         },
         {
-          "name": "finaleT",
+          "name": "hasFinaleBoss",
           "line": 25
         },
         {
-          "name": "updateFinale",
+          "name": "restoreFinale",
           "line": 26
         },
         {
-          "name": "ENDSEQ",
+          "name": "finaleT",
+          "line": 27
+        },
+        {
+          "name": "updateFinale",
           "line": 28
         },
         {
-          "name": "startEndingCinematic",
-          "line": 29
-        },
-        {
-          "name": "updateEndingCinematic",
+          "name": "ENDSEQ",
           "line": 30
         },
         {
-          "name": "drawEndingCinematic",
+          "name": "startEndingCinematic",
+          "line": 31
+        },
+        {
+          "name": "updateEndingCinematic",
           "line": 32
         },
         {
+          "name": "drawEndingCinematic",
+          "line": 34
+        },
+        {
           "name": "heroHitFx",
-          "line": 67
+          "line": 69
         },
         {
           "name": "COMBO_N",
-          "line": 68
+          "line": 70
         }
       ]
     },
@@ -1736,7 +1744,7 @@
       "id": "combat",
       "path": "src/combat.js",
       "topic": "영웅 공격·콤보·무기 표현",
-      "bytes": 20387,
+      "bytes": 20448,
       "lines": 165,
       "symbols": [
         {
@@ -1789,8 +1797,8 @@
       "id": "defence",
       "path": "src/defence.js",
       "topic": "마을별 방어·사냥꾼·수리·울타리 그리기",
-      "bytes": 44543,
-      "lines": 382,
+      "bytes": 46250,
+      "lines": 407,
       "symbols": [
         {
           "name": "TOWER",
@@ -1861,208 +1869,228 @@
           "line": 19
         },
         {
-          "name": "villageAt",
-          "line": 21
+          "name": "DEFENSE_READY",
+          "line": 20
         },
         {
-          "name": "fenceLvV",
+          "name": "defenseHP",
           "line": 22
         },
         {
-          "name": "fenceUp",
+          "name": "refundClearedDefensePads",
           "line": 23
         },
         {
-          "name": "fMaxV",
-          "line": 24
-        },
-        {
-          "name": "fixDef",
-          "line": 25
-        },
-        {
-          "name": "FIXDEF",
-          "line": 27
-        },
-        {
-          "name": "fenceSlow",
+          "name": "restoreDefenseState",
           "line": 28
         },
         {
+          "name": "saveDefenseState",
+          "line": 39
+        },
+        {
+          "name": "villageAt",
+          "line": 46
+        },
+        {
+          "name": "fenceLvV",
+          "line": 47
+        },
+        {
+          "name": "fenceUp",
+          "line": 48
+        },
+        {
+          "name": "fMaxV",
+          "line": 49
+        },
+        {
+          "name": "fixDef",
+          "line": 50
+        },
+        {
+          "name": "FIXDEF",
+          "line": 52
+        },
+        {
+          "name": "fenceSlow",
+          "line": 53
+        },
+        {
           "name": "fenceSoft",
-          "line": 29
-        },
-        {
-          "name": "XTOWERS",
-          "line": 33
-        },
-        {
-          "name": "xtLv",
-          "line": 34
-        },
-        {
-          "name": "xTowerOn",
-          "line": 35
-        },
-        {
-          "name": "towerCount",
-          "line": 36
-        },
-        {
-          "name": "updateXTowers",
-          "line": 37
-        },
-        {
-          "name": "drawXTowers",
-          "line": 42
-        },
-        {
-          "name": "updateDefense",
-          "line": 43
-        },
-        {
-          "name": "hunterDmg",
           "line": 54
         },
         {
-          "name": "hunterSeparate",
-          "line": 56
-        },
-        {
-          "name": "stepLim",
+          "name": "XTOWERS",
           "line": 58
         },
         {
+          "name": "xtLv",
+          "line": 59
+        },
+        {
+          "name": "xTowerOn",
+          "line": 60
+        },
+        {
+          "name": "towerCount",
+          "line": 61
+        },
+        {
+          "name": "updateXTowers",
+          "line": 62
+        },
+        {
+          "name": "drawXTowers",
+          "line": 67
+        },
+        {
+          "name": "updateDefense",
+          "line": 68
+        },
+        {
+          "name": "hunterDmg",
+          "line": 79
+        },
+        {
+          "name": "hunterSeparate",
+          "line": 81
+        },
+        {
+          "name": "stepLim",
+          "line": 83
+        },
+        {
           "name": "stepHunter",
-          "line": 65
+          "line": 90
         },
         {
           "name": "drawBow",
-          "line": 108
+          "line": 133
         },
         {
           "name": "repTarget",
-          "line": 115
+          "line": 140
         },
         {
           "name": "repairs",
-          "line": 122
+          "line": 147
         },
         {
           "name": "repCost",
-          "line": 123
+          "line": 148
         },
         {
           "name": "repDef",
-          "line": 124
+          "line": 149
         },
         {
           "name": "doRepair",
-          "line": 125
+          "line": 150
         },
         {
           "name": "addRepair",
-          "line": 128
+          "line": 153
         },
         {
           "name": "drawTowerWpn",
-          "line": 136
+          "line": 161
         },
         {
           "name": "wallGaps",
-          "line": 168
+          "line": 193
         },
         {
           "name": "wallSegs",
-          "line": 170
+          "line": 195
         },
         {
           "name": "inGap",
-          "line": 171
+          "line": 196
         },
         {
           "name": "LOGC",
-          "line": 172
+          "line": 197
         },
         {
           "name": "LOCKC",
-          "line": 181
+          "line": 206
         },
         {
           "name": "SIGNP",
-          "line": 191
+          "line": 216
         },
         {
           "name": "drawOutskirts",
-          "line": 192
+          "line": 217
         },
         {
           "name": "drawLocked",
-          "line": 202
+          "line": 227
         },
         {
           "name": "drawSideFence",
-          "line": 212
+          "line": 237
         },
         {
           "name": "bannerLines",
-          "line": 221
+          "line": 246
         },
         {
           "name": "drawStageBanner",
-          "line": 224
+          "line": 249
         },
         {
           "name": "drawFence",
-          "line": 231
+          "line": 256
         },
         {
           "name": "drawFenceV",
-          "line": 232
-        },
-        {
-          "name": "fenceCracks",
           "line": 257
         },
         {
+          "name": "fenceCracks",
+          "line": 282
+        },
+        {
           "name": "towerBase",
-          "line": 262
+          "line": 287
         },
         {
           "name": "autoHunt",
-          "line": 268
+          "line": 293
         },
         {
           "name": "drawBear",
-          "line": 277
+          "line": 302
         },
         {
           "name": "drawLoot",
-          "line": 349
+          "line": 374
         },
         {
           "name": "toScreen",
-          "line": 355
+          "line": 380
         },
         {
           "name": "edgeMark",
-          "line": 356
+          "line": 381
         },
         {
           "name": "drawTutEdge",
-          "line": 365
+          "line": 390
         },
         {
           "name": "ZBTN",
-          "line": 366
+          "line": 391
         },
         {
           "name": "drawZoomBtn",
-          "line": 367
+          "line": 392
         },
         {
           "name": "drawBearChip",
-          "line": 370
+          "line": 395
         }
       ]
     },
@@ -3339,8 +3367,8 @@
       "id": "loop",
       "path": "src/loop.js",
       "topic": "프레임·시뮬레이션·테스트 훅·시작 순서",
-      "bytes": 13017,
-      "lines": 96,
+      "bytes": 13096,
+      "lines": 98,
       "symbols": [
         {
           "name": "last",

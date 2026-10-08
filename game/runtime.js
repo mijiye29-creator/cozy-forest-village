@@ -196,7 +196,7 @@ function siteScore(){var n=0;SITES.forEach(function(st){n+=siteLv(st.id);});retu
 /* v75: running totals for today's goals (new save field S.stat - older saves start from zero) */
 function stat(k,n){if(!S.stat)S.stat={};S.stat[k]=(S.stat[k]||0)+(n||0);}
 var RESETTING=false;
-function save(){if(RESETTING)return;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function save(){if(RESETTING)return;try{saveDefenseState();localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function startOver(){try{localStorage.setItem(KEY+'-bak-reset',JSON.stringify(S));localStorage.removeItem(KEY);}catch(e){}RESETTING=true;location.reload();}
 function ss(line,id){return S.ss[line][id]||0;}
 function addSs(line,id,n){S.ss[line][id]=ss(line,id)+n;}
@@ -1689,16 +1689,18 @@ function allMaxed(){
   return true;
 }
 function spawnFinaleBoss(){
-  S.finaleSpawned=1;save();
+  if(S.finaleDone||hasFinaleBoss())return;
   var fx0=Math.min(MX,fenceX()),ent=bearEntry('top',fx0),hp=350*bearMult();
   var fb={x:ent.x,y:ent.y,side:'top',ex:ent.ex,ey:ent.ey,stole:0,tgt:{kind:'purse'},state:'in',hp:hp,max:hp,boss:true,king:true,finale:true,t:0,flash:0,dir:1,bob:0,kx:0,hitT:0,swipeT:1,dmg:0,swipe:0,climb:0,homeY:HT+16,roar:3,roarMax:3};
-  BEARS.push(fb);sfx('horn');flash=.6;shake(1);
+  BEARS.push(fb);S.finaleSpawned=1;save();sfx('horn');flash=.6;shake(1);
   STAGEBAN={t:4,max:4,text:'👑 세 마을의 불빛을 본 대왕곰!',sub:'숲·호수·광산의 사냥꾼이 함께 막아내요'};
   addFloat(MX/2,120,'🐻‍❄️👑 끝판왕 북극곰이 나타났어요!','#ffe27a');
 }
 function showEnding(){var el=document.getElementById('ending');if(el)el.hidden=false;sfx('chime');flash=.5;shake(.6);}
+function hasFinaleBoss(){return BEARS.some(function(b){return b.finale&&b.state!=='dead'&&b.state!=='out';});}
+function restoreFinale(){if(S.finaleDone){TITLE=false;titleEl.hidden=true;document.getElementById('quickDock').hidden=false;showEnding();}}
 var finaleT=1;
-function updateFinale(dt){finaleT-=dt;if(finaleT>0)return;finaleT=1;if(!S.finaleDone&&!S.finaleSpawned&&allMaxed())spawnFinaleBoss();}
+function updateFinale(dt){finaleT-=dt;if(finaleT>0)return;finaleT=1;if(!S.finaleDone&&!hasFinaleBoss()&&(S.finaleSpawned||allMaxed()))spawnFinaleBoss();}
 /* v87 (director): a short cinematic slideshow - blizzard, bear invasion, village saved - plays before the trophy screen */
 var ENDSEQ=null;
 function startEndingCinematic(){ENDSEQ={scene:0,t:0,dur:[3.2,3.4,3.4]};flash=.6;shake(1);}
@@ -1785,9 +1787,9 @@ function updateBears(dt){
   var w0=winterStart(),prev=S.season||0;S.season=prev+(tutOn()?0:dt);
   if(prev<w0-20&&S.season>=w0-20){var aw=agents[0];addFloat(aw.x,aw.y-46,'⚠️ 곧 북극곰이 습격해요!','#dff4ff');sfx('chime');}
   if(prev<w0&&S.season>=w0){S.winters=(S.winters||0)+1;var nb=bearCap();bearHintT=time+3.5;raidQ=0;raidT=1;FENCEHP=S.fence&&!S.fenceDown?fenceMax():0;VFBREACH={};VFHP={2:fMaxV(2),3:fMaxV(3)};TOWERHP=S.tower&&!S.towerDown?towerMax():0;
-    flash=.4;sfx('horn');shake(.7);var aw2=agents[0];addFloat(aw2.x,aw2.y-46,'🐻‍❄️ 곰 습격! 북극곰이 아래에서 몰려와요','#dff4ff');
+    refundClearedDefensePads();flash=.4;sfx('horn');shake(.7);var aw2=agents[0];addFloat(aw2.x,aw2.y-46,'🐻‍❄️ 곰 습격! 북극곰이 아래에서 몰려와요','#dff4ff');
     if(!STAGEBAN)STAGEBAN={t:1.8,max:1.8,text:'🐻‍❄️ 북극곰 습격!',sub:'망루·사냥꾼이 막아요'};}
-  if(S.season>=seasonLen()){S.season=S.season%seasonLen();raidQ=0;VFBREACH={};var aw3=agents[0];addFloat(aw3.x,aw3.y-46,liveBears().length?'🛡️ 새로운 곰은 안 와요 · 남은 곰을 무찔러요':'🛡️ 곰 습격이 끝났어요','#c9f5c0');}
+  if(S.season>=seasonLen()){S.season=S.season%seasonLen();raidQ=0;VFBREACH={};refundClearedDefensePads();var aw3=agents[0];addFloat(aw3.x,aw3.y-46,liveBears().length?'🛡️ 새로운 곰은 안 와요 · 남은 곰을 무찔러요':'🛡️ 곰 습격이 끝났어요','#c9f5c0');}
   if(isWinter()){raidT-=dt;var rp=raidP();
     if(rp>=.7&&RUSHMSG!==S.winters){RUSHMSG=S.winters;STAGEBAN={t:2.2,max:2.2,text:'🔥 곰 떼가 몰려와요!',sub:'습격 막바지 · 끝까지 버텨요'};bearBanT=time;shake(.6);flash=Math.max(flash,.3);sfx('horn');}
     if(raidT<=0){raidT=raidGap();var capN=bearCapNow();if(liveBears().length<capN){spawnBear();
@@ -1806,7 +1808,7 @@ function updateBears(dt){
     if(b.climb>0){b.climb-=dt;b.bob+=dt*3;b.swipe=Math.max(b.swipe,.3);}
     if(b.state==='fence'){b.dir=b.side==='right'?-1:1;b.swipeT-=dt;b.bob+=dt*4;
       var fv=b.wallV||villageAt(b.x);if(fv!==1){if(!fenceUp(fv)){b.state='in';}else if(b.swipeT<=0){b.swipeT=fenceHold(fv);b.swipe=1;b.ultSwipe=false;VFHP[fv]=(VFHP[fv]||fMaxV(fv))-(b.king?16:(b.boss?9:5))*1.4*bearStrikeMult()*fenceSoft(fv);sfx('chop',.2);shake(.15);burst(b.x,b.side==='bottom'?H+6:b.y,'#b98f5e',5,false);
-        if(VFHP[fv]<=0){VFHP[fv]=0;VFBREACH[fv]=1;flash=.3;shake(.8);sfx('nope');addFloat(b.x,H-40,'💥 '+(fv===2?'호수':'광산')+' 마을 성벽이 뚫렸어요!','#ffb3b3');burst(b.x,H-6,'#b98f5e',20,false);}}}
+        if(VFHP[fv]<=0){VFHP[fv]=0;VFBREACH[fv]=1;flash=.3;shake(.8);sfx('nope');addFloat(b.x,H-40,'💥 '+(fv===2?'호수':'광산')+' 마을 성벽이 뚫렸어요!','#ffb3b3');burst(b.x,H-6,'#b98f5e',20,false);save();}}}
       else if(!S.fence||S.fenceDown){b.state='in';}
       else if(b.swipeT<=0){b.swipeT=fenceHold(1);b.swipe=1;b.ultSwipe=false;FENCEHP-=(b.king?16:(b.boss?9:5))*1.4*bearStrikeMult()*fenceSoft(1);sfx('chop',.2);shake(b.boss?.3:.15);burst(b.x,b.side==='bottom'?H+6:b.y,'#b98f5e',5,false);
         if(FENCEHP<=0){FENCEHP=0;S.fenceDown=1;flash=.35;shake(1);sfx('nope');addFloat(MX/2,H-40,'💥 울타리가 부서졌어요! 수리해요','#ffb3b3');burst(MX/2,H-6,'#b98f5e',24,false);save();}}}
@@ -1925,6 +1927,31 @@ function fenceMax(){return fenceHpAt(S.fence||0);}
 function fenceHpAt(L){return 80+90*L+(L>=3?70*(L-2):0);}
 function towerMax(){var L=S.tower||0;return 50+40*L+(L>=3?40*(L-2):0);}
 var FENCEHP=0,TOWERHP=0,VFHP={},VFBREACH={};
+var DEFENSE_READY=false;
+/* Optional snapshots preserve damage across saves without changing seasonal repair rules. */
+function defenseHP(value,max,broken){return broken?0:(typeof value==='number'&&isFinite(value)&&value>0?Math.min(max,value):max);}
+function refundClearedDefensePads(){
+  if(!S.pads)return;
+  ['fence_fix','tower_fix','vfence_fix2','vfence_fix3'].forEach(function(id){var broken=id==='fence_fix'?S.fenceDown:(id==='tower_fix'?S.towerDown:VFBREACH[id.slice(-1)]),paid=S.pads[id];
+    if(!broken&&typeof paid==='number'&&isFinite(paid)&&paid>0){S.coins+=paid;delete S.pads[id];}});
+}
+function restoreDefenseState(){
+  var d=S.defenseState;if(!d||typeof d!=='object'||Array.isArray(d)||d.version!==1)d={};
+  FENCEHP=S.fence?defenseHP(d.fenceHP,fenceMax(),S.fenceDown):0;
+  TOWERHP=S.tower?defenseHP(d.towerHP,towerMax(),S.towerDown):0;
+  VFHP={};VFBREACH={};
+  [2,3].forEach(function(v){var n=d.breaches&&d.breaches[v],paid=S.pads&&S.pads['vfence_fix'+v];
+    /* A legacy paid repair proves a breach even when the old runtime flag was lost. */
+    var broken=fenceLvV(v)>0&&(n===1||n===true||(n===undefined&&typeof paid==='number'&&isFinite(paid)&&paid>0));
+    VFBREACH[v]=broken?1:0;VFHP[v]=fenceLvV(v)?defenseHP(d.villageHP&&d.villageHP[v],fMaxV(v),broken):0;});
+  refundClearedDefensePads();DEFENSE_READY=true;
+}
+function saveDefenseState(){
+  if(!DEFENSE_READY)return;
+  var d={version:1,fenceHP:S.fence?defenseHP(FENCEHP,fenceMax(),S.fenceDown):0,towerHP:S.tower?defenseHP(TOWERHP,towerMax(),S.towerDown):0,villageHP:{},breaches:{}};
+  [2,3].forEach(function(v){d.breaches[v]=VFBREACH[v]?1:0;d.villageHP[v]=fenceLvV(v)?defenseHP(VFHP[v],fMaxV(v),VFBREACH[v]):0;});
+  S.defenseState=d;
+}
 /* v63: village of a map x (1 forest, 2 lake, 3 mine) and its own wall */
 function villageAt(x){return x<STAGE_W[0]?1:(x<STAGE_W[1]?2:3);}
 function fenceLvV(v){return v===1?(S.fence||0):((S.vf&&S.vf[v])||0);}
@@ -4544,11 +4571,13 @@ window.addEventListener('pageshow',function(){last=performance.now();frameGate=l
 /* v56: crews already at the top level merge into their super worker on load */
 /* v57: start-up steps are guarded one by one so a single bad value can't stop the game loop from ever starting */
 function boot(name,fn){try{fn();}catch(e){var m=name+': '+(e&&e.message||e);if(!window.__bootErr)window.__bootErr=m;var t=document.getElementById('tinfo');if(t){t.hidden=false;t.textContent='⚠️ '+m;t.style.color='#b3263b';}var v=document.querySelector('#setp .sver');if(v)v.textContent='v103 · 오류 '+m.slice(0,70);}}
+boot('defence-save',restoreDefenseState);
 boot('merge',function(){['lumber','fisher','hunter','hunter2','hunter3','miner'].forEach(function(r){if(canMerge(r))mergeCrew(r,false);});S.w.forEach(function(g){if(g.super&&isHunter(g.role))g.name=SUPERNAME[g.role];});});
 boot('dex',function(){dexInit();DEXREADY=true;});boot('tab',applyTab);boot('ui',refreshUI);
 boot('fit',fit);boot('cam',function(){var pa=agents[0];Z=zoomTarget();camX=camClampX(pa.x-W/Z/2);camY=camClampY(pa.y-SH/Z*.5);});
 boot('refund',function(){if(S.refundN){addFloat(150,150,'💰+'+fmt(S.refundN),'#ffe27a',true);delete S.refundN;save();}});
 boot('spot',function(){var pa=agents[0];if(!walkXY(pa.x,pa.y))unstick(pa);});
+boot('ending-resume',restoreFinale);
 requestAnimationFrame(loop);
 })();
 

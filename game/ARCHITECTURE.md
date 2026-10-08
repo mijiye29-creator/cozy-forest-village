@@ -17,7 +17,7 @@ index.html은 화면 구조, styles/game.css는 화면 디자인이다. 34개 �
 | 저장·마을 해금 | save-progression.js | world.js, sites.js, upgrades.js | all |
 | 채집·일꾼·납품 | agents.js, sites.js | gear-economy.js, movement.js | all |
 | 벨트·생산·트럭 | conveyors.js, production.js | goods.js, upgrades.js, render-logistics.js | all |
-| 곰·전투·방어 | raids.js, combat.js, defence.js | ending.js, gear-economy.js | all |
+| 곰·전투·방어 | raids.js, combat.js, defence.js | ending.js, save-progression.js | combat |
 | 인트로·대사 | story-intro.js, game/intro-scenes.js | loop.js, game/styles/game.css | story |
 | 모바일·줌 | viewport.js, input.js | loop.js, panels.js, game/styles/game.css | movement |
 | 도감·일일 과제·레이더 | panels.js | goods.js, input.js, render-scene.js | all |
@@ -62,7 +62,8 @@ rg로 찾는다. 브라우저 개발자 도구는 runtime.js.map으로 원본 �
 
 ## 빌드와 검증
 
-- tests/run-code.cjs 그룹: all, tutorial, story, shop, movement, village.
+- tests/run-code.cjs 그룹: all, tutorial, story, shop, movement, village, combat.
+- 방어 손상은 선택 필드 S.defenseState로 저장한다. 새 진행 플래그는 런타임 실체 유실 시 복구 경로를 함께 검사한다.
 - build-game.cjs --check는 오래된 번들·소스맵·색인·캐시 버전을 실패 처리한다.
 - HTML의 runtime/CSS URL은 내용 해시를 포함해 변경 뒤 이전 캐시를 피한다.
 - tests/static-server.cjs는 실제 JS/CSS/이미지를 제공한다. 모든 요청에 HTML을 반환하지 않는다.

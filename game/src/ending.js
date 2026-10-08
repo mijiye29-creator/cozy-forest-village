@@ -14,16 +14,18 @@ function allMaxed(){
   return true;
 }
 function spawnFinaleBoss(){
-  S.finaleSpawned=1;save();
+  if(S.finaleDone||hasFinaleBoss())return;
   var fx0=Math.min(MX,fenceX()),ent=bearEntry('top',fx0),hp=350*bearMult();
   var fb={x:ent.x,y:ent.y,side:'top',ex:ent.ex,ey:ent.ey,stole:0,tgt:{kind:'purse'},state:'in',hp:hp,max:hp,boss:true,king:true,finale:true,t:0,flash:0,dir:1,bob:0,kx:0,hitT:0,swipeT:1,dmg:0,swipe:0,climb:0,homeY:HT+16,roar:3,roarMax:3};
-  BEARS.push(fb);sfx('horn');flash=.6;shake(1);
+  BEARS.push(fb);S.finaleSpawned=1;save();sfx('horn');flash=.6;shake(1);
   STAGEBAN={t:4,max:4,text:'👑 세 마을의 불빛을 본 대왕곰!',sub:'숲·호수·광산의 사냥꾼이 함께 막아내요'};
   addFloat(MX/2,120,'🐻‍❄️👑 끝판왕 북극곰이 나타났어요!','#ffe27a');
 }
 function showEnding(){var el=document.getElementById('ending');if(el)el.hidden=false;sfx('chime');flash=.5;shake(.6);}
+function hasFinaleBoss(){return BEARS.some(function(b){return b.finale&&b.state!=='dead'&&b.state!=='out';});}
+function restoreFinale(){if(S.finaleDone){TITLE=false;titleEl.hidden=true;document.getElementById('quickDock').hidden=false;showEnding();}}
 var finaleT=1;
-function updateFinale(dt){finaleT-=dt;if(finaleT>0)return;finaleT=1;if(!S.finaleDone&&!S.finaleSpawned&&allMaxed())spawnFinaleBoss();}
+function updateFinale(dt){finaleT-=dt;if(finaleT>0)return;finaleT=1;if(!S.finaleDone&&!hasFinaleBoss()&&(S.finaleSpawned||allMaxed()))spawnFinaleBoss();}
 /* v87 (director): a short cinematic slideshow - blizzard, bear invasion, village saved - plays before the trophy screen */
 var ENDSEQ=null;
 function startEndingCinematic(){ENDSEQ={scene:0,t:0,dur:[3.2,3.4,3.4]};flash=.6;shake(1);}

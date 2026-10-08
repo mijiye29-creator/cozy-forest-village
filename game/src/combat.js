@@ -42,9 +42,9 @@ function updateBears(dt){
   var w0=winterStart(),prev=S.season||0;S.season=prev+(tutOn()?0:dt);
   if(prev<w0-20&&S.season>=w0-20){var aw=agents[0];addFloat(aw.x,aw.y-46,'⚠️ 곧 북극곰이 습격해요!','#dff4ff');sfx('chime');}
   if(prev<w0&&S.season>=w0){S.winters=(S.winters||0)+1;var nb=bearCap();bearHintT=time+3.5;raidQ=0;raidT=1;FENCEHP=S.fence&&!S.fenceDown?fenceMax():0;VFBREACH={};VFHP={2:fMaxV(2),3:fMaxV(3)};TOWERHP=S.tower&&!S.towerDown?towerMax():0;
-    flash=.4;sfx('horn');shake(.7);var aw2=agents[0];addFloat(aw2.x,aw2.y-46,'🐻‍❄️ 곰 습격! 북극곰이 아래에서 몰려와요','#dff4ff');
+    refundClearedDefensePads();flash=.4;sfx('horn');shake(.7);var aw2=agents[0];addFloat(aw2.x,aw2.y-46,'🐻‍❄️ 곰 습격! 북극곰이 아래에서 몰려와요','#dff4ff');
     if(!STAGEBAN)STAGEBAN={t:1.8,max:1.8,text:'🐻‍❄️ 북극곰 습격!',sub:'망루·사냥꾼이 막아요'};}
-  if(S.season>=seasonLen()){S.season=S.season%seasonLen();raidQ=0;VFBREACH={};var aw3=agents[0];addFloat(aw3.x,aw3.y-46,liveBears().length?'🛡️ 새로운 곰은 안 와요 · 남은 곰을 무찔러요':'🛡️ 곰 습격이 끝났어요','#c9f5c0');}
+  if(S.season>=seasonLen()){S.season=S.season%seasonLen();raidQ=0;VFBREACH={};refundClearedDefensePads();var aw3=agents[0];addFloat(aw3.x,aw3.y-46,liveBears().length?'🛡️ 새로운 곰은 안 와요 · 남은 곰을 무찔러요':'🛡️ 곰 습격이 끝났어요','#c9f5c0');}
   if(isWinter()){raidT-=dt;var rp=raidP();
     if(rp>=.7&&RUSHMSG!==S.winters){RUSHMSG=S.winters;STAGEBAN={t:2.2,max:2.2,text:'🔥 곰 떼가 몰려와요!',sub:'습격 막바지 · 끝까지 버텨요'};bearBanT=time;shake(.6);flash=Math.max(flash,.3);sfx('horn');}
     if(raidT<=0){raidT=raidGap();var capN=bearCapNow();if(liveBears().length<capN){spawnBear();
@@ -63,7 +63,7 @@ function updateBears(dt){
     if(b.climb>0){b.climb-=dt;b.bob+=dt*3;b.swipe=Math.max(b.swipe,.3);}
     if(b.state==='fence'){b.dir=b.side==='right'?-1:1;b.swipeT-=dt;b.bob+=dt*4;
       var fv=b.wallV||villageAt(b.x);if(fv!==1){if(!fenceUp(fv)){b.state='in';}else if(b.swipeT<=0){b.swipeT=fenceHold(fv);b.swipe=1;b.ultSwipe=false;VFHP[fv]=(VFHP[fv]||fMaxV(fv))-(b.king?16:(b.boss?9:5))*1.4*bearStrikeMult()*fenceSoft(fv);sfx('chop',.2);shake(.15);burst(b.x,b.side==='bottom'?H+6:b.y,'#b98f5e',5,false);
-        if(VFHP[fv]<=0){VFHP[fv]=0;VFBREACH[fv]=1;flash=.3;shake(.8);sfx('nope');addFloat(b.x,H-40,'💥 '+(fv===2?'호수':'광산')+' 마을 성벽이 뚫렸어요!','#ffb3b3');burst(b.x,H-6,'#b98f5e',20,false);}}}
+        if(VFHP[fv]<=0){VFHP[fv]=0;VFBREACH[fv]=1;flash=.3;shake(.8);sfx('nope');addFloat(b.x,H-40,'💥 '+(fv===2?'호수':'광산')+' 마을 성벽이 뚫렸어요!','#ffb3b3');burst(b.x,H-6,'#b98f5e',20,false);save();}}}
       else if(!S.fence||S.fenceDown){b.state='in';}
       else if(b.swipeT<=0){b.swipeT=fenceHold(1);b.swipe=1;b.ultSwipe=false;FENCEHP-=(b.king?16:(b.boss?9:5))*1.4*bearStrikeMult()*fenceSoft(1);sfx('chop',.2);shake(b.boss?.3:.15);burst(b.x,b.side==='bottom'?H+6:b.y,'#b98f5e',5,false);
         if(FENCEHP<=0){FENCEHP=0;S.fenceDown=1;flash=.35;shake(1);sfx('nope');addFloat(MX/2,H-40,'💥 울타리가 부서졌어요! 수리해요','#ffb3b3');burst(MX/2,H-6,'#b98f5e',24,false);save();}}}

@@ -88,9 +88,11 @@ window.addEventListener('pageshow',function(){last=performance.now();frameGate=l
 /* v56: crews already at the top level merge into their super worker on load */
 /* v57: start-up steps are guarded one by one so a single bad value can't stop the game loop from ever starting */
 function boot(name,fn){try{fn();}catch(e){var m=name+': '+(e&&e.message||e);if(!window.__bootErr)window.__bootErr=m;var t=document.getElementById('tinfo');if(t){t.hidden=false;t.textContent='⚠️ '+m;t.style.color='#b3263b';}var v=document.querySelector('#setp .sver');if(v)v.textContent='v103 · 오류 '+m.slice(0,70);}}
+boot('defence-save',restoreDefenseState);
 boot('merge',function(){['lumber','fisher','hunter','hunter2','hunter3','miner'].forEach(function(r){if(canMerge(r))mergeCrew(r,false);});S.w.forEach(function(g){if(g.super&&isHunter(g.role))g.name=SUPERNAME[g.role];});});
 boot('dex',function(){dexInit();DEXREADY=true;});boot('tab',applyTab);boot('ui',refreshUI);
 boot('fit',fit);boot('cam',function(){var pa=agents[0];Z=zoomTarget();camX=camClampX(pa.x-W/Z/2);camY=camClampY(pa.y-SH/Z*.5);});
 boot('refund',function(){if(S.refundN){addFloat(150,150,'💰+'+fmt(S.refundN),'#ffe27a',true);delete S.refundN;save();}});
 boot('spot',function(){var pa=agents[0];if(!walkXY(pa.x,pa.y))unstick(pa);});
+boot('ending-resume',restoreFinale);
 requestAnimationFrame(loop);
