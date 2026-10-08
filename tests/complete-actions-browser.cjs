@@ -119,6 +119,25 @@ const { chromium } = require("playwright"),
       await page.screenshot({
         path: `/tmp/cozy-all-actions-${viewport.width}.png`,
       });
+      await page.evaluate(() => {
+        var q = __completeActions;
+        for (var goal of [
+          [400, 280],
+          [650, 230],
+          [510, 200],
+        ]) {
+          q.move(goal[0] === 400 ? 650 : 400, 280);
+          q.target(goal[0], goal[1]);
+          for (var n = 0; n < 200; n++) {
+            q.tick(0.05);
+            if (!q.position().walkable) throw Error("Entered pool");
+          }
+          if (
+            Math.hypot(q.position().x - goal[0], q.position().y - goal[1]) > 2
+          )
+            throw Error("Pool route failed");
+        }
+      });
       const z = await page.evaluate(() => __completeActions.view().z);
       await page.locator("#auroraCanvas").evaluate((c) => {
         c.dispatchEvent(

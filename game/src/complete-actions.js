@@ -385,7 +385,8 @@ var AURORA_OPEN = false,
   AURORA_UI = null,
   AURORA_HERO = { x: 540, y: 500, tx: 540, ty: 500 },
   AURORA_TIME = 0,
-  AURORA_GUESTS = [], AURORA_SAVE_T = 0;
+  AURORA_GUESTS = [],
+  AURORA_SAVE_T = 0;
 var AURORA_FAC = [
   {
     key: "canal",
@@ -568,6 +569,7 @@ function auroraOpen() {
         return;
       }
       var r = this.getBoundingClientRect();
+      AURORA_HERO.route = [];
       AURORA_HERO.tx = Math.max(
         30,
         Math.min(
@@ -682,12 +684,22 @@ function auroraControls() {
   area.appendChild(hire);
 }
 function updateAurora(dt) {
-  AURORA_SAVE_T += dt; if (AURORA_SAVE_T >= 5) { AURORA_SAVE_T = 0; save(); }
+  AURORA_SAVE_T += dt;
+  if (AURORA_SAVE_T >= 5) {
+    AURORA_SAVE_T = 0;
+    save();
+  }
   AURORA_TIME += dt;
   var a = auroraState(),
-    p = AURORA_HERO,
-    dx = p.tx - p.x,
-    dy = p.ty - p.y,
+    p = AURORA_HERO;
+  while (
+    p.route &&
+    p.route.length &&
+    Math.hypot(p.x - p.route[0].x, p.y - p.route[0].y) < 1
+  )
+    p.route.shift();
+  var dx = (p.route && p.route.length ? p.route[0].x : p.tx) - p.x,
+    dy = (p.route && p.route.length ? p.route[0].y : p.ty) - p.y,
     d = Math.hypot(dx, dy);
   p.mv = d > 1;
   if (d) {
@@ -697,10 +709,19 @@ function updateAurora(dt) {
     if (auroraWalk(nx, ny)) {
       p.x = nx;
       p.y = ny;
+      if (
+        p.route &&
+        p.route.length &&
+        Math.hypot(p.x - p.route[0].x, p.y - p.route[0].y) < 1
+      )
+        p.route.shift();
     } else {
-      var turn = p.x < 510 ? 455 : 565;
-      if (auroraWalk(p.x + (turn - p.x) * Math.min(1, dt * 4), p.y))
-        p.x += (turn - p.x) * Math.min(1, dt * 4);
+      var side = p.x < 510 ? 455 : 565;
+      var edge = p.ty <= 225 ? 205 : p.ty >= 303 ? 325 : p.y < 265 ? 205 : 325;
+      p.route = [
+        { x: side, y: edge },
+        { x: p.tx < 475 ? 455 : p.tx > 545 ? 565 : side, y: edge },
+      ];
     }
   }
   a.cheer = Math.max(0, (a.cheer || 0) - dt);
@@ -897,10 +918,23 @@ if (/[?&]test=1/.test(location.search))
     repair: auroraRepair,
     hire: auroraHire,
     move: function (x, y) {
+      AURORA_HERO.route = [];
       AURORA_HERO.x = x;
       AURORA_HERO.y = y;
       AURORA_HERO.tx = x;
       AURORA_HERO.ty = y;
+    },
+    target: function (x, y) {
+      AURORA_HERO.route = [];
+      AURORA_HERO.tx = x;
+      AURORA_HERO.ty = y;
+    },
+    position: function () {
+      return {
+        x: AURORA_HERO.x,
+        y: AURORA_HERO.y,
+        walkable: auroraWalk(AURORA_HERO.x, AURORA_HERO.y),
+      };
     },
     view: function () {
       return { z: AURORA_Z, camera: AURORA_VIEW };

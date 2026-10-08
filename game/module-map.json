@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "runtime_sha256": "f953093ac612598d201e5e2f55bbc27c106c5f428af71344d335a160a85569a1",
+  "runtime_sha256": "5497c60802311e5c5d61c46b5f9bf1c8c105d351045da9bd4a318334eaa1bb4d",
   "modules": [
     {
       "id": "boot-errors",
@@ -3592,8 +3592,8 @@
       "id": "complete-actions",
       "path": "src/complete-actions.js",
       "topic": "전체 동작·동행·이벤트·엔딩 이후 온천마을 운영",
-      "bytes": 24737,
-      "lines": 912,
+      "bytes": 25561,
+      "lines": 946,
       "symbols": [
         {
           "name": "ACTION_STAFF",
@@ -3661,39 +3661,39 @@
         },
         {
           "name": "AURORA_FAC",
-          "line": 389
+          "line": 390
         },
         {
           "name": "auroraState",
-          "line": 431
+          "line": 432
         },
         {
           "name": "auroraInventory",
-          "line": 454
+          "line": 455
         },
         {
           "name": "auroraRepair",
-          "line": 477
+          "line": 478
         },
         {
           "name": "auroraHire",
-          "line": 516
+          "line": 517
         },
         {
           "name": "auroraOpen",
-          "line": 527
+          "line": 528
         },
         {
           "name": "auroraControls",
-          "line": 623
+          "line": 625
         },
         {
           "name": "updateAurora",
-          "line": 684
+          "line": 686
         },
         {
           "name": "drawAurora",
-          "line": 737
+          "line": 758
         }
       ]
     },
